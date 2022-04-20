@@ -1,3 +1,5 @@
+[![build](https://github.com/BoevaLab/CanSig/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/BoevaLab/CanSig/actions/workflows/build.yml)
+
 # CanSig: Discovering de novo shared transcriptional programs in single cancer cells
 
 A pipeline for single-cell cancer data sets analysis.
