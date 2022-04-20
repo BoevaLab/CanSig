@@ -1,0 +1,21 @@
+# Tests whether the Sphinx documentation builds for every PR.
+# This should be kept in-sync with the PR deploying the documentation.
+name: Docs-Test
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-python@v2
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 0
+    - name: Install theme
+      run: pip install pydata-sphinx-theme
+    - name: Build and Commit
+      uses: sphinx-notes/pages@v2
+
