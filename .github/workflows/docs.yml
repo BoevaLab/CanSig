@@ -1,6 +1,6 @@
 # Builds Sphinx documentation and pushes it to the gh-pages branch.
 # This is based on https://github.com/marketplace/actions/sphinx-to-github-pages
-name: Pages
+name: Docs
 on:
   push:
     branches:
@@ -13,6 +13,8 @@ jobs:
     - uses: actions/checkout@master
       with:
         fetch-depth: 0
+    - name: Install theme
+      run: pip install pydata-sphinx-theme
     - name: Build and Commit
       uses: sphinx-notes/pages@v2
     - name: Push changes

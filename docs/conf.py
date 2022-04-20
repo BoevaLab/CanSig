@@ -65,9 +65,10 @@ napoleon_use_ivar = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-# See https://sphinx-themes.org/ for additional themes
-html_permalinks_icon = '<span>#</span>'
-html_theme = 'sphinxawesome_theme'
+# See https://sphinx-themes.org/ for other themes.
+# Note that if you change the theme, you may need to modify the GitHub
+# Action responsible for deploying the webpage.
+html_theme = 'pydata_sphinx_theme'
 
 
 # Add any paths that contain custom static files (such as style sheets) here,
