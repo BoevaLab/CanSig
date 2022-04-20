@@ -1,6 +1,6 @@
 # CanSig: Discovering de novo shared transcriptional programs in single cancer cells
 
-A pipeline for single-cell cancer data sets.
+A pipeline for single-cell cancer data sets analysis.
 
 This repository accompanies [our preprint](https://doi.org/10.1101/2022.04.14.488324).
 
@@ -8,7 +8,7 @@ This repository accompanies [our preprint](https://doi.org/10.1101/2022.04.14.48
 
 - For tutorials and API description, see our [documentation](https://boevalab.github.io/CanSig/).
 - If you found a bug or have an idea for improvement, [submit an issue](https://github.com/BoevaLab/CanSig/issues).
-- If you would like to contribute, see the [contribution guide](https://boevalab.github.io/CanSig/).
+- If you would like to contribute, see the [contribution guide](https://boevalab.github.io/CanSig#contributing).
 
 ## Installation
 

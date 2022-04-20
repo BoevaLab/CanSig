@@ -3,7 +3,10 @@
 # This file only contains a selection of the most common options. For a full
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
-
+#
+# We also used https://samnicholls.net/2016/06/15/how-to-sphinx-readthedocs/
+#
+#
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -18,8 +21,8 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 
 project = 'CanSig'
-copyright = '2022 BoevaLab, J. Yates, F. Barkmann, P. Czyz, E. Saquand'
-author = 'J. Yates, F. Barkmann, P. Czyz, E. Saquand'
+copyright = '2022 CanSig team'
+author = 'CanSig contributors'
 
 # The full version, including alpha/beta/rc tags
 release = '0.0.1'
@@ -31,8 +34,11 @@ release = '0.0.1'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "sphinx.ext.githubpages",
     "sphinx.ext.autodoc",
+    "sphinx.ext.coverage",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.githubpages",
+    "sphinx.ext.todo",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -43,13 +49,26 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+# -- Extensions --------------------------------------------------------------
+
+# sphinx.ext.todo
+# (Support for Todo comments).
+todo_include_todos = True
+
+# sphinx.ext.napoleon
+# (Support for NumPy-style docstrings).
+napoleon_google_docstring = False
+napoleon_use_param = False
+napoleon_use_ivar = True
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
-html_theme = 'alabaster'
+# See https://sphinx-themes.org/ for additional themes
+html_permalinks_icon = '<span>#</span>'
+html_theme = 'sphinxawesome_theme'
+
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
