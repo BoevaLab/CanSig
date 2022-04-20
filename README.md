@@ -9,8 +9,8 @@ This repository accompanies [our preprint](https://doi.org/10.1101/2022.04.14.48
 ## Resources
 
 - For tutorials and API description, see our [documentation](https://boevalab.github.io/CanSig/).
-- If you found a bug or have an idea for improvement, [submit an issue](https://github.com/BoevaLab/CanSig/issues).
-- If you would like to contribute, see the [contribution guide](https://boevalab.github.io/CanSig#contributing).
+- If you found a bug or have an idea for improvement, [submit an issue](https://boevalab.github.io/CanSig/contributing.html#submitting-an-issue).
+- If you would like to contribute, see the [contribution guide](https://boevalab.github.io/CanSig/contributing.html).
 
 ## Installation
 
