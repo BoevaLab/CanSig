@@ -2,4 +2,11 @@
 
 This repository accompanies [our preprint](https://doi.org/10.1101/2022.04.14.488324).
 
+## Contributors
+_To open-source the code, Git history was truncated. Hence, GitHub's statistics do not faithfully summarize the contributions. All persons listed below made major contributions to the code._
+
+- [Josephine Yates](https://github.com/josephineyates)
+- [Florian Barkmann](https://github.com/FlorianBarkmann)
+- [Paweł Czyż](https://github.com/pawel-czyz)
+- [Elia Saquand](https://github.com/saquand)
 
