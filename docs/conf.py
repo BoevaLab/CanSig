@@ -15,17 +15,18 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
+
+sys.path.insert(0, os.path.abspath(".."))
 
 
 # -- Project information -----------------------------------------------------
 
-project = 'CanSig'
-copyright = '2022 CanSig team'
-author = 'CanSig contributors'
+project = "CanSig"
+copyright = "2022 CanSig team"
+author = "CanSig contributors"
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = "0.0.1"
 
 
 # -- General configuration ---------------------------------------------------
@@ -42,12 +43,12 @@ extensions = [
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 # -- Extensions --------------------------------------------------------------
 
@@ -56,8 +57,8 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 todo_include_todos = True
 
 # sphinx.ext.napoleon
-# (Support for NumPy-style docstrings).
-napoleon_google_docstring = False
+# (Support for Google-style docstrings).
+napoleon_google_docstring = True
 napoleon_use_param = False
 napoleon_use_ivar = True
 
@@ -68,10 +69,10 @@ napoleon_use_ivar = True
 # See https://sphinx-themes.org/ for other themes.
 # Note that if you change the theme, you may need to modify the GitHub
 # Action responsible for deploying the webpage.
-html_theme = 'pydata_sphinx_theme'
+html_theme = "pydata_sphinx_theme"
 
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
