@@ -1,6 +1,6 @@
 # Tests whether the Sphinx documentation builds for every PR.
 # This should be kept in-sync with the PR deploying the documentation.
-name: Docs-Test
+name: docs-test
 on:
   pull_request:
     branches:

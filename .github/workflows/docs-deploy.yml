@@ -1,7 +1,7 @@
 # Builds Sphinx documentation and pushes it to the gh-pages branch,
 # so that it is deployed.
 # This is based on https://github.com/marketplace/actions/sphinx-to-github-pages
-name: Docs
+name: docs-deploy
 on:
   push:
     branches:

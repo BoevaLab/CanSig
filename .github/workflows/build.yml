@@ -1,3 +1,6 @@
+# This pipeline checks whether the package
+# installs properly, passes unit tests and whether
+# the code formatting is right.
 name: build
 
 on:
@@ -8,7 +11,7 @@ on:
 
 
 jobs:
-  ci:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
