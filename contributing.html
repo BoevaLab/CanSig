@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Contribution guide &#8212; CanSig 0.0.1 documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cansig" href="source/modules.html" />
+    <link rel="prev" title="CanSig: discovering cancer signatures" href="index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+<a class="navbar-brand" href="index.html">
+<p class="title">CanSig</p>
+</a>
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 current active nav-item">
+ <a class="current reference internal nav-link" href="#">
+  Contribution guide
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="source/modules.html">
+  cansig
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submitting-an-issue">
+   Submitting an issue
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submitting-a-pull-request">
+   Submitting a Pull Request
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#for-new-developers">
+   For new developers
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#getting-started-with-the-code">
+     Getting started with the code
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tooling">
+     Tooling
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#working-with-documentation">
+     Working with documentation
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="contribution-guide">
+<span id="id1"></span><h1>Contribution guide<a class="headerlink" href="#contribution-guide" title="Permalink to this headline">#</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<section id="submitting-an-issue">
+<h2>Submitting an issue<a class="headerlink" href="#submitting-an-issue" title="Permalink to this headline">#</a></h2>
+<p>If you find a bug, please submit <a class="reference external" href="https://github.com/BoevaLab/CanSig/issues">a new issue</a>.</p>
+<dl class="simple">
+<dt>To be able to reproduce a bug, we will usually need the following information:</dt><dd><ul class="simple">
+<li><p>Versions of Python packages used (in particular version of this library).</p></li>
+<li><p>A minimal code snippet allowing us to reproduce the bug.</p></li>
+<li><p>What is the desired behaviour in the reported case?</p></li>
+<li><p>What is the actual behaviour?</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="submitting-a-pull-request">
+<h2>Submitting a Pull Request<a class="headerlink" href="#submitting-a-pull-request" title="Permalink to this headline">#</a></h2>
+<dl class="simple">
+<dt>Do:</dt><dd><ul class="simple">
+<li><p>Do consider submitting a draft pull request with a description of proposed changes, before starting actual work.</p></li>
+<li><p>Do follow <a class="reference external" href="https://peps.python.org/pep-0008/">PEP8</a> and <a class="reference external" href="https://google.github.io/styleguide/pyguide.html">Google Style Guide</a>.</p></li>
+<li><p>Do write unit tests (<code class="docutils literal notranslate"><span class="pre">tests</span></code> directory). We use <a class="reference external" href="https://docs.pytest.org">pytest</a>.</p></li>
+<li><p>Do write <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google-style docstrings</a>.</p></li>
+<li><p>Do write high-level documentation (e.g., examples and tutorials, illustrating introduced features) in <code class="docutils literal notranslate"><span class="pre">docs</span></code>. We use <a class="reference external" href="https://www.sphinx-doc.org">Sphinx</a>  and <a class="reference external" href="https://docutils.sourceforge.io/rst.html">ReStructuredText</a>. For a reference, see e.g., <a class="reference external" href="https://sphinx-tutorial.readthedocs.io/cheatsheet/">this cheatsheet</a>.</p></li>
+<li><p>Do check the Development section.</p></li>
+</ul>
+</dd>
+<dt>Don’t:</dt><dd><ul class="simple">
+<li><p>Don’t include license information. This project is BSD-3 licensed and by submitting your pull request you implicitly and irrevocably agree to use this.</p></li>
+<li><p>Don’t implement too many ideas in a single pull request. Multiple features should be implemented in separate pull requests.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="for-new-developers">
+<h2>For new developers<a class="headerlink" href="#for-new-developers" title="Permalink to this headline">#</a></h2>
+<section id="getting-started-with-the-code">
+<h3>Getting started with the code<a class="headerlink" href="#getting-started-with-the-code" title="Permalink to this headline">#</a></h3>
+<p>Install the module in editable mode and with the dependencies needed to run the test suite:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install -e <span class="s2">&quot;.[test]&quot;</span>
+</pre></div>
+</div>
+<p>At this point you should be able to run the unit test suite:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pytest
+</pre></div>
+</div>
+</section>
+<section id="tooling">
+<h3>Tooling<a class="headerlink" href="#tooling" title="Permalink to this headline">#</a></h3>
+<p>As a developer, you will use some tools increasing code quality. You can install them by running</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install -r requirements-dev.txt
+$ pre-commit install
+</pre></div>
+</div>
+<p>We use <a class="reference external" href="https://github.com/psf/black">black</a> and <a class="reference external" href="https://flake8.pycqa.org/en/latest/">flake8</a> to lint the code, <a class="reference external" href="https://github.com/google/pytype">pytype</a> to check whether the types agree, and <a class="reference external" href="https://docs.pytest.org">pytest</a> to unit test the code.
+These code quality checks are applied to every Pull Request via a workflow in the <code class="docutils literal notranslate"><span class="pre">.github/workflows</span></code> directory.</p>
+</section>
+<section id="working-with-documentation">
+<h3>Working with documentation<a class="headerlink" href="#working-with-documentation" title="Permalink to this headline">#</a></h3>
+<p>We write <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google-style docstrings</a> and high-level documentation (e.g., examples and tutorials, illustrating introduced features) in <code class="docutils literal notranslate"><span class="pre">docs</span></code>.</p>
+<p>Although docstrings (in Python code) are assembled automatically, high-level documentation (including tutorials), needs to be written manually. For this, we use <a class="reference external" href="https://www.sphinx-doc.org">Sphinx</a>  and <a class="reference external" href="https://docutils.sourceforge.io/rst.html">ReStructuredText</a>. For a reference, see e.g., <a class="reference external" href="https://sphinx-tutorial.readthedocs.io/cheatsheet/">this cheatsheet</a>.</p>
+<p>Whenever a Pull Request is submitted (but not merged yet), we do a test build.
+Whenever a Pull Request is merged into the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch, a new version of the documentation is automatically built and deployed. Both workflows are in <code class="docutils literal notranslate"><span class="pre">.github/workflows</span></code>.</p>
+<p>We store the source code of the documentation in the <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory. To build it locally, use</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> docs
+$ sphinx-apidoc -o source/ ../cansig
+$ make html
+</pre></div>
+</div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">_build</span></code> directory, you should see <code class="docutils literal notranslate"><span class="pre">index.html</span></code> file. Open it with a web-browser of your choice.</p>
+</section>
+</section>
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="index.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">CanSig: discovering cancer signatures</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="source/modules.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">cansig</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022 CanSig team.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>
