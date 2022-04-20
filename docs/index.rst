@@ -1,8 +1,3 @@
-.. CanSig documentation master file, created by
-   sphinx-quickstart on Wed Apr 20 13:39:48 2022.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 CanSig: discovering cancer signatures
 =====================================
 
@@ -93,7 +88,6 @@ Indices and tables
    :maxdepth: 2
    :caption: Contents:
 
-   source/cansig
    source/modules
 
 * :ref:`genindex`
