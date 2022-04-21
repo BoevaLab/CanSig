@@ -16,6 +16,8 @@ This repository accompanies [our preprint](https://doi.org/10.1101/2022.04.14.48
 
 _Currently the installation instructions are in the contribution guide and are targeted to the developers. We hope it changes soon, when we release the first version of the package._
 
+More information can be found in the [Getting started](https://boevalab.github.io/CanSig/index.html#getting-started) section of our documentation.
+
 ## Code contributors
 _To open-source the code, Git history was truncated. Hence, GitHub's statistics do not faithfully summarize the contributions. All persons listed below made major contributions to the code._
 
