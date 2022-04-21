@@ -27,9 +27,12 @@ To install the package,
 Tutorials
 ---------
 
+* To learn about the preprocessing module, see :ref:`preprocessing`.
+
+
 .. todo::
 
-   Summary of tutorials. In particular, we should show how to use the preprocessing functions.
+   Summary of tutorials. Tutorial on interpretation.
 
 
 Contributing
@@ -46,8 +49,8 @@ Indices and tables
    :caption: Contents:
 
    contributing
+   preprocessing
    source/modules
-   
 
 * :ref:`genindex`
 * :ref:`modindex`

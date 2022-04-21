@@ -42,7 +42,14 @@ For new developers
 Getting started with the code
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Install the module in editable mode and with the dependencies needed to run the test suite:
+Clone the repository:
+
+.. code-block:: bash
+
+   $ git clone git@github.com:BoevaLab/CanSig.git
+   $ cd CanSig
+
+Install the module in editable mode with the dependencies needed to run the test suite:
 
 .. code-block:: bash
 
