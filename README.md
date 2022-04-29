@@ -6,6 +6,8 @@ A pipeline for single-cell cancer data sets analysis.
 
 This repository accompanies [our preprint](https://doi.org/10.1101/2022.04.14.488324).
 
+_Note: This repository is in the development stage. We hope it will soon become available._
+
 ## Resources
 
 - For tutorials and API description, see our [documentation](https://boevalab.github.io/CanSig/).
@@ -14,7 +16,9 @@ This repository accompanies [our preprint](https://doi.org/10.1101/2022.04.14.48
 
 ## Installation
 
-_Currently the installation instructions are in the contribution guide and are targeted to the developers. We hope it changes soon, when we release the first version of the package._
+```
+$ pip install cansig
+```
 
 More information can be found in the [Getting started](https://boevalab.github.io/CanSig/index.html#getting-started) section of our documentation.
 
