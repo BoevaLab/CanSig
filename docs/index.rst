@@ -34,7 +34,10 @@ We will analyse an artificial single-cell dataset, stored using the HDF5 format.
 
    $ python -m cansig.run.download HDF5
 
-You should see a new directory ``data`` containing the dataset ``example.hdf5``.
+You should see a new directory ``data`` with a subdirectory ``pipeline-tutorial/`` containing two files:
+
+* ``data.hdf5``: an artificial single-cell dataset (discussed below)
+* ``pathways.gmt``: artificial gene sets, used for Gene Set Enrichment Analysis
 
 .. todo::
    Add the description of this dataset and UMAP visualisations.
@@ -46,15 +49,24 @@ We will run the analysis pipeline with a single command:
 
 .. code-block:: bash
 
-   $ python -m cansig.run.pipeline data/example.hdf5 --dimensions 4 6 --clusters 2 3 5 --model-runs 2 --cluster-runs 2 --output tutorial-output
+   $ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5 --gene-sets data/pipeline-tutorial/pathways.gmt \
+                                   --dimensions 4 6 --model-runs 2 \
+                                   --clusters 2 3 5  --cluster-runs 2 \
+                                   --output tutorial-output 
 
 This command launched the training of several models, used for batch correction and dimension reduction.
 We reduce the dimension either to 4 or 6 (``--dimensions 4 6``).
 For each of these dimensionalities, we run two independent runs (``--model-runs 2``), what results in 4 models in total.
 
-Then, for each of the four models, we apply clustering into 2, 3, or 5 communities (``--clusters 2 3 5``). Again, we repeat this step twice (``--cluster-runs 2``).
+Then, for each of the four models, we apply clustering into 2, 3, or 5 communities (``--clusters 2 3 5``).
+Again, we repeat this step twice (``--cluster-runs 2``) using different random seeds.
 
-The results are available in the generated directory ``tutorial-output``.
+Note that we specified a custom GMT file with gene sets (as the dataset we are analyzing is artificial). The default database for cancer data is TODO, although many others can be used (e.g., TODO, TODO, and TODO).
+
+.. todo::
+   Fill in the TODO items above.
+
+The results will be available in the generated directory ``tutorial-output/`` in a few minutes.
 
 Let's analyse its structure:
 
