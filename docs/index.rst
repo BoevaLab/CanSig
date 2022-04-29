@@ -58,18 +58,28 @@ The results are available in the generated directory ``tutorial-output``.
 
 Let's analyse its structure:
 
-* ``summary/``
-    * ``nes_plot.pdf``
-    * ``pathways.csv``
-* ``runs/``
-    * ``latent/``
-    * ``cluster/``
-    * ``gsea/``
+* ``summary/``: directory with a high-level summary of all the runs
+    * ``nes_heatmap.pdf``: heatmap summarizing Normalized Enrichment Score of the pathways which seem to be differentially expressed
+    * ``pathways.csv``: a table with the enrichment score, p-values, and q-values of all pathways
+    * ``training.pdf``: plot summarizing the training curves (used to assess the convergence of dimension reduction/batch correction methods)
+    * ``training_status.json``: summary whether all the dimension reduction/batch correction methods have converged
+* ``runs/``: directory with all generated data, from single runs
+    * ``latent/``: each model has a separate directory representing the latent representations inferred by the batch correction/dimension reduction method
+    * ``cluster/``: cluster assignments (each of the latent representations file can clustered using different algorithms)
+    * ``gsea/``: Gene Set Enrichment Analysis scores for each of the clustering
+
+.. todo::
+   This is a sketch. We need to adjust it accordingly, when the implementation is ready.
 
 
-.. note::
-   Currently, we use `scVI <https://github.com/scverse/scvi-tools>`_ for batch correction and dimension reduction and `Leiden clustering <https://doi.org/10.1038/s41598-019-41695-z>`_.
-   For more advanced tutorial, instructing how to use different models, consult :ref:`pipeline-advanced`.
+While we covered the most basic usage of the pipeline, more information can be obtained by running
+
+.. code-block:: bash
+
+   $ python -m cansig.run.pipeline --help
+
+or by consulting the :ref:`pipeline-advanced`.
+
 
 Interpreting the results
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -77,8 +87,9 @@ Interpreting the results
 .. todo::
    Basic discussion how to interpret the results.
 
-.. note::
-   For more advanced analysis, see the :ref:`interpretation` tutorial.
+
+For more advanced analysis, including drawing biological insights, see :ref:`interpretation`.
+
 
 Tutorials
 ---------
@@ -86,9 +97,6 @@ Tutorials
 * To learn more about the pipeline (parallelization, using custom models), see :ref:`pipeline-advanced`.
 * For a tutorial how to interpret the results from the biological perspective, see :ref:`interpretation`.
 * To learn about the preprocessing module (used to prepare the raw data into the HDF5 format), see the :ref:`preprocessing`.
-
-.. todo::
-   Summary of tutorials. Tutorial on interpretation.
 
 
 Contributing
