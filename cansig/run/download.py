@@ -29,11 +29,40 @@ def create_parser() -> argparse.ArgumentParser:
 
 
 def download_hdf5(destination: Optional[str]) -> str:
-    pass
+    """This function downloads a small HDF5 dataset for the pipeline
+    demonstration.
+
+    Args:
+        destination: where the dataset should be downloaded
+
+
+    Returns:
+        the path to which the dataset was downloaded
+        (if `destination` is not None, it should be `destination`).
+
+    Note:
+        The purpose of this function is to have a side effect.
+    """
+    # TODO(Pawel): Missing function.
+    return "TODO"
 
 
 def download_preprocessing(destination: Optional[str]) -> str:
-    pass
+    """This function downloads a dataset for the preprocessing tutorial.
+
+    Args:
+        destination: where the dataset should be downloaded
+
+
+    Returns:
+        the path to which the dataset was downloaded
+        (if `destination` is not None, it should be `destination`).
+
+    Note:
+        The purpose of this function is to have a side effect.
+    """
+    # TODO(Pawel): Missing function.
+    return "TODO"
 
 
 def main() -> None:
