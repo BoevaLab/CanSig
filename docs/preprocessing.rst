@@ -141,7 +141,7 @@ Furthermore, the CNV profile of each cell is stored in `adata.obsm["X_cnv"]`.
 
 In addition to the AnnData object, `preprocessing` also generates
 plots for each sample to assess the quality of the data and the split into malignant and
-non-malignant cells. The plots are stored in <figure_dir>/<sample_id>. The first plot is
+non-malignant cells. The plots are stored in <figure_dir>/<batch_id>. The first plot is
 created during the quality control step and gives insights into which cells are being
 filtered out. This plot is saved to quality_control.png.
 
