@@ -6,6 +6,8 @@ CanSig: discovering cancer signatures
 
 Human tumors are highly heterogeneous in their cell composition; specifically, they exhibit heterogeneity in transcriptional states of malignant cells, as has been recently discovered through single-cell RNA sequencing (scRNA-seq). Distinct states of malignant cells have been linked to variability in tumorigenic properties and resistance to anti-cancer treatment. Despite the fact that scRNA-seq data contain all necessary information to uncover shared transcriptional states of malignant cells in tumors, jointly analyzing cells from multiple cancer patients comes with its set of challenges including batch correction and accounting for patient-specific genetic background driving differences between gene expression vectors. We propose CanSig, an easy-to-use approach designed to discover known and de novo shared signatures in cancer single cells. CanSig preprocesses, integrates and analyzes scRNA-seq data to provide new signatures of shared transcriptional states and links these states to known pathways. 
 
+.. todo::
+   Add a picture of the pipeline here with the figure caption as in the preprint.
 
 .. note::
    A preprint describing the pipeline and case studies is `now available <https://doi.org/10.1101/2022.04.14.488324>`_.
@@ -56,7 +58,7 @@ We will run the analysis pipeline with a single command:
 
 This command launched the training of several models, used for batch correction and dimension reduction.
 We reduce the dimension either to 4 or 6 (``--dimensions 4 6``).
-For each of these dimensionalities, we run two independent runs (``--model-runs 2``), what results in 4 models in total.
+For each of these dimensionalities, we run two independent runs – with different random seeds – (``--model-runs 2``), what results in 4 models in total.
 
 Then, for each of the four models, we apply clustering into 2, 3, or 5 communities (``--clusters 2 3 5``).
 Again, we repeat this step twice (``--cluster-runs 2``) using different random seeds.
