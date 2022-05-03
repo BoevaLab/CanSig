@@ -13,8 +13,7 @@ _DATA_URL = "https://polybox.ethz.ch/index.php/s/59uBkhs0JmKQGcJ/download"
 _PREPROCESSED_URL = ""
 
 
-def load_data(preprocessed: bool = False) -> Tuple[
-        List[ad.AnnData], pd.DataFrame, List[Dict]]:
+def load_data(preprocessed: bool = False) -> Tuple[List[ad.AnnData], pd.DataFrame, List[Dict]]:
     """
     load_data returns the data needed for the tutorial. See the preprocessing tutorial
     for details.
@@ -34,9 +33,7 @@ def load_data(preprocessed: bool = False) -> Tuple[
         responds = requests.get(_DATA_URL)
 
     if responds.status_code != 200:
-        print(
-            "Connection error, please try again later. If the problem remains please "
-            "raise an issue on github.")
+        print("Connection error, please try again later. If the problem remains please raise an issue on github.")
         responds.raise_for_status()
     # TODO: Add progressbar to the download.
     content = responds.content
