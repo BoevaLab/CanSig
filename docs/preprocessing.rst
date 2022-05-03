@@ -13,14 +13,14 @@ To illustrate the usage of the pre-processing module of CanSig, we use three sam
 
 .. code-block:: python
     from cansig.tutorial import load_data
-    adatas, gene_order, scoring_list = load_data()
+    adatas, gene_order, scoring_dict = load_data()
 
 
 
 The function load_data loads the following objects: adatas, a list of three AnnData
 objects; gene_order, a DataFrame that contains
-the gene position in the chromosome, and scoring_list, a list of dictionaries
-containing gene lists and names of known signatures.
+the gene position in the chromosome, and scoring_dict, a dictionary
+containing names of known signatures as keys and their associated genes in a list a values.
 
 .. important:: CanSig always expects raw counts (not log library size normalized) as input.
 
@@ -37,12 +37,12 @@ needs to be formatted as "chr<number of the chromosome>".
     LINC00115          chr1  761586  762902
     FAM41C             chr1  803451  812283
     SAMD11             chr1  860260  879955
-Lastly, the key of the dictionary in the scoring_list indicates into which column of
+Lastly, the key of the scoring_dict indicates into which column of
 .obs the score will be saved and the value should be a list of genes used for scoring.
 
 .. code-block:: python
-    print(scoring_list[0])
-    {'Epi1': ['KRT16', 'CSTB', 'S100A2', 'S100A9', 'SPRR1B', ...]}
+    print(scoring_dict)
+    {'Epi1': ['KRT16', 'CSTB', 'S100A2', 'S100A9', 'SPRR1B', ...], ...}
 
 
 For scoring, we use scanpy's `score_genes` function with log library size normalized
@@ -86,7 +86,7 @@ used for quality control.
                          min_genes=700,
                          threshold_pct_mt_counts=30.,
                          gene_order=gene_order,
-                         scoring_list=scoring_list,
+                         scoring_dict=scoring_dict,
                          figure_dir=None)
 
 .. Note:: Instead of loading the AnnData objects directly into memory, we can also
