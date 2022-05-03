@@ -3,8 +3,13 @@
 Preprocessing tutorial
 ======================
 
-.. todo:: Should I add an overview of the preprocessing steps here or do we expect
-    people to be familiar with our paper?
+The pre-processing module of CanSig consists of multiple steps.
+In the first step, we apply standard quality control measures.
+The second step consists in CNV inference to remove cells annotated as malignant that do not
+present CNVs and cells annotated as non-malignant that present CNVs.
+In the optional, third step, known gene signatures can be scored.
+
+.. todo:: Add graphic.
 
 Loading the data
 ----------------------
@@ -25,20 +30,18 @@ containing names of known signatures as keys and their associated genes in a lis
 .. important:: CanSig always expects raw counts (not log library size normalized) as input.
 
 Each cell in the AnnData objects has to have a cell type annotation stored in
-.obs[celltype_column]. The gene order file is expected to be a DataFrame that contains
+`adata.obs[celltype_column]`. The gene order file is expected to be a DataFrame that contains
 as index the gene names and three columns: chromosome, start and end. The chromosome
 needs to be formatted as "chr<number of the chromosome>".
 
 .. code-block:: python
-    print(gene_order.head())
+    print(gene_order.head(2))
                 chromosome   start     end
     MIR1302-9.3        chr1   29554   31109
     FAM87B             chr1  752751  755214
-    LINC00115          chr1  761586  762902
-    FAM41C             chr1  803451  812283
-    SAMD11             chr1  860260  879955
+
 Lastly, the key of the scoring_dict indicates into which column of
-.obs the score will be saved and the value should be a list of genes used for scoring.
+`adata.obs` the score will be saved and the value should be a list of genes used for scoring.
 
 .. code-block:: python
     print(scoring_dict)
@@ -46,7 +49,7 @@ Lastly, the key of the scoring_dict indicates into which column of
 
 
 For scoring, we use scanpy's `score_genes` function with log library size normalized
-counts as input and we apply the scoring function per batch and not on the combined
+counts as input. We apply the scoring function per batch and not on the combined
 dataset. See `score_genes <https://scanpy.readthedocs.io/en/stable/generated/scanpy.tl.score_genes.html>`_
 for more details.
 
@@ -89,11 +92,18 @@ used for quality control.
                          scoring_dict=scoring_dict,
                          figure_dir=None)
 
-.. Note:: Instead of loading the AnnData objects directly into memory, we can also
+
+.. Note:: Instead of calling the function with the AnnData objects in memory, we can also
     provide a list of paths to .h5ad files. This can save memory if many
     samples are preprocessed. If the data is loaded from memory we have to define
-    a column that contains the batch_id. If the data is loaded from disc and no column
-    for the batch_id is passed the filename will be used as a batch_id.
+    a column that contains the batch_id. If the data is loaded from disc and the
+    batch_id_column is not already in `adata.obs` it will be set to the filename.
+
+Cells with less than `min_counts` counts or more than `max_counts` counts will be filtered out.
+Furthermore, cells with fewer than `min_genes` genes expressed or with a higher
+percentage count in mitochondrial genes than `threshold_pct_mt_counts` will also be removed.
+All plots generated during preprocessing will be stored in `figure_dir`. For more detail,
+see preprocessing docs (TODO: add link here).
 
 Outputs
 --------
@@ -111,10 +121,13 @@ For each cell the following annotations are added in `adata.obs`:
 - `log_counts`: `log(n_counts)`.
 - `n_genes`: The number of genes expressed in the cell.
 - `pct_zero_genes`: `n_genes` divided by the number of all genes.
-- `pct_counts_mt`: The counts corresponding to mitochondrial DNA divided by `total_counts`.
+- `pct_counts_mt`: The counts corresponding to mitochondrial RNA divided by `total_counts`.
 - `malignant_annotation`: Boolean indicating if the cell is considered malignant based on it cell type.
-- `malignant_cnvs`: Boolean indicating if the cell is considered malignant based on its inferred CNV profil.
-- `malignant`: Boolean indicating if the cell is considered malignant based on its celltype and CNV profil.
+- `malignant_cnvs`: Boolean indicating if the cell is considered malignant based on its inferred CNV profile.
+- `malignant`: Boolean indicating if the cell is considered malignant based on its celltype and CNV profile.
+
+For more details on the malignant/non-malignant status annotation, see  the Methods section
+of our `paper <https://www.biorxiv.org/content/10.1101/2022.04.14.488324v1>`_.
 
 .. todo:: Do we want to add cell cycle scores? Problem: When different gene names are used?
 
@@ -123,8 +136,8 @@ For each cell the following annotations are added in `adata.obs`:
     that are annotated as non-malignant but show CNVs will not be considered as
     malignant cells.
 
-In additions to the above annotations, a column for each of the dictionaries in the scoring
-list is added. For this tutorial, these are
+In additions to the above annotations, a column for each element in the `scoring_dict` is
+added `adata.obs`. For this tutorial, these are the known signature from [Zhang2021]_,
 
 - `Mucosal`: The mucosal immunity-like (Mucosal) program was characterized by the expression of genes associated with innate immune response (e.g., S100P) and mucosal defensive mechanisms including mucosal chemokine (e.g., CXCL17) and mucus production (e.g., AGR2 and MUC20)
 - `Stress`: The stress responses (Stress) program consisted of immediate early genes (e.g., EGR1, JUN, and FOS) that are activated in response to widespread cellular stimuli and displayed upregulation of TNFα signaling, UV response, p53, and apoptosis pathways
@@ -135,9 +148,20 @@ list is added. For this tutorial, these are
 - `Mes`: he mesenchymal cell-like properties (Mes) program consisted of genes such as VIM and SPARC and showed activation of epithelial-mesenchymal transition (EMT) and angiogenesis pathways.
 - `Oxd`: Finally, the oxidative stress or detoxification (Oxd) program was characterized by the expression of multiple peroxidases and reductases (e.g., GPX2 and AKR1C1) involved in the defense against oxidative damage.
 
-.. todo:: This needs to be adapted for the tutorial.
+Scoring known signatures is an optional step and CanSig can function without. However,
+by using known signatures one can assess the quality of the low dimensional representation
+found in the next step by the model, in addition to using convergence metrics. We therefore
+recommend to try using known signatures for the cancer type studied for better
+interpretability of the results.
 
-Furthermore, the CNV profile of each cell is stored in `adata.obsm["X_cnv"]`.
+
+Furthermore, the CNV profile of each cell is stored in `adata.obsm["X_cnv"]`. Each row
+in `adata.obsm["X_cnv"]` corresponds to a cell and each column represents a gene. The genes
+are sorted by their position in the chromosome.
+
+.. note:: Since the CNVs inferred by InferCNV are highly correlated we only store the CNVs
+    for every 10th gene to save memory. The number of genes skipped is controlled by the
+    `step` parameter in `preprocessing`.
 
 In addition to the AnnData object, `preprocessing` also generates
 plots for each sample to assess the quality of the data and the split into malignant and
@@ -146,7 +170,7 @@ created during the quality control step and gives insights into which cells are 
 filtered out. This plot is saved to quality_control.png.
 
 .. todo:: Add image for quality control
-    Figure caption:  (A) Historgram of count depth per cell. (B) Histogram of number
+    Figure caption:  (A) Histogram of count depth per cell. (B) Histogram of number
     of genes detected per cell. (C) Count depth distribution. (D) Number of genes versus
     the count depth coloured by the fraction of mitochondrial reads. Mitochondrial read
     fractions are only high in particularly low count cells with few detected genes.
@@ -162,10 +186,9 @@ This plot is saved to chromosome_heatmap.png
 
 .. todo:: umap for each score + umap for malignant/non-malignant cells in CNV space.
 
-
 .. note:: For faster pre-processing plotting can be turned off by setting plot to False.
 
-.. todo:: Are there other useful plots that we want to add here???
+.. todo:: Are there other useful plots that we want to add here?
 
 References
 ----------

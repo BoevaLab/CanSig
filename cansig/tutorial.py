@@ -14,7 +14,7 @@ _PREPROCESSED_URL = ""
 
 
 def load_data(preprocessed: bool = False) -> Tuple[
-    List[ad.AnnData], pd.DataFrame, List[Dict]]:
+        List[ad.AnnData], pd.DataFrame, List[Dict]]:
     """
     load_data returns the data needed for the tutorial. See the preprocessing tutorial
     for details.
