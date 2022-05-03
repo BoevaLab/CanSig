@@ -131,9 +131,34 @@
               
               <div class="toc-item">
                 
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
-    
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-data">
+   Loading the data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   Preprocessing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#outputs">
+   Outputs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
 </nav>
               </div>
               
@@ -155,10 +180,168 @@
                 
   <section id="preprocessing-tutorial">
 <span id="preprocessing"></span><h1>Preprocessing tutorial<a class="headerlink" href="#preprocessing-tutorial" title="Permalink to this headline">#</a></h1>
+<p>The pre-processing module of CanSig consists of multiple steps.
+In the first step, we apply standard quality control measures.
+The second step consists in CNV inference to remove cells annotated as malignant that do not
+present CNVs and cells annotated as non-malignant that present CNVs.
+In the optional, third step, known gene signatures can be scored.</p>
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
-<p>The preprocessing tutorial.</p>
+<p>Add graphic.</p>
 </div>
+<section id="loading-the-data">
+<h2>Loading the data<a class="headerlink" href="#loading-the-data" title="Permalink to this headline">#</a></h2>
+<p>To illustrate the usage of the pre-processing module of CanSig, we use three samples from
+<a class="reference internal" href="#zhang2021" id="id2"><span>[Zhang2021]</span></a>.</p>
+<p>The function load_data loads the following objects: adatas, a list of three AnnData
+objects; gene_order, a DataFrame that contains
+the gene position in the chromosome, and scoring_dict, a dictionary
+containing names of known signatures as keys and their associated genes in a list a values.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>CanSig always expects raw counts (not log library size normalized) as input.</p>
+</div>
+<p>Each cell in the AnnData objects has to have a cell type annotation stored in
+<cite>adata.obs[celltype_column]</cite>. The gene order file is expected to be a DataFrame that contains
+as index the gene names and three columns: chromosome, start and end. The chromosome
+needs to be formatted as “chr&lt;number of the chromosome&gt;”.</p>
+<p>Lastly, the key of the scoring_dict indicates into which column of
+<cite>adata.obs</cite> the score will be saved and the value should be a list of genes used for scoring.</p>
+<p>For scoring, we use scanpy’s <cite>score_genes</cite> function with log library size normalized
+counts as input. We apply the scoring function per batch and not on the combined
+dataset. See <a class="reference external" href="https://scanpy.readthedocs.io/en/stable/generated/scanpy.tl.score_genes.html">score_genes</a>
+for more details.</p>
+</section>
+<section id="id3">
+<h2>Preprocessing<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<p>Before we can start with the preprocessing, we need to define which cell types are
+considered as malignant or undetermined. The remaining cell types will be considered as
+non-malignant. Furthermore, we need to define which cell types are used as reference for
+InferCNV. These are typically non-malignant cells representing a variety of different
+cell types. For more details, see <a class="reference external" href="https://github.com/broadinstitute/inferCNV/wiki">InferCNV</a>.</p>
+<p>Now, we can run preprocessing by importing the function and defining the thresholds
+used for quality control.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Instead of calling the function with the AnnData objects in memory, we can also
+provide a list of paths to .h5ad files. This can save memory if many
+samples are preprocessed. If the data is loaded from memory we have to define
+a column that contains the batch_id. If the data is loaded from disc and the
+batch_id_column is not already in <cite>adata.obs</cite> it will be set to the filename.</p>
+</div>
+<p>Cells with less than <cite>min_counts</cite> counts or more than <cite>max_counts</cite> counts will be filtered out.
+Furthermore, cells with fewer than <cite>min_genes</cite> genes expressed or with a higher
+percentage count in mitochondrial genes than <cite>threshold_pct_mt_counts</cite> will also be removed.
+All plots generated during preprocessing will be stored in <cite>figure_dir</cite>. For more detail,
+see preprocessing docs (TODO: add link here).</p>
+</section>
+<section id="outputs">
+<h2>Outputs<a class="headerlink" href="#outputs" title="Permalink to this headline">#</a></h2>
+<p>The function <cite>preprocessing</cite> returns a single AnnData object containing all the high quality cells
+from the inputted samples.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since the goal of CanSig is to discover shared signatures, we do an inner join
+for the genes. This means only genes present in all samples will be kept in the
+final AnnData (This behavior can be changed by setting <cite>join</cite> to “outer”.).</p>
+</div>
+<p>For each cell the following annotations are added in <cite>adata.obs</cite>:</p>
+<ul class="simple">
+<li><p><cite>n_counts</cite>: The library size of the cell.</p></li>
+<li><p><cite>log_counts</cite>: <cite>log(n_counts)</cite>.</p></li>
+<li><p><cite>n_genes</cite>: The number of genes expressed in the cell.</p></li>
+<li><p><cite>pct_zero_genes</cite>: <cite>n_genes</cite> divided by the number of all genes.</p></li>
+<li><p><cite>pct_counts_mt</cite>: The counts corresponding to mitochondrial RNA divided by <cite>total_counts</cite>.</p></li>
+<li><p><cite>malignant_annotation</cite>: Boolean indicating if the cell is considered malignant based on it cell type.</p></li>
+<li><p><cite>malignant_cnvs</cite>: Boolean indicating if the cell is considered malignant based on its inferred CNV profile.</p></li>
+<li><p><cite>malignant</cite>: Boolean indicating if the cell is considered malignant based on its celltype and CNV profile.</p></li>
+</ul>
+<p>For more details on the malignant/non-malignant status annotation, see  the Methods section
+of our <a class="reference external" href="https://www.biorxiv.org/content/10.1101/2022.04.14.488324v1">paper</a>.</p>
+<div class="admonition-todo admonition" id="id4">
+<p class="admonition-title">Todo</p>
+<p>Do we want to add cell cycle scores? Problem: When different gene names are used?</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Rare malignant cells might be difficult to annotate. Therefore, we consider
+cells, that show CNVs but are annotated as undetermined, as malignant. However, cells
+that are annotated as non-malignant but show CNVs will not be considered as
+malignant cells.</p>
+</div>
+<p>In additions to the above annotations, a column for each element in the <cite>scoring_dict</cite> is
+added <cite>adata.obs</cite>. For this tutorial, these are the known signature from <a class="reference internal" href="#zhang2021" id="id5"><span>[Zhang2021]</span></a>,</p>
+<ul class="simple">
+<li><p><cite>Mucosal</cite>: The mucosal immunity-like (Mucosal) program was characterized by the expression of genes associated with innate immune response (e.g., S100P) and mucosal defensive mechanisms including mucosal chemokine (e.g., CXCL17) and mucus production (e.g., AGR2 and MUC20)</p></li>
+<li><p><cite>Stress</cite>: The stress responses (Stress) program consisted of immediate early genes (e.g., EGR1, JUN, and FOS) that are activated in response to widespread cellular stimuli and displayed upregulation of TNFα signaling, UV response, p53, and apoptosis pathways</p></li>
+<li><p><cite>AP</cite>: The antigen presentation (AP) program had increased expression of major histocompatibility complex (MHC) class II molecules (e.g., CD74, HLA-DPA1, and HLA-DRA/B1/B5) that are involved in initiating adaptive antitumor immune responses</p></li>
+<li><p><cite>Cycling</cite>: The cell cycle (Cycling) program was characterized by high expression of genes involved in cell proliferation (e.g., CENPW, CKS1B, and BIRC5) and presented activation of the E2F targets, G2M checkpoint and MYC targets pathways, suggesting tumor cell proliferation</p></li>
+<li><p><cite>Epi1</cite>: The Epi1 program was characterized by the expression of stress keratins (KRT6, KRT16, and KRT17) that are associated with keratinocyte hyperproliferation and therefore may play a role in enhancing tumorigenesis and tumor growth</p></li>
+<li><p><cite>Epi2</cite>: The Epi2 program had the overexpressed genes related to the terminal differentiation such as envelope proteins (SPRR1A/1B) and calprotectin (S100A8/9), apical surface, the PI3K/AKT/mTOR signaling, the complement, and p53 pathways</p></li>
+<li><p><cite>Mes</cite>: he mesenchymal cell-like properties (Mes) program consisted of genes such as VIM and SPARC and showed activation of epithelial-mesenchymal transition (EMT) and angiogenesis pathways.</p></li>
+<li><p><cite>Oxd</cite>: Finally, the oxidative stress or detoxification (Oxd) program was characterized by the expression of multiple peroxidases and reductases (e.g., GPX2 and AKR1C1) involved in the defense against oxidative damage.</p></li>
+</ul>
+<p>Scoring known signatures is an optional step and CanSig can function without. However,
+by using known signatures one can assess the quality of the low dimensional representation
+found in the next step by the model, in addition to using convergence metrics. We therefore
+recommend to try using known signatures for the cancer type studied for better
+interpretability of the results.</p>
+<p>Furthermore, the CNV profile of each cell is stored in <cite>adata.obsm[“X_cnv”]</cite>. Each row
+in <cite>adata.obsm[“X_cnv”]</cite> corresponds to a cell and each column represents a gene. The genes
+are sorted by their position in the chromosome.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since the CNVs inferred by InferCNV are highly correlated we only store the CNVs
+for every 10th gene to save memory. The number of genes skipped is controlled by the
+<cite>step</cite> parameter in <cite>preprocessing</cite>.</p>
+</div>
+<p>In addition to the AnnData object, <cite>preprocessing</cite> also generates
+plots for each sample to assess the quality of the data and the split into malignant and
+non-malignant cells. The plots are stored in &lt;figure_dir&gt;/&lt;batch_id&gt;. The first plot is
+created during the quality control step and gives insights into which cells are being
+filtered out. This plot is saved to quality_control.png.</p>
+<div class="admonition-todo admonition" id="id7">
+<p class="admonition-title">Todo</p>
+<p>Add image for quality control
+Figure caption:  (A) Histogram of count depth per cell. (B) Histogram of number
+of genes detected per cell. (C) Count depth distribution. (D) Number of genes versus
+the count depth coloured by the fraction of mitochondrial reads. Mitochondrial read
+fractions are only high in particularly low count cells with few detected genes.
+Source: <a class="reference internal" href="#luecken2019" id="id6"><span>[Luecken2019]</span></a></p>
+</div>
+<p>The next plot is generated after inferring CNVs. It shows the chromosome heatmap
+separated into malignant and non-malignant and the malignant cells are further divided
+into reference and non-reference Cells. The non-malignant cells should not show CNVs.
+This plot is saved to chromosome_heatmap.png</p>
+<div class="admonition-todo admonition" id="id8">
+<p class="admonition-title">Todo</p>
+<p>Add image of the chromosome heatmap showing separation of malignant and
+non-malignant cells.</p>
+</div>
+<div class="admonition-todo admonition" id="id9">
+<p class="admonition-title">Todo</p>
+<p>umap for each score + umap for malignant/non-malignant cells in CNV space.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For faster pre-processing plotting can be turned off by setting plot to False.</p>
+</div>
+<div class="admonition-todo admonition" id="id10">
+<p class="admonition-title">Todo</p>
+<p>Are there other useful plots that we want to add here?</p>
+</div>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<dl class="citation">
+<dt class="label" id="zhang2021"><span class="brackets">Zhang2021</span><span class="fn-backref">(<a href="#id2">1</a>,<a href="#id5">2</a>)</span></dt>
+<dd><p>Zhang, X., Peng, L., Luo, Y. et al. Dissecting esophageal squamous-cell carcinoma ecosystem by single-cell transcriptomic analysis. Nat Commun 12, 5291 (2021). <a class="reference external" href="https://doi.org/10.1038/s41467-021-25539-x">https://doi.org/10.1038/s41467-021-25539-x</a></p>
+</dd>
+<dt class="label" id="luecken2019"><span class="brackets"><a class="fn-backref" href="#id6">Luecken2019</a></span></dt>
+<dd><p>Luecken, M. D., Theis, F. J. Current best practices in single-cell RNA-seq analysis: a tutorial. Molecular systems biology, 15(6), e8746 (2019). <a class="reference external" href="https://doi.org/10.15252/msb.20188746">https://doi.org/10.15252/msb.20188746</a></p>
+</dd>
+</dl>
+</section>
 </section>
 
 
