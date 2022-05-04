@@ -31,8 +31,8 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="cansig" href="source/modules.html" />
-    <link rel="prev" title="Contribution guide" href="contributing.html" />
+    <link rel="next" title="Advanced pipeline usage" href="pipeline-advanced.html" />
+    <link rel="prev" title="CanSig: discovering cancer signatures" href="index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -67,15 +67,27 @@
       
       <div class="navbar-center-item">
         <ul id="navbar-main-elements" class="navbar-nav">
-    <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="contributing.html">
-  Contribution guide
+    <li class="toctree-l1 current active nav-item">
+ <a class="current reference internal nav-link" href="#">
+  Preprocessing tutorial
  </a>
 </li>
 
-<li class="toctree-l1 current active nav-item">
- <a class="current reference internal nav-link" href="#">
-  Preprocessing tutorial
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="pipeline-advanced.html">
+  Advanced pipeline usage
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="interpretation.html">
+  Advanced interpretation tutorial
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="contributing.html">
+  Contribution guide
  </a>
 </li>
 
@@ -193,6 +205,10 @@ In the optional, third step, known gene signatures can be scored.</p>
 <h2>Loading the data<a class="headerlink" href="#loading-the-data" title="Permalink to this headline">#</a></h2>
 <p>To illustrate the usage of the pre-processing module of CanSig, we use three samples from
 <a class="reference internal" href="#zhang2021" id="id2"><span>[Zhang2021]</span></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cansig.tutorial</span> <span class="kn">import</span> <span class="n">load_data</span>
+<span class="n">adatas</span><span class="p">,</span> <span class="n">gene_order</span><span class="p">,</span> <span class="n">scoring_dict</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">()</span>
+</pre></div>
+</div>
 <p>The function load_data loads the following objects: adatas, a list of three AnnData
 objects; gene_order, a DataFrame that contains
 the gene position in the chromosome, and scoring_dict, a dictionary
@@ -205,8 +221,18 @@ containing names of known signatures as keys and their associated genes in a lis
 <cite>adata.obs[celltype_column]</cite>. The gene order file is expected to be a DataFrame that contains
 as index the gene names and three columns: chromosome, start and end. The chromosome
 needs to be formatted as “chr&lt;number of the chromosome&gt;”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">gene_order</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">chromosome</span>   <span class="n">start</span>     <span class="n">end</span>
+<span class="n">MIR1302</span><span class="o">-</span><span class="mf">9.3</span>        <span class="n">chr1</span>   <span class="mi">29554</span>   <span class="mi">31109</span>
+<span class="n">FAM87B</span>             <span class="n">chr1</span>  <span class="mi">752751</span>  <span class="mi">755214</span>
+</pre></div>
+</div>
 <p>Lastly, the key of the scoring_dict indicates into which column of
 <cite>adata.obs</cite> the score will be saved and the value should be a list of genes used for scoring.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">scoring_dict</span><span class="p">)</span>
+<span class="p">{</span><span class="s1">&#39;Epi1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;KRT16&#39;</span><span class="p">,</span> <span class="s1">&#39;CSTB&#39;</span><span class="p">,</span> <span class="s1">&#39;S100A2&#39;</span><span class="p">,</span> <span class="s1">&#39;S100A9&#39;</span><span class="p">,</span> <span class="s1">&#39;SPRR1B&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="o">...</span><span class="p">}</span>
+</pre></div>
+</div>
 <p>For scoring, we use scanpy’s <cite>score_genes</cite> function with log library size normalized
 counts as input. We apply the scoring function per batch and not on the combined
 dataset. See <a class="reference external" href="https://scanpy.readthedocs.io/en/stable/generated/scanpy.tl.score_genes.html">score_genes</a>
@@ -219,8 +245,36 @@ considered as malignant or undetermined. The remaining cell types will be consid
 non-malignant. Furthermore, we need to define which cell types are used as reference for
 InferCNV. These are typically non-malignant cells representing a variety of different
 cell types. For more details, see <a class="reference external" href="https://github.com/broadinstitute/inferCNV/wiki">InferCNV</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">malignant_celltypes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Epi&quot;</span><span class="p">]</span>
+<span class="n">undetermined_celltypes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Undetermined&quot;</span><span class="p">]</span>
+<span class="n">reference_celltypes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Pericytes&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;Bcells&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;FRC&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;Endothelial&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;Fibroblasts&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;Myeloid&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;Tcells&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
 <p>Now, we can run preprocessing by importing the function and defining the thresholds
 used for quality control.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cansig</span> <span class="kn">import</span> <span class="n">preprocessing</span>
+
+<span class="n">adata</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="p">(</span><span class="n">adatas</span><span class="p">,</span>
+                     <span class="n">batch_id_column</span> <span class="o">=</span> <span class="s1">&#39;batch_id&#39;</span><span class="p">,</span>
+                     <span class="n">celltype_column</span> <span class="o">=</span> <span class="s1">&#39;cell_type&#39;</span><span class="p">,</span>
+                     <span class="n">malignant_celltypes</span><span class="o">=</span><span class="n">malignant_celltypes</span><span class="p">,</span>
+                     <span class="n">undetermined_celltypes</span><span class="o">=</span><span class="n">undetermined_celltypes</span><span class="p">,</span>
+                     <span class="n">reference_celltypes</span><span class="o">=</span><span class="n">reference_celltypes</span><span class="p">,</span>
+                     <span class="n">min_counts</span><span class="o">=</span><span class="mi">1_500</span><span class="p">,</span>
+                     <span class="n">max_counts</span><span class="o">=</span><span class="mi">50_000</span><span class="p">,</span>
+                     <span class="n">min_genes</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span>
+                     <span class="n">threshold_pct_mt_counts</span><span class="o">=</span><span class="mf">30.</span><span class="p">,</span>
+                     <span class="n">gene_order</span><span class="o">=</span><span class="n">gene_order</span><span class="p">,</span>
+                     <span class="n">scoring_dict</span><span class="o">=</span><span class="n">scoring_dict</span><span class="p">,</span>
+                     <span class="n">figure_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Instead of calling the function with the AnnData objects in memory, we can also
@@ -350,17 +404,17 @@ non-malignant cells.</p>
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="contributing.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="index.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Contribution guide</p>
+            <p class="prev-next-title">CanSig: discovering cancer signatures</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="source/modules.html" title="next page">
+    <a class='right-next' id="next-link" href="pipeline-advanced.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">cansig</p>
+        <p class="prev-next-title">Advanced pipeline usage</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
