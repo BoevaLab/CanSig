@@ -17,6 +17,7 @@ To illustrate the usage of the pre-processing module of CanSig, we use three sam
 [Zhang2021]_.
 
 .. code-block:: python
+
     from cansig.tutorial import load_data
     adatas, gene_order, scoring_dict = load_data()
 
@@ -35,6 +36,7 @@ as index the gene names and three columns: chromosome, start and end. The chromo
 needs to be formatted as "chr<number of the chromosome>".
 
 .. code-block:: python
+
     print(gene_order.head(2))
                 chromosome   start     end
     MIR1302-9.3        chr1   29554   31109
@@ -44,6 +46,7 @@ Lastly, the key of the scoring_dict indicates into which column of
 `adata.obs` the score will be saved and the value should be a list of genes used for scoring.
 
 .. code-block:: python
+
     print(scoring_dict)
     {'Epi1': ['KRT16', 'CSTB', 'S100A2', 'S100A9', 'SPRR1B', ...], ...}
 
@@ -62,6 +65,7 @@ InferCNV. These are typically non-malignant cells representing a variety of diff
 cell types. For more details, see `InferCNV <https://github.com/broadinstitute/inferCNV/wiki>`_.
 
 .. code-block:: python
+
     malignant_celltypes = ["Epi"]
     undetermined_celltypes = ["Undetermined"]
     reference_celltypes = ["Pericytes",
@@ -76,6 +80,7 @@ Now, we can run preprocessing by importing the function and defining the thresho
 used for quality control.
 
 .. code-block:: python
+
     from cansig import preprocessing
 
     adata = preprocessing(adatas,
@@ -93,7 +98,7 @@ used for quality control.
                          figure_dir=None)
 
 
-.. Note:: Instead of calling the function with the AnnData objects in memory, we can also
+.. note:: Instead of calling the function with the AnnData objects in memory, we can also
     provide a list of paths to .h5ad files. This can save memory if many
     samples are preprocessed. If the data is loaded from memory we have to define
     a column that contains the batch_id. If the data is loaded from disc and the
