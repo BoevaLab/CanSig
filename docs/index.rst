@@ -51,6 +51,8 @@ You should see a new directory ``data`` with a subdirectory ``pipeline-tutorial/
 Running the analysis
 ^^^^^^^^^^^^^^^^^^^^
 
+.. note:: If you are familiar with Python, you may prefer running the analysis in a custom manner. See the :ref:`pipeline-advanced`.
+
 We will run the analysis pipeline with a single command:
 
 .. code-block:: bash
