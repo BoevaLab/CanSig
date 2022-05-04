@@ -31,6 +31,14 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output", type=pathlib.Path, default=pathlib.Path("output"), help="Output directory."
     )  # TODO(Pawel): Parametrize this with datetime.
+    parser.add_argument(
+        "--save-intermediate",
+        type=bool,
+        default=True,
+        help="Whether the intermediate results should be saved."
+        "By default, the results are saved. Turning this off is discouraged, "
+        "unless the system memory is very limited.",
+    )
     return parser
 
 
