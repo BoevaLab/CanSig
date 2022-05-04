@@ -18,11 +18,10 @@ def create_parser() -> argparse.ArgumentParser:
         "--model-runs",
         type=int,
         default=1,
-        help="Number of dimension reduction/batch correction models to be trained per the specified latent dimension.",
+        help="Number of data integration models to be trained per the specified latent dimension. "
+        "Each model will be trained with a different random seed.",
     )
-    parser.add_argument(
-        "--cluster-runs", type=int, default=1, help="Number of clusterings per the specified number of clusters."
-    )
+    parser.add_argument("--cluster-runs", type=int, default=1, help="Number of random seeds used for the clustering.")
     parser.add_argument(
         "--dimensions", nargs="+", default=[4, 6], help="List with the number of latent dimensions to be used."
     )
