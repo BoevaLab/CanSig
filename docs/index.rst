@@ -32,16 +32,18 @@ Install the package:
 Example dataset
 ^^^^^^^^^^^^^^^
 
-We will analyse an artificial single-cell dataset, stored using the HDF5 format. We will download it using an auxiliary script:
+To demonstrate the pipeline usage, we will analyse a small esophageal dataset, which has been already preprocessed (for more information about the dataset and the data curation, see :ref:`preprocessing`).
+
+We will download it using an auxiliary script:
 
 .. code-block:: bash
 
-   $ python -m cansig.run.download HDF5
+   $ python -m cansig.run.download PIPELINE
 
 You should see a new directory ``data`` with a subdirectory ``pipeline-tutorial/`` containing two files:
 
-* ``data.hdf5``: an artificial single-cell dataset (discussed below)
-* ``pathways.gmt``: artificial gene sets, used for Gene Set Enrichment Analysis
+* ``data.h5ad``: a single-cell dataset (discussed below)
+* ``pathways.gmt``: gene sets, used for Gene Set Enrichment Analysis
 
 .. todo::
    Add the description of this dataset and UMAP visualisations.

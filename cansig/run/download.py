@@ -5,7 +5,7 @@ from typing import Optional
 
 
 # Download choices
-HDF5 = "HDF5"
+PIPELINE = "PIPELINE"
 PREPROCESSING = "PREPROCESSING"
 
 
@@ -15,8 +15,8 @@ def create_parser() -> argparse.ArgumentParser:
         "what",
         help="The type of data to be downloaded. (Different tutorials use different datasets).",
         type=str,
-        choices=[HDF5, PREPROCESSING],
-        default=HDF5,
+        choices=[PIPELINE, PREPROCESSING],
+        default=PIPELINE,
     )
     parser.add_argument(
         "--destination",
@@ -29,7 +29,7 @@ def create_parser() -> argparse.ArgumentParser:
 
 
 def download_hdf5(destination: Optional[str]) -> str:
-    """This function downloads a small HDF5 dataset for the pipeline
+    """This function downloads a small PIPELINE dataset for the pipeline
     demonstration.
 
     Args:
@@ -69,7 +69,7 @@ def main() -> None:
     parser = create_parser()
     args = parser.parse_args()
 
-    if args.what == HDF5:
+    if args.what == PIPELINE:
         downloaded_path = download_hdf5(destination=args.destination)
     elif args.what == PREPROCESSING:
         downloaded_path = download_preprocessing(destination=args.destination)
