@@ -57,14 +57,25 @@ We will run the analysis pipeline with a single command:
 
 .. code-block:: bash
 
-   $ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5 --gene-sets data/pipeline-tutorial/pathways.gmt \
+   $ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5 
+                                   --batch batch_id
+                                   --gene-sets data/pipeline-tutorial/pathways.gmt \
                                    --dimensions 4 6 --model-runs 2 \
                                    --clusters 2 3 5  --cluster-runs 2 \
                                    --output tutorial-output 
 
-This command launched the training of several models, used for batch correction and dimension reduction.
-We reduce the dimension either to 4 or 6 (``--dimensions 4 6``).
+This command launched the training of several models, used for data integration (batch correction and dimension reduction).
+We marked that the batch column in the dataset is named ``batch_id`` and we will reduce the dimension either to 4 or 6 (``--dimensions 4 6``).
 For each of these dimensionalities, we run two independent runs – with different random seeds – (``--model-runs 2``), what results in 4 models in total.
+
+.. note::
+
+   In case of additional continuous or discrete variables, which may confound the expression (e.g., the sequencing technology used), one could specify it via the ``--continuous-covariates`` and ``--discrete-covariates`` flags.
+   
+   For more information, run 
+
+   ``$ python -m cansig.run.pipeline --help``
+
 
 Then, for each of the four models, we apply clustering into 2, 3, or 5 communities (``--clusters 2 3 5``).
 Again, we repeat this step twice (``--cluster-runs 2``) using different random seeds.

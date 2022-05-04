@@ -14,6 +14,19 @@ logger = logging.getLogger(__name__)
 def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument("data", type=pathlib.Path, help="HDF5 file containing the dataset.")
+    parser.add_argument("--batch", type=str, help="Name of the column with batch (or sample) index.")
+    parser.add_argument(
+        "--continuous-covariates",
+        nargs="+",
+        default=[],
+        help="Names of the columns representing " "additional continuous covariates.",
+    )
+    parser.add_argument(
+        "--discrete-covariates",
+        nargs="+",
+        default=[],
+        help="Names of the columns representing " "additional continuous covariates.",
+    )
     parser.add_argument(
         "--model-runs",
         type=int,
