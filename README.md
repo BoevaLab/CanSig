@@ -1,4 +1,7 @@
 [![build](https://github.com/BoevaLab/CanSig/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/BoevaLab/CanSig/actions/workflows/build.yml)
+[![docs-deploy](https://github.com/BoevaLab/CanSig/actions/workflows/docs-deploy.yml/badge.svg)](https://github.com/BoevaLab/CanSig/actions/workflows/docs-deploy.yml)
+[![PyPI](https://img.shields.io/pypi/v/cansig.svg)](https://pypi.org/project/cansig)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 # CanSig: Discovering de novo shared transcriptional programs in single cancer cells
 
@@ -29,4 +32,3 @@ _To open-source the code, Git history was truncated. Hence, GitHub's statistics 
 - [Florian Barkmann](https://github.com/FlorianBarkmann)
 - [Paweł Czyż](https://github.com/pawel-czyz)
 - [Elia Saquand](https://github.com/saquand)
-

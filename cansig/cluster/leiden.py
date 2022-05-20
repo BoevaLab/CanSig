@@ -45,19 +45,18 @@ class NeighborsGraphConfig(pydantic.BaseModel):
     n_neighbors: int = pydantic.Field(default=15)
     n_pcs: Optional[int] = pydantic.Field(default=None)
     knn: bool = pydantic.Field(default=True)
-    random_state: int = pydantic.Field(default=111)
     # TODO(Pawel): Check whether we can support other methods as well.
     method: Literal["umap"] = pydantic.Field(default="umap")
     metric: _SupportedMetric = pydantic.Field(default="euclidean")
 
 
-def _build_neighborhood_graph(data: an.AnnData, config: NeighborsGraphConfig) -> None:
+def _build_neighborhood_graph(data: an.AnnData, config: NeighborsGraphConfig, random_state: int) -> None:
     """A convenient thin wrapper for scanpy.pp.neighbors."""
     sc.pp.neighbors(
         data,
         n_neighbors=config.n_neighbors,
         n_pcs=config.n_pcs,
-        random_state=config.random_state,
+        random_state=random_state,
         method=config.method,
         metric=config.metric,
     )
@@ -100,7 +99,7 @@ class LeidenResolution(ICluster):
 
     def fit_predict(self, X: ArrayLike, y=None) -> np.ndarray:
         points = an.AnnData(X=np.asarray(X))
-        _build_neighborhood_graph(points, config=self._settings.nngraph)
+        _build_neighborhood_graph(points, config=self._settings.nngraph, random_state=self._settings.random_state)
 
         key_added = "cluster-labels"
         sc.tl.leiden(
@@ -120,7 +119,7 @@ class LeidenNCluster(ICluster):
 
     def fit_predict(self, X: ArrayLike, y=None) -> np.ndarray:
         points = an.AnnData(X=np.asarray(X))
-        _build_neighborhood_graph(points, config=self._settings.nngraph)
+        _build_neighborhood_graph(points, config=self._settings.nngraph, random_state=self._settings.random_state)
 
         key_added = "cluster-labels"
         points = _binary_search_leiden_resolution(
