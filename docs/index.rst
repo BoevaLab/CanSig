@@ -20,6 +20,8 @@ This tutorial assumes you have access to a Unix terminal (e.g., Linux, BSD, MacO
 
 When the Unix terminal is ready, you will need to `install Python <https://wiki.python.org/moin/BeginnersGuide>`_. One popular solution is `Anaconda <https://www.anaconda.com/>`_.
 
+.. note:: CanSig requires Python 3.8 (or a most recent version).
+
 Installation
 ^^^^^^^^^^^^
 
@@ -40,10 +42,7 @@ We will download it using an auxiliary script:
 
    $ python -m cansig.run.download PIPELINE
 
-You should see a new directory ``data`` with a subdirectory ``pipeline-tutorial/`` containing two files:
-
-* ``data.h5ad``: a single-cell dataset (discussed below)
-* ``pathways.gmt``: gene sets, used for Gene Set Enrichment Analysis
+You should see a new directory ``data`` with a file ``pipeline-tutorial.h5ad``.
 
 .. todo::
    Add the description of this dataset and UMAP visualisations.
@@ -58,15 +57,16 @@ We will run the analysis pipeline with a single command:
 .. code-block:: bash
 
    $ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5 
-                                   --batch batch_id
-                                   --gene-sets data/pipeline-tutorial/pathways.gmt \
-                                   --dimensions 4 6 --model-runs 2 \
-                                   --clusters 2 3 5  --cluster-runs 2 \
+                                   --batch batch
+                                   --gene-sets MSigDB_Hallmark_2020 \
+                                   --dimensions 4 6 --model-runs 1 \
+                                   --clusters 2 3 5  --cluster-runs 1 \
                                    --output tutorial-output 
 
 This command launched the training of several models, used for data integration (batch correction and dimension reduction).
-We marked that the batch column in the dataset is named ``batch_id`` and we will reduce the dimension either to 4 or 6 (``--dimensions 4 6``).
-For each of these dimensionalities, we run two independent runs – with different random seeds – (``--model-runs 2``), what results in 4 models in total.
+We marked that the batch column in the dataset is named ``batch`` and we will reduce the dimension either to 4 or 6 (``--dimensions 4 6``).
+For each of these dimensionalities, we do a single run (``--model-runs 1``). Increasing this number will train more models, differing in random seeds.
+
 
 .. note::
 
@@ -78,9 +78,10 @@ For each of these dimensionalities, we run two independent runs – with differe
 
 
 Then, for each of the four models, we apply clustering into 2, 3, or 5 communities (``--clusters 2 3 5``).
-Again, we repeat this step twice (``--cluster-runs 2``) using different random seeds.
+Again, one can repeat this steps, using different random seeds, by increasing ``--cluster-runs``.
 
-Note that we specified a custom GMT file with gene sets (as the dataset we are analyzing is artificial). The default database for cancer data is TODO, although many others can be used (e.g., TODO, TODO, and TODO).
+We specified the database to be used (``--gene-sets MSigDB_Hallmark_2020``).
+This is one of many databases available online. Alternatively, one can provide a path to the GMT file.
 
 .. todo::
    Fill in the TODO items above.

@@ -1,0 +1,22 @@
+# The purpose of this file is to store *all* the dependencies
+# setup.cfg
+anndata
+gseapy
+leidenalg
+matplotlib
+numpy<=1.21
+pandas    
+petname
+pydantic
+scanpy
+seaborn
+scipy
+scvi-tools
+# requirements-dev.txt
+black
+flake8
+pre-commit
+pytest
+pytest-cov
+pytest-xdist
+pytype
