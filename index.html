@@ -234,6 +234,10 @@
 <h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">#</a></h2>
 <p>This tutorial assumes you have access to a Unix terminal (e.g., Linux, BSD, MacOS). If you use Windows, install <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install">Windows Subsystem for Linux</a> first.</p>
 <p>When the Unix terminal is ready, you will need to <a class="reference external" href="https://wiki.python.org/moin/BeginnersGuide">install Python</a>. One popular solution is <a class="reference external" href="https://www.anaconda.com/">Anaconda</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>CanSig requires Python 3.8 (or a most recent version).</p>
+</div>
 <section id="installation">
 <h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h3>
 <p>Install the package:</p>
@@ -248,11 +252,7 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.download PIPELINE
 </pre></div>
 </div>
-<p>You should see a new directory <code class="docutils literal notranslate"><span class="pre">data</span></code> with a subdirectory <code class="docutils literal notranslate"><span class="pre">pipeline-tutorial/</span></code> containing two files:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">data.h5ad</span></code>: a single-cell dataset (discussed below)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pathways.gmt</span></code>: gene sets, used for Gene Set Enrichment Analysis</p></li>
-</ul>
+<p>You should see a new directory <code class="docutils literal notranslate"><span class="pre">data</span></code> with a file <code class="docutils literal notranslate"><span class="pre">pipeline-tutorial.h5ad</span></code>.</p>
 <div class="admonition-todo admonition" id="id2">
 <p class="admonition-title">Todo</p>
 <p>Add the description of this dataset and UMAP visualisations.</p>
@@ -266,16 +266,16 @@
 </div>
 <p>We will run the analysis pipeline with a single command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
-                                --batch batch_id
-                                --gene-sets data/pipeline-tutorial/pathways.gmt <span class="se">\</span>
-                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">2</span> <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">2</span> <span class="se">\</span>
+                                --batch batch
+                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
+                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
+                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
                                 --output tutorial-output
 </pre></div>
 </div>
 <p>This command launched the training of several models, used for data integration (batch correction and dimension reduction).
-We marked that the batch column in the dataset is named <code class="docutils literal notranslate"><span class="pre">batch_id</span></code> and we will reduce the dimension either to 4 or 6 (<code class="docutils literal notranslate"><span class="pre">--dimensions</span> <span class="pre">4</span> <span class="pre">6</span></code>).
-For each of these dimensionalities, we run two independent runs – with different random seeds – (<code class="docutils literal notranslate"><span class="pre">--model-runs</span> <span class="pre">2</span></code>), what results in 4 models in total.</p>
+We marked that the batch column in the dataset is named <code class="docutils literal notranslate"><span class="pre">batch</span></code> and we will reduce the dimension either to 4 or 6 (<code class="docutils literal notranslate"><span class="pre">--dimensions</span> <span class="pre">4</span> <span class="pre">6</span></code>).
+For each of these dimensionalities, we do a single run (<code class="docutils literal notranslate"><span class="pre">--model-runs</span> <span class="pre">1</span></code>). Increasing this number will train more models, differing in random seeds.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In case of additional continuous or discrete variables, which may confound the expression (e.g., the sequencing technology used), one could specify it via the <code class="docutils literal notranslate"><span class="pre">--continuous-covariates</span></code> and <code class="docutils literal notranslate"><span class="pre">--discrete-covariates</span></code> flags.</p>
@@ -283,8 +283,9 @@ For each of these dimensionalities, we run two independent runs – with differe
 <p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">cansig.run.pipeline</span> <span class="pre">--help</span></code></p>
 </div>
 <p>Then, for each of the four models, we apply clustering into 2, 3, or 5 communities (<code class="docutils literal notranslate"><span class="pre">--clusters</span> <span class="pre">2</span> <span class="pre">3</span> <span class="pre">5</span></code>).
-Again, we repeat this step twice (<code class="docutils literal notranslate"><span class="pre">--cluster-runs</span> <span class="pre">2</span></code>) using different random seeds.</p>
-<p>Note that we specified a custom GMT file with gene sets (as the dataset we are analyzing is artificial). The default database for cancer data is TODO, although many others can be used (e.g., TODO, TODO, and TODO).</p>
+Again, one can repeat this steps, using different random seeds, by increasing <code class="docutils literal notranslate"><span class="pre">--cluster-runs</span></code>.</p>
+<p>We specified the database to be used (<code class="docutils literal notranslate"><span class="pre">--gene-sets</span> <span class="pre">MSigDB_Hallmark_2020</span></code>).
+This is one of many databases available online. Alternatively, one can provide a path to the GMT file.</p>
 <div class="admonition-todo admonition" id="id3">
 <p class="admonition-title">Todo</p>
 <p>Fill in the TODO items above.</p>
