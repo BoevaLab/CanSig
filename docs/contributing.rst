@@ -96,3 +96,15 @@ We store the source code of the documentation in the ``docs`` directory. To buil
 
 In the ``_build`` directory, you should see ``index.html`` file. Open it with a web-browser of your choice.
 
+
+Requirements
+^^^^^^^^^^^^
+
+Python packages needed to run the CanSig code should be specified inside ``setup.cfg`` (it also includes optional testing dependencies).
+Developer tools (described above) are specified in ``requirements-dev.txt``.
+We also keep the file ``requirements.txt`` which is supposed to be the union of all possible dependencies.
+Our CI pipeline uses this file for caching the dependencies (so that it runs faster).
+We check whether the ``requirements.txt`` is the union of the other two files using a simple script ``.ci/check-requirements-cache.py``.
+
+.. note:: Currently this script *does not* parse lines containing both the module and the comment. It is very simple.
+
