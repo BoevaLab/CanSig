@@ -53,7 +53,6 @@ def postprocess(
 
     # *** Gene Set Enrichment Analysis ***
     # Set up and save GSEA settings
-    gsea_config = gsea.GeneExpressionConfig()
     fs.save_settings(settings=gsea_config, path=output_dir.gsea_settings)
 
     # Read the anndata and add the cluster labels
