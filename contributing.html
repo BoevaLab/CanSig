@@ -183,6 +183,11 @@
      Working with documentation
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#requirements">
+     Requirements
+    </a>
+   </li>
   </ul>
  </li>
 </ul>
@@ -283,6 +288,18 @@ $ make html
 </pre></div>
 </div>
 <p>In the <code class="docutils literal notranslate"><span class="pre">_build</span></code> directory, you should see <code class="docutils literal notranslate"><span class="pre">index.html</span></code> file. Open it with a web-browser of your choice.</p>
+</section>
+<section id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">#</a></h3>
+<p>Python packages needed to run the CanSig code should be specified inside <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code> (it also includes optional testing dependencies).
+Developer tools (described above) are specified in <code class="docutils literal notranslate"><span class="pre">requirements-dev.txt</span></code>.
+We also keep the file <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> which is supposed to be the union of all possible dependencies.
+Our CI pipeline uses this file for caching the dependencies (so that it runs faster).
+We check whether the <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> is the union of the other two files using a simple script <code class="docutils literal notranslate"><span class="pre">.ci/check-requirements-cache.py</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently this script <em>does not</em> parse lines containing both the module and the comment. It is very simple.</p>
+</div>
 </section>
 </section>
 </section>
