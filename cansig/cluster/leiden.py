@@ -118,7 +118,7 @@ class LeidenNCluster(ICluster):
         self._settings = settings
 
     def fit_predict(self, X: ArrayLike, y=None) -> np.ndarray:
-        points = an.AnnData(X=np.asarray(X))
+        points = an.AnnData(X=np.asarray(X),dtype=X.dtype)
         _build_neighborhood_graph(points, config=self._settings.nngraph, random_state=self._settings.random_state)
 
         key_added = "cluster-labels"
