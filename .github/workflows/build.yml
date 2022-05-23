@@ -34,3 +34,6 @@ jobs:
         run: flake8
       - name: Run pytype check
         run: pytype
+      - name: Dependencies caching looks right
+        run: python .ci/check-requirements-cache.py
+
