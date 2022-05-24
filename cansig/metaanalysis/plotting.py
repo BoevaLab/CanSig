@@ -59,5 +59,4 @@ class ScatterPlot:
         return fig
 
     def save_fig(self, fig: plt.figure, output_file: pathlib.Path) -> None:
-        
         fig.savefig(fname=output_file)
