@@ -2,12 +2,9 @@ import pathlib
 from typing import Literal, List, Optional
 
 import anndata  # pytype: disable=import-error
-import numpy as np
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
-
-import cansig.filesys as fs
 
 _SupportedDim = Literal["pca", "umap"]
 
@@ -53,7 +50,7 @@ class ScatterPlot:
 
         default_columns = ["new-cluster-column", self._settings.batch_column]
 
-        if self._settings.signature_columns == None:
+        if self._settings.signature_columns is None:
             colors = default_columns
         else:
             colors = list(self._settings.signature_columns) + default_columns

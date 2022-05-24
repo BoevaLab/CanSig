@@ -1,7 +1,5 @@
 import argparse
 import pathlib
-from pickletools import decimalnl_short
-from typing import Iterable
 
 import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
