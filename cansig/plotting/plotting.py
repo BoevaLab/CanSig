@@ -12,7 +12,7 @@ _SupportedDim = Literal["pca", "umap"]
 
 class ScatterPlotConfig(pydantic.BaseModel):
 
-    dim_red: _SupportedDim = pydantic.Field(default="pca")
+    dim_reduction: _SupportedDim = pydantic.Field(default="pca")
     signature_columns: Optional[List[str]]
     batch_column: str
 
@@ -32,7 +32,7 @@ class ScatterPlot:
 
     def plot_scatter(self, adata: anndata.AnnData, representations: pd.DataFrame) -> plt.figure:
 
-        print(f"Plotting {self._settings.dim_red.upper()}...")
+        print(f"Plotting {self._settings.dim_reduction.upper()}...")
         copy = adata.copy()
         copy = self._put_latent_in_adata(z=representations, adata=copy)
 
@@ -47,11 +47,11 @@ class ScatterPlot:
         else:
             colors = list(self._settings.signature_columns) + default_columns
 
-        if self._settings.dim_red == "pca":
+        if self._settings.dim_reduction == "pca":
             copy.obsm["X_pca"] = sc.tl.pca(copy.obsm["X_latent"])
             fig = sc.pl.pca(copy, color=colors, ncols=3, return_fig=True)
 
-        elif self._settings.dim_red == "umap":
+        elif self._settings.dim_reduction == "umap":
             sc.pp.neighbors(copy, use_rep="X_latent")
             sc.tl.umap(copy)
             fig = sc.pl.umap(copy, color=colors, ncols=3, return_fig=True)

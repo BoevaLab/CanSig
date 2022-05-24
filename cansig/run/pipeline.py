@@ -85,8 +85,9 @@ def create_parser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
-        "--dimred",
+        "--dim-reduction",
         type=str,
+        choices=["umap","pca"],
         help="The type of dimensionality reduction method used to plot the latent space",
         default="pca",
     )
@@ -98,7 +99,7 @@ def create_parser() -> argparse.ArgumentParser:
         default=None,
     )
     parser.add_argument(
-        "--noplots",
+        "--disable-plots",
         action="store_true",
         help="a flag used when the user does not want plotting done",
     )
@@ -136,7 +137,7 @@ def generate_gsea_config(args) -> gsea.GeneExpressionConfig:
 def generate_plotting_config(args) -> plotting.ScatterPlotConfig:
 
     return plotting.ScatterPlotConfig(
-        dim_red=args.dimred,
+        dim_red=args.dim_reduction,
         signature_columns=args.sigcols,
         batch_column=args.batch,
     )
@@ -180,7 +181,7 @@ def single_integration_run(
     gsea_config: gsea.GeneExpressionConfig,
     multirun_dir: MultirunDirectory,
     plotting_config: plotting.ScatterPlotConfig,
-    noplot_bool: bool,
+    plot: bool,
 ) -> None:
     # First, we run the integration step
     integration_dir = multirun_dir.integration_directories / fs.get_directory_name()
@@ -201,7 +202,7 @@ def single_integration_run(
                 latents_dir=integration_dir,
                 output_dir=multirun_dir.postprocessing_directories / fs.get_directory_name(),
                 plotting_config=plotting_config,
-                noplot_bool=noplot_bool,
+                plot=plot,
             )
         except Exception as e:
             print(f"Caught exception {type(e)}: {e}.")
@@ -288,7 +289,7 @@ def main() -> None:
                 gsea_config=generate_gsea_config(args),
                 multirun_dir=multirun_dir,
                 plotting_config=generate_plotting_config(args),
-                noplot_bool=args.noplots,
+                plot=(not args.disable_plots),
             )
         except Exception as e:
             print(f"Caught exception {type(e)}: {e}.")
