@@ -93,7 +93,10 @@ class GeneExpressionAnalysis:
         sc.pp.log1p(adata_copy)
 
         sc.tl.rank_genes_groups(
-            adata_copy, groupby=self.cluster_name, groups=self.group_names, method=self.method,
+            adata_copy,
+            groupby=self.cluster_name,
+            groups=self.group_names,
+            method=self.method,
         )
         ranked_genes = adata_copy.uns["rank_genes_groups"]
 
