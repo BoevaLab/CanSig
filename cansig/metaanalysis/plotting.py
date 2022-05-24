@@ -20,15 +20,6 @@ class ScatterPlot:
     def __init__(self, settings: ScatterPlotConfig) -> None:
         self._settings = settings
 
-    def _pretty_ax(ax):
-        ax.spines["right"].set_visible(False)
-        ax.spines["top"].set_visible(False)
-        ax.tick_params(
-            axis="both", which="both", bottom=False, top=False, left=False, labelbottom=False, labelleft=False
-        )
-        ax.spines["bottom"].set_linewidth(1.5)
-        ax.spines["left"].set_linewidth(1.5)
-
     def _put_latent_in_adata(self, z: pd.DataFrame, adata: anndata.AnnData) -> anndata.AnnData:
 
         df = pd.concat([adata.obs, z], axis=1, join="inner")
