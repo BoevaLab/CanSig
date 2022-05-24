@@ -1,5 +1,7 @@
 import argparse
 import pathlib
+from pickletools import decimalnl_short
+from typing import Iterable
 
 import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
@@ -7,6 +9,7 @@ import pandas as pd  # pytype: disable=import-error
 import cansig.cluster.api as cluster
 import cansig.filesys as fs
 import cansig.gsea as gsea
+import cansig.metaanalysis.plotting as plotting
 
 OUTPUT_BASE_PATH = pathlib.Path("outputs/postprocessing")
 
@@ -31,6 +34,8 @@ def postprocess(
     output_dir: pathlib.Path,
     cluster_config: cluster.LeidenNClusterConfig,
     gsea_config: gsea.GeneExpressionConfig,
+    plotting_config: plotting.ScatterPlotConfig,
+    noplot_bool: bool,
 ) -> bool:
     # Create the output directory
     output_dir = fs.PostprocessingDir(path=output_dir, create=True)
@@ -62,6 +67,14 @@ def postprocess(
     cluster_col = "new-cluster-column"
     adata.obs[cluster_col] = pd.Categorical(labels)
 
+    # *** Plotting ***
+    if noplot_bool:
+        # the user does not want plots
+        pass
+    else:
+        scatter = plotting.ScatterPlot(plotting_config)
+        scatter.plot_scatter(adata=adata, representations=representations, output_file=output_dir.scatter_output)
+
     # Run gene set enrichment analysis
     gex_object = gsea.gex_factory(cluster_name=cluster_col, config=gsea_config)
 
@@ -79,6 +92,10 @@ def main(args):
         output_dir=args.output,
         gsea_config=gsea.GeneExpressionConfig(),
         cluster_config=cluster.LeidenNClusterConfig(clusters=args.clusters),
+        plotting_config=plotting.ScatterPlotConfig(
+            dim_red=args.dimred.lower(), signature_columns=args.sigcols, batch_columns=args.batch
+        ),
+        noplot_bool=args.noplots,
     )
 
 

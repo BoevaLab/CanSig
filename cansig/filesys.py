@@ -113,6 +113,10 @@ class PostprocessingDir(StructuredDir):
         # TODO(Pawel): Note, the desired output is still discussed.
         return self.path / "gsea-dataframe.csv"
 
+    @property
+    def scatter_output(self) -> pathlib.Path:
+        return self.path / "latent_space_dimred.png"
+
 
 def get_directory_name() -> str:
     """A string representing a unique name for the run."""
