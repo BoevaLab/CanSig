@@ -16,7 +16,7 @@ import cansig.cluster.api as cluster
 import cansig.filesys as fs
 import cansig.gsea as gsea
 import cansig.metaanalysis.heatmap as heatmap
-import cansig.metaanalysis.plotting as plotting
+import cansig.plotting.plotting as plotting
 import cansig.models.api as models
 import cansig.models.scvi as _scvi
 

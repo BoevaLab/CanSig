@@ -7,7 +7,7 @@ import pandas as pd  # pytype: disable=import-error
 import cansig.cluster.api as cluster
 import cansig.filesys as fs
 import cansig.gsea as gsea
-import cansig.metaanalysis.plotting as plotting
+import cansig.plotting.plotting as plotting
 
 OUTPUT_BASE_PATH = pathlib.Path("outputs/postprocessing")
 
