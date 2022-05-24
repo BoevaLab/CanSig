@@ -16,6 +16,7 @@ import cansig.cluster.api as cluster
 import cansig.filesys as fs
 import cansig.gsea as gsea
 import cansig.metaanalysis.heatmap as heatmap
+import cansig.plotting.plotting as plotting
 import cansig.models.api as models
 import cansig.models.scvi as _scvi
 
@@ -82,6 +83,26 @@ def create_parser() -> argparse.ArgumentParser:
         "By default, the results are saved. Turning this off is discouraged, "
         "unless the system memory is very limited.",
     )
+
+    parser.add_argument(
+        "--dim-reduction",
+        type=str,
+        choices=["umap", "pca"],
+        help="The type of dimensionality reduction method used to plot the latent space",
+        default="pca",
+    )
+
+    parser.add_argument(
+        "--sigcols",
+        nargs="+",
+        help="a list containing the name of the columns containing the signatures to plot as scatter plot",
+        default=None,
+    )
+    parser.add_argument(
+        "--disable-plots",
+        action="store_true",
+        help="a flag used when the user does not want plotting done",
+    )
     return parser
 
 
@@ -110,6 +131,15 @@ def generate_model_configs(args) -> List[models.SCVIConfig]:
 def generate_gsea_config(args) -> gsea.GeneExpressionConfig:
     return gsea.GeneExpressionConfig(
         gene_sets=args.gene_sets,
+    )
+
+
+def generate_plotting_config(args) -> plotting.ScatterPlotConfig:
+
+    return plotting.ScatterPlotConfig(
+        dim_red=args.dim_reduction,
+        signature_columns=args.sigcols,
+        batch_column=args.batch,
     )
 
 
@@ -150,6 +180,8 @@ def single_integration_run(
     clustering_configs: Iterable[cluster.LeidenNClusterConfig],
     gsea_config: gsea.GeneExpressionConfig,
     multirun_dir: MultirunDirectory,
+    plotting_config: plotting.ScatterPlotConfig,
+    plot: bool,
 ) -> None:
     # First, we run the integration step
     integration_dir = multirun_dir.integration_directories / fs.get_directory_name()
@@ -169,6 +201,8 @@ def single_integration_run(
                 gsea_config=gsea_config,
                 latents_dir=integration_dir,
                 output_dir=multirun_dir.postprocessing_directories / fs.get_directory_name(),
+                plotting_config=plotting_config,
+                plot=plot,
             )
         except Exception as e:
             print(f"Caught exception {type(e)}: {e}.")
@@ -254,6 +288,8 @@ def main() -> None:
                 clustering_configs=generate_clustering_configs(args),
                 gsea_config=generate_gsea_config(args),
                 multirun_dir=multirun_dir,
+                plotting_config=generate_plotting_config(args),
+                plot=(not args.disable_plots),
             )
         except Exception as e:
             print(f"Caught exception {type(e)}: {e}.")
