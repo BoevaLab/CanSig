@@ -194,6 +194,7 @@ def _get_pathways_and_scores(df: pd.DataFrame) -> List[Tuple[str, float]]:
     # TODO(Pawel): This is very hacky. Make configurable.
     new_df = df.groupby("Term").max()
     new_df = new_df[new_df["fdr"] < 0.05]
+    new_df = new_df[new_df["nes"] > 0]
     return list(new_df["nes"].items())
 
 
