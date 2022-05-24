@@ -78,6 +78,10 @@ def postprocess(
     gex_object = gsea.gex_factory(cluster_name=cluster_col, config=gsea_config)
 
     gene_ranks = gex_object.diff_gex(adata)
+
+    output_dir.make_sig_dir()
+    gsea.save_signatures(diff_genes=gene_ranks, res_dir=output_dir.signature_output)
+
     results = gex_object.perform_gsea(gene_ranks)
     results.to_csv(output_dir.gsea_output)
 

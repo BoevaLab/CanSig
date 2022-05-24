@@ -93,19 +93,21 @@ class GeneExpressionAnalysis:
         sc.pp.log1p(adata_copy)
 
         sc.tl.rank_genes_groups(
-            adata_copy,
-            groupby=self.cluster_name,
-            groups=self.group_names,
-            method=self.method,
+            adata_copy, groupby=self.cluster_name, groups=self.group_names, method=self.method,
         )
         ranked_genes = adata_copy.uns["rank_genes_groups"]
 
         gene_order = {}
         for label in ranked_genes["names"].dtype.names:
             gene_order[label] = pd.DataFrame(
-                ranked_genes["scores"][label][: self.n_diff_genes],
+                np.array(
+                    [
+                        ranked_genes["scores"][label][: self.n_diff_genes],
+                        ranked_genes["pvals"][label][: self.n_diff_genes],
+                    ]
+                ).T,
                 index=ranked_genes["names"][label][: self.n_diff_genes],
-                columns=["logfold"],
+                columns=["zscores", "pvals"],
             )
 
         return gene_order
@@ -151,7 +153,7 @@ class GeneExpressionAnalysis:
 
             print(f"GSEA for cluster {label}")
             gs_res = gp.prerank(
-                rnk=gene_rank,
+                rnk=gene_rank[["zscores"]],
                 gene_sets=self.gene_sets,
                 processes=4,
                 permutation_num=self.permutation_num,  # reduce number for speed
@@ -194,3 +196,11 @@ def gex_factory(cluster_name: str, config: GeneExpressionConfig) -> GeneExpressi
         gene_sets=config.gene_sets,
         permutation_num=config.permutation_num,
     )
+
+
+def save_signatures(diff_genes: Dict[str, pd.DataFrame], res_dir: pathlib.Path) -> None:
+    """Saves the signatures associated with each cluster as the differential expression
+    analysis
+    """
+    for cluster in diff_genes:
+        diff_genes[cluster].to_csv(res_dir / f"signature_cl{cluster}.csv")
