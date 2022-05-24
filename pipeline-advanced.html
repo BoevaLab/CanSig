@@ -158,6 +158,11 @@
    Using custom models
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-the-plotting-utilities">
+   Using the plotting utilities
+  </a>
+ </li>
 </ul>
 
 </nav>
@@ -217,6 +222,43 @@ For every model you consider, create a directory:</p>
 </div>
 <p>This will create a directory <code class="docutils literal notranslate"><span class="pre">output-dir/</span></code> with the same structure as the original pipeline.
 If you do not wish the <code class="docutils literal notranslate"><span class="pre">my-models/</span></code> directory to be copied over into <code class="docutils literal notranslate"><span class="pre">output-dir/runs/latent</span></code>, use the flag <code class="docutils literal notranslate"><span class="pre">--no-copy</span></code>.</p>
+</section>
+<section id="using-the-plotting-utilities">
+<h2>Using the plotting utilities<a class="headerlink" href="#using-the-plotting-utilities" title="Permalink to this headline">#</a></h2>
+<p>By default, running the pipeline will result in a scatter plot being created for every configuration (i.e. for every pair of latent representation/clustering).
+These scatter plots will be colored by default according to (a) the cluster assignments and (b) the batch.</p>
+<p>You have the option to plot using either PCA or UMAP, and you can add plotting according to pre-scored signatures (i.e. present in the adata.obs object).</p>
+<p>The plotting utilities can be controlled through three arguments in the command line :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--dim-reduction</span></code>: the dimensionality reduction method used for plotting. The options are “pca” or “umap”, and defaults to PCA.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--sigcols</span></code>: optionally, the name of the signatures to plot in addition to batch and cluster assignment.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--disable-plots</span></code>: if you do not want plots to be generated, use this flag. This will skip plotting altogether.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The signature column names inputted with <code class="docutils literal notranslate"><span class="pre">--sigcols</span></code> must be in the adata.obs.columns.</p>
+</div>
+<p>Example usage to plot UMAP with additional scored signatures named <code class="docutils literal notranslate"><span class="pre">signature1</span></code> and <code class="docutils literal notranslate"><span class="pre">signature2</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
+                                --batch batch
+                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
+                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
+                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
+                                --output tutorial-output <span class="se">\</span>
+                                --dim-reduction umap <span class="se">\</span>
+                                --sigcols signature1 signature2
+</pre></div>
+</div>
+<p>Example usage to disable plotting utilities</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
+                                --batch batch
+                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
+                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
+                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
+                                --output tutorial-output <span class="se">\</span>
+                                --disable-plots
+</pre></div>
+</div>
 </section>
 </section>
 

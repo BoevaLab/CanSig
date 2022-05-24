@@ -294,38 +294,37 @@ This is one of many databases available online. Alternatively, one can provide a
 <p>Let’s analyse its structure:</p>
 <ul class="simple">
 <li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">summary/</span></code>: directory with a high-level summary of all the runs</dt><dd><ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">nes_heatmap.pdf</span></code>: heatmap summarizing Normalized Enrichment Score of the pathways which seem to be differentially expressed</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pathways.csv</span></code>: a table with the enrichment score, p-values, and q-values of all pathways</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">training.pdf</span></code>: plot summarizing the training curves (used to assess the convergence of dimension reduction/batch correction methods)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">training_status.json</span></code>: summary whether all the dimension reduction/batch correction methods have converged</p></li>
+<dt><code class="docutils literal notranslate"><span class="pre">integration/</span></code>: each model has a separate directory representing the latent representations inferred by the batch correction/dimension reduction method</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/integration-settings.json</span></code>: summary of the parameters used for the integration method</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/latent-representations.csv</span></code>: coordinates in the latent space inferred by the integration method</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">runs/</span></code>: directory with all generated data, from single runs</dt><dd><ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">latent/</span></code>: each model has a separate directory representing the latent representations inferred by the batch correction/dimension reduction method</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cluster/</span></code>: cluster assignments (each of the latent representations file can clustered using different algorithms)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gsea/</span></code>: Gene Set Enrichment Analysis scores for each of the clustering</p></li>
+<dt><code class="docutils literal notranslate"><span class="pre">postprocessing/</span></code>: each clustering configuration on each model has a separate directory with the postprocessing information saved</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/cluster-labels.csv</span></code>: cluster assignments for this run</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/cluster-settings.json</span></code>: summary of the parameters used for the clustering step</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/gsea-dataframe.csv</span></code>: results of GSEA run in this setting (full table, including non-significant pathways and negative enrichment score pathways)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/gsea-settings.json</span></code>: summary of the parameters used for the GSEA run</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/integration-settings.json</span></code>: summary of the parameters used for the integration method</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/latent_space_dimred.png</span></code>: by default, scatter plot of the PCA on the latent space colored according to batch and clustering (see advanced tutorial for more details)</p></li>
 </ul>
 </dd>
 </dl>
 </li>
+<li><p><code class="docutils literal notranslate"><span class="pre">heatmap.pdf</span></code>: heatmap summarizing Normalized Enrichment Score of the pathways which seem to be differentially expressed over all runs indicated</p></li>
 </ul>
-<div class="admonition-todo admonition" id="id4">
-<p class="admonition-title">Todo</p>
-<p>This is a sketch. We need to adjust it accordingly, when the implementation is ready.</p>
-</div>
 <p>While we covered the most basic usage of the pipeline, more information can be obtained by running</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline --help
 </pre></div>
 </div>
-<p>or by consulting the <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a>.</p>
+<p>or by consulting the <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a>.
+Options include running your own integration model or controlling the plotting utilities.</p>
 </section>
 <section id="interpreting-the-results">
 <h3>Interpreting the results<a class="headerlink" href="#interpreting-the-results" title="Permalink to this headline">#</a></h3>
-<div class="admonition-todo admonition" id="id5">
+<div class="admonition-todo admonition" id="id4">
 <p class="admonition-title">Todo</p>
 <p>Basic discussion how to interpret the results.</p>
 </div>
@@ -335,7 +334,7 @@ This is one of many databases available online. Alternatively, one can provide a
 <section id="tutorials">
 <h2>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p>To learn more about the pipeline (parallelization, using custom models), see <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a>.</p></li>
+<li><p>To learn more about the pipeline (parallelization, using custom models, plotting), see <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a>.</p></li>
 <li><p>For a tutorial how to interpret the results from the biological perspective, see <a class="reference internal" href="interpretation.html#interpretation"><span class="std std-ref">Advanced interpretation tutorial</span></a>.</p></li>
 <li><p>To learn about the preprocessing module (used to prepare the raw data into the HDF5 format), see the <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing tutorial</span></a>.</p></li>
 </ul>
@@ -358,6 +357,7 @@ This is one of many databases available online. Alternatively, one can provide a
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pipeline-advanced.html">Advanced pipeline usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pipeline-advanced.html#using-custom-models">Using custom models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline-advanced.html#using-the-plotting-utilities">Using the plotting utilities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="interpretation.html">Advanced interpretation tutorial</a></li>
