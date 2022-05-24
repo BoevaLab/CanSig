@@ -86,7 +86,7 @@ This is one of many databases available online. Alternatively, one can provide a
 .. todo::
    Fill in the TODO items above.
 
-The results will be available in the generated directory ``tutorial-output/`` in a few minutes to hours depending on the size of the dataset.
+The results will be available in the generated directory ``tutorial-output/`` in a few minutes.
 
 Let's analyse its structure:
 
