@@ -5,6 +5,7 @@ import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
+import matplotlib.pyplot as plt
 
 _SupportedDim = Literal["pca", "umap"]
 
@@ -29,7 +30,7 @@ class ScatterPlot:
 
         return adata
 
-    def plot_scatter(self, adata: anndata.AnnData, representations: pd.DataFrame, output_file: pathlib.Path) -> None:
+    def plot_scatter(self, adata: anndata.AnnData, representations: pd.DataFrame) -> plt.figure:
 
         print(f"Plotting {self._settings.dim_red.upper()}...")
         copy = adata.copy()
@@ -55,8 +56,8 @@ class ScatterPlot:
             sc.tl.umap(copy)
             fig = sc.pl.umap(copy, color=colors, ncols=3, return_fig=True)
 
-        # TODO(Josephine): Need to implement this, currently throws error
-        # for i in range(len(fig.axes)):
-        #    self._pretty_ax(fig.axes[i])
+        return fig
 
+    def save_fig(self, fig: plt.figure, output_file: pathlib.Path) -> None:
+         
         fig.savefig(fname=output_file)

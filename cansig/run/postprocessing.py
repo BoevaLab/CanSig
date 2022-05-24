@@ -71,7 +71,8 @@ def postprocess(
         pass
     else:
         scatter = plotting.ScatterPlot(plotting_config)
-        scatter.plot_scatter(adata=adata, representations=representations, output_file=output_dir.scatter_output)
+        fig = scatter.plot_scatter(adata=adata, representations=representations)
+        scatter.save_fig(fig, output_file=output_dir.scatter_output)
 
     # Run gene set enrichment analysis
     gex_object = gsea.gex_factory(cluster_name=cluster_col, config=gsea_config)
