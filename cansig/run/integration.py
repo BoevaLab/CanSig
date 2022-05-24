@@ -54,7 +54,11 @@ def parse_args() -> Arguments:
     return cast(Arguments, args)
 
 
-def integrate(data_path: pathlib.Path, config: models.SCVIConfig, output: pathlib.Path,) -> bool:
+def integrate(
+    data_path: pathlib.Path, 
+    config: models.SCVIConfig, 
+    output: pathlib.Path,
+    ) -> bool:
     # Save settings
     output_dir = fs.IntegrationDir(output, create=True)
     fs.save_settings(settings=config, path=output_dir.integration_settings)
@@ -71,7 +75,10 @@ def integrate(data_path: pathlib.Path, config: models.SCVIConfig, output: pathli
 
 
 def main(args: Arguments) -> None:
-    config = models.SCVIConfig(batch=args.batch, n_latent=args.latent,)
+    config = models.SCVIConfig(
+        batch=args.batch, 
+        n_latent=args.latent,
+        )
     # Set the number of training epochs.
     # It's a bit hacky, as we could do that at the initialization stage.
     config.train.max_epochs = args.max_epochs
