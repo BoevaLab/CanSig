@@ -90,18 +90,17 @@ The results will be available in the generated directory ``tutorial-output/`` in
 
 Let's analyse its structure:
 
-* ``summary/``: directory with a high-level summary of all the runs
-    * ``nes_heatmap.pdf``: heatmap summarizing Normalized Enrichment Score of the pathways which seem to be differentially expressed
-    * ``pathways.csv``: a table with the enrichment score, p-values, and q-values of all pathways
-    * ``training.pdf``: plot summarizing the training curves (used to assess the convergence of dimension reduction/batch correction methods)
-    * ``training_status.json``: summary whether all the dimension reduction/batch correction methods have converged
-* ``runs/``: directory with all generated data, from single runs
-    * ``latent/``: each model has a separate directory representing the latent representations inferred by the batch correction/dimension reduction method
-    * ``cluster/``: cluster assignments (each of the latent representations file can clustered using different algorithms)
-    * ``gsea/``: Gene Set Enrichment Analysis scores for each of the clustering
-
-.. todo::
-   This is a sketch. We need to adjust it accordingly, when the implementation is ready.
+* ``integration/``: each model has a separate directory representing the latent representations inferred by the batch correction/dimension reduction method
+   * ``{rundir}/integration-settings.json``: summary of the parameters used for the integration method
+   * ``{rundir}/latent-representations.csv``: coordinates in the latent space inferred by the integration method
+* ``postprocessing/``: each clustering configuration on each model has a separate directory with the postprocessing information saved
+   * ``{rundir}/cluster-labels.csv``: cluster assignments for this run 
+   * ``{rundir}/cluster-settings.json``: summary of the parameters used for the clustering step
+   * ``{rundir}/gsea-dataframe.csv``: results of GSEA run in this setting (full table, including non-significant pathways and negative enrichment score pathways)
+   * ``{rundir}/gsea-settings.json``: summary of the parameters used for the GSEA run
+   * ``{rundir}/integration-settings.json``: summary of the parameters used for the integration method
+   * ``{rundir}/latent_space_dimred.png``: by default, scatter plot of the PCA on the latent space colored according to batch and clustering (see advanced tutorial for more details)
+* ``heatmap.pdf``: heatmap summarizing Normalized Enrichment Score of the pathways which seem to be differentially expressed over all runs indicated
 
 
 While we covered the most basic usage of the pipeline, more information can be obtained by running
@@ -110,7 +109,8 @@ While we covered the most basic usage of the pipeline, more information can be o
 
    $ python -m cansig.run.pipeline --help
 
-or by consulting the :ref:`pipeline-advanced`.
+or by consulting the :ref:`pipeline-advanced`. 
+Options include running your own integration model or controlling the plotting utilities.
 
 
 Interpreting the results
@@ -126,7 +126,7 @@ For more advanced analysis, including drawing biological insights, see :ref:`int
 Tutorials
 ---------
 
-* To learn more about the pipeline (parallelization, using custom models), see :ref:`pipeline-advanced`.
+* To learn more about the pipeline (parallelization, using custom models, plotting), see :ref:`pipeline-advanced`.
 * For a tutorial how to interpret the results from the biological perspective, see :ref:`interpretation`.
 * To learn about the preprocessing module (used to prepare the raw data into the HDF5 format), see the :ref:`preprocessing`.
 
