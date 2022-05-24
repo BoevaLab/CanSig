@@ -98,8 +98,8 @@ def create_parser() -> argparse.ArgumentParser:
         default=None,
     )
     parser.add_argument(
-        "--noplots", 
-        action="store_true", 
+        "--noplots",
+        action="store_true",
         help="a flag used when the user does not want plotting done",
     )
     return parser
@@ -136,8 +136,8 @@ def generate_gsea_config(args) -> gsea.GeneExpressionConfig:
 def generate_plotting_config(args) -> plotting.ScatterPlotConfig:
 
     return plotting.ScatterPlotConfig(
-        dim_red=args.dimred, 
-        signature_columns=args.sigcols, 
+        dim_red=args.dimred,
+        signature_columns=args.sigcols,
         batch_column=args.batch,
     )
 
@@ -148,7 +148,7 @@ def generate_clustering_configs(args) -> List[cluster.LeidenNClusterConfig]:
     for seed in range(args.cluster_runs):
         for n_cluster in args.clusters:
             config = cluster.LeidenNClusterConfig(
-                random_state=seed, 
+                random_state=seed,
                 clusters=n_cluster,
             )
             lst.append(config)
@@ -246,9 +246,9 @@ def read_directory(directory: fs.PostprocessingDir) -> List[heatmap.HeatmapItem]
 
     return [
         heatmap.HeatmapItem(
-            vertical=n_cluster, 
-            horizontal=n_latent, 
-            value=score, 
+            vertical=n_cluster,
+            horizontal=n_latent,
+            value=score,
             panel=pathway,
         )
         for pathway, score in items
