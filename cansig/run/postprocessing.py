@@ -1,7 +1,6 @@
 from typing import Optional
 
 import argparse
-from importlib.resources import path
 import pathlib
 
 import anndata  # pytype: disable=import-error

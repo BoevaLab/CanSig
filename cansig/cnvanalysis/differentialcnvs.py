@@ -1,12 +1,8 @@
 import pathlib
-from typing import Literal, Iterable
 
 import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import numpy as np
-import pydantic  # pytype: disable=import-error
-import scanpy as sc  # pytype: disable=import-error
-import matplotlib.pyplot as plt
 import scipy
 
 from scipy.stats import mannwhitneyu, ttest_ind
@@ -35,7 +31,7 @@ def get_diff_cnv(
 
     if len(cnv_array.index.intersection(cl_labels.index)) != len(cnv_array.index):
         raise ValueError(
-            f"The index of the provided CNV array is different from the index of the cluster label assignments"
+            "The index of the provided CNV array is different from the index of the cluster label assignments"
         )
 
     full_cnv = pd.concat([cnv_array, cl_labels], axis=1)
