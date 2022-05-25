@@ -84,7 +84,7 @@ class PostprocessingDir(StructuredDir):
     INTEGRATION_SETTINGS: str = IntegrationDir.MODEL
     GSEA_SETTINGS: str = "gsea-settings.json"
     SIGNATURE_SETTINGS: str = "signatures"
-    DCNV_SETTINGS: str = "differential_cnvs.csv"
+    DCNV_FILE: str = "differential_cnvs.csv"
 
     def valid(self) -> bool:
         return (
@@ -125,7 +125,7 @@ class PostprocessingDir(StructuredDir):
 
     @property
     def dcnv_output(self) -> pathlib.Path:
-        return self.path / self.DCNV_SETTINGS
+        return self.path / self.DCNV_FILE
 
     def make_sig_dir(self):
         self.signature_output.mkdir(parents=True, exist_ok=False)

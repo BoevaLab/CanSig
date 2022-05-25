@@ -11,11 +11,11 @@ from statsmodels.stats.multitest import multipletests  # add as requirement
 
 def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFrame:
 
-    if type(data.obsm[cnv_key]) == scipy.sparse.csr.csr_matrix:
+    if scipy.sparse.issparse(data.obsm[cnv_key]):
         data.obsm[cnv_key] = data.obsm[cnv_key].toarray()
 
-        data.obsm[cnv_key][data.obsm[cnv_key] > 0] = 1
-        data.obsm[cnv_key][data.obsm[cnv_key] < 0] = -1
+    data.obsm[cnv_key][data.obsm[cnv_key] > 0] = 1
+    data.obsm[cnv_key][data.obsm[cnv_key] < 0] = -1
 
     return pd.DataFrame(data.obsm[cnv_key], index=data.obs_names)
 
@@ -34,7 +34,7 @@ def get_diff_cnv(
             "The index of the provided CNV array is different from the index of the cluster label assignments"
         )
 
-    full_cnv = pd.concat([cnv_array, cl_labels], axis=1)
+    cnv_array = cnv_array.loc[cl_labels.index]
     cl_key = cl_labels.columns[0]
 
     if diff_method == "mwu":
@@ -42,28 +42,21 @@ def get_diff_cnv(
     elif diff_method == "ttest":
         diff_function = ttest_ind
 
-    all_results = {}
-    for cluster in cl_labels[cl_key].unique():
+    all_results = defaultdict(list)
+    for cluster in sorted(cl_labels[cl_key].unique()):
         print(f"Starting differential CNV analysis for cluster {cluster}")
-        cl_cnv = full_cnv[full_cnv[cl_key] == cluster].drop(cl_key, axis=1)
-        rest_cnv = full_cnv[full_cnv[cl_key] != cluster].drop(cl_key, axis=1)
+        cl_cnv = cnv_array[cl_labels[cl_key] == cluster]
+        rest_cnv = cnv_array[cl_labels[cl_key] != cluster]
 
-        pvalues, perc_gains, perc_losses, rest_gains, rest_losses = [], [], [], [], []
         for col in cl_cnv:
 
-            pvalues.append(diff_function(cl_cnv[col].values, rest_cnv[col].values)[1])
-
-            perc_gains.append((cl_cnv[col] > 0).sum() / cl_cnv.shape[0])
-            perc_losses.append((cl_cnv[col] < 0).sum() / cl_cnv.shape[0])
-
-            rest_gains.append((rest_cnv[col] > 0).sum() / rest_cnv.shape[0])
-            rest_losses.append((rest_cnv[col] < 0).sum() / rest_cnv.shape[0])
-
-        all_results[str(cluster) + "_pvalues"] = pvalues
-        all_results[str(cluster) + "_perc_gains"] = perc_gains
-        all_results[str(cluster) + "_perc_losses"] = perc_losses
-        all_results[str(cluster) + "_rest_gains"] = rest_gains
-        all_results[str(cluster) + "_rest_losses"] = rest_losses
+            all_results[str(cluster)+"_pvalues"].append(diff_function(cl_cnv[col].values,rest_cnv[col].values)[1])
+             
+            all_results[str(cluster)+"_perc_gains"].append((cl_cnv[col]>0).sum()/cl_cnv.shape[0])
+            all_results[str(cluster)+"_perc_losses"].append((cl_cnv[col]<0).sum()/cl_cnv.shape[0])
+            
+            all_results[str(cluster)+"_rest_gains"].append((rest_cnv[col]>0).sum()/rest_cnv.shape[0])
+            all_results[str(cluster)+"_rest_losses"].append((rest_cnv[col]<0).sum()/rest_cnv.shape[0])
 
     diffCNVs = pd.DataFrame(all_results)
 
