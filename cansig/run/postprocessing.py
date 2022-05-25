@@ -23,7 +23,10 @@ def parse_args():
     parser.add_argument("--clusters", type=int, help="The number of clusters.", default=5)
 
     parser.add_argument(
-        "--output", type=pathlib.Path, help="Output directory.", default=OUTPUT_BASE_PATH / fs.get_directory_name(),
+        "--output",
+        type=pathlib.Path,
+        help="Output directory.",
+        default=OUTPUT_BASE_PATH / fs.get_directory_name(),
     )
     parser.add_argument(
         "--gene-sets",
@@ -45,7 +48,9 @@ def parse_args():
         default=None,
     )
     parser.add_argument(
-        "--disable-plots", action="store_true", help="a flag used when the user does not want plotting done",
+        "--disable-plots",
+        action="store_true",
+        help="a flag used when the user does not want plotting done",
     )
     parser.add_argument(
         "--disable-signatures",
@@ -53,7 +58,9 @@ def parse_args():
         help="a flag used when the user does not want the signatures to be saved",
     )
     parser.add_argument(
-        "--diffcnv", action="store_true", help="a flag used when the user wants to compute differential CNVs",
+        "--diffcnv",
+        action="store_true",
+        help="a flag used when the user wants to compute differential CNVs",
     )
     parser.add_argument(
         "--diffcnv-method",
