@@ -91,8 +91,7 @@ def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10):
     # we get the order in which the chromosomes are stored with infercnv
     chromosomes = list(dict(sorted(data.uns["cnv"]["chr_pos"].items(), key=lambda item: item[1])).keys())
 
-    sorted_genes = data.var.sort_values(by="chromosome").dropna().copy()
-    sorted_genes = sorted_genes[sorted_genes.cnv_called]
+    sorted_genes = data.var[data.var.cnv_called].sort_values(by="chromosome").copy()
     sorted_genes = sorted_genes[sorted_genes.chromosome.str.startswith("chr")]
 
     columns = []
