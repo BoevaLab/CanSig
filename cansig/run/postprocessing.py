@@ -23,10 +23,7 @@ def parse_args():
     parser.add_argument("--clusters", type=int, help="The number of clusters.", default=5)
 
     parser.add_argument(
-        "--output",
-        type=pathlib.Path,
-        help="Output directory.",
-        default=OUTPUT_BASE_PATH / fs.get_directory_name(),
+        "--output", type=pathlib.Path, help="Output directory.", default=OUTPUT_BASE_PATH / fs.get_directory_name(),
     )
     parser.add_argument(
         "--gene-sets",
@@ -48,9 +45,7 @@ def parse_args():
         default=None,
     )
     parser.add_argument(
-        "--disable-plots",
-        action="store_true",
-        help="a flag used when the user does not want plotting done",
+        "--disable-plots", action="store_true", help="a flag used when the user does not want plotting done",
     )
     parser.add_argument(
         "--disable-signatures",
@@ -58,15 +53,13 @@ def parse_args():
         help="a flag used when the user does not want the signatures to be saved",
     )
     parser.add_argument(
-        "--diffcnv",
-        action="store_true",
-        help="a flag used when the user wants to compute differential CNVs",
+        "--diffcnv", action="store_true", help="a flag used when the user wants to compute differential CNVs",
     )
     parser.add_argument(
         "--diffcnv-method",
         type=str,
         help="the method used to perform differential CNV analysis",
-        choices=["mwu","ttest"],
+        choices=["mwu", "ttest"],
         default="mwu",
     )
     parser.add_argument(
@@ -159,19 +152,16 @@ def postprocess(
         # the user wants to perform the CNV analysis
         if cnvarray_path is None:
             print("Computing the differential CNVs using the provided AnnData object")
-            diffCNVs = cnv.find_differential_cnv(data=adata, 
-                                    diff_method=diffcnv_method,
-                                    correction=diffcnv_correction)
+            diffCNVs = cnv.find_differential_cnv(data=adata, diff_method=diffcnv_method, correction=diffcnv_correction)
             cnv.save_diffcnv(diffCNVs=diffCNVs, output_file=output_dir.dcnv_output)
 
         else:
             print("Computing the differential CNVs using a user-provided CNV array")
-            cnvarray = pd.read_csv(cnvarray_path,index_col=0)
-            cl_labels = cnv.get_cluster_labels(data = adata)
-            diffCNVs = cnv.find_differential_cnv_precomputed(cnv_array=cnvarray, 
-                                                            cl_labels=cl_labels,
-                                                            diff_method=diffcnv_method,
-                                                            correction=diffcnv_correction)
+            cnvarray = pd.read_csv(cnvarray_path, index_col=0)
+            cl_labels = cnv.get_cluster_labels(data=adata)
+            diffCNVs = cnv.find_differential_cnv_precomputed(
+                cnv_array=cnvarray, cl_labels=cl_labels, diff_method=diffcnv_method, correction=diffcnv_correction
+            )
             cnv.save_diffcnv(diffCNVs=diffCNVs, output_file=output_dir.dcnv_output)
 
     return output_dir.valid()

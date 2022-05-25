@@ -99,9 +99,7 @@ def create_parser() -> argparse.ArgumentParser:
         default=None,
     )
     parser.add_argument(
-        "--disable-plots",
-        action="store_true",
-        help="a flag used when the user does not want plotting done",
+        "--disable-plots", action="store_true", help="a flag used when the user does not want plotting done",
     )
     parser.add_argument(
         "--disable-signatures",
@@ -109,15 +107,13 @@ def create_parser() -> argparse.ArgumentParser:
         help="a flag used when the user does not want the signatures to be saved",
     )
     parser.add_argument(
-        "--diffcnv",
-        action="store_true",
-        help="a flag used when the user wants to compute differential CNVs",
+        "--diffcnv", action="store_true", help="a flag used when the user wants to compute differential CNVs",
     )
     parser.add_argument(
         "--diffcnv-method",
         type=str,
         help="the method used to perform differential CNV analysis",
-        choices=["mwu","ttest"],
+        choices=["mwu", "ttest"],
         default="mwu",
     )
     parser.add_argument(
@@ -158,17 +154,13 @@ def generate_model_configs(args) -> List[models.SCVIConfig]:
 
 
 def generate_gsea_config(args) -> gsea.GeneExpressionConfig:
-    return gsea.GeneExpressionConfig(
-        gene_sets=args.gene_sets,
-    )
+    return gsea.GeneExpressionConfig(gene_sets=args.gene_sets,)
 
 
 def generate_plotting_config(args) -> plotting.ScatterPlotConfig:
 
     return plotting.ScatterPlotConfig(
-        dim_red=args.dim_reduction,
-        signature_columns=args.sigcols,
-        batch_column=args.batch,
+        dim_red=args.dim_reduction, signature_columns=args.sigcols, batch_column=args.batch,
     )
 
 
@@ -177,10 +169,7 @@ def generate_clustering_configs(args) -> List[cluster.LeidenNClusterConfig]:
 
     for seed in range(args.cluster_runs):
         for n_cluster in args.clusters:
-            config = cluster.LeidenNClusterConfig(
-                random_state=seed,
-                clusters=n_cluster,
-            )
+            config = cluster.LeidenNClusterConfig(random_state=seed, clusters=n_cluster,)
             lst.append(config)
     return lst
 
@@ -285,12 +274,7 @@ def read_directory(directory: fs.PostprocessingDir) -> List[heatmap.HeatmapItem]
     items = _get_pathways_and_scores(gsea_dataframe)
 
     return [
-        heatmap.HeatmapItem(
-            vertical=n_cluster,
-            horizontal=n_latent,
-            value=score,
-            panel=pathway,
-        )
+        heatmap.HeatmapItem(vertical=n_cluster, horizontal=n_latent, value=score, panel=pathway,)
         for pathway, score in items
     ]
 
