@@ -50,13 +50,13 @@ def get_diff_cnv(
 
         for col in cl_cnv:
 
-            all_results[str(cluster) + "_pvalues"].append(diff_function(cl_cnv[col].values,rest_cnv[col].values)[1])
+            all_results[str(cluster) + "_pvalues"].append(diff_function(cl_cnv[col].values, rest_cnv[col].values)[1])
              
-            all_results[str(cluster) + "_perc_gains"].append((cl_cnv[col]>0).sum()/cl_cnv.shape[0])
-            all_results[str(cluster) + "_perc_losses"].append((cl_cnv[col]<0).sum()/cl_cnv.shape[0])
+            all_results[str(cluster) + "_perc_gains"].append((cl_cnv[col]>0).sum() / cl_cnv.shape[0])
+            all_results[str(cluster) + "_perc_losses"].append((cl_cnv[col]<0).sum() / cl_cnv.shape[0])
             
-            all_results[str(cluster) + "_rest_gains"].append((rest_cnv[col]>0).sum()/rest_cnv.shape[0])
-            all_results[str(cluster) + "_rest_losses"].append((rest_cnv[col]<0).sum()/rest_cnv.shape[0])
+            all_results[str(cluster) + "_rest_gains"].append((rest_cnv[col]>0).sum() / rest_cnv.shape[0])
+            all_results[str(cluster) + "_rest_losses"].append((rest_cnv[col]<0).sum() / rest_cnv.shape[0])
 
     diffCNVs = pd.DataFrame(all_results)
 
