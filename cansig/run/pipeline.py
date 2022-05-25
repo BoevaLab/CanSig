@@ -7,7 +7,7 @@ In the end, produces summary.
 import argparse
 import logging
 import pathlib
-from typing import Iterable, List, Tuple
+from typing import Iterable, List, Tuple, Optional
 
 import matplotlib.pyplot as plt  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
@@ -108,6 +108,30 @@ def create_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="a flag used when the user does not want the signatures to be saved",
     )
+    parser.add_argument(
+        "--diffcnv",
+        action="store_true",
+        help="a flag used when the user wants to compute differential CNVs",
+    )
+    parser.add_argument(
+        "--diffcnv-method",
+        type=str,
+        help="the method used to perform differential CNV analysis",
+        choices=["mwu","ttest"],
+        default="mwu",
+    )
+    parser.add_argument(
+        "--diffcnv-correction",
+        action="store_true",
+        help="whether to perform Benjamini Hochberg FDR correction on the differential CNV results",
+    )
+    parser.add_argument(
+        "--cnvarray",
+        type=pathlib.Path,
+        help="if computing differential CNVs with user provided CNV array, the path to the .csv containing the CNV information. \
+            IMPORTANT: using this flag will automatically disable running the differential CNV on the anndata object",
+        default=None,
+    )
     return parser
 
 
@@ -188,6 +212,10 @@ def single_integration_run(
     plotting_config: plotting.ScatterPlotConfig,
     plot: bool,
     savesig: bool,
+    diffcnv: bool,
+    diffcnv_method: str,
+    diffcnv_correction: bool,
+    cnvarray_path: Optional[pathlib.Path],
 ) -> None:
     # First, we run the integration step
     integration_dir = multirun_dir.integration_directories / fs.get_directory_name()
@@ -210,6 +238,10 @@ def single_integration_run(
                 plotting_config=plotting_config,
                 plot=plot,
                 savesig=savesig,
+                diffcnv=diffcnv,
+                diffcnv_method=diffcnv_method,
+                diffcnv_correction=diffcnv_correction,
+                cnvarray_path=cnvarray_path,
             )
         except Exception as e:
             print(f"Caught exception {type(e)}: {e}.")
@@ -298,6 +330,10 @@ def main() -> None:
                 plotting_config=generate_plotting_config(args),
                 plot=(not args.disable_plots),
                 savesig=(not args.disable_signatures),
+                diffcnv=args.diffcnv,
+                diffcnv_method=args.diffcnv_method,
+                diffcnv_correction=args.diffcnv_correction,
+                cnvarray_path=args.cnvarray,
             )
         except Exception as e:
             print(f"Caught exception {type(e)}: {e}.")
