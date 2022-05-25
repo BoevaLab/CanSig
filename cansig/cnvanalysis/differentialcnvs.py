@@ -4,6 +4,7 @@ import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import numpy as np
 import scipy
+from collections import defaultdict
 
 from scipy.stats import mannwhitneyu, ttest_ind
 from statsmodels.stats.multitest import multipletests  # add as requirement
