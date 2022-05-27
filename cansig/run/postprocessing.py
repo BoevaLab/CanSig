@@ -1,3 +1,5 @@
+from typing import Optional, Literal  # pytype: disable=not-supported-yet
+
 import argparse
 import pathlib
 
@@ -8,6 +10,9 @@ import cansig.cluster.api as cluster
 import cansig.filesys as fs
 import cansig.gsea as gsea
 import cansig.plotting.plotting as plotting
+import cansig.cnvanalysis.differentialcnvs as cnv
+
+TestType = Literal["mwu", "ttest"]
 
 OUTPUT_BASE_PATH = pathlib.Path("outputs/postprocessing")
 
@@ -53,6 +58,30 @@ def parse_args():
         action="store_true",
         help="a flag used when the user does not want the signatures to be saved",
     )
+    parser.add_argument(
+        "--diffcnv",
+        action="store_true",
+        help="a flag used when the user wants to compute differential CNVs",
+    )
+    parser.add_argument(
+        "--diffcnv-method",
+        type=str,
+        help="the method used to perform differential CNV analysis",
+        choices=["mwu", "ttest"],
+        default="mwu",
+    )
+    parser.add_argument(
+        "--diffcnv-correction",
+        action="store_true",
+        help="whether to perform Benjamini Hochberg FDR correction on the differential CNV results",
+    )
+    parser.add_argument(
+        "--cnvarray",
+        type=pathlib.Path,
+        help="if computing differential CNVs with user provided CNV array, the path to the .csv containing the CNV information. \
+            IMPORTANT: using this flag will automatically disable running the differential CNV on the anndata object",
+        default=None,
+    )
 
     args = parser.parse_args()
     return args
@@ -67,6 +96,10 @@ def postprocess(
     plotting_config: plotting.ScatterPlotConfig,
     plot: bool,
     savesig: bool,
+    diffcnv: bool,
+    diffcnv_method: TestType,
+    diffcnv_correction: bool,
+    cnvarray_path: Optional[pathlib.Path],
 ) -> bool:
     # Create the output directory
     output_dir = fs.PostprocessingDir(path=output_dir, create=True)
@@ -103,9 +136,6 @@ def postprocess(
         scatter = plotting.ScatterPlot(plotting_config)
         fig = scatter.plot_scatter(adata=adata, representations=representations)
         scatter.save_fig(fig, output_file=output_dir.scatter_output)
-    else:
-        # the user does not want plots
-        pass
 
     # Run gene set enrichment analysis
     gex_object = gsea.gex_factory(cluster_name=cluster_col, config=gsea_config)
@@ -115,12 +145,26 @@ def postprocess(
     if savesig:
         output_dir.make_sig_dir()
         gsea.save_signatures(diff_genes=gene_ranks, res_dir=output_dir.signature_output)
-    else:
-        # the user does not want to save the signatures
-        pass
 
     results = gex_object.perform_gsea(gene_ranks)
     results.to_csv(output_dir.gsea_output)
+
+    # *** Differential CNV analysis ***
+    if diffcnv:
+        # the user wants to perform the CNV analysis
+        if cnvarray_path is None:
+            print("Computing the differential CNVs using the provided AnnData object")
+            diffCNVs = cnv.find_differential_cnv(data=adata, diff_method=diffcnv_method, correction=diffcnv_correction)
+            cnv.save_diffcnv(diffCNVs=diffCNVs, output_file=output_dir.dcnv_output)
+
+        else:
+            print("Computing the differential CNVs using a user-provided CNV array")
+            cnvarray = pd.read_csv(cnvarray_path, index_col=0)
+            cl_labels = cnv.get_cluster_labels(data=adata)
+            diffCNVs = cnv.find_differential_cnv_precomputed(
+                cnv_array=cnvarray, cl_labels=cl_labels, diff_method=diffcnv_method, correction=diffcnv_correction
+            )
+            cnv.save_diffcnv(diffCNVs=diffCNVs, output_file=output_dir.dcnv_output)
 
     return output_dir.valid()
 
@@ -137,6 +181,10 @@ def main(args):
         ),
         plot=(not args.disable_plots),
         savesig=(not args.disable_signatures),
+        diffcnv=args.diffcnv,
+        diffcnv_method=args.diffcnv_method,
+        diffcnv_correction=args.diffcnv_correction,
+        cnvarray_path=args.cnvarray,
     )
 
 
