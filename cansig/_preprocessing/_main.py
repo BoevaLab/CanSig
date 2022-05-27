@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Dict
 
 import anndata as ad  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
@@ -10,7 +10,7 @@ from cansig._preprocessing._quality_control import quality_control
 from cansig._preprocessing._scoring import signature_scoring, update_scoring_dict, update_cell_cycle_genes
 from cansig._preprocessing._subclonal import subclonal_cluster
 from cansig._preprocessing._utils import check_min_malignant_cells, check_min_reference_cells, normalize, finalize_adata
-from ..types import Scoring_dict, Pathlike
+from ..types import Pathlike
 
 
 def preprocessing(
@@ -30,7 +30,7 @@ def preprocessing(
     window_size: int = 101,
     step: int = 10,
     cnv_key: str = "cnv",
-    scoring_dict: Scoring_dict = None,
+    scoring_dict: Union[Dict[str, list], None] = None,
     g2m_genes: List[str] = None,
     s_genes: List[str] = None,
     figure_dir=None,
