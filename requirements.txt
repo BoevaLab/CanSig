@@ -2,6 +2,7 @@
 # setup.cfg
 anndata
 gseapy
+infercnvpy
 leidenalg
 matplotlib
 numpy<=1.21
