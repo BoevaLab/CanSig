@@ -1,4 +1,4 @@
-from typing import List, Union, Dict, Optional
+from typing import List, Union, Dict, Optional, Tuple
 
 import anndata as ad  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
@@ -17,22 +17,22 @@ def preprocessing(
     input_adatas: List[Union[ad.AnnData, Pathlike]],
     malignant_celltypes: List[str],
     undetermined_celltypes: List[str],
-    reference_groups: List[str],
+    reference_groups: List[Tuple[str]],
     celltype_column: str,
     batch_id_column: str,
+    gene_order: Union[pd.DataFrame, Pathlike],
     min_counts: int = 1_500,
     max_counts: int = 50_000,
     min_genes: int = 700,
     threshold_pct_mt_counts: float = 30.0,
     min_reference_groups: int = 2,
     min_reference_cells: int = 20,
-    gene_order: Union[pd.DataFrame, Pathlike] = None,
     window_size: int = 101,
     step: int = 10,
     cnv_key: str = "cnv",
     scoring_dict: Optional[Dict[str, list]] = None,
-    g2m_genes: List[str] = None,
-    s_genes: List[str] = None,
+    g2m_genes: Optional[List[str]] = None,
+    s_genes: Optional[List[str]] = None,
     figure_dir: Optional[Pathlike] = None,
     copy: bool = False,
     min_malignant_cells: int = 50,

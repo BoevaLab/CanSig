@@ -1,6 +1,6 @@
 import os
 import warnings
-from typing import List, Iterable
+from typing import List, Iterable, Optional
 
 import anndata as ad  # pytype: disable=import-error
 
@@ -40,9 +40,9 @@ class DataRecorder:
     def _sanitize_adata(
         self,
         adata: ad.AnnData,
-        obs_to_drop: List[str] = None,
-        obsm_to_drop: List[str] = None,
-        var_to_drop: List[str] = None,
+        obs_to_drop: Optional[List[str]] = None,
+        obsm_to_drop: Optional[List[str]] = None,
+        var_to_drop: Optional[List[str]] = None,
     ) -> None:
         if obs_to_drop is None:
             obs_to_drop = _DEFAULT_OBS_TO_DROP
@@ -131,7 +131,7 @@ def load_adata_from_file(path, batch_id_column):
     return adata
 
 
-def load_adatas(adatas, batch_id_column: str = None):
+def load_adatas(adatas, batch_id_column: str):
     if not all(isinstance(adata, ad.AnnData) for adata in adatas):
         adatas = [load_adata_from_file(path, batch_id_column) for path in adatas]
     gene_list = validate_adatas(adatas)
