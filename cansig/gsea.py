@@ -207,4 +207,4 @@ def save_signatures(diff_genes: Dict[str, pd.DataFrame], res_dir: pathlib.Path) 
     analysis
     """
     for cluster in diff_genes:
-        diff_genes[cluster].to_csv(res_dir / f"signature-cl{cluster}.csv")
+        diff_genes[cluster].to_csv(res_dir / f"signature_cl{cluster}.csv")
