@@ -1,6 +1,6 @@
 import logging
 import warnings
-from typing import Dict, List
+from typing import Dict, List, Union
 
 import anndata as ad  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
@@ -10,7 +10,6 @@ from scanpy.tools._score_genes import _sparse_nanmean  # pytype: disable=import-
 from scipy.sparse import issparse  # pytype: disable=import-error
 
 from cansig._preprocessing._CONSTANTS import _CONSTANTS, _CELL_STATUS
-from cansig.types import Scoring_dict
 
 logger = logging.Logger(__name__)
 
@@ -119,7 +118,7 @@ _DEFAULT_G2M_GENES = [
 ]
 
 
-def update_scoring_dict(scoring_dict: Scoring_dict, gene_list: List[str]):
+def update_scoring_dict(scoring_dict: Union[Dict[str, list], None], gene_list: List[str]):
     if scoring_dict is None:
         return None
 
@@ -163,7 +162,7 @@ def update_cell_cycle_genes(g2m_genes, s_genes, gene_list):
 
 
 def signature_scoring(
-    adata: ad.AnnData, g2m_genes: List[str], s_genes: List[str], scoring_dict: Dict[str, list] = None
+    adata: ad.AnnData, g2m_genes: List[str], s_genes: List[str], scoring_dict: Union[Dict[str, list], None] = None
 ):
     """
     Scores signatures from the scoring_dict and the cell cylce.

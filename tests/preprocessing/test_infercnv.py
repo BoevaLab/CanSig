@@ -1,10 +1,9 @@
-import anndata as ad
-import numpy as np
-import pandas as pd
-import pytest
+import anndata as ad  # pytype: disable=import-error
+import numpy as np  # pytype: disable=import-error
+import pandas as pd  # pytype: disable=import-error
+import pytest  # pytype: disable=import-error
 
-from cansig._preprocessing._infercnv import infercnv, get_gene_order, \
-    _validate_gene_order
+from cansig._preprocessing._infercnv import infercnv, get_gene_order, _validate_gene_order
 from cansig._preprocessing._utils import normalize
 
 
@@ -38,8 +37,8 @@ class TestInferCNV:
         assert "X_cnv" in adata.obsm_keys()
         assert adata.obsm["X_cnv"].shape == (100, 40)
         assert "cnv" in adata.uns_keys()
-        assert 'chr_pos' in adata.uns["cnv"]
-        assert adata.uns["cnv"]["chr_pos"] == {'chr1': 0, 'chr2': 20}
+        assert "chr_pos" in adata.uns["cnv"]
+        assert adata.uns["cnv"]["chr_pos"] == {"chr1": 0, "chr2": 20}
 
     def test_infercnv_key(self, adata, gene_annotation):
         infercnv(adata, gene_annotation, reference_cat=["reference"], cnv_key="test")
@@ -75,8 +74,7 @@ class TestGetGeneAnnotation:
         with pytest.raises(ValueError):
             _validate_gene_order(gene_annotation, gene_list)
 
-    @pytest.mark.parametrize("drop_column", (["chromosome"], ["chromosome", "end"],
-                                             ["start", "end"]))
+    @pytest.mark.parametrize("drop_column", (["chromosome"], ["chromosome", "end"], ["start", "end"]))
     def test_validate_columns(self, gene_annotation, drop_column, gene_list):
         gene_annotation = gene_annotation.drop(drop_column, axis=1)
         with pytest.raises(KeyError):

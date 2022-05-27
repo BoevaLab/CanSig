@@ -1,15 +1,14 @@
 """Convenient generic type definitions (used in multiple places)."""
 import pathlib
-from typing import cast, NewType, Sequence, Union, Dict
+from typing import cast, NewType, Sequence, Union
 
-import numpy as np
-import pandas as pd
+import numpy as np  # pytype: disable=import-error
+import pandas as pd  # pytype: disable=import-error
 
 Pathlike = Union[pathlib.Path, str]  # Represents input paths
 
 # Represents latent codes. Index should identify cells.
 Latents = NewType("Latents", pd.DataFrame)
-Scoring_dict = NewType("Scoring_dict", Dict[str, list])
 
 
 def create_latents(latent_codes: np.ndarray, index: Sequence) -> Latents:
