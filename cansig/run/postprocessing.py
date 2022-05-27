@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Literal  # pytype: disable=not-supported-yet
 
 import argparse
 import pathlib
@@ -11,6 +11,8 @@ import cansig.filesys as fs
 import cansig.gsea as gsea
 import cansig.plotting.plotting as plotting
 import cansig.cnvanalysis.differentialcnvs as cnv
+
+TestType = Literal["mwu", "ttest"]
 
 OUTPUT_BASE_PATH = pathlib.Path("outputs/postprocessing")
 
@@ -95,7 +97,7 @@ def postprocess(
     plot: bool,
     savesig: bool,
     diffcnv: bool,
-    diffcnv_method: str,
+    diffcnv_method: TestType,
     diffcnv_correction: bool,
     cnvarray_path: Optional[pathlib.Path],
 ) -> bool:
