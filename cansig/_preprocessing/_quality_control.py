@@ -1,4 +1,5 @@
 import logging
+from typing import Optional
 
 import anndata as ad  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
@@ -14,7 +15,7 @@ def quality_control(
     max_counts: int = 50000,
     min_genes: int = 700,
     threshold_mt: float = 35.0,
-    figure_dir: Pathlike = None,
+    figure_dir: Optional[Pathlike] = None,
 ) -> ad.AnnData:
     """
     Removes low quality cells using standard quality control procedure.

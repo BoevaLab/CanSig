@@ -1,4 +1,4 @@
-from typing import List, Union, Dict
+from typing import List, Union, Dict, Optional
 
 import anndata as ad  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
@@ -30,10 +30,10 @@ def preprocessing(
     window_size: int = 101,
     step: int = 10,
     cnv_key: str = "cnv",
-    scoring_dict: Union[Dict[str, list], None] = None,
+    scoring_dict: Optional[Dict[str, list]] = None,
     g2m_genes: List[str] = None,
     s_genes: List[str] = None,
-    figure_dir=None,
+    figure_dir: Optional[Pathlike] = None,
     copy: bool = False,
     min_malignant_cells: int = 50,
 ) -> ad.AnnData:
