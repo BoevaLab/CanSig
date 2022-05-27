@@ -1,13 +1,19 @@
 import pathlib
+import logging
+from collections import defaultdict
+from typing import Literal  # pytype: disable=not-supported-yet
 
 import anndata  # pytype: disable=import-error
+import numpy as np  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
-import numpy as np
-import scipy
-from collections import defaultdict
+import scipy  # pytype: disable=import-error
 
-from scipy.stats import mannwhitneyu, ttest_ind
-from statsmodels.stats.multitest import multipletests  # add as requirement
+from scipy.stats import mannwhitneyu, ttest_ind  # pytype: disable=import-error
+from statsmodels.stats.multitest import multipletests  # pytype: disable=import-error
+
+TestType = Literal["mwu", "ttest"]
+
+_LOGGER = logging.getLogger(__name__)
 
 
 def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFrame:
@@ -27,7 +33,7 @@ def get_cluster_labels(data: anndata.AnnData, cluster_key: str = "new-cluster-co
 
 
 def get_diff_cnv(
-    cnv_array: pd.DataFrame, cl_labels: pd.DataFrame, diff_method: str = "mwu", correction: bool = False
+    cnv_array: pd.DataFrame, cl_labels: pd.DataFrame, diff_method: TestType, correction: bool = False
 ) -> pd.DataFrame:
 
     if len(cnv_array.index.intersection(cl_labels.index)) != len(cnv_array.index):
@@ -45,7 +51,7 @@ def get_diff_cnv(
 
     all_results = defaultdict(list)
     for cluster in sorted(cl_labels[cl_key].unique()):
-        print(f"Starting differential CNV analysis for cluster {cluster}")
+        _LOGGER.info(f"Starting differential CNV analysis for cluster {cluster}")
         cl_cnv = cnv_array[cl_labels[cl_key] == cluster]
         rest_cnv = cnv_array[cl_labels[cl_key] != cluster]
 
@@ -74,6 +80,9 @@ def get_diff_cnv(
 
 def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10):
 
+    # This function can only be used on an anndata object preprocessed using our module
+    # these checks are to ensure the organization of the adata object
+    # fits the one created with our preprocessing module
     if (
         ("chromosome" not in data.var.columns)
         or ("cnv_called" not in data.var.columns)
@@ -91,17 +100,35 @@ def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10):
     # we get the order in which the chromosomes are stored with infercnv
     chromosomes = list(dict(sorted(data.uns["cnv"]["chr_pos"].items(), key=lambda item: item[1])).keys())
 
+    # In .var, cnv_called will contain True if the gene was used for CNV calling
+    # in infercnv, false otherwise. To map, we thus only select the genes
+    # used in infercnv
     sorted_genes = data.var[data.var.cnv_called].sort_values(by="chromosome").copy()
+    # check we do not have weird behavior with chromosomes not mapped correctly
     sorted_genes = sorted_genes[sorted_genes.chromosome.str.startswith("chr")]
 
     columns = []
     for i, chrom in enumerate(chromosomes):
+        # first subset to the list of genes on one chromosome then order by
+        # position on the chromosome
         chrom_df = sorted_genes[sorted_genes.chromosome == chrom].sort_values(by="start")
 
+        # infercnv works by inferring a CNV on a region of window_size
+        # mapping will contain the boundaries (start, end) for every region inferred
+        # ie mapping[n] will contain the start position on the chromosome
+        # of the region n in the cnvarray object, and mapping[n+1]
+        # will contain the end position on the chromosome of the
+        # region n in the cnvarray object
         mapping = np.arange(0, chrom_df.shape[0], window_size)
+        # the chromosome size is not necessarily a multiple of
+        # the window_size, this adds the last genes belonging to the last
+        # inferred region of infercnv
         if mapping[-1] != chrom_df.shape[0]:
             mapping = np.append(mapping, chrom_df.shape[0])
 
+        # now that we have the mapping, for each region belonging to
+        # the cnvarray object, we know which genes were used to infer this region
+        # which we add as index preceded by the chromosome
         list_genes = []
         for i in range(len(mapping) - 1):
             genes = list(chrom_df.iloc[mapping[i] : mapping[i + 1]].index)
@@ -112,7 +139,7 @@ def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10):
     return columns
 
 
-def find_differential_cnv(data: anndata.AnnData, diff_method: str = "mwu", correction: bool = True) -> pd.DataFrame:
+def find_differential_cnv(data: anndata.AnnData, diff_method: TestType, correction: bool = True) -> pd.DataFrame:
 
     cnv_array = discretize_cnv(data=data, cnv_key="X_cnv")
 
@@ -127,7 +154,7 @@ def find_differential_cnv(data: anndata.AnnData, diff_method: str = "mwu", corre
 
 
 def find_differential_cnv_precomputed(
-    cnv_array: pd.DataFrame, cl_labels: pd.DataFrame, diff_method: str = "mwu", correction: bool = True
+    cnv_array: pd.DataFrame, cl_labels: pd.DataFrame, diff_method: TestType, correction: bool = True
 ) -> pd.DataFrame:
 
     diffCNVs = get_diff_cnv(cnv_array=cnv_array, cl_labels=cl_labels, diff_method=diff_method, correction=correction)

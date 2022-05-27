@@ -134,9 +134,6 @@ def postprocess(
         scatter = plotting.ScatterPlot(plotting_config)
         fig = scatter.plot_scatter(adata=adata, representations=representations)
         scatter.save_fig(fig, output_file=output_dir.scatter_output)
-    else:
-        # the user does not want plots
-        pass
 
     # Run gene set enrichment analysis
     gex_object = gsea.gex_factory(cluster_name=cluster_col, config=gsea_config)
@@ -146,9 +143,6 @@ def postprocess(
     if savesig:
         output_dir.make_sig_dir()
         gsea.save_signatures(diff_genes=gene_ranks, res_dir=output_dir.signature_output)
-    else:
-        # the user does not want to save the signatures
-        pass
 
     results = gex_object.perform_gsea(gene_ranks)
     results.to_csv(output_dir.gsea_output)

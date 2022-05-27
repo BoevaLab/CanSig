@@ -7,7 +7,7 @@ In the end, produces summary.
 import argparse
 import logging
 import pathlib
-from typing import Iterable, List, Tuple, Optional
+from typing import Iterable, List, Tuple, Optional, Literal  # pytype: disable=not-supported-yet
 
 import matplotlib.pyplot as plt  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
@@ -23,6 +23,7 @@ import cansig.models.scvi as _scvi
 import cansig.run.integration as integration
 import cansig.run.postprocessing as postprocessing
 
+TestType = Literal["mwu", "ttest"]
 
 logger = logging.getLogger(__name__)
 
@@ -213,7 +214,7 @@ def single_integration_run(
     plot: bool,
     savesig: bool,
     diffcnv: bool,
-    diffcnv_method: str,
+    diffcnv_method: TestType,
     diffcnv_correction: bool,
     cnvarray_path: Optional[pathlib.Path],
 ) -> None:

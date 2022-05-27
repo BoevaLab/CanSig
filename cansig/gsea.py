@@ -107,10 +107,11 @@ class GeneExpressionAnalysis:
                     [
                         ranked_genes["scores"][label][: self.n_diff_genes],
                         ranked_genes["pvals"][label][: self.n_diff_genes],
+                        ranked_genes["pvals_adj"][label][: self.n_diff_genes],
                     ]
                 ).T,
                 index=ranked_genes["names"][label][: self.n_diff_genes],
-                columns=["zscores", "pvals"],
+                columns=["zscores", "pvals", "qvals"],
             )
 
         return gene_order
