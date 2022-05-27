@@ -1,8 +1,11 @@
 """Script for data downloading."""
 import argparse
-
+import pathlib
+import shutil
+import tempfile
 from typing import Optional
 
+import cansig.tutorial as tutorial
 
 # Download choices
 PIPELINE = "PIPELINE"
@@ -35,7 +38,6 @@ def download_hdf5(destination: Optional[str]) -> str:
     Args:
         destination: where the dataset should be downloaded
 
-
     Returns:
         the path to which the dataset was downloaded
         (if `destination` is not None, it should be `destination`).
@@ -43,8 +45,26 @@ def download_hdf5(destination: Optional[str]) -> str:
     Note:
         The purpose of this function is to have a side effect.
     """
-    # TODO(Pawel): Missing function.
-    return "TODO"
+    destination = destination or "data/tutorial"
+    destination = pathlib.Path(destination)
+    destination.mkdir(parents=True, exist_ok=True)
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        zip_path = pathlib.Path(tmpdir) / "data.zip"
+
+        print("Downloading the ZIP version of the dataset...")
+
+        tutorial.download_file_to_path(
+            source_url="https://polybox.ethz.ch/index.php/s/NdjJLiNGcEwiswd/download",
+            md5sum="7ea79c0e799b2b560c92cb2062f8d257",
+            path=zip_path,
+            verbose=True,
+        )
+
+        print("Downloaded the ZIP version. Unpacking...")
+        shutil.unpack_archive(zip_path, extract_dir=destination)
+
+    return str(destination)
 
 
 def download_preprocessing(destination: Optional[str]) -> str:
