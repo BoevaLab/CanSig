@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Iterable, List, Optional, Union
+from typing import Iterable, List, Optional, Tuple, Union
 
 import matplotlib.pyplot as plt  # pytype: disable=import-error
 import numpy as np
@@ -49,6 +49,21 @@ def _get_n_runs(items: Iterable[HeatmapItem]) -> int:
     return max(counter.values())
 
 
+def _calculate_figsize(
+    settings: HeatmapSettings, n_runs: int, n_vertical: int, n_horizontal: int, n_panel: int
+) -> Tuple[float, float]:
+    # The tiles need the rectangle like base_width x height
+    base_width = settings.tile_size * n_runs * n_vertical
+    height = settings.tile_size * n_panel * n_horizontal
+    # We will add some offset to the width to accommodate for panel names.
+    # Note that this is heuristic, we haven't calibrated this properly
+    # (plus, the offset should depend on the maximal length of the panel name)
+    offset_width = (settings.font_size / 8) * settings.tile_size
+
+    width = base_width + offset_width
+    return (width, height)
+
+
 def plot_heatmap(items: Iterable[HeatmapItem], settings: HeatmapSettings) -> plt.Figure:
     items = list(items)
 
@@ -65,7 +80,9 @@ def plot_heatmap(items: Iterable[HeatmapItem], settings: HeatmapSettings) -> plt
     #  vertical = clusters
     #  horizontal = latent dimensionality
 
-    figsize = (settings.tile_size * n_runs * n_vertical, settings.tile_size * n_panel * n_horizontal)
+    figsize = _calculate_figsize(
+        settings=settings, n_runs=n_runs, n_vertical=n_vertical, n_horizontal=n_horizontal, n_panel=n_panel
+    )
     fig, axs = plt.subplots(n_panel, 1, figsize=figsize)
 
     for plot_idx, (panel, ax) in enumerate(zip(panels, axs.ravel())):

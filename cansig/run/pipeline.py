@@ -272,6 +272,12 @@ def _get_pathways_and_scores(df: pd.DataFrame) -> List[Tuple[str, float]]:
     return list(new_df["nes"].items())
 
 
+def _format_pathway_name(pathway: str) -> str:
+    """Function replacing spaces and _ with newlines, so that long pathway names span multiple lines,
+    instead of being a very long one-line string."""
+    return pathway.replace(" ", "\n").replace("_", "\n")
+
+
 def read_directory(directory: fs.PostprocessingDir) -> List[heatmap.HeatmapItem]:
     # TODO(Pawel): This looks very hacky.
     assert directory.valid()
@@ -290,7 +296,7 @@ def read_directory(directory: fs.PostprocessingDir) -> List[heatmap.HeatmapItem]
             vertical=n_cluster,
             horizontal=n_latent,
             value=score,
-            panel=pathway,
+            panel=_format_pathway_name(pathway),
         )
         for pathway, score in items
     ]
