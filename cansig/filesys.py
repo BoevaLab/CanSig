@@ -83,6 +83,7 @@ class PostprocessingDir(StructuredDir):
     CLUSTER_SETTINGS: str = "cluster-settings.json"
     INTEGRATION_SETTINGS: str = IntegrationDir.MODEL
     GSEA_SETTINGS: str = "gsea-settings.json"
+    SIGNATURE_SETTINGS: str = "signatures"
 
     def valid(self) -> bool:
         return (
@@ -116,6 +117,13 @@ class PostprocessingDir(StructuredDir):
     @property
     def scatter_output(self) -> pathlib.Path:
         return self.path / "latent_space_dimred.png"
+
+    @property
+    def signature_output(self) -> pathlib.Path:
+        return self.path / self.SIGNATURE_SETTINGS
+
+    def make_sig_dir(self):
+        self.signature_output.mkdir(parents=True, exist_ok=False)
 
 
 def get_directory_name() -> str:

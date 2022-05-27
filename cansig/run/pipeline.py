@@ -103,6 +103,11 @@ def create_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="a flag used when the user does not want plotting done",
     )
+    parser.add_argument(
+        "--disable-signatures",
+        action="store_true",
+        help="a flag used when the user does not want the signatures to be saved",
+    )
     return parser
 
 
@@ -182,6 +187,7 @@ def single_integration_run(
     multirun_dir: MultirunDirectory,
     plotting_config: plotting.ScatterPlotConfig,
     plot: bool,
+    savesig: bool,
 ) -> None:
     # First, we run the integration step
     integration_dir = multirun_dir.integration_directories / fs.get_directory_name()
@@ -203,6 +209,7 @@ def single_integration_run(
                 output_dir=multirun_dir.postprocessing_directories / fs.get_directory_name(),
                 plotting_config=plotting_config,
                 plot=plot,
+                savesig=savesig,
             )
         except Exception as e:
             print(f"Caught exception {type(e)}: {e}.")
@@ -290,6 +297,7 @@ def main() -> None:
                 multirun_dir=multirun_dir,
                 plotting_config=generate_plotting_config(args),
                 plot=(not args.disable_plots),
+                savesig=(not args.disable_signatures),
             )
         except Exception as e:
             print(f"Caught exception {type(e)}: {e}.")
