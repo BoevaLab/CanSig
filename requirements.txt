@@ -13,6 +13,7 @@ seaborn
 scikit-learn
 scipy
 scvi-tools
+statsmodels
 # requirements-dev.txt
 black
 flake8
