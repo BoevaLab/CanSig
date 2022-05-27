@@ -62,14 +62,13 @@ class TestAnnotateAdata:
 
 
 class TestLoadAdata:
-    @pytest.mark.parametrize("subset", (True, False))
-    def test_load_from_file(self, adatas, tmpdir, subset):
+    def test_load_from_file(self, adatas, tmpdir):
         paths = []
         for i, adata in enumerate(adatas):
             path = f"{tmpdir}/sample_{i}.h5ad"
             adata.write_h5ad(path)
             paths.append(path)
-        bdatas, _ = load_adatas(paths)
+        bdatas, _ = load_adatas(paths, "sample_id")
         assert len(list(bdatas)) == len(adatas)
         assert all([np.array_equal(adata.X, bdata.X) for adata, bdata in zip(bdatas, adatas)])
 
