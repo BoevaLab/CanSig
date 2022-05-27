@@ -76,3 +76,17 @@ html_theme = "pydata_sphinx_theme"
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
+
+# Options for the theme, as specified there:
+# https://pydata-sphinx-theme.readthedocs.io/en/stable/user_guide/configuring.html
+
+html_theme_options = {
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/BoevaLab/CanSig",
+            "icon": "fab fa-github-square",
+            "type": "fontawesome",
+        }
+    ]
+}

@@ -1,4 +1,5 @@
-import pytest
+import pydantic  # pytype: disable=import-error
+import pytest  # pytype: disable=import-error
 
 import cansig.filesys as fs
 
@@ -28,3 +29,17 @@ def test_get_file__many(tmp_path, n_files: int) -> None:
         (tmp_path / f"{i}.txt").touch()
     with pytest.raises(FileExistsError):
         fs.get_file(tmp_path, ".txt")
+
+
+def test_saving_and_loading(tmp_path) -> None:
+    class Grocery(pydantic.BaseModel):
+        apples: int
+        milk: float
+
+    path = tmp_path / "target"
+    # Save settings
+    settings = Grocery(apples=3, milk=2.0)
+    fs.save_settings(settings=settings, path=path)
+    # Read them and compare
+    settings_ = fs.read_settings(factory=Grocery, path=path)
+    assert settings_ == settings
