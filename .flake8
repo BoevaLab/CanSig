@@ -1,12 +1,13 @@
 [flake8]
 max-line-length = 120
-ignore = E712, W503, E203
+ignore = E712, W503, E203, C901
 exclude =
     .git,
     __pycache__,
     docs/source/conf.py,
     old,
     build,
-    dist
+    dist,
+
 max-complexity = 8
 

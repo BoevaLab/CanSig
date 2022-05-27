@@ -2,13 +2,12 @@ import os
 import warnings
 from typing import List, Iterable
 
-import anndata as ad
+import anndata as ad  # pytype: disable=import-error
 
 from cansig._preprocessing._CONSTANTS import _CELL_STATUS, _CONSTANTS, _REFERENCE
 from cansig._preprocessing._utils import DisableLogger
 
-_DEFAULT_VARS_TO_DROP = ("n_cells_by_counts", "mean_counts", "pct_dropout_by_counts",
-                         "total_counts", "mean", "std")
+_DEFAULT_VARS_TO_DROP = ("n_cells_by_counts", "mean_counts", "pct_dropout_by_counts", "total_counts", "mean", "std")
 
 _DEFAULT_OBS_TO_DROP = ("total_counts", "n_genes_by_counts")
 
@@ -27,22 +26,24 @@ class DataRecorder:
         self.data.append(adata)
 
     def concatenate(self) -> ad.AnnData:
-        adata = ad.concat(self.data, keys=self.batch_ids, merge="first",
-                          uns_merge="first", index_unique="-")
+        adata = ad.concat(self.data, keys=self.batch_ids, merge="first", uns_merge="first", index_unique="-")
 
         # Pandas throws a FutureWarning here. I think it is reasonable to assume that
         # Anndata will fix this in time. Also, it logs which columns are stores as
         # categorical.
         with warnings.catch_warnings():
-            warnings.simplefilter('ignore', FutureWarning)
+            warnings.simplefilter("ignore", FutureWarning)
             with DisableLogger():
                 adata.strings_to_categoricals()
         return adata
 
-    def _sanitize_adata(self, adata: ad.AnnData,
-                        obs_to_drop: List[str] = None,
-                        obsm_to_drop: List[str] = None,
-                        var_to_drop: List[str] = None) -> None:
+    def _sanitize_adata(
+        self,
+        adata: ad.AnnData,
+        obs_to_drop: List[str] = None,
+        obsm_to_drop: List[str] = None,
+        var_to_drop: List[str] = None,
+    ) -> None:
         if obs_to_drop is None:
             obs_to_drop = _DEFAULT_OBS_TO_DROP
         if obsm_to_drop is None:
@@ -61,45 +62,47 @@ class DataRecorder:
                 adata.var.drop(var, axis=1, inplace=True)
 
 
-def annotate_adata(adata: ad.AnnData,
-                   celltype_column: str,
-                   malignant_celltypes: List[str],
-                   undecided_celltypes: List[str]):
-    """
-
-    """
+def annotate_adata(
+    adata: ad.AnnData, celltype_column: str, malignant_celltypes: List[str], undecided_celltypes: List[str]
+):
+    """ """
 
     adata.obs[_CONSTANTS.MALIGNANT_ANNOTATION] = adata.obs[celltype_column].apply(
-        lambda cell_type: _annotate_malignant(cell_type, malignant_celltypes,
-                                              undecided_celltypes)
+        lambda cell_type: _annotate_malignant(cell_type, malignant_celltypes, undecided_celltypes)
     )
 
 
-def get_reference_groups(adata: ad.AnnData, celltype_column: str, reference_groups,
-                         min_reference_cells: int = 20,
-                         min_reference_groups: int = 2):
+def get_reference_groups(
+    adata: ad.AnnData,
+    celltype_column: str,
+    reference_groups,
+    min_reference_cells: int = 20,
+    min_reference_groups: int = 2,
+):
     adata.obs[_CONSTANTS.REFERENCE_KEY] = adata.obs[celltype_column].apply(
-        lambda cell_type: _annotate_reference(cell_type, reference_groups))
+        lambda cell_type: _annotate_reference(cell_type, reference_groups)
+    )
 
     n_cell_per_ref_group = adata.obs[_CONSTANTS.REFERENCE_KEY].value_counts()
     valid_ref_groups = n_cell_per_ref_group.index[
-        (n_cell_per_ref_group >= min_reference_cells) &
-        n_cell_per_ref_group.index.str.startswith(_REFERENCE.REFERENCE_PREFIX)].tolist()
+        (n_cell_per_ref_group >= min_reference_cells)
+        & n_cell_per_ref_group.index.str.startswith(_REFERENCE.REFERENCE_PREFIX)
+    ].tolist()
 
     if len(valid_ref_groups) < min_reference_groups:
-        adata.obs.loc[adata.obs[_CONSTANTS.REFERENCE_KEY].str.startswith(
-            _REFERENCE.REFERENCE_PREFIX),
-                      _CONSTANTS.REFERENCE_KEY] = f"{_REFERENCE.REFERENCE_PREFIX}_0"
+        adata.obs.loc[
+            adata.obs[_CONSTANTS.REFERENCE_KEY].str.startswith(_REFERENCE.REFERENCE_PREFIX), _CONSTANTS.REFERENCE_KEY
+        ] = f"{_REFERENCE.REFERENCE_PREFIX}_0"
         valid_ref_groups = [f"{_REFERENCE.REFERENCE_PREFIX}_0"]
     else:
-        adata.obs.loc[~adata.obs[_CONSTANTS.REFERENCE_KEY].isin(
-            valid_ref_groups), _CONSTANTS.REFERENCE_KEY] = _REFERENCE.NON_REFERENCE
+        adata.obs.loc[
+            ~adata.obs[_CONSTANTS.REFERENCE_KEY].isin(valid_ref_groups), _CONSTANTS.REFERENCE_KEY
+        ] = _REFERENCE.NON_REFERENCE
 
     return valid_ref_groups
 
 
-def _annotate_reference(celltype: str,
-                        reference_groups: Iterable[Iterable[str]]) -> str:
+def _annotate_reference(celltype: str, reference_groups: Iterable[Iterable[str]]) -> str:
     for n_reference_group, reference_celltypes in enumerate(reference_groups):
         # The trailing comma for tuple creation is easily forgotten. Therefore, we wrap
         # single strings into tuples. The celltype check in reference_celltypes
@@ -112,8 +115,7 @@ def _annotate_reference(celltype: str,
     return _REFERENCE.NON_REFERENCE
 
 
-def _annotate_malignant(celltype: str, malignant_celltypes: List[str],
-                        undecided_celltypes: List[str]) -> str:
+def _annotate_malignant(celltype: str, malignant_celltypes: List[str], undecided_celltypes: List[str]) -> str:
     if celltype in malignant_celltypes:
         return _CELL_STATUS.MALIGNANT
     elif celltype in undecided_celltypes:

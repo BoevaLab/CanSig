@@ -1,6 +1,6 @@
-import infercnvpy as cnv
-import scanpy as sc
-from anndata import AnnData
+import infercnvpy as cnv  # pytype: disable=import-error
+import scanpy as sc  # pytype: disable=import-error
+from anndata import AnnData  # pytype: disable=import-error
 
 
 def embeddings_counts(adata: AnnData) -> None:

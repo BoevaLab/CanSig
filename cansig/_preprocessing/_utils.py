@@ -1,8 +1,8 @@
 import logging
 
-import anndata as ad
-import numpy as np
-import scanpy as sc
+import anndata as ad  # pytype: disable=import-error
+import numpy as np  # pytype: disable=import-error
+import scanpy as sc  # pytype: disable=import-error
 
 from cansig._preprocessing._CONSTANTS import _CONSTANTS, _CELL_STATUS
 
@@ -26,8 +26,7 @@ class DisableLogger:
         logging.disable(logging.NOTSET)
 
 
-def check_min_reference_cells(adata: ad.AnnData, reference_cat, min_reference_cells,
-                              min_reference_groups):
+def check_min_reference_cells(adata: ad.AnnData, reference_cat, min_reference_cells, min_reference_groups):
     """Checks if enough reference cells are present in adata to run infercnv.
 
     Args:
@@ -36,15 +35,14 @@ def check_min_reference_cells(adata: ad.AnnData, reference_cat, min_reference_ce
         min_reference_cells:
         min_reference_groups:
     """
-    n_ref_cells = adata.obs[_CONSTANTS.REFERENCE_KEY].value_counts()[
-        reference_cat].sum()
+    n_ref_cells = adata.obs[_CONSTANTS.REFERENCE_KEY].value_counts()[reference_cat].sum()
     return n_ref_cells >= min_reference_cells * min_reference_groups
 
 
 def check_min_malignant_cells(adata: ad.AnnData, min_malignant_cells: int):
     """Checks if enough malignant cells are present to infer subclones."""
-    return (adata.obs[
-                _CONSTANTS.MALIGNANT] == _CELL_STATUS.MALIGNANT).sum() >= min_malignant_cells
+    return (adata.obs[_CONSTANTS.MALIGNANT] == _CELL_STATUS.MALIGNANT).sum() >= min_malignant_cells
+
 
 def normalize(adata: ad.AnnData) -> None:
     """First normalizes the data to counts per ten-thousands and then log plus 1 transforms
@@ -53,8 +51,7 @@ def normalize(adata: ad.AnnData) -> None:
     Args:
         adata (ad.AnnData): Annotated data matrix."""
     adata.layers[_CONSTANTS.NORMALIZED] = adata.X.copy()
-    sc.pp.normalize_total(adata, target_sum=_CONSTANTS.TARGET_SUM,
-                          layer=_CONSTANTS.NORMALIZED)
+    sc.pp.normalize_total(adata, target_sum=_CONSTANTS.TARGET_SUM, layer=_CONSTANTS.NORMALIZED)
     sc.pp.log1p(adata, layer=_CONSTANTS.NORMALIZED)
 
 
