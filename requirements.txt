@@ -14,7 +14,6 @@ scikit-learn
 scipy
 scvi-tools
 statsmodels
-protobuf~=3.19.0
 # requirements-dev.txt
 black
 flake8
