@@ -8,12 +8,13 @@ numpy<=1.21
 pandas    
 petname
 pydantic
-scanpy
+scanpy>=1.9.1
 seaborn
 scikit-learn
 scipy
 scvi-tools
 statsmodels
+protobuf~=3.19.0
 # requirements-dev.txt
 black
 flake8
