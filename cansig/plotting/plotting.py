@@ -74,7 +74,7 @@ class ScatterPlot:
 
         else:
             raise NotImplementedError(
-                f"Dimensionality reduction method: " f"{self._settings.dim_reduction} is not implemented."
+                f"Dimensionality reduction method: {self._settings.dim_reduction} is not implemented."
             )
         return fig
 
