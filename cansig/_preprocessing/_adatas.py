@@ -37,6 +37,7 @@ class DataRecorder:
                 adata.strings_to_categoricals()
         return adata
 
+    # flake8: noqa: C901
     def _sanitize_adata(
         self,
         adata: ad.AnnData,
