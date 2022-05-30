@@ -113,7 +113,8 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--ngenessig",
         type=int,
-        help="number of genes to take into consideration as a signature to rescore the cells according to de novo found signatures",
+        help="number of genes to take into consideration as a signature to rescore \
+             the cells according to de novo found signatures",
         default=200,
     )
     parser.add_argument(

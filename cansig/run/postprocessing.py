@@ -1,4 +1,3 @@
-from operator import ge
 from typing import Optional, Literal  # pytype: disable=not-supported-yet
 
 import argparse
@@ -63,7 +62,8 @@ def parse_args():
     parser.add_argument(
         "--ngenessig",
         type=int,
-        help="number of genes to take into consideration as a signature to rescore the cells according to de novo found signatures",
+        help="number of genes to take into consideration as a signature to \
+            rescore the cells according to de novo found signatures",
         default=200,
     )
     parser.add_argument(
