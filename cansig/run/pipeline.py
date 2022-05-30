@@ -23,8 +23,8 @@ import cansig.models.scvi as _scvi
 import cansig.run.integration as integration
 import cansig.run.postprocessing as postprocessing
 
-TestType = Literal["mwu", "ttest"]
-CorrType = Literal["pearson", "spearman"]
+_TESTTYPE = Literal["mwu", "ttest"]
+_CORRTYPE = Literal["pearson", "spearman"]
 
 logger = logging.getLogger(__name__)
 
@@ -228,9 +228,9 @@ def single_integration_run(
     plot: bool,
     savesig: bool,
     n_genes_sig: int,
-    corr_method: CorrType,
+    corr_method: _CORRTYPE,
     diffcnv: bool,
-    diffcnv_method: TestType,
+    diffcnv_method: _TESTTYPE,
     diffcnv_correction: bool,
     cnvarray_path: Optional[pathlib.Path],
 ) -> None:

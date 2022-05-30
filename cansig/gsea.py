@@ -15,7 +15,7 @@ from scanpy.tools._rank_genes_groups import _Method  # pytype: disable=import-er
 # This is kind of ugly because the defaults are not obvious but since it can be a path
 # and path are string we can't really differentiate them.
 _GENESETS = Union[str, pathlib.Path]
-CorrType = Literal["pearson", "spearman"]
+_CORRTYPE = Literal["pearson", "spearman"]
 
 
 def genes_to_string(genes: List[str], sep: str = ";") -> str:
@@ -214,7 +214,7 @@ def save_signatures(diff_genes: Dict[str, pd.DataFrame], res_dir: pathlib.Path) 
 def score_signature(
     adata: anndata.AnnData,
     n_genes_sig: int,
-    corr_method: CorrType,
+    corr_method: _CORRTYPE,
     diff_genes: Dict[str, pd.DataFrame],
     cell_score_file: pathlib.Path,
     sig_correlation_file: pathlib.Path,

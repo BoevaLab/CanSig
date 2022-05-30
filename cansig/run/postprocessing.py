@@ -4,8 +4,6 @@ from typing import Optional, Literal  # pytype: disable=not-supported-yet
 import argparse
 import pathlib
 
-from black import diff
-
 import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 
@@ -15,8 +13,8 @@ import cansig.gsea as gsea
 import cansig.plotting.plotting as plotting
 import cansig.cnvanalysis.differentialcnvs as cnv
 
-TestType = Literal["mwu", "ttest"]
-CorrType = Literal["pearson", "spearman"]
+_TESTTYPE = Literal["mwu", "ttest"]
+_CORRTYPE = Literal["pearson", "spearman"]
 
 OUTPUT_BASE_PATH = pathlib.Path("outputs/postprocessing")
 
@@ -114,9 +112,9 @@ def postprocess(
     plot: bool,
     savesig: bool,
     n_genes_sig: int,
-    corr_method: CorrType,
+    corr_method: _CORRTYPE,
     diffcnv: bool,
-    diffcnv_method: TestType,
+    diffcnv_method: _TESTTYPE,
     diffcnv_correction: bool,
     cnvarray_path: Optional[pathlib.Path],
 ) -> bool:
