@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -28,12 +28,13 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Preprocessing tutorial" href="preprocessing.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -216,7 +217,7 @@
               <div>
                 
   <section id="cansig-discovering-cancer-signatures">
-<h1>CanSig: discovering cancer signatures<a class="headerlink" href="#cansig-discovering-cancer-signatures" title="Permalink to this headline">#</a></h1>
+<h1>CanSig: discovering cancer signatures<a class="headerlink" href="#cansig-discovering-cancer-signatures" title="Permalink to this heading">#</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This package is currently <em>not</em> ready to be used. We hope it will be available to public use in June.</p>
@@ -231,7 +232,7 @@
 <p>A preprint describing the pipeline and case studies is <a class="reference external" href="https://doi.org/10.1101/2022.04.14.488324">now available</a>.</p>
 </div>
 <section id="getting-started">
-<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">#</a></h2>
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
 <p>This tutorial assumes you have access to a Unix terminal (e.g., Linux, BSD, MacOS). If you use Windows, install <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install">Windows Subsystem for Linux</a> first.</p>
 <p>When the Unix terminal is ready, you will need to <a class="reference external" href="https://wiki.python.org/moin/BeginnersGuide">install Python</a>. One popular solution is <a class="reference external" href="https://www.anaconda.com/">Anaconda</a>.</p>
 <div class="admonition note">
@@ -239,14 +240,14 @@
 <p>CanSig requires Python 3.8 (or a most recent version).</p>
 </div>
 <section id="installation">
-<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h3>
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h3>
 <p>Install the package:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install cansig
 </pre></div>
 </div>
 </section>
 <section id="example-dataset">
-<h3>Example dataset<a class="headerlink" href="#example-dataset" title="Permalink to this headline">#</a></h3>
+<h3>Example dataset<a class="headerlink" href="#example-dataset" title="Permalink to this heading">#</a></h3>
 <p>To demonstrate the pipeline usage, we will analyse a small esophageal dataset, which has been already preprocessed (for more information about the dataset and the data curation, see <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing tutorial</span></a>).</p>
 <p>We will download it using an auxiliary script:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.download PIPELINE
@@ -259,7 +260,7 @@
 </div>
 </section>
 <section id="running-the-analysis">
-<h3>Running the analysis<a class="headerlink" href="#running-the-analysis" title="Permalink to this headline">#</a></h3>
+<h3>Running the analysis<a class="headerlink" href="#running-the-analysis" title="Permalink to this heading">#</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you are familiar with Python, you may prefer running the analysis in a custom manner. See the <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a>.</p>
@@ -323,7 +324,7 @@ This is one of many databases available online. Alternatively, one can provide a
 Options include running your own integration model or controlling the plotting utilities.</p>
 </section>
 <section id="interpreting-the-results">
-<h3>Interpreting the results<a class="headerlink" href="#interpreting-the-results" title="Permalink to this headline">#</a></h3>
+<h3>Interpreting the results<a class="headerlink" href="#interpreting-the-results" title="Permalink to this heading">#</a></h3>
 <div class="admonition-todo admonition" id="id4">
 <p class="admonition-title">Todo</p>
 <p>Basic discussion how to interpret the results.</p>
@@ -332,7 +333,7 @@ Options include running your own integration model or controlling the plotting u
 </section>
 </section>
 <section id="tutorials">
-<h2>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">#</a></h2>
+<h2>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>To learn more about the pipeline (parallelization, using custom models, plotting), see <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a>.</p></li>
 <li><p>For a tutorial how to interpret the results from the biological perspective, see <a class="reference internal" href="interpretation.html#interpretation"><span class="std std-ref">Advanced interpretation tutorial</span></a>.</p></li>
@@ -340,11 +341,11 @@ Options include running your own integration model or controlling the plotting u
 </ul>
 </section>
 <section id="contributing">
-<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">#</a></h2>
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this heading">#</a></h2>
 <p>For the contribution guide and instructions for new developers, see <a class="reference internal" href="contributing.html#contribution-guide"><span class="std std-ref">Contribution guide</span></a>.</p>
 </section>
 <section id="indices-and-tables">
-<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">#</a></h2>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -415,7 +416,7 @@ Options include running your own integration model or controlling the plotting u
     
     <div class="footer-item">
       <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br>
 </p>
     </div>
     

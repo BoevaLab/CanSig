@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -28,13 +28,14 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Advanced pipeline usage" href="pipeline-advanced.html" />
     <link rel="prev" title="CanSig: discovering cancer signatures" href="index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -195,7 +196,7 @@
               <div>
                 
   <section id="preprocessing-tutorial">
-<span id="preprocessing"></span><h1>Preprocessing tutorial<a class="headerlink" href="#preprocessing-tutorial" title="Permalink to this headline">#</a></h1>
+<span id="preprocessing"></span><h1>Preprocessing tutorial<a class="headerlink" href="#preprocessing-tutorial" title="Permalink to this heading">#</a></h1>
 <p>The pre-processing module of CanSig consists of multiple steps.
 In the first step, we apply standard quality control measures.
 The second step consists in CNV inference to remove cells annotated as malignant that do not
@@ -206,7 +207,7 @@ In the optional, third step, known gene signatures can be scored.</p>
 <p>Add graphic.</p>
 </div>
 <section id="loading-the-data">
-<h2>Loading the data<a class="headerlink" href="#loading-the-data" title="Permalink to this headline">#</a></h2>
+<h2>Loading the data<a class="headerlink" href="#loading-the-data" title="Permalink to this heading">#</a></h2>
 <p>To illustrate the usage of the pre-processing module of CanSig, we use three samples from
 <a class="reference internal" href="#zhang2021" id="id2"><span>[Zhang2021]</span></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cansig.tutorial</span> <span class="kn">import</span> <span class="n">load_data</span>
@@ -243,7 +244,7 @@ dataset. See <a class="reference external" href="https://scanpy.readthedocs.io/e
 for more details.</p>
 </section>
 <section id="id3">
-<h2>Preprocessing<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<h2>Preprocessing<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
 <p>Before we can start with the preprocessing, we need to define which cell types are
 considered as malignant or undetermined. The remaining cell types will be considered as
 non-malignant. Furthermore, we need to define which cell types are used as reference for
@@ -294,7 +295,7 @@ All plots generated during preprocessing will be stored in <cite>figure_dir</cit
 see preprocessing docs (TODO: add link here).</p>
 </section>
 <section id="outputs">
-<h2>Outputs<a class="headerlink" href="#outputs" title="Permalink to this headline">#</a></h2>
+<h2>Outputs<a class="headerlink" href="#outputs" title="Permalink to this heading">#</a></h2>
 <p>The function <cite>preprocessing</cite> returns a single AnnData object containing all the high quality cells
 from the inputted samples.</p>
 <div class="admonition note">
@@ -390,7 +391,7 @@ non-malignant cells.</p>
 </div>
 </section>
 <section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
 <dl class="citation">
 <dt class="label" id="zhang2021"><span class="brackets">Zhang2021</span><span class="fn-backref">(<a href="#id2">1</a>,<a href="#id5">2</a>)</span></dt>
 <dd><p>Zhang, X., Peng, L., Luo, Y. et al. Dissecting esophageal squamous-cell carcinoma ecosystem by single-cell transcriptomic analysis. Nat Commun 12, 5291 (2021). <a class="reference external" href="https://doi.org/10.1038/s41467-021-25539-x">https://doi.org/10.1038/s41467-021-25539-x</a></p>
@@ -443,7 +444,7 @@ non-malignant cells.</p>
     
     <div class="footer-item">
       <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br>
 </p>
     </div>
     

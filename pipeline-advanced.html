@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -28,13 +28,14 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Advanced interpretation tutorial" href="interpretation.html" />
     <link rel="prev" title="Preprocessing tutorial" href="preprocessing.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -185,9 +186,9 @@
               <div>
                 
   <section id="advanced-pipeline-usage">
-<span id="pipeline-advanced"></span><h1>Advanced pipeline usage<a class="headerlink" href="#advanced-pipeline-usage" title="Permalink to this headline">#</a></h1>
+<span id="pipeline-advanced"></span><h1>Advanced pipeline usage<a class="headerlink" href="#advanced-pipeline-usage" title="Permalink to this heading">#</a></h1>
 <section id="using-custom-models">
-<h2>Using custom models<a class="headerlink" href="#using-custom-models" title="Permalink to this headline">#</a></h2>
+<h2>Using custom models<a class="headerlink" href="#using-custom-models" title="Permalink to this heading">#</a></h2>
 <p>If you would like to try another batch correction/dimension reduction method, you can apply it to the data and run postprocessing manually.
 For every model you consider, create a directory:</p>
 <p><code class="docutils literal notranslate"><span class="pre">my-models/</span></code>: directory with the results. In the pipeline case its called <code class="docutils literal notranslate"><span class="pre">latent/</span></code>:</p>
@@ -224,7 +225,7 @@ For every model you consider, create a directory:</p>
 If you do not wish the <code class="docutils literal notranslate"><span class="pre">my-models/</span></code> directory to be copied over into <code class="docutils literal notranslate"><span class="pre">output-dir/runs/latent</span></code>, use the flag <code class="docutils literal notranslate"><span class="pre">--no-copy</span></code>.</p>
 </section>
 <section id="using-the-plotting-utilities">
-<h2>Using the plotting utilities<a class="headerlink" href="#using-the-plotting-utilities" title="Permalink to this headline">#</a></h2>
+<h2>Using the plotting utilities<a class="headerlink" href="#using-the-plotting-utilities" title="Permalink to this heading">#</a></h2>
 <p>By default, running the pipeline will result in a scatter plot being created for every configuration (i.e. for every pair of latent representation/clustering).
 These scatter plots will be colored by default according to (a) the cluster assignments and (b) the batch.</p>
 <p>You have the option to plot using either PCA or UMAP, and you can add plotting according to pre-scored signatures (i.e. present in the adata.obs object).</p>
@@ -303,7 +304,7 @@ These scatter plots will be colored by default according to (a) the cluster assi
     
     <div class="footer-item">
       <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br>
 </p>
     </div>
     

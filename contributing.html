@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -28,13 +28,14 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="cansig" href="source/modules.html" />
     <link rel="prev" title="Advanced interpretation tutorial" href="interpretation.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -212,11 +213,11 @@
               <div>
                 
   <section id="contribution-guide">
-<span id="id1"></span><h1>Contribution guide<a class="headerlink" href="#contribution-guide" title="Permalink to this headline">#</a></h1>
+<span id="id1"></span><h1>Contribution guide<a class="headerlink" href="#contribution-guide" title="Permalink to this heading">#</a></h1>
 <div class="toctree-wrapper compound">
 </div>
 <section id="submitting-an-issue">
-<h2>Submitting an issue<a class="headerlink" href="#submitting-an-issue" title="Permalink to this headline">#</a></h2>
+<h2>Submitting an issue<a class="headerlink" href="#submitting-an-issue" title="Permalink to this heading">#</a></h2>
 <p>If you find a bug, please submit <a class="reference external" href="https://github.com/BoevaLab/CanSig/issues">a new issue</a>.</p>
 <dl class="simple">
 <dt>To be able to reproduce a bug, we will usually need the following information:</dt><dd><ul class="simple">
@@ -229,7 +230,7 @@
 </dl>
 </section>
 <section id="submitting-a-pull-request">
-<h2>Submitting a Pull Request<a class="headerlink" href="#submitting-a-pull-request" title="Permalink to this headline">#</a></h2>
+<h2>Submitting a Pull Request<a class="headerlink" href="#submitting-a-pull-request" title="Permalink to this heading">#</a></h2>
 <dl class="simple">
 <dt>Do:</dt><dd><ul class="simple">
 <li><p>Do consider submitting a draft pull request with a description of proposed changes, before starting actual work.</p></li>
@@ -248,9 +249,9 @@
 </dl>
 </section>
 <section id="for-new-developers">
-<h2>For new developers<a class="headerlink" href="#for-new-developers" title="Permalink to this headline">#</a></h2>
+<h2>For new developers<a class="headerlink" href="#for-new-developers" title="Permalink to this heading">#</a></h2>
 <section id="getting-started-with-the-code">
-<h3>Getting started with the code<a class="headerlink" href="#getting-started-with-the-code" title="Permalink to this headline">#</a></h3>
+<h3>Getting started with the code<a class="headerlink" href="#getting-started-with-the-code" title="Permalink to this heading">#</a></h3>
 <p>Clone the repository:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone git@github.com:BoevaLab/CanSig.git
 $ <span class="nb">cd</span> CanSig
@@ -266,7 +267,7 @@ $ <span class="nb">cd</span> CanSig
 </div>
 </section>
 <section id="tooling">
-<h3>Tooling<a class="headerlink" href="#tooling" title="Permalink to this headline">#</a></h3>
+<h3>Tooling<a class="headerlink" href="#tooling" title="Permalink to this heading">#</a></h3>
 <p>As a developer, you will use some tools increasing code quality. You can install them by running</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install -r requirements-dev.txt
 $ pre-commit install
@@ -276,7 +277,7 @@ $ pre-commit install
 These code quality checks are applied to every Pull Request via a workflow in the <code class="docutils literal notranslate"><span class="pre">.github/workflows</span></code> directory.</p>
 </section>
 <section id="working-with-documentation">
-<h3>Working with documentation<a class="headerlink" href="#working-with-documentation" title="Permalink to this headline">#</a></h3>
+<h3>Working with documentation<a class="headerlink" href="#working-with-documentation" title="Permalink to this heading">#</a></h3>
 <p>We write <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google-style docstrings</a> and high-level documentation (e.g., examples and tutorials, illustrating introduced features) in <code class="docutils literal notranslate"><span class="pre">docs</span></code>.</p>
 <p>Although docstrings (in Python code) are assembled automatically, high-level documentation (including tutorials), needs to be written manually. For this, we use <a class="reference external" href="https://www.sphinx-doc.org">Sphinx</a>  and <a class="reference external" href="https://docutils.sourceforge.io/rst.html">ReStructuredText</a>. For a reference, see e.g., <a class="reference external" href="https://sphinx-tutorial.readthedocs.io/cheatsheet/">this cheatsheet</a>.</p>
 <p>Whenever a Pull Request is submitted (but not merged yet), we do a test build.
@@ -290,7 +291,7 @@ $ make html
 <p>In the <code class="docutils literal notranslate"><span class="pre">_build</span></code> directory, you should see <code class="docutils literal notranslate"><span class="pre">index.html</span></code> file. Open it with a web-browser of your choice.</p>
 </section>
 <section id="requirements">
-<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">#</a></h3>
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">#</a></h3>
 <p>Python packages needed to run the CanSig code should be specified inside <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code> (it also includes optional testing dependencies).
 Developer tools (described above) are specified in <code class="docutils literal notranslate"><span class="pre">requirements-dev.txt</span></code>.
 We also keep the file <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> which is supposed to be the union of all possible dependencies.
@@ -345,7 +346,7 @@ We check whether the <code class="docutils literal notranslate"><span class="pre
     
     <div class="footer-item">
       <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br>
 </p>
     </div>
     
