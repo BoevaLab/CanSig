@@ -15,6 +15,7 @@ from scanpy.tools._rank_genes_groups import _Method  # pytype: disable=import-er
 # This is kind of ugly because the defaults are not obvious but since it can be a path
 # and path are string we can't really differentiate them.
 _GENESETS = Union[str, pathlib.Path]
+CorrType = Literal["pearson", "spearman"]
 
 
 def genes_to_string(genes: List[str], sep: str = ";") -> str:
@@ -208,3 +209,30 @@ def save_signatures(diff_genes: Dict[str, pd.DataFrame], res_dir: pathlib.Path) 
     """
     for cluster in diff_genes:
         diff_genes[cluster].to_csv(res_dir / f"signature_cl{cluster}.csv")
+
+
+def score_signature(
+    adata: anndata.AnnData,
+    n_genes_sig: int,
+    corr_method: CorrType,
+    diff_genes: Dict[str, pd.DataFrame],
+    cell_score_file: pathlib.Path,
+    sig_correlation_file: pathlib.Path,
+) -> None:
+    copy = adata.copy()
+    sc.pp.normalize_total(copy, target_sum=10000)
+    sc.pp.log1p(copy)
+
+    added_signature = []
+    for cluster in np.sort(list(diff_genes.keys())):
+        added_signature.append(f"signature_{cluster}")
+        sig = diff_genes[cluster]
+        sig = sig[sig.zscores > 0]
+        sig = list(sig.iloc[:n_genes_sig].index)
+
+        sc.tl.score_genes(copy, gene_list=sig, score_name=added_signature[-1])
+
+    signature_df = copy.obs[added_signature]
+    signature_df.to_csv(cell_score_file)
+
+    signature_df.corr(method=corr_method).to_csv(sig_correlation_file)

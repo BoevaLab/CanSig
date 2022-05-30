@@ -1,7 +1,10 @@
+from operator import ge
 from typing import Optional, Literal  # pytype: disable=not-supported-yet
 
 import argparse
 import pathlib
+
+from black import diff
 
 import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
@@ -13,6 +16,7 @@ import cansig.plotting.plotting as plotting
 import cansig.cnvanalysis.differentialcnvs as cnv
 
 TestType = Literal["mwu", "ttest"]
+CorrType = Literal["pearson", "spearman"]
 
 OUTPUT_BASE_PATH = pathlib.Path("outputs/postprocessing")
 
@@ -59,6 +63,19 @@ def parse_args():
         help="a flag used when the user does not want the signatures to be saved",
     )
     parser.add_argument(
+        "--ngenessig",
+        type=int,
+        help="number of genes to take into consideration as a signature to rescore the cells according to de novo found signatures",
+        default=200,
+    )
+    parser.add_argument(
+        "--corrmethod",
+        type=str,
+        help="the correlation method used to correlated the de novo found signatures",
+        choices=["pearson", "spearman"],
+        default="pearson",
+    )
+    parser.add_argument(
         "--diffcnv",
         action="store_true",
         help="a flag used when the user wants to compute differential CNVs",
@@ -96,6 +113,8 @@ def postprocess(
     plotting_config: plotting.ScatterPlotConfig,
     plot: bool,
     savesig: bool,
+    n_genes_sig: int,
+    corr_method: CorrType,
     diffcnv: bool,
     diffcnv_method: TestType,
     diffcnv_correction: bool,
@@ -145,6 +164,14 @@ def postprocess(
     if savesig:
         output_dir.make_sig_dir()
         gsea.save_signatures(diff_genes=gene_ranks, res_dir=output_dir.signature_output)
+        gsea.score_signature(
+            adata=adata,
+            diff_genes=gene_ranks,
+            n_genes_sig=n_genes_sig,
+            corr_method=corr_method,
+            cell_score_file=output_dir.cell_score_output,
+            sig_correlation_file=output_dir.sig_correlation_output,
+        )
 
     results = gex_object.perform_gsea(gene_ranks)
     results.to_csv(output_dir.gsea_output)
@@ -181,6 +208,8 @@ def main(args):
         ),
         plot=(not args.disable_plots),
         savesig=(not args.disable_signatures),
+        n_genes_sig=args.ngenessig,
+        corr_method=args.corrmethod,
         diffcnv=args.diffcnv,
         diffcnv_method=args.diffcnv_method,
         diffcnv_correction=args.diffcnv_correction,
