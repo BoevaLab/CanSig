@@ -245,6 +245,11 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.filesys.</span></span><span class="sig-name descname"><span class="pre">PostprocessingDir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.filesys.PostprocessingDir" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#cansig.filesys.StructuredDir" title="cansig.filesys.StructuredDir"><code class="xref py py-class docutils literal notranslate"><span class="pre">StructuredDir</span></code></a></p>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.CELL_SCORE_FILE">
+<span class="sig-name descname"><span class="pre">CELL_SCORE_FILE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cells-score-denovo-signature.csv'</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.CELL_SCORE_FILE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.CLUSTER_SETTINGS">
 <span class="sig-name descname"><span class="pre">CLUSTER_SETTINGS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cluster-settings.json'</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.CLUSTER_SETTINGS" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
@@ -272,6 +277,16 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.SIGNATURE_SETTINGS">
 <span class="sig-name descname"><span class="pre">SIGNATURE_SETTINGS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'signatures'</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.SIGNATURE_SETTINGS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.SIG_CORRELATION_FILE">
+<span class="sig-name descname"><span class="pre">SIG_CORRELATION_FILE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'denovo-signature-correlation.csv'</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.SIG_CORRELATION_FILE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.cell_score_output">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cell_score_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.cell_score_output" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -312,6 +327,11 @@
 <dl class="py property">
 <dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.scatter_output">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scatter_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.scatter_output" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.sig_correlation_output">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sig_correlation_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.sig_correlation_output" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
