@@ -11,7 +11,7 @@ import scipy  # pytype: disable=import-error
 from scipy.stats import mannwhitneyu, ttest_ind  # pytype: disable=import-error
 from statsmodels.stats.multitest import multipletests  # pytype: disable=import-error
 
-TestType = Literal["mwu", "ttest"]
+_TESTTYPE = Literal["mwu", "ttest"]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -33,7 +33,7 @@ def get_cluster_labels(data: anndata.AnnData, cluster_key: str = "new-cluster-co
 
 
 def get_diff_cnv(
-    cnv_array: pd.DataFrame, cl_labels: pd.DataFrame, diff_method: TestType, correction: bool = False
+    cnv_array: pd.DataFrame, cl_labels: pd.DataFrame, diff_method: _TESTTYPE, correction: bool = False
 ) -> pd.DataFrame:
 
     if len(cnv_array.index.intersection(cl_labels.index)) != len(cnv_array.index):
@@ -139,7 +139,7 @@ def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10):
     return columns
 
 
-def find_differential_cnv(data: anndata.AnnData, diff_method: TestType, correction: bool = True) -> pd.DataFrame:
+def find_differential_cnv(data: anndata.AnnData, diff_method: _TESTTYPE, correction: bool = True) -> pd.DataFrame:
 
     cnv_array = discretize_cnv(data=data, cnv_key="X_cnv")
 
@@ -154,7 +154,7 @@ def find_differential_cnv(data: anndata.AnnData, diff_method: TestType, correcti
 
 
 def find_differential_cnv_precomputed(
-    cnv_array: pd.DataFrame, cl_labels: pd.DataFrame, diff_method: TestType, correction: bool = True
+    cnv_array: pd.DataFrame, cl_labels: pd.DataFrame, diff_method: _TESTTYPE, correction: bool = True
 ) -> pd.DataFrame:
 
     diffCNVs = get_diff_cnv(cnv_array=cnv_array, cl_labels=cl_labels, diff_method=diff_method, correction=correction)

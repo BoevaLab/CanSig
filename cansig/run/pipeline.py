@@ -23,7 +23,8 @@ import cansig.models.scvi as _scvi
 import cansig.run.integration as integration
 import cansig.run.postprocessing as postprocessing
 
-TestType = Literal["mwu", "ttest"]
+_TESTTYPE = Literal["mwu", "ttest"]
+_CORRTYPE = Literal["pearson", "spearman"]
 
 logger = logging.getLogger(__name__)
 
@@ -108,6 +109,20 @@ def create_parser() -> argparse.ArgumentParser:
         "--disable-signatures",
         action="store_true",
         help="a flag used when the user does not want the signatures to be saved",
+    )
+    parser.add_argument(
+        "--ngenessig",
+        type=int,
+        help="number of genes to take into consideration as a signature to rescore \
+             the cells according to de novo found signatures",
+        default=200,
+    )
+    parser.add_argument(
+        "--corrmethod",
+        type=str,
+        help="the correlation method used to correlated the de novo found signatures",
+        choices=["pearson", "spearman"],
+        default="pearson",
     )
     parser.add_argument(
         "--diffcnv",
@@ -213,8 +228,10 @@ def single_integration_run(
     plotting_config: plotting.ScatterPlotConfig,
     plot: bool,
     savesig: bool,
+    n_genes_sig: int,
+    corr_method: _CORRTYPE,
     diffcnv: bool,
-    diffcnv_method: TestType,
+    diffcnv_method: _TESTTYPE,
     diffcnv_correction: bool,
     cnvarray_path: Optional[pathlib.Path],
 ) -> None:
@@ -239,6 +256,8 @@ def single_integration_run(
                 plotting_config=plotting_config,
                 plot=plot,
                 savesig=savesig,
+                n_genes_sig=n_genes_sig,
+                corr_method=corr_method,
                 diffcnv=diffcnv,
                 diffcnv_method=diffcnv_method,
                 diffcnv_correction=diffcnv_correction,
@@ -337,6 +356,8 @@ def main() -> None:
                 plotting_config=generate_plotting_config(args),
                 plot=(not args.disable_plots),
                 savesig=(not args.disable_signatures),
+                n_genes_sig=args.ngenessig,
+                corr_method=args.corrmethod,
                 diffcnv=args.diffcnv,
                 diffcnv_method=args.diffcnv_method,
                 diffcnv_correction=args.diffcnv_correction,
