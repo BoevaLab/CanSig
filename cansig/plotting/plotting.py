@@ -22,7 +22,7 @@ class ScatterPlotConfig(pydantic.BaseModel):
     batch_column: str
     color_map: str = "viridis"
     latent_key: str = "X_latent"
-    n_cols: int = 3
+    ncols: int = 3
 
 
 class ScatterPlot:
@@ -56,14 +56,14 @@ class ScatterPlot:
         if self._settings.dim_reduction == "pca":
             copy.obsm["X_pca"] = sc.tl.pca(copy.obsm[self._settings.latent_key])
             fig = sc.pl.pca(
-                copy, color=colors, ncols=self._settings.n_cols, color_map=self._settings.color_map, return_fig=True
+                copy, color=colors, ncols=self._settings.ncols, color_map=self._settings.color_map, return_fig=True
             )
 
         elif self._settings.dim_reduction == "umap":
             sc.pp.neighbors(copy, use_rep=self._settings.latent_key)
             sc.tl.umap(copy)
             fig = sc.pl.umap(
-                copy, color=colors, ncols=self._settings.n_cols, color_map=self._settings.color_map, return_fig=True
+                copy, color=colors, ncols=self._settings.ncols, color_map=self._settings.color_map, return_fig=True
             )
 
         elif self._settings.dim_reduction == "both":
@@ -74,7 +74,7 @@ class ScatterPlot:
             fig = plot_insets(
                 copy,
                 color=colors,
-                ncols=self._settings.n_cols,
+                ncols=self._settings.ncols,
                 color_map=self._settings.color_map,
             )
 
@@ -104,13 +104,13 @@ def plot_insets(copy: anndata.AnnData, color: Union[str, List[str]], ncols: int,
     return fig
 
 
-def plot_inset(adata: anndata.AnnData, color: str, ax, color_map: str):
+def plot_inset(adata: anndata.AnnData, color: str, ax: plt.Axes, color_map: str):
     sc.pl.umap(adata, color=color, ax=ax, show=False, color_map=color_map)
     prettify_axis(ax)
     x_lim = ax.get_xlim()
     y_lim = ax.get_ylim()
-    ax.set_xlim((x_lim[0], x_lim[1] + 0.45 * (x_lim[1] - x_lim[0])))
-    ax.set_ylim((y_lim[0], y_lim[1] + 0.45 * (y_lim[1] - y_lim[0])))
+    ax.set_xlim(left=x_lim[0], right=x_lim[1] + 0.45 * (x_lim[1] - x_lim[0]))
+    ax.set_ylim(bottom=y_lim[0], top=y_lim[1] + 0.45 * (y_lim[1] - y_lim[0]))
     axin = inset_axes(ax, width="40%", height="40%")
 
     sc.pl.pca(
@@ -127,7 +127,7 @@ def plot_inset(adata: anndata.AnnData, color: str, ax, color_map: str):
     axin.set_title("")
 
 
-def prettify_axis(ax) -> None:
+def prettify_axis(ax: plt.Axes) -> None:
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
     ax.tick_params(axis="both", which="both", bottom=False, top=False, left=False, labelbottom=False, labelleft=False)
