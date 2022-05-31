@@ -21,7 +21,7 @@ class ReprDirectoryConfig(pydantic.BaseModel):
     NANSTABILITY: int = pydantic.Field(default=10000)
     NANVALUES: int = pydantic.Field(default=-10000)
     COMPLEXITYPEN: float = pydantic.Field(default=0.1)
-    COMPLEXITYSTAB = float = pydantic.Field(default=1)
+    COMPLEXITYSTAB: float = pydantic.Field(default=1)
 
 
 def get_complexity(ver: _FactorType, horizontal: List[_FactorType], n_runs: int) -> np.array:
