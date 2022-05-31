@@ -1,26 +1,105 @@
-import anndata as ad  # pytype: disable=import-error
+from typing import List
+
+import anndata  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
 import pytest  # pytype: disable=import-error
 
-from cansig._preprocessing._CONSTANTS import _CELL_STATUS, _CONSTANTS
-from cansig._preprocessing._utils import check_min_malignant_cells
+from cansig._preprocessing.utils import (
+    check_min_malignant_cells,
+    check_min_reference_cells,
+    Normalized,
+    NormalizedConfig,
+    load_adatas,
+    validate_adatas,
+)
+from .utils import generate_adata
 
 
-def get_adata():
-    X = np.random.uniform(size=(100, 10))
-    adata = ad.AnnData(X=X)
-
-    return adata
+@pytest.fixture
+def adatas() -> List[anndata.AnnData]:
+    adatas = []
+    gene_names = [[f"gene_{i}" for i in genes] for genes in [range(4, 10), range(3, 8), range(5, 8)]]
+    for i, gene_name in enumerate(gene_names):
+        adata = generate_adata(10, len(gene_name), var_names=gene_name, sample_id=f"sample_{i}")
+        adata.X = np.random.normal(size=(10, len(gene_name)))
+        adatas.append(adata)
+    return adatas
 
 
 @pytest.mark.parametrize("n_malignant,expected", [(5, False), (15, True)])
-def test_check_min_malignant_cells(n_malignant, expected):
-    adata = get_adata()
-    adata.obs[_CONSTANTS.MALIGNANT] = [_CELL_STATUS.MALIGNANT] * n_malignant + [_CELL_STATUS.NON_MALIGNANT] * (
-        100 - n_malignant
+def test_check_min_malignant_cells(n_malignant: int, expected: bool):
+    n_cells = 20
+    adata = generate_adata(
+        n_cells, 10, {"malignant": [("malignant", n_malignant), ("non-malignant", n_cells - n_malignant)]}
     )
-    assert check_min_malignant_cells(adata, min_malignant_cells=10) == expected
+    result = check_min_malignant_cells(
+        adata, malignant_key="malignant", min_malignant_cells=10, malignant_celltype="malignant"
+    )
+    assert result == expected
 
 
-def test_check_min_ref_cells():
-    pass
+class TestCheckMinRefCells:
+    @pytest.mark.parametrize("n_reference,expected", [(5, False), (15, True)])
+    def test_one_ref_group(self, n_reference, expected):
+        n_cells = 20
+        adata = generate_adata(
+            n_cells, 10, {"reference": [("reference_0", n_reference), ("non-malignant", n_cells - n_reference)]}
+        )
+        result = check_min_reference_cells(
+            adata,
+            reference_cat=["reference_0"],
+            reference_key="reference",
+            min_reference_cells=10,
+            min_reference_groups=1,
+        )
+        assert result == expected
+
+    @pytest.mark.parametrize("n_reference_0,n_reference_1,expected", [(5, 5, True), (11, 0, True), (9, 0, False)])
+    def test_two_ref_groups(self, n_reference_0, n_reference_1, expected):
+        n_cells = 40
+        n_non_reference = n_cells - n_reference_0 - n_reference_1
+        adata = generate_adata(
+            n_cells,
+            10,
+            {
+                "reference": [
+                    ("reference_0", n_reference_0),
+                    ("reference_1", n_reference_1),
+                    ("non-reference", n_non_reference),
+                ]
+            },
+        )
+        reference_cat = adata.obs["reference"][adata.obs["reference"].str.startswith("reference")].unique()
+        result = check_min_reference_cells(
+            adata, reference_cat=reference_cat, reference_key="reference", min_reference_cells=5, min_reference_groups=2
+        )
+        assert result == expected
+
+
+class TestNormalized:
+    def test_normalized(self):
+        adata = generate_adata(n_cells=100, n_genes=1000)
+        normalized_config = NormalizedConfig()
+        with Normalized(adata, normalized_config):
+            assert np.allclose((np.exp(adata.X) - 1).sum(1), normalized_config.target_sum)
+
+        assert np.allclose(adata.X, 1.0)
+
+
+class TestLoadAdata:
+    def test_load_from_file(self, adatas, tmpdir):
+        paths = []
+        for i, adata in enumerate(adatas):
+            path = f"{tmpdir}/sample_{i}.h5ad"
+            adata.write_h5ad(path)
+            paths.append(path)
+        bdatas, _ = load_adatas(paths, "sample_id")
+        assert len(list(bdatas)) == len(adatas)
+        assert all([np.array_equal(adata.X, bdata.X) for adata, bdata in zip(bdatas, adatas)])
+
+
+class TestValidateAdatas:
+    def test_validate_adatas_gene_list(self, adatas):
+        gene_list = validate_adatas(adatas)
+        assert isinstance(gene_list, list)
+        assert set(gene_list) == {f"gene_{i}" for i in range(5, 8)}

@@ -2,7 +2,7 @@ import anndata as ad  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
 import pytest  # pytype: disable=import-error
 
-from cansig._preprocessing._quality_control import quality_control
+from cansig._preprocessing.quality_control import quality_control
 
 
 class TestQualityControl:

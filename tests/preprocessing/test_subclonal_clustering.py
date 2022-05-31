@@ -1,29 +1,44 @@
-import anndata as ad  # pytype: disable=import-error
-import numpy as np  # pytype: disable=import-error
-import pytest  # pytype: disable=import-error
+import numpy as np
 
-from cansig._preprocessing._CONSTANTS import _CONSTANTS, _CELL_STATUS
-from cansig._preprocessing._subclonal import subclonal_cluster
-
-
-@pytest.fixture()
-def adata():
-    np.random.seed(seed=42)
-    adata = ad.AnnData(X=np.zeros((200, 100)))
-    X_cnv = np.zeros((200, 100))
-    X_cnv[50:100, :30] = np.random.normal(20, size=(50, 30))
-    X_cnv[100:150, 30:60] = np.random.normal(20, size=(50, 30))
-    X_cnv[150:200, 60:] = np.random.normal(20, size=(50, 40))
-    adata.obsm["X_cnv"] = X_cnv
-    adata.obs[_CONSTANTS.MALIGNANT] = [_CELL_STATUS.NON_MALIGNANT] * 50 + [_CELL_STATUS.MALIGNANT] * 150
-    adata.obs["sample_id"] = "test"
-    return adata
+from cansig._preprocessing.subclonal import Subclonal, SubclonalConfig
+from .utils import generate_adata
 
 
 class TestSubclonalCluster:
-    def test_subclonal_multiple_subclones(self, adata):
-        subclonal_cluster(adata, batch_id_column="sample_id")
-        assert np.equal(adata.obs["subclonal"][:50], adata.obs["subclonal"][0]).all()
-        assert np.equal(adata.obs["subclonal"][50:100], adata.obs["subclonal"][50]).all()
-        assert np.equal(adata.obs["subclonal"][100:150], adata.obs["subclonal"][100]).all()
-        assert np.equal(adata.obs["subclonal"][150:200], adata.obs["subclonal"][150]).all()
+    def test_subclonal_multiple_subclones(self):
+        np.random.seed(42)
+        adata = generate_adata(
+            75, 30, {"malignant": [("non-malignant", 25), ("malignant", 50)], "sample_id": [("test", 75)]}
+        )
+        adata.obsm["X_cnv"] = np.zeros_like(adata.X)
+        adata.obsm["X_cnv"][25:50, :] = np.random.normal(5, size=(25, 30))
+        adata.obsm["X_cnv"][50:, :] = np.random.normal(0, size=(25, 30))
+
+        subclonal_config = SubclonalConfig(
+            batch_id_column="sample_id", cnv_key="cnv", malignant_key="malignant", malignant_status="malignant"
+        )
+        subclonal = Subclonal(subclonal_config)
+
+        subclonal.cluster(adata)
+        subclonal_key = subclonal_config.subclonal_key
+        assert np.equal(adata.obs[subclonal_key][:25], subclonal_config.non_malignant_marker).all()
+        assert np.equal(adata.obs[subclonal_key][25:50], adata.obs[subclonal_key][25]).all()
+        assert np.equal(adata.obs[subclonal_key][50:], adata.obs[subclonal_key][50]).all()
+        assert adata.obs[subclonal_key][25] != adata.obs[subclonal_key][50]
+
+    def test_subclonal_single_subclones(self):
+        adata = generate_adata(
+            50, 30, {"malignant": [("non-malignant", 25), ("malignant", 25)], "sample_id": [("test", 50)]}
+        )
+        adata.obsm["X_cnv"] = np.zeros_like(adata.X)
+        adata.obsm["X_cnv"][25:50, :] = 10.0
+
+        subclonal_config = SubclonalConfig(
+            batch_id_column="sample_id", cnv_key="cnv", malignant_key="malignant", malignant_status="malignant"
+        )
+        subclonal = Subclonal(subclonal_config)
+
+        subclonal.cluster(adata)
+        subclonal_key = subclonal_config.subclonal_key
+        assert np.equal(adata.obs[subclonal_key][:25], subclonal_config.non_malignant_marker).all()
+        assert np.equal(adata.obs[subclonal_key][25:50], adata.obs[subclonal_key][25]).all()
