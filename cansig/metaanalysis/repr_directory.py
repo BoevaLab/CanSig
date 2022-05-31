@@ -1,5 +1,6 @@
 from collections import defaultdict
-from typing import Iterable, List, Tuple, Union
+import collections
+from typing import Iterable, List, Tuple, Union, Dict
 
 import pathlib
 
@@ -37,7 +38,7 @@ def get_values_panel(
     horizontal: List[_FactorType],
     panel: _PanelType,
     n_runs: int,
-):
+) -> np.array:
 
     values = np.zeros((len(horizontal), n_runs))
     values.fill(np.nan)
@@ -77,7 +78,7 @@ def get_objective_function_elements(
     vertical: List[_FactorType],
     panels: List[_PanelType],
     n_runs: int,
-) -> Union[dict, dict, dict]:
+) -> Tuple[collections.defaultdict, collections.defaultdict, Dict]:
 
     all_values, all_stability = defaultdict(list), defaultdict(list)
     all_complexity = {}
@@ -96,7 +97,11 @@ def get_objective_function_elements(
 
 
 def get_objective_function(
-    settings: ReprDirectoryConfig, all_values: dict, all_stability: dict, all_complexity: dict, ver: int
+    settings: ReprDirectoryConfig,
+    all_values: collections.defaultdict,
+    all_stability: collections.defaultdict,
+    all_complexity: Dict,
+    ver: int,
 ) -> np.array:
     return (
         -np.sum(all_values[ver], axis=0)
@@ -128,7 +133,7 @@ def get_all_objective_function(
 
 def get_representative_run(
     all_obj_function: np.array, vertical: Iterable[_FactorType], horizontal: Iterable[_FactorType]
-):
+) -> Tuple[_FactorType, _FactorType, int]:
     index = np.unravel_index(np.argmin(all_obj_function, axis=None), all_obj_function.shape)
     return vertical[index[0]], horizontal[index[1]], index[2]
 
@@ -154,7 +159,7 @@ def find_all_config_directories(
 
 
 def representative_directory(
-    representative_run: Tuple[int], directories: Iterable[fs.PostprocessingDir]
+    representative_run: Tuple[_FactorType, _FactorType, int], directories: Iterable[fs.PostprocessingDir]
 ) -> fs.PostprocessingDir:
     config_directories = find_all_config_directories(
         clusters=representative_run[0], latent_dim=representative_run[1], directories=directories
@@ -164,7 +169,7 @@ def representative_directory(
 
 def find_representative_run(
     items: Iterable[heatmap.HeatmapItem], directories: List[fs.PostprocessingDir], settings: ReprDirectoryConfig
-) -> None:
+) -> fs.PostprocessingDir:
 
     vertical, horizontal, panels, n_runs = heatmap.get_heatmap_items(items=items)
 
@@ -192,7 +197,7 @@ def find_representative_run(
     return chosen_directory
 
 
-def save_chosen_directory(chosen_directory: fs.PostprocessingDir, filepath: pathlib.Path):
+def save_chosen_directory(chosen_directory: fs.PostprocessingDir, filepath: pathlib.Path) -> None:
     with open(filepath, "w") as f:
         f.write(
             "Representative directory chosen to optimize the NES over all \
