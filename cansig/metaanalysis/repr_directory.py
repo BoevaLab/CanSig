@@ -3,10 +3,8 @@ from typing import Iterable, List, Tuple, Union
 
 import pathlib
 
-import matplotlib.pyplot as plt  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
-import seaborn as sns  # pytype: disable=import-error
 
 import cansig.metaanalysis.heatmap as heatmap
 import cansig.filesys as fs
