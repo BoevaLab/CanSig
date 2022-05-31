@@ -79,7 +79,7 @@ class GeneExpressionAnalysis:
 
         Returns:
             adata_copy: copy of the AnnData object with
-                log-normalized and scaled gene expression
+                log-normalized_layer and scaled gene expression
                 and performed gene expression analysis
         """
 
@@ -139,7 +139,7 @@ class GeneExpressionAnalysis:
             are the classical GSEA
             columns ie
                 - 'es' (enrichment score),
-                - 'nes' (normalized enrichemnt score)
+                - 'nes' (normalized_layer enrichemnt score)
                 - 'pval' (p value)
                 - 'fdr' (FDR Benjamini Hochberg corrected p value)
                 - 'geneset_size' (size of the geneset of the term)

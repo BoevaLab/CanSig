@@ -193,7 +193,23 @@ This plot is saved to chromosome_heatmap.png
 
 .. note:: For faster pre-processing plotting can be turned off by setting plot to False.
 
-.. todo:: Are there other useful plots that we want to add here?
+   The preprocessing tutorial.
+
+
+The next plot is generated after inferring CNVs. It shows the chromosome heatmap
+separated into malignant and non-malignant and the malignant cells are further divided
+into reference and non-reference Cells. The non-malignant cells should not show CNVs.
+This plot is saved to chromosome_heatmap.png
+
+.. todo:: Add image of the chromosome heatmap showing separation of malignant and
+    non-malignant cells.
+
+.. todo:: umap for each score + umap for malignant/non-malignant cells in CNV space.
+
+
+.. note:: For faster pre-processing plotting can be turned off by setting plot to False.
+
+.. todo:: Are there other useful plots that we want to add here???
 
 References
 ----------
