@@ -64,6 +64,20 @@ def _calculate_figsize(
     return (width, height)
 
 
+def get_heatmap_items(
+    items: Iterable[HeatmapItem],
+) -> Tuple[List[_FactorType], List[_FactorType], List[_PanelType], int]:
+    items = list(items)
+
+    vertical = _get_vertical(items)
+    horizontal = _get_horizontal(items)
+    panels = _get_panels(items)
+
+    n_runs = _get_n_runs(items)
+
+    return vertical, horizontal, panels, n_runs
+
+
 def plot_heatmap(items: Iterable[HeatmapItem], settings: HeatmapSettings) -> plt.Figure:
     items = list(items)
 

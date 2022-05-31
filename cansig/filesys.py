@@ -1,6 +1,7 @@
 """This module controls the directory structure used to save the results."""
 import abc
 import datetime
+from importlib.resources import path
 import json
 import pathlib
 from typing import Any, Callable, TypeVar
