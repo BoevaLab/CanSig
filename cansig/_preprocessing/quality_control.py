@@ -6,7 +6,7 @@ import scanpy as sc  # pytype: disable=import-error
 
 from cansig.types import Pathlike
 
-logger = logging.Logger(__name__)
+_LOGGER = logging.Logger(__name__)
 
 
 def quality_control(
@@ -30,7 +30,7 @@ def quality_control(
         genes than the threshold_mt are being removed.
     """
     # TODO: add plotting.
-    logger.info(f"Stating qc with {adata.n_obs} cells.")
+    _LOGGER.info(f"Stating qc with {adata.n_obs} cells.")
     adata.var["mt"] = adata.var_names.str.startswith("MT-")
     sc.pp.calculate_qc_metrics(adata, qc_vars=["mt"], percent_top=None, log1p=False, inplace=True)
     raw_cells = adata.n_obs
@@ -40,6 +40,6 @@ def quality_control(
     sc.pp.filter_cells(adata, min_genes=min_genes)
     filter_cells = adata.n_obs
 
-    logger.info(f"Finished qc with {adata.n_obs} cells remaining and removed " f"{raw_cells - filter_cells} cells.")
+    _LOGGER.info(f"Finished qc with {adata.n_obs} cells remaining and removed {raw_cells - filter_cells} cells.")
 
     return adata

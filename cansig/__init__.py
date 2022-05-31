@@ -1,3 +1,3 @@
-from cansig._preprocessing._main import preprocessing
+from cansig._preprocessing.main import preprocessing
 
 __all__ = ["preprocessing"]
