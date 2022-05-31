@@ -23,7 +23,7 @@ class ReprDirectoryConfig(pydantic.BaseModel):
     COMPLEXITYSTAB: float = pydantic.Field(default=1)
 
 
-def get_complexity(ver: _FactorType, horizontal: List[_FactorType], n_runs: int) -> Iterable[float]:
+def get_complexity(ver: _FactorType, horizontal: List[_FactorType], n_runs: int) -> np.ndarray:
     complexity = []
     for i in range(len(horizontal)):
         complexity.append([horizontal[i] + ver] * n_runs)
@@ -37,7 +37,7 @@ def get_values_panel(
     horizontal: List[_FactorType],
     panel: _PanelType,
     n_runs: int,
-) -> Iterable[float]:
+) -> np.ndarray:
 
     values = np.zeros((len(horizontal), n_runs))
     values.fill(np.nan)
@@ -59,7 +59,7 @@ def get_values_panel(
     return np.nan_to_num(values, nan=settings.NANVALUES)
 
 
-def get_stability_panel(settings: ReprDirectoryConfig, values: Iterable[float]) -> Iterable[float]:
+def get_stability_panel(settings: ReprDirectoryConfig, values: np.ndarray) -> np.ndarray:
     stability = np.zeros(values.shape)
     stability.fill(np.nan)
 
@@ -101,7 +101,7 @@ def get_objective_function(
     all_stability: collections.defaultdict,
     all_complexity: Dict,
     ver: int,
-) -> Iterable[float]:
+) -> np.ndarray:
     return (
         -np.sum(all_values[ver], axis=0)
         + settings.COMPLEXITYSTAB * np.sum(all_stability[ver], axis=0)
@@ -111,11 +111,11 @@ def get_objective_function(
 
 def get_all_objective_function(
     settings: ReprDirectoryConfig,
-    all_values: dict,
-    all_stability: dict,
-    all_complexity: dict,
+    all_values: collections.defaultdict,
+    all_stability: collections.defaultdict,
+    all_complexity: Dict,
     vertical: List[_FactorType],
-) -> Iterable[float]:
+) -> np.ndarray:
     all_obj_function = []
     for ver in vertical:
         all_obj_function.append(
@@ -131,15 +131,15 @@ def get_all_objective_function(
 
 
 def get_representative_run(
-    all_obj_function: Iterable[float], vertical: Iterable[_FactorType], horizontal: Iterable[_FactorType]
+    all_obj_function: np.ndarray, vertical: List[_FactorType], horizontal: List[_FactorType]
 ) -> Tuple[_FactorType, _FactorType, int]:
     index = np.unravel_index(np.argmin(all_obj_function, axis=None), all_obj_function.shape)
     return vertical[index[0]], horizontal[index[1]], index[2]
 
 
 def find_all_config_directories(
-    clusters: int, latent_dim: int, directories: Iterable[fs.PostprocessingDir]
-) -> Iterable[fs.PostprocessingDir]:
+    clusters: int, latent_dim: int, directories: List[fs.PostprocessingDir]
+) -> List[fs.PostprocessingDir]:
 
     config_directories = []
     for directory in directories:
@@ -158,7 +158,7 @@ def find_all_config_directories(
 
 
 def representative_directory(
-    representative_run: Tuple[_FactorType, _FactorType, int], directories: Iterable[fs.PostprocessingDir]
+    representative_run: Tuple[_FactorType, _FactorType, int], directories: List[fs.PostprocessingDir]
 ) -> fs.PostprocessingDir:
     config_directories = find_all_config_directories(
         clusters=representative_run[0], latent_dim=representative_run[1], directories=directories
