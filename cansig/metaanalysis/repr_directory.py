@@ -17,14 +17,13 @@ _PanelType = str
 
 
 class ReprDirectoryConfig(pydantic.BaseModel):
-
     NANSTABILITY: int = pydantic.Field(default=10000)
     NANVALUES: int = pydantic.Field(default=-10000)
     COMPLEXITYPEN: float = pydantic.Field(default=0.1)
     COMPLEXITYSTAB: float = pydantic.Field(default=1)
 
 
-def get_complexity(ver: _FactorType, horizontal: List[_FactorType], n_runs: int) -> np.array:
+def get_complexity(ver: _FactorType, horizontal: List[_FactorType], n_runs: int) -> Iterable[float]:
     complexity = []
     for i in range(len(horizontal)):
         complexity.append([horizontal[i] + ver] * n_runs)
@@ -38,7 +37,7 @@ def get_values_panel(
     horizontal: List[_FactorType],
     panel: _PanelType,
     n_runs: int,
-) -> np.array:
+) -> Iterable[float]:
 
     values = np.zeros((len(horizontal), n_runs))
     values.fill(np.nan)
@@ -60,7 +59,7 @@ def get_values_panel(
     return np.nan_to_num(values, nan=settings.NANVALUES)
 
 
-def get_stability_panel(settings: ReprDirectoryConfig, values: np.array) -> np.array:
+def get_stability_panel(settings: ReprDirectoryConfig, values: Iterable[float]) -> Iterable[float]:
     stability = np.zeros(values.shape)
     stability.fill(np.nan)
 
@@ -102,7 +101,7 @@ def get_objective_function(
     all_stability: collections.defaultdict,
     all_complexity: Dict,
     ver: int,
-) -> np.array:
+) -> Iterable[float]:
     return (
         -np.sum(all_values[ver], axis=0)
         + settings.COMPLEXITYSTAB * np.sum(all_stability[ver], axis=0)
@@ -116,7 +115,7 @@ def get_all_objective_function(
     all_stability: dict,
     all_complexity: dict,
     vertical: List[_FactorType],
-) -> np.array:
+) -> Iterable[float]:
     all_obj_function = []
     for ver in vertical:
         all_obj_function.append(
@@ -132,7 +131,7 @@ def get_all_objective_function(
 
 
 def get_representative_run(
-    all_obj_function: np.array, vertical: Iterable[_FactorType], horizontal: Iterable[_FactorType]
+    all_obj_function: Iterable[float], vertical: Iterable[_FactorType], horizontal: Iterable[_FactorType]
 ) -> Tuple[_FactorType, _FactorType, int]:
     index = np.unravel_index(np.argmin(all_obj_function, axis=None), all_obj_function.shape)
     return vertical[index[0]], horizontal[index[1]], index[2]
