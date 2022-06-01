@@ -16,6 +16,7 @@ import cansig.cluster.api as cluster
 import cansig.filesys as fs
 import cansig.gsea as gsea
 import cansig.metaanalysis.heatmap as heatmap
+import cansig.metaanalysis.repr_directory as repdir
 import cansig.plotting.plotting as plotting
 import cansig.models.api as models
 import cansig.models.scvi as _scvi
@@ -334,6 +335,12 @@ def generate_heatmap(dirs: Iterable[fs.PostprocessingDir]) -> plt.Figure:
     return heatmap.plot_heatmap(items, settings=settings)
 
 
+def generate_items(dirs: Iterable[fs.PostprocessingDir]) -> Iterable[heatmap.HeatmapItem]:
+    items = sum([read_directory(directory) for directory in dirs], [])
+
+    return items
+
+
 def main() -> None:
     # Read the CLI arguments
     parser = create_parser()
@@ -374,6 +381,14 @@ def main() -> None:
     fig = generate_heatmap(directories)
     fig.tight_layout()
     fig.savefig(multirun_dir.path / "heatmap.pdf")
+
+    items = generate_items(directories)
+    chosen_directory = repdir.find_representative_run(
+        items=items, directories=directories, settings=repdir.ReprDirectoryConfig()
+    )
+    repdir.save_chosen_directory(
+        chosen_directory=chosen_directory, filepath=multirun_dir.path / "representative-directory.txt"
+    )
 
 
 if __name__ == "__main__":
