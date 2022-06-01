@@ -50,7 +50,7 @@ You should see a new directory ``data`` with a file ``pipeline-tutorial.h5ad``.
 Running the analysis
 ^^^^^^^^^^^^^^^^^^^^
 
-.. note:: If you are familiar with Python, you may prefer running the analysis in a custom manner. See the :ref:`pipeline-advanced`.
+.. note:: If you are familiar with Python, you may prefer running the analysis in a custom manner. See the :ref:`pipeline-advanced` and :ref:`cansig-for-python-coders`.
 
 We will run the analysis pipeline with a single command:
 
@@ -83,6 +83,20 @@ Again, one can repeat this steps, using different random seeds, by increasing ``
 We specified the database to be used (``--gene-sets MSigDB_Hallmark_2020``).
 This is one of many databases available online. Alternatively, one can provide a path to the GMT file.
 
+.. note::
+
+   Running the pipeline in this way requires internet connectivity. 
+   If not connected to the internet, to run the same analysis, you need to download the file ``h.all.v{current_version}.symbols.gmt``, go to the directory where this file is saved, and update the command line as follows
+
+ .. code-block:: bash
+
+   $ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5 
+                                   --batch batch
+                                   --gene-sets h.all.v{current_version}.symbols.gmt \
+                                   --dimensions 4 6 --model-runs 1 \
+                                   --clusters 2 3 5  --cluster-runs 1 \
+                                   --output tutorial-output   
+
 .. todo::
    Fill in the TODO items above.
 
@@ -99,8 +113,13 @@ Let's analyse its structure:
    * ``{rundir}/gsea-dataframe.csv``: results of GSEA run in this setting (full table, including non-significant pathways and negative enrichment score pathways)
    * ``{rundir}/gsea-settings.json``: summary of the parameters used for the GSEA run
    * ``{rundir}/integration-settings.json``: summary of the parameters used for the integration method
-   * ``{rundir}/latent_space_dimred.png``: by default, scatter plot of the PCA on the latent space colored according to batch and clustering (see advanced tutorial for more details)
+   * ``{rundir}/latent-space-dimred.png``: scatter plot of the PCA on the latent space colored according to batch and clustering (see advanced tutorial for more details)
+   * ``{rundir}/cells-score-denovo-signature.csv``: scores for each cell for the de novo found signatures for this run
+   * ``{rundir}/denovo-signature-correlation.csv``: the pearson correlation between de novo found signatures
+   * ``{rundir}/signatures/``: directory containing the de novo signatures as the results of the differential gene expression analysis
+      * ``signature_cl{CLUSTER}.csv``: results of the differential gene expression analysis for cluster CLUSTER, ranked according to z-score. 
 * ``heatmap.pdf``: heatmap summarizing Normalized Enrichment Score of the pathways which seem to be differentially expressed over all runs indicated
+* ``representative-directory.txt``: simple text file with the name of the post processing directory that can be used as a "representative directory"
 
 
 While we covered the most basic usage of the pipeline, more information can be obtained by running
@@ -110,7 +129,7 @@ While we covered the most basic usage of the pipeline, more information can be o
    $ python -m cansig.run.pipeline --help
 
 or by consulting the :ref:`pipeline-advanced`. 
-Options include running your own integration model or controlling the plotting utilities.
+Options include running your own integration model, controlling the plotting utilities, performing differential CNV analysis
 
 
 Interpreting the results
@@ -129,6 +148,7 @@ Tutorials
 * To learn more about the pipeline (parallelization, using custom models, plotting), see :ref:`pipeline-advanced`.
 * For a tutorial how to interpret the results from the biological perspective, see :ref:`interpretation`.
 * To learn about the preprocessing module (used to prepare the raw data into the HDF5 format), see the :ref:`preprocessing`.
+* To learn how to run CanSig in a python script/jupyter notebook, see :ref:`cansig-for-python-coders`.
 
 
 Contributing

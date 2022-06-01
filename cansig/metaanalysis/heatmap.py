@@ -67,6 +67,16 @@ def _calculate_figsize(
 def get_heatmap_items(
     items: Iterable[HeatmapItem],
 ) -> Tuple[List[_FactorType], List[_FactorType], List[_PanelType], int]:
+    """Returns all the caracteristic of the heatmap items
+
+    Args:
+        items: list of HeatmapItem
+    Returns:
+        vertical: list of unique number of latent dimensions used in the meta analysis
+        horizontal: list of unique number of clusters used in the meta analysis
+        panels: list of pathways found
+        n_runs: number of runs (ie using different random seeds, either for the model or for the clustering)
+    """
     items = list(items)
 
     vertical = _get_vertical(items)

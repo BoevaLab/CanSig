@@ -17,6 +17,16 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class ScatterPlotConfig(pydantic.BaseModel):
+    """This model is the configuration for plotting
+    Args:
+        dim_reduction: the dimensionality reduction method to plot (can be pca, umap or both)
+        signature_columns: the signature names to plot
+        batch_column: column in which the batch id is stored
+        color_map: color map used for plotting
+        latent_key: the key in the .obsm object where the latent representation coordinates are stored
+        ncols: number of cols to use for plotting
+    """
+
     dim_reduction: _SupportedDim = pydantic.Field(default="pca")
     signature_columns: Optional[List[str]]
     batch_column: str
@@ -30,7 +40,15 @@ class ScatterPlot:
         self._settings = settings
 
     def _put_latent_in_adata(self, z: pd.DataFrame, adata: anndata.AnnData) -> anndata.AnnData:
+        """takes a latent representation coordinate dataframe and inputs it into
+            an anndata object
 
+        Args:
+            z: pd.Dataframe containing the latent representation coordinates for each cell
+            adata: Anndata object to put the latent representation into (in the .obsm df)
+        Returns:
+            adata: Anndata object with latent representations in .obsm
+        """
         df = pd.concat([adata.obs, z], axis=1, join="inner")
         if set(adata.obs_names) != set(df.index):
             _LOGGER.warning("Index of the latent space does not match the index of the AnnData.")
@@ -41,6 +59,16 @@ class ScatterPlot:
         return adata
 
     def plot_scatter(self, adata: anndata.AnnData, representations: pd.DataFrame) -> plt.figure:
+        """main function of the class; plots a scatterplot according to a specific
+            dimensionality reduction method
+
+        Args:
+            adata: Anndata object to plot
+            representations: pd.Df containing the latent representation coordinates
+        Returns:
+            fig: matplotlib.plt figure containing the scatterplots for all
+            columns
+        """
 
         _LOGGER.info(f"Plotting {self._settings.dim_reduction.upper()}...")
         copy = adata.copy()
@@ -90,6 +118,19 @@ class ScatterPlot:
 
 
 def plot_insets(copy: anndata.AnnData, color: Union[str, List[str]], ncols: int, color_map: str):
+    """plots umap with pca inset
+
+    Args:
+        copy: Anndata object to plot
+        color: str or list of str describing the observations/variables to plot
+        ncols: number of columns to plot on
+        color_map: color map used
+    Returns:
+        fig: matplotlib.plt figure with insets plotted
+
+    See Also:
+        scanpy.pl.pca function for more details on args
+    """
     if isinstance(color, str):
         color = [color]
     nplots = len(color)
@@ -105,6 +146,16 @@ def plot_insets(copy: anndata.AnnData, color: Union[str, List[str]], ncols: int,
 
 
 def plot_inset(adata: anndata.AnnData, color: str, ax: plt.Axes, color_map: str):
+    """inplace function to plot a single inset
+
+    Args:
+        copy: Anndata object to plot
+        color: str or list of str describing the observations/variables to plot
+        color_map: color map used
+
+    See Also:
+        scanpy.pl.pca function for more details on args
+    """
     sc.pl.umap(adata, color=color, ax=ax, show=False, color_map=color_map)
     prettify_axis(ax)
     x_lim = ax.get_xlim()
@@ -128,6 +179,7 @@ def plot_inset(adata: anndata.AnnData, color: str, ax: plt.Axes, color_map: str)
 
 
 def prettify_axis(ax: plt.Axes) -> None:
+    """Helper function to make axes more beautiful"""
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
     ax.tick_params(axis="both", which="both", bottom=False, top=False, left=False, labelbottom=False, labelleft=False)

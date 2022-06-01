@@ -1,7 +1,7 @@
 import pathlib
 import logging
 from collections import defaultdict
-from typing import Literal  # pytype: disable=not-supported-yet
+from typing import Literal, List  # pytype: disable=not-supported-yet
 
 import anndata  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
@@ -17,6 +17,21 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFrame:
+    """This function discretizes the CNV values obtained.
+    The output of infercnv is a float; during our preprocessing module, these values are
+    already de-noised to remove spurious calls using the Dynamic Thresholding procedure
+    as described here https://github.com/broadinstitute/inferCNV/wiki/De-noising-Filters
+    All remaining positive values are turned into 1 = a gain and all negative values a -1 = a loss
+    using this function. We thus only gain general gains and losses and do not keep the amplitude
+    of this gain or loss (ie do not call 2 gains or -2 losses)
+
+    Args:
+        data: anndata object with precomputed cluster labels and CNV calls
+        cnv_key: key for the called CNV calls in the .obsm of data
+    Returns:
+        cnv_df: dataframe containing the discretized values of the CNV calls
+            shape (n_cells, n_regions_called)
+    """
 
     if scipy.sparse.issparse(data.obsm[cnv_key]):
         data.obsm[cnv_key] = data.obsm[cnv_key].toarray()
@@ -28,22 +43,52 @@ def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFram
 
 
 def get_cluster_labels(data: anndata.AnnData, cluster_key: str = "new-cluster-column") -> pd.DataFrame:
+    """Gets the cluster labels precomputed in the anndata object
 
+    Args:
+        data: anndata object with precomputed cluster labels and CNV calls
+        cluster_key: key for the cluster labels in the .obs of the adata
+    Returns:
+        pd.Df with the cluster labels for each cell
+    """
     return data.obs[[cluster_key]]
 
 
 def get_diff_cnv(
     cnv_array: pd.DataFrame, cl_labels: pd.DataFrame, diff_method: _TESTTYPE, correction: bool = False
 ) -> pd.DataFrame:
+    """Computes the differential CNVs between a cluster and the rest, for all clusters
 
+    Args:
+        cnv_array: pd.Df containing the discretized CNV calls, either computed using `discretize_cnv`
+            or precomputed if the CNVs were not called using our preprocessing module
+            shape (n_cells, n_regions_called)
+        cl_labels: cluster labels associated with the cnv_array, either computed using `get_cluster_labels`
+            or precomputed if the CNVs were not called using our preprocessing module
+            shape (n_cells, 1)
+        diff_method: can be mann-whitney U (mwu) or t-test (ttest), method used to compute the differential
+            CNV between a cluster and the rest
+        correction: whether to output FDR corrected q values in addition to p values
+    Returns:
+        diffCNVs: a pd.Df containing for the differential CNV results. For each cluster cl
+            - "{cl}_pvalues" contains the p values of the test cl vs rest
+            - "{cl}_perc_{gains/losses}" contains the percentage of cells in the cluster showing a
+                gain/loss at this region
+            - "{cl}_rest_{gains/losses}" contains the percentage of cells in all but the cluster showing a
+                gain/loss at this region
+            - (optional) "{cl}_qvalues" contains the q values of the test cl vs rest
+                (only if correction is True)
+    """
     if len(cnv_array.index.intersection(cl_labels.index)) != len(cnv_array.index):
         raise ValueError(
             "The index of the provided CNV array is different from the index of the cluster label assignments"
         )
 
+    # make sure the cnv array and cluster labels are in the same order ie correspond to each other
     cnv_array = cnv_array.loc[cl_labels.index]
     cl_key = cl_labels.columns[0]
 
+    # pick the statistical method used
     if diff_method == "mwu":
         diff_function = mannwhitneyu
     elif diff_method == "ttest":
@@ -52,19 +97,27 @@ def get_diff_cnv(
     all_results = defaultdict(list)
     for cluster in sorted(cl_labels[cl_key].unique()):
         _LOGGER.info(f"Starting differential CNV analysis for cluster {cluster}")
+
+        # separate the array into the CNVs associated with a cluster and the rest
         cl_cnv = cnv_array[cl_labels[cl_key] == cluster]
         rest_cnv = cnv_array[cl_labels[cl_key] != cluster]
 
         for col in cl_cnv:
 
+            # get the p value of the test
             all_results[str(cluster) + "_pvalues"].append(diff_function(cl_cnv[col].values, rest_cnv[col].values)[1])
+
+            # percentage of cells showing a gain/loss in this region in the cluster
             all_results[str(cluster) + "_perc_gains"].append((cl_cnv[col] > 0).sum() / cl_cnv.shape[0])
             all_results[str(cluster) + "_perc_losses"].append((cl_cnv[col] < 0).sum() / cl_cnv.shape[0])
+
+            # percentage of cells showing a gain/loss in this region in all but this cluster
             all_results[str(cluster) + "_rest_gains"].append((rest_cnv[col] > 0).sum() / rest_cnv.shape[0])
             all_results[str(cluster) + "_rest_losses"].append((rest_cnv[col] < 0).sum() / rest_cnv.shape[0])
 
     diffCNVs = pd.DataFrame(all_results)
 
+    # if correction is required, the we compute the FDR correction and append it
     if correction:
         final_pvalues = diffCNVs.loc[:, diffCNVs.columns.str.contains("pvalues")]
         qvalues = multipletests(final_pvalues.values.ravel(), method="fdr_bh")[1]
@@ -78,8 +131,32 @@ def get_diff_cnv(
     return diffCNVs
 
 
-def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10):
+def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10) -> List[str]:
+    """Computes the mapping between the CNV regions called in our preprocessing module
+        and the genes used for the computation of the CNV call.
 
+    Args:
+        data: anndata object as preprocessed using our preprocessing module. Must contain
+            - "chromosome" in data.var.columns: the chromosome to which the gene belongs
+            - "cnv_called" in data.var.columns: if this gene was used for the infercnv call (see
+                `cansig._preprocessing` for more details on the CNV calling procedure)
+            - "start" in data.var.columns: the start position of the gene on the chromosome
+            - "cnv" in data.uns: a summary of the infercnv run
+            - "chr_pos" in data.uns["cnv"]: a dictionary containing the mapping between the chromosome and
+                the index of the regions in the cnv array
+        window_size: the window size used for the CNV call (see `cansig._preprocessing` for more details
+            on the CNV calling procedure)
+    Returns:
+        the name of the regions, as 'chrXXX:gene1;gene2;...;gene_windowsize'
+
+    Raises:
+        ValueError: if the data object doesn't fit the above mentioned criteria (this is automatic
+            if the data object was processed using our preprocessing module)
+    Note:
+        this function is only called if computing the differential CNV on an Anndata object
+        preprocessed using our preprocessing module. If using an external CNV array, we assume
+        you have your own mapping for the regions you are using
+    """
     # This function can only be used on an anndata object preprocessed using our module
     # these checks are to ensure the organization of the adata object
     # fits the one created with our preprocessing module
@@ -140,7 +217,43 @@ def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10):
 
 
 def find_differential_cnv(data: anndata.AnnData, diff_method: _TESTTYPE, correction: bool = True) -> pd.DataFrame:
+    """Main function of the differential CNV module. This function is adapted to an anndata object
+        as preprocessed by our preprocessing module. If computing differential CNVs on a user-provided
+        object, the function `find_differential_cnv_precomputed` is used
 
+    Args:
+        data: anndata object as preprocessed using our preprocessing module. Must contain
+            - "X_cnv" in data.obsm: the CNV called using our preprocessin module
+            - "new-cluster-column" in data.obs: the column with the precomputed cluster labels
+            - "chromosome" in data.var.columns: the chromosome to which the gene belongs
+            - "cnv_called" in data.var.columns: if this gene was used for the infercnv call (see
+                `cansig._preprocessing` for more details on the CNV calling procedure)
+            - "start" in data.var.columns: the start position of the gene on the chromosome
+            - "cnv" in data.uns: a summary of the infercnv run
+            - "chr_pos" in data.uns["cnv"]: a dictionary containing the mapping between the chromosome and
+                the index of the regions in the cnv array
+        diff_method: can be mann-whitney U (mwu) or t-test (ttest), method used to compute the differential
+            CNV between a cluster and the rest
+        correction: whether to output FDR corrected q values in addition to p values
+    Returns:
+        diffCNVs: a pd.Df containing for the differential CNV results. For each cluster cl
+            - "{cl}_pvalues" contains the p values of the test cl vs rest
+            - "{cl}_perc_{gains/losses}" contains the percentage of cells in the cluster showing a
+                gain/loss at this region
+            - "{cl}_rest_{gains/losses}" contains the percentage of cells in all but the cluster showing a
+                gain/loss at this region
+            - (optional) "{cl}_qvalues" contains the q values of the test cl vs rest
+                (only if correction is True)
+        the index is the mapping as computed in `get_cnv_mapping`
+
+    Note:
+        this function is only called if computing the differential CNV on an Anndata object
+        preprocessed using our preprocessing module.
+
+    See Also:
+        `find_differential_cnv_precomputed`, the equivalent function if the anndata object provided
+        was not preprocessed using our preprocessing module
+    """
     cnv_array = discretize_cnv(data=data, cnv_key="X_cnv")
 
     cl_labels = get_cluster_labels(data=data, cluster_key="new-cluster-column")
@@ -156,11 +269,40 @@ def find_differential_cnv(data: anndata.AnnData, diff_method: _TESTTYPE, correct
 def find_differential_cnv_precomputed(
     cnv_array: pd.DataFrame, cl_labels: pd.DataFrame, diff_method: _TESTTYPE, correction: bool = True
 ) -> pd.DataFrame:
+    """Equivalent of the `find_differential_cnv` function if no anndata object used for the rest of the
+        analysis was not precomputed using our preprocessing module
 
+    Args:
+        cnv_array: pd.Df containing the discretized CNV calls
+            shape (n_cells, n_regions_called)
+        cl_labels: cluster labels associated with the cnv_array
+            shape (n_cells, 1)
+        diff_method: can be mann-whitney U (mwu) or t-test (ttest), method used to compute the differential
+            CNV between a cluster and the rest
+        correction: whether to output FDR corrected q values in addition to p values
+    Returns:
+        diffCNVs: a pd.Df containing for the differential CNV results. For each cluster cl
+            - "{cl}_pvalues" contains the p values of the test cl vs rest
+            - "{cl}_perc_{gains/losses}" contains the percentage of cells in the cluster showing a
+                gain/loss at this region
+            - "{cl}_rest_{gains/losses}" contains the percentage of cells in all but the cluster showing a
+                gain/loss at this region
+            - (optional) "{cl}_qvalues" contains the q values of the test cl vs rest
+                (only if correction is True)
+
+    Note:
+        this function is only called if computing the differential CNV on an Anndata object
+        preprocessed using our preprocessing module.
+
+    See Also:
+        `find_differential_cnv_precomputed`, the equivalent function if the anndata object provided
+        was not preprocessed using our preprocessing module
+    """
     diffCNVs = get_diff_cnv(cnv_array=cnv_array, cl_labels=cl_labels, diff_method=diff_method, correction=correction)
 
     return diffCNVs
 
 
 def save_diffcnv(diffCNVs: pd.DataFrame, output_file: pathlib.Path) -> None:
+    """Helper function to save the differential CNV results"""
     diffCNVs.to_csv(output_file)

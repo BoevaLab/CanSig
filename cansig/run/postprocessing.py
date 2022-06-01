@@ -118,6 +118,56 @@ def postprocess(
     diffcnv_correction: bool,
     cnvarray_path: Optional[pathlib.Path],
 ) -> bool:
+    """Main function of the postprocessing module. Will perform all steps of postprocessing ie:
+        - perform clustering with a specific amount of clusters
+        - perform GSEA with a user-chosen gene set
+        - by default (optional) plot the latent representations colored according to batch ID, cluster
+            label and optionally known precomputed signatures
+        - by default (optional) save the results of the differential gene expression analysis,
+            score all cells according to the de novo found signatures and compute correlation
+            between de novo found signatures
+        - optional step (skipped by default) compute the differential CNVs between the clusters
+            and save the results
+
+    Args:
+        data_path: path to where the .h5ad data is stored (see cansig._preprocessing for more
+            details on the format)
+        latents_dir: path to the directory containig the results of the integration step
+            performed on the same data as indicated in the data_path, using our
+            integration module (see cansig.run.integration for more details)
+        output_dir: path to the postprocessing directory to save the results
+        cluster_config: configuration to run clustering (see cansig.cluster for more details)
+        gsea_config: configuration to run GSEA (see cansig.gsea for more details)
+        plotting_config: configuration for plotting (see cansig.plotting for more details)
+        plot: whether to produce & save the plots or not
+        savesig: whether to save the de novo signatures and score the cells according to these
+        n_genes_sig: number of genes used to define a signature to score the cells
+        corr_method: correlation (spearman or pearson) to compute the correlation between
+            de novo signatures
+        diffcnv: whether to perform differential CNV analysis
+        diffcnv_method: either mwu or ttest, the statistical test used to perform the differential
+            CNV analysis
+        diffcnv_correction: whether to compute the FDR corrected results for the differential
+            CNV analysis
+        cnvarray_path: optional, if computing the differential CNV analysis on an anndata object
+            not preprocessed using our preprocessing module, the path to the CNV calling for each
+            cell
+
+    Returns:
+        A boolean that verifies the directory is not corrupted
+
+    Note:
+        This function saves a number of analyses in the output_dir:
+            - settings for clustering
+            - cluster labels
+            - settings for GSEA
+            - (by default) scatter plot of the latent space
+            - (by default) differential gene expression results
+            - (by default) cell score for each of the de novo found signatures
+            - (by default) correlation between de novo found signatures
+            - GSEA results for each cluster
+            - (optionally) results for the differential CNV analysis
+    """
     # Create the output directory
     output_dir = fs.PostprocessingDir(path=output_dir, create=True)
 
@@ -149,6 +199,7 @@ def postprocess(
     adata.obs[cluster_col] = pd.Categorical(labels)
 
     # *** Plotting ***
+    # by default, plotting is activated with PCA (plot=True), can be disabled by the user
     if plot:
         scatter = plotting.ScatterPlot(plotting_config)
         fig = scatter.plot_scatter(adata=adata, representations=representations)
@@ -159,6 +210,9 @@ def postprocess(
 
     gene_ranks = gex_object.diff_gex(adata)
 
+    # *** Signature saving and scoring ***
+    # by default, all de novo found signatures are saved as the result of the differential gene expression
+    # and the signatures are scored an all cells using n_genes_sig top positively diff expressed genes
     if savesig:
         output_dir.make_sig_dir()
         gsea.save_signatures(diff_genes=gene_ranks, res_dir=output_dir.signature_output)

@@ -28,7 +28,7 @@ class GeneExpressionAnalysis:
 
     Performs first differential gene expression analysis and then GSEA.
 
-    Attrs:
+    Args:
         cluster_name: name of the column in which to find the cluster labels
             in the AnnData object
         group_names: clusters to perform the analysis for, default is all,
@@ -44,6 +44,8 @@ class GeneExpressionAnalysis:
         permutation_num: number of permutations computed in GSEA.
             Lower reduces the computational complexity,
             higher leads to more robust results.
+
+    Note: if using default settings for gene_sets, you need to have internet connection to run GSEA!
     """
 
     def __init__(
@@ -74,13 +76,14 @@ class GeneExpressionAnalysis:
     def diff_gex(self, adata: anndata.AnnData) -> Dict[str, pd.DataFrame]:
         """Computes the differential gene expression between cluster groups
 
-        Attrs:
+        Args:
             adata: AnnData object containing the clustering labels and gene counts in X
 
         Returns:
-            adata_copy: copy of the AnnData object with
-                log-normalized_layer and scaled gene expression
-                and performed gene expression analysis
+            gene_order: dictionary with cluster label as key and
+                differential gene expression results as value, with genes
+                ordered according to their z scores, and the p values and
+                FDR corrected p values
         """
 
         if self.n_diff_genes is None:
@@ -121,22 +124,20 @@ class GeneExpressionAnalysis:
         """Performs the gene set enrichment analysis for every cluster group using pre-ranked
         differentially expressed genes.
 
-        Attrs:
+        Args:
             adata: AnnData object containing the clustering labels and
             gene counts in X
             diff_genes: dictionary with cluster label as key and a
             pd.DataFrame containing the
-            n_diff_genes most overexpressed genes ranked by logfold
-            change in the corresponding cluster
+            n_diff_genes most overexpressed genes ranked by z score
+            in the corresponding cluster
 
         Returns:
-            pathways: dictionary with the cluster name as
-            key and the pd.DataFrame with
-            the 5 most enriched pathways found by GSEA as value
+            gsea_df: pd.DataFrame containing the result of GSEA
+                on all clusters
 
         Note:
-            the columns of the pathways[label] pd.DataFrames
-            are the classical GSEA
+            the columns of gsea_df are the classical GSEA
             columns ie
                 - 'es' (enrichment score),
                 - 'nes' (normalized_layer enrichemnt score)
@@ -152,6 +153,9 @@ class GeneExpressionAnalysis:
                     positively ranked in our
                     dataset and matched to the term that we will
                     use for scoring)
+                - 'cluster' (the cluster for which these results were found)
+
+        Note: if using default settings for gene_sets, you need to have internet connection!
         """
         gsea_dfs = []
         for label, gene_rank in diff_genes.items():
@@ -168,11 +172,14 @@ class GeneExpressionAnalysis:
             )
 
             gsea_df = gs_res.res2d.sort_values(by="nes", ascending=False)
+            # select only genes that are positively enriched
             pos_genes = gs_res.ranking[gs_res.ranking.sort_values() >= 0].index
 
             genes_for_scoring = []
 
             for i in range(gsea_df.shape[0]):
+                # the genes selected for scoring are genes that are positively enriched
+                # in the cluster and belong to the pathway
                 genes = np.intersect1d(gsea_df.iloc[i].genes.split(";"), pos_genes)
                 genes_scoring = genes_to_string(genes)
                 genes_for_scoring.append(genes_scoring)
@@ -206,6 +213,17 @@ def gex_factory(cluster_name: str, config: GeneExpressionConfig) -> GeneExpressi
 def save_signatures(diff_genes: Dict[str, pd.DataFrame], res_dir: pathlib.Path) -> None:
     """Saves the signatures associated with each cluster as the differential expression
     analysis
+
+    Args:
+        diff_genes: a dict containing the results of the differential gene expression as computed
+            in `diff_gex`
+        res_dir: path to the directory in which to save the signatures
+
+    Returns:
+        None
+
+    See Also:
+        `diff_gex`, function used to perform the differential gene expression
     """
     for cluster in diff_genes:
         diff_genes[cluster].to_csv(res_dir / f"signature_cl{cluster}.csv")
@@ -219,6 +237,25 @@ def score_signature(
     cell_score_file: pathlib.Path,
     sig_correlation_file: pathlib.Path,
 ) -> None:
+    """Scores all cells present in the Anndata object using the uncovered de novo signatures.
+
+    Args:
+        adata: Anndata object inputted at the beginning of the pipeline
+        n_genes_sig: the signature is defined as the top n_genes_sig most differentially expressed genes
+        corr_method: can be either pearson or spearman, the method used to compute the correlation between
+            the found signatures
+        diff_genes: a dict containing the results of the differential gene expression as computed
+            in `diff_gex`
+        cell_score_file: path to the file to save the cell scores
+        sig_correlation_file: path to the file to save the correlation between signatures
+    Returns:
+        None
+
+    See Also:
+        `diff_gex`, function used to perform the differential gene expression
+    """
+
+    # first normalize and log1p to be able to score
     copy = adata.copy()
     sc.pp.normalize_total(copy, target_sum=10000)
     sc.pp.log1p(copy)
@@ -227,12 +264,16 @@ def score_signature(
     for cluster in np.sort(list(diff_genes.keys())):
         added_signature.append(f"signature_{cluster}")
         sig = diff_genes[cluster]
+        # select the genes for the signature, which must be overexpressed in the
+        # cluster and within the n_genes_sig top differentially expressed
         sig = sig[sig.zscores > 0]
         sig = list(sig.iloc[:n_genes_sig].index)
 
         sc.tl.score_genes(copy, gene_list=sig, score_name=added_signature[-1])
 
+    # save the scores
     signature_df = copy.obs[added_signature]
     signature_df.to_csv(cell_score_file)
 
+    # save the correlation between the scores
     signature_df.corr(method=corr_method).to_csv(sig_correlation_file)
