@@ -20,6 +20,7 @@ class ReprDirectoryConfig(pydantic.BaseModel):
     # TODO(Josephine): Potentially make this modifiable by the user
     """This is the configuration for the optimization to find the
     'representative' directory
+
     Args:
         NANSTABILITY: value used to fill in np.nan values in the stability computation
         NANVALUES: value usde to fill the np.nan values in the NES value computation
@@ -110,7 +111,7 @@ def get_stability_panel(settings: ReprDirectoryConfig, values: np.ndarray) -> np
         values: array as computed in `get_values_panel`
     Returns:
         stability: array containing the stability values for all the runs for a specific number of
-            clusters and a specific panel
+        clusters and a specific panel
     See Also:
         `ReprDirectoryConfig`
         `get_values_panel`
@@ -147,18 +148,21 @@ def get_objective_function_elements(
         panel: the panel name to consider
         n_runs: number of runs (ie using different random seeds, either for the model or for the clustering)
     Returns:
-        all_values: dictionary with number of clusters as key, and the NES values associated for each run
+        all_values dictionary with number of clusters as key, and the NES values associated for each run
         for each panel (ie pathway) found as value. The value array will thus be of shape
         (n_panels, n_latent_dimensions, n_runs)
-        all_stability: dictionary with number of clusters as key, and the stability values associated
+
+        all_stability dictionary with number of clusters as key, and the stability values associated
         for each run for each panel (ie pathway) found as value. The value array will thus be of shape
         (n_panels, n_latent_dimensions, n_runs)
-        all_complexity: dictionary with the number of clusters as key, and the complexity values associated
+
+        all_complexity dictionary with the number of clusters as key, and the complexity values associated
         for each run. The value array will thus be of shape (n_latent_dimensions, n_runs)
+
     See Also:
-        `ReprDirectoryConfig`
-        `get_values_panel`
-        `get_stability_panel`
+        `ReprDirectoryConfig`,
+        `get_values_panel`,
+        `get_stability_panel`,
         `get_complexity`
     """
     all_values, all_stability = defaultdict(list), defaultdict(list)
@@ -186,13 +190,14 @@ def get_objective_function(
 ) -> np.ndarray:
     """Returns the objective function associated with a specific number of clusters.
     The objective function consists of three parts:
-        - the NES: we wish to maximize the sum of the NES values over all pathways selected
-            (here we minimize -NES)
-        - the stability: we wish to minimize the variance over random seeds and number
-            of latent dimensions (we used a penalty coeff, default 1)
-        - the complexity: we wish to minimize the complexity of the found solution
-            (we used a penalty coeff, default 0.1 to accomodate the difference in range
-            between the complexity and the NES values)
+
+    - the NES: we wish to maximize the sum of the NES values over all pathways selected
+        (here we minimize -NES)
+    - the stability: we wish to minimize the variance over random seeds and number
+        of latent dimensions (we used a penalty coeff, default 1)
+    - the complexity: we wish to minimize the complexity of the found solution
+        (we used a penalty coeff, default 0.1 to accomodate the difference in range
+        between the complexity and the NES values)
 
     Args:
         settings: settings as desribed in ReprDirectoryConfig
@@ -204,7 +209,7 @@ def get_objective_function(
         objective function associated for all runs for a specific number of clusters
         shape (n_latent_dimensions, n_runs)
     See Also:
-        `ReprDirectoryConfig`
+        `ReprDirectoryConfig`,
         `get_objective_function_elements`
     """
     return (
@@ -222,6 +227,7 @@ def get_all_objective_function(
     vertical: List[_FactorType],
 ) -> np.ndarray:
     """Returns all the objective functions as computed in `get_objective_function`
+
     Args:
         settings: settings as desribed in ReprDirectoryConfig
         all_values: dictionary as computed in `get_objective_function_elements`
@@ -231,7 +237,7 @@ def get_all_objective_function(
     Returns:
         objective function associated for all runs, shape (n_clusters, n_latent_dimensions, n_runs)
     See Also:
-        `ReprDirectoryConfig`
+        `ReprDirectoryConfig`,
         `get_objective_function`
     """
     all_obj_function = []
@@ -280,7 +286,7 @@ def find_all_config_directories(
         latent_dim: number of latent dimensions of the representative run
         directories: list of all the directories for the meta analysis
     Returns:
-        config_directories: list of all the directories that have the correct number of clusters
+        list of all the directories that have the correct number of clusters
         and number of latent dimensions
     See Also:
         `heatmap` submodule
@@ -332,8 +338,8 @@ def find_representative_run(
         settings: settings as desribed in ReprDirectoryConfig
 
     Returns:
-        chosen_directory: the path to the "representative" directory, ie the directory associated with
-            the run that minimizes the objective function
+        the path to the "representative" directory, ie the directory associated with
+        the run that minimizes the objective function
 
     See Also:
         `generate_items` in cansig.run.pipeline

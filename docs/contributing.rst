@@ -3,10 +3,6 @@
 Contribution guide
 ==================
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
 
 Submitting an issue
 -------------------

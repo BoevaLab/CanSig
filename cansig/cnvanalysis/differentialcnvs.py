@@ -29,8 +29,8 @@ def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFram
         data: anndata object with precomputed cluster labels and CNV calls
         cnv_key: key for the called CNV calls in the .obsm of data
     Returns:
-        cnv_df: dataframe containing the discretized values of the CNV calls
-            shape (n_cells, n_regions_called)
+        dataframe containing the discretized values of the CNV calls
+        shape (n_cells, n_regions_called)
     """
 
     if scipy.sparse.issparse(data.obsm[cnv_key]):
@@ -69,15 +69,17 @@ def get_diff_cnv(
         diff_method: can be mann-whitney U (mwu) or t-test (ttest), method used to compute the differential
             CNV between a cluster and the rest
         correction: whether to output FDR corrected q values in addition to p values
+
     Returns:
-        diffCNVs: a pd.Df containing for the differential CNV results. For each cluster cl
+        a pd.Df containing for the differential CNV results. For each cluster cl
+
             - "{cl}_pvalues" contains the p values of the test cl vs rest
             - "{cl}_perc_{gains/losses}" contains the percentage of cells in the cluster showing a
-                gain/loss at this region
+              gain/loss at this region
             - "{cl}_rest_{gains/losses}" contains the percentage of cells in all but the cluster showing a
-                gain/loss at this region
+              gain/loss at this region
             - (optional) "{cl}_qvalues" contains the q values of the test cl vs rest
-                (only if correction is True)
+              (only if correction is True)
     """
     if len(cnv_array.index.intersection(cl_labels.index)) != len(cnv_array.index):
         raise ValueError(
@@ -137,17 +139,20 @@ def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10) -> List[str]:
 
     Args:
         data: anndata object as preprocessed using our preprocessing module. Must contain
+
             - "chromosome" in data.var.columns: the chromosome to which the gene belongs
             - "cnv_called" in data.var.columns: if this gene was used for the infercnv call (see
-                `cansig._preprocessing` for more details on the CNV calling procedure)
+              `cansig._preprocessing` for more details on the CNV calling procedure)
             - "start" in data.var.columns: the start position of the gene on the chromosome
             - "cnv" in data.uns: a summary of the infercnv run
             - "chr_pos" in data.uns["cnv"]: a dictionary containing the mapping between the chromosome and
-                the index of the regions in the cnv array
+              the index of the regions in the cnv array
+
         window_size: the window size used for the CNV call (see `cansig._preprocessing` for more details
             on the CNV calling procedure)
+
     Returns:
-        the name of the regions, as 'chrXXX:gene1;gene2;...;gene_windowsize'
+        the name of the regions as "chrXXX;gene1;gene2;...;gene_windowsize"
 
     Raises:
         ValueError: if the data object doesn't fit the above mentioned criteria (this is automatic
@@ -218,33 +223,37 @@ def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10) -> List[str]:
 
 def find_differential_cnv(data: anndata.AnnData, diff_method: _TESTTYPE, correction: bool = True) -> pd.DataFrame:
     """Main function of the differential CNV module. This function is adapted to an anndata object
-        as preprocessed by our preprocessing module. If computing differential CNVs on a user-provided
-        object, the function `find_differential_cnv_precomputed` is used
+    as preprocessed by our preprocessing module. If computing differential CNVs on a user-provided
+    object, the function `find_differential_cnv_precomputed` is used
 
     Args:
         data: anndata object as preprocessed using our preprocessing module. Must contain
+
             - "X_cnv" in data.obsm: the CNV called using our preprocessin module
             - "new-cluster-column" in data.obs: the column with the precomputed cluster labels
             - "chromosome" in data.var.columns: the chromosome to which the gene belongs
             - "cnv_called" in data.var.columns: if this gene was used for the infercnv call (see
-                `cansig._preprocessing` for more details on the CNV calling procedure)
+              `cansig._preprocessing` for more details on the CNV calling procedure)
             - "start" in data.var.columns: the start position of the gene on the chromosome
             - "cnv" in data.uns: a summary of the infercnv run
             - "chr_pos" in data.uns["cnv"]: a dictionary containing the mapping between the chromosome and
-                the index of the regions in the cnv array
+              the index of the regions in the cnv array
+
         diff_method: can be mann-whitney U (mwu) or t-test (ttest), method used to compute the differential
             CNV between a cluster and the rest
         correction: whether to output FDR corrected q values in addition to p values
+
     Returns:
-        diffCNVs: a pd.Df containing for the differential CNV results. For each cluster cl
+        a pd.Df containing for the differential CNV results (the index is the mapping as computed in `get_cnv_mapping`).
+        For each cluster cl
+
             - "{cl}_pvalues" contains the p values of the test cl vs rest
-            - "{cl}_perc_{gains/losses}" contains the percentage of cells in the cluster showing a
-                gain/loss at this region
-            - "{cl}_rest_{gains/losses}" contains the percentage of cells in all but the cluster showing a
-                gain/loss at this region
+            - "{cl}_perc_{gains/losses}" contains the percentage of cells in the cluster showing
+              a gain/loss at this region
+            - "{cl}_rest_{gains/losses}" contains the percentage of cells in all but the cluster
+              showing a gain/loss at this region
             - (optional) "{cl}_qvalues" contains the q values of the test cl vs rest
-                (only if correction is True)
-        the index is the mapping as computed in `get_cnv_mapping`
+              (only if correction is True)
 
     Note:
         this function is only called if computing the differential CNV on an Anndata object
@@ -273,22 +282,22 @@ def find_differential_cnv_precomputed(
         analysis was not precomputed using our preprocessing module
 
     Args:
-        cnv_array: pd.Df containing the discretized CNV calls
-            shape (n_cells, n_regions_called)
-        cl_labels: cluster labels associated with the cnv_array
-            shape (n_cells, 1)
+        cnv_array: pd.Df containing the discretized CNV calls, shape (n_cells, n_regions_called)
+        cl_labels: cluster labels associated with the cnv_array, shape (n_cells, 1)
         diff_method: can be mann-whitney U (mwu) or t-test (ttest), method used to compute the differential
             CNV between a cluster and the rest
         correction: whether to output FDR corrected q values in addition to p values
+
     Returns:
-        diffCNVs: a pd.Df containing for the differential CNV results. For each cluster cl
+        a pd.Df containing for the differential CNV results. For each cluster cl
+
             - "{cl}_pvalues" contains the p values of the test cl vs rest
             - "{cl}_perc_{gains/losses}" contains the percentage of cells in the cluster showing a
-                gain/loss at this region
+              gain/loss at this region
             - "{cl}_rest_{gains/losses}" contains the percentage of cells in all but the cluster showing a
-                gain/loss at this region
+              gain/loss at this region
             - (optional) "{cl}_qvalues" contains the q values of the test cl vs rest
-                (only if correction is True)
+              (only if correction is True)
 
     Note:
         this function is only called if computing the differential CNV on an Anndata object

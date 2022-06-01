@@ -50,7 +50,7 @@ You should see a new directory ``data`` with a file ``pipeline-tutorial.h5ad``.
 Running the analysis
 ^^^^^^^^^^^^^^^^^^^^
 
-.. note:: If you are familiar with Python, you may prefer running the analysis in a custom manner. See the :ref:`pipeline-advanced` and :ref:`cansig-for-python-coders`.
+.. note:: If you are familiar with Python, you may prefer running the analysis in a custom manner. See the :ref:`pipeline-advanced` and :ref:`Cansig for python coders <coders>`.
 
 We will run the analysis pipeline with a single command:
 
@@ -148,7 +148,7 @@ Tutorials
 * To learn more about the pipeline (parallelization, using custom models, plotting), see :ref:`pipeline-advanced`.
 * For a tutorial how to interpret the results from the biological perspective, see :ref:`interpretation`.
 * To learn about the preprocessing module (used to prepare the raw data into the HDF5 format), see the :ref:`preprocessing`.
-* To learn how to run CanSig in a python script/jupyter notebook, see :ref:`cansig-for-python-coders`.
+* To learn how to run CanSig in a python script/jupyter notebook, see :ref:`Cansig for python coders <coders>`.
 
 
 Contributing
@@ -168,6 +168,7 @@ Indices and tables
    pipeline-advanced
    interpretation
    contributing
+   cansig-for-python-coders
    source/modules
 
 * :ref:`genindex`

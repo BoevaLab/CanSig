@@ -18,6 +18,7 @@ _LOGGER = logging.getLogger(__name__)
 
 class ScatterPlotConfig(pydantic.BaseModel):
     """This model is the configuration for plotting
+
     Args:
         dim_reduction: the dimensionality reduction method to plot (can be pca, umap or both)
         signature_columns: the signature names to plot

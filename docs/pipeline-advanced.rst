@@ -2,7 +2,7 @@
 
 Advanced pipeline usage
 =======================
-
+ 
 Using custom models
 -------------------
 
@@ -53,6 +53,8 @@ The plotting utilities can be controlled through three arguments in the command 
 * ``--dim-reduction``: the dimensionality reduction method used for plotting. The options are "pca", "umap", or "both", and defaults to PCA. 
 * ``--sigcols``: optionally, the name of the signatures to plot in addition to batch and cluster assignment. 
 * ``--disable-plots``: if you do not want plots to be generated, use this flag. This will skip plotting altogether.
+
+
 .. note::
    The signature column names inputted with ``--sigcols`` must be in the adata.obs.columns.
 
@@ -95,12 +97,13 @@ Example usage to disable plotting utilities
                                    --disable-plots
 
 Saving signatures and scoring cells
-----------------------------
+-----------------------------------
 
 CanSig finds signatures in cancer data: these signatures are defined as the most overexpressed genes in a biologically meaningful part of the subspace (approximated by a cluster).
 By default, running the pipeline will result the results of the differential gene expression analysis to be saved for each cluster (for more information on interpretation, see :ref:`interpretation`), as wells as the score for each cell for each of the signatures (defined as the 200 most positively differentially expressed genes in the cluster) and the correlation between the signatures.
 
 The results associated with signatures and scoring can be controlled through the three following command line arguments:
+
 * ``--disable-signatures``: if you do not want any of the results linked to signatures to be saved (ie differential gene expression analysis for each cluster, scores of each signature for each cell and correlation between signatures), then input this flag.
 * ``--ngenessig``: number of genes that define a signature associated with a cluster. The cells will be scored using the n top positively differentially expressed genes in the cluster, with n being the minimal value between the total number of differentially expressed genes and ngenessig inputted. Defaults to 200.
 * ``--corrmethod``: the method used to compute the correlation between the signatures; can be spearman or pearson. Defaults to pearson.
@@ -146,12 +149,10 @@ This means that the data object you provide will contain the following:
 
    - "X_cnv" in data.obsm: the CNV called using our preprocessing module
    - "chromosome" in data.var.columns: the chromosome to which the gene belongs
-   - "cnv_called" in data.var.columns: if this gene was used for the infercnv call (see
-         `cansig._preprocessing` for more details on the CNV calling procedure)
+   - "cnv_called" in data.var.columns: if this gene was used for the infercnv call (see ``cansig._preprocessing`` for more details on the CNV calling procedure)
    - "start" in data.var.columns: the start position of the gene on the chromosome
    - "cnv" in data.uns: a summary of the infercnv run
-   - "chr_pos" in data.uns["cnv"]: a dictionary containing the mapping between the chromosome and
-         the index of the regions in the cnv array
+   - "chr_pos" in data.uns["cnv"]: a dictionary containing the mapping between the chromosome and the index of the regions in the cnv array
 
 The analysis can be controlled through three arguments in the command line:
 
@@ -171,7 +172,8 @@ Example usage to compute the differential CNV analysis with default values (Mann
                                    --output tutorial-output \
                                    --diffcnv
 
-This will result in the following file being added to the ``tutorial-output/`` directory, in addition to all described in the :ref:`index`
+This will result in the following file being added to the ``tutorial-output/`` directory, in addition to all the files/directories described on the homepage.
+
 * ``postprocessing/``:
    * ``{rundir}/differential-cnvs.csv``: file containing the columns for each cluster cl
       - {cl}\_pvalues: contains the p values of the test cl vs rest
@@ -201,7 +203,7 @@ This will result in the same file as in the previous example with the addition o
    If trying to run this function as such on a data object that has not been processed with our preprocessing module, this will result in an ValueError
 
 Differential CNV analysis for data not processed with our module
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 This calling assumes the data was not processed using our module. In this case, you must provide a path to a .csv file that contains pre-called CNV. 
 This array must have the following structure:
 - first column should contain the cell IDs. The cell IDs must correspond to the cell IDs in the data object provided.
@@ -234,14 +236,13 @@ Example usage to compute the differential CNV analysis with default values (Mann
                                    --diffcnv \
                                    --cnvarray data/pipeline-tutorial/cnv_array.csv
 
-This will result in the following file being added to the ``tutorial-output/`` directory, in addition to all described in the :ref:`index`
+This will result in the following file being added to the ``tutorial-output/`` directory, in addition to all the files/directories described on the homepage.
+
 * ``postprocessing/``:
    * ``{rundir}/differential-cnvs.csv``: file containing the columns for each cluster cl
       - {cl}\_pvalues: contains the p values of the test cl vs rest
-      - {cl}\_perc\_{gains/losses}: contains the percentage of cells in the cluster showing a
-            gain/loss at this region
-      - {cl}\_rest\_{gains/losses}: contains the percentage of cells in all but the cluster showing a
-            gain/loss at this region
+      - {cl}\_perc\_{gains/losses}: contains the percentage of cells in the cluster showing a gain/loss at this region
+      - {cl}\_rest\_{gains/losses}: contains the percentage of cells in all but the cluster showing a gain/loss at this region
 
 Example usage to compute the differential CNV analysis with a t-test and with FDR corrected values (ie q-values)
 
@@ -259,4 +260,5 @@ Example usage to compute the differential CNV analysis with a t-test and with FD
                                    --cnvarray data/pipeline-tutorial/cnv_array.csv
 
 This will result in the same file as in the previous example with the addition of the columns
+
       - "{cl}\_qvalues": contains the q values of the test cl vs rest
