@@ -200,7 +200,7 @@ def postprocess(
         else:
             print("Computing the differential CNVs using a user-provided CNV array")
             cnvarray = pd.read_csv(cnvarray_path, index_col=0)
-            cl_labels = cnv.get_cluster_labels(data=adata)
+            cl_labels = cnv.get_cluster_labels(data=adata, batch_key=batch)
             diffCNVs = cnv.find_differential_cnv_precomputed(
                 cnv_array=cnvarray,
                 cl_labels=cl_labels,
