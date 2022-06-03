@@ -15,7 +15,7 @@ _TESTTYPE = Literal["mwu", "ttest"]
 
 _LOGGER = logging.getLogger(__name__)
 
-SUBCLONAL_MAJORITY = 0.3
+SUBCLONAL_MAJORITY = 0.5
 
 
 def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFrame:
