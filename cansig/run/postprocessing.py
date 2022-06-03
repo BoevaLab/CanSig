@@ -22,6 +22,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("data", type=pathlib.Path, help="The path to the original anndata object.")
     parser.add_argument("latents", type=pathlib.Path, help="The path to the directory with integration results.")
+    parser.add_argument("--batch", type=str, help="Name of the column with batch (or sample) index.")
     parser.add_argument("--clusters", type=int, help="The number of clusters.", default=5)
 
     parser.add_argument(
@@ -79,6 +80,12 @@ def parse_args():
         help="a flag used when the user wants to compute differential CNVs",
     )
     parser.add_argument(
+        "--subclonalcnv",
+        action="store_true",
+        help="a flag used when the user wants to compute differential CNVs \
+            on a subclonal basis rather than a per cell basis",
+    )
+    parser.add_argument(
         "--diffcnv-method",
         type=str,
         help="the method used to perform differential CNV analysis",
@@ -106,6 +113,7 @@ def postprocess(
     data_path: pathlib.Path,
     latents_dir: pathlib.Path,
     output_dir: pathlib.Path,
+    batch: str,
     cluster_config: cluster.LeidenNClusterConfig,
     gsea_config: gsea.GeneExpressionConfig,
     plotting_config: plotting.ScatterPlotConfig,
@@ -114,6 +122,7 @@ def postprocess(
     n_genes_sig: int,
     corr_method: _CORRTYPE,
     diffcnv: bool,
+    subclonalcnv: bool,
     diffcnv_method: _TESTTYPE,
     diffcnv_correction: bool,
     cnvarray_path: Optional[pathlib.Path],
@@ -179,7 +188,13 @@ def postprocess(
         # the user wants to perform the CNV analysis
         if cnvarray_path is None:
             print("Computing the differential CNVs using the provided AnnData object")
-            diffCNVs = cnv.find_differential_cnv(data=adata, diff_method=diffcnv_method, correction=diffcnv_correction)
+            diffCNVs = cnv.find_differential_cnv(
+                data=adata,
+                diff_method=diffcnv_method,
+                correction=diffcnv_correction,
+                subclonal=subclonalcnv,
+                batch_key=batch,
+            )
             cnv.save_diffcnv(diffCNVs=diffCNVs, output_file=output_dir.dcnv_output)
 
         else:
@@ -187,7 +202,11 @@ def postprocess(
             cnvarray = pd.read_csv(cnvarray_path, index_col=0)
             cl_labels = cnv.get_cluster_labels(data=adata)
             diffCNVs = cnv.find_differential_cnv_precomputed(
-                cnv_array=cnvarray, cl_labels=cl_labels, diff_method=diffcnv_method, correction=diffcnv_correction
+                cnv_array=cnvarray,
+                cl_labels=cl_labels,
+                diff_method=diffcnv_method,
+                correction=diffcnv_correction,
+                batch_key=batch,
             )
             cnv.save_diffcnv(diffCNVs=diffCNVs, output_file=output_dir.dcnv_output)
 
@@ -198,6 +217,7 @@ def main(args):
     postprocess(
         data_path=args.data,
         latents_dir=args.latents,
+        batch=args.batch,
         output_dir=args.output,
         gsea_config=gsea.GeneExpressionConfig(gene_sets=args.gene_sets),
         cluster_config=cluster.LeidenNClusterConfig(clusters=args.clusters),
@@ -209,6 +229,7 @@ def main(args):
         n_genes_sig=args.ngenessig,
         corr_method=args.corrmethod,
         diffcnv=args.diffcnv,
+        subclonalcnv=args.subclonalcnv,
         diffcnv_method=args.diffcnv_method,
         diffcnv_correction=args.diffcnv_correction,
         cnvarray_path=args.cnvarray,
