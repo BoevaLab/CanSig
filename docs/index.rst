@@ -12,6 +12,25 @@ Human tumors are highly heterogeneous in their cell composition; specifically, t
 .. note::
    A preprint describing the pipeline and case studies is `now available <https://doi.org/10.1101/2022.04.14.488324>`_.
 
+Navigation
+----------
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   preprocessing
+   pipeline-advanced
+   interpretation
+   formatting-data
+   cansig-for-python-coders
+   troubleshooting
+   contributing
+   source/modules
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
 Getting started
 ---------------
@@ -147,8 +166,10 @@ Tutorials
 
 * To learn more about the pipeline (parallelization, using custom models, plotting), see :ref:`pipeline-advanced`.
 * For a tutorial how to interpret the results from the biological perspective, see :ref:`interpretation`.
-* To learn about the preprocessing module (used to prepare the raw data into the HDF5 format), see the :ref:`preprocessing`.
+* To learn about the preprocessing module (used to prepare the raw data into the .h5ad format), see the :ref:`preprocessing`.
+* To learn how to format already preprocessed .csv files into .h5ad files, see :ref:`formatting`.
 * To learn how to run CanSig in a python script/jupyter notebook, see :ref:`Cansig for python coders <coders>`.
+* To ensure smooth running of CanSig, check out :ref:`the checklist and troubleshooting page. <troubleshooting>`. 
 
 
 Contributing
@@ -157,21 +178,5 @@ Contributing
 For the contribution guide and instructions for new developers, see :ref:`contribution-guide`.
 
 
-Indices and tables
-------------------
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   preprocessing
-   pipeline-advanced
-   interpretation
-   contributing
-   cansig-for-python-coders
-   source/modules
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
