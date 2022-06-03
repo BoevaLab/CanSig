@@ -15,6 +15,8 @@ _TESTTYPE = Literal["mwu", "ttest"]
 
 _LOGGER = logging.getLogger(__name__)
 
+SUBCLONAL_MAJORITY = 0.5
+
 
 def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFrame:
 
@@ -27,13 +29,54 @@ def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFram
     return pd.DataFrame(data.obsm[cnv_key], index=data.obs_names)
 
 
-def get_cluster_labels(data: anndata.AnnData, cluster_key: str = "new-cluster-column") -> pd.DataFrame:
+def get_subclonal_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv", subclonal_key: str = "subclonal") -> pd.DataFrame:
 
-    return data.obs[[cluster_key]]
+    cnv_array = discretize_cnv(data=data, cnv_key="X_cnv")
+
+    pos_cnv_array = cnv_array[cnv_array >= 0].fillna(0)
+    neg_cnv_array = cnv_array[cnv_array <= 0].fillna(0)
+
+    sub_pos_cnv_array = pd.concat([pos_cnv_array, data.obs[subclonal_key]], axis=1)
+    sub_neg_cnv_array = pd.concat([neg_cnv_array, data.obs[subclonal_key]], axis=1)
+
+    mean_sub_pos = sub_pos_cnv_array.groupby(subclonal_key).mean()
+    mean_sub_pos[mean_sub_pos > SUBCLONAL_MAJORITY] = 1
+    mean_sub_pos = mean_sub_pos[mean_sub_pos > SUBCLONAL_MAJORITY].fillna(0)
+
+    mean_sub_neg = sub_neg_cnv_array.groupby(subclonal_key).mean()
+    mean_sub_neg[mean_sub_neg < -SUBCLONAL_MAJORITY] = -1
+    mean_sub_neg = mean_sub_neg[mean_sub_neg < -SUBCLONAL_MAJORITY].fillna(0)
+
+    mean_sub = mean_sub_pos + mean_sub_neg
+
+    subclonal_cnv_array = []
+    for subclone in data.obs.subclonal.unique():
+        subclonal_cells = data.obs[data.obs[subclonal_key] == subclone].index
+
+        subclonal_df = pd.concat([mean_sub.loc[subclone] for i in range(len(subclonal_cells))], axis=1)
+        subclonal_df.columns = subclonal_cells
+        subclonal_df = subclonal_df.T
+
+        subclonal_cnv_array.append(subclonal_df)
+    subclonal_cnv_array = pd.concat(subclonal_cnv_array)
+
+    return subclonal_cnv_array
+
+
+def get_cluster_labels(
+    data: anndata.AnnData, cluster_key: str = "new-cluster-column", batch_key: str = "batch"
+) -> pd.DataFrame:
+
+    return data.obs[[cluster_key, batch_key]]
 
 
 def get_diff_cnv(
-    cnv_array: pd.DataFrame, cl_labels: pd.DataFrame, diff_method: _TESTTYPE, correction: bool = False
+    cnv_array: pd.DataFrame,
+    cl_labels: pd.DataFrame,
+    diff_method: _TESTTYPE,
+    correction: bool = False,
+    cluster_key: str = "new-cluster-column",
+    batch_key: str = "batch",
 ) -> pd.DataFrame:
 
     if len(cnv_array.index.intersection(cl_labels.index)) != len(cnv_array.index):
@@ -42,7 +85,6 @@ def get_diff_cnv(
         )
 
     cnv_array = cnv_array.loc[cl_labels.index]
-    cl_key = cl_labels.columns[0]
 
     if diff_method == "mwu":
         diff_function = mannwhitneyu
@@ -50,18 +92,43 @@ def get_diff_cnv(
         diff_function = ttest_ind
 
     all_results = defaultdict(list)
-    for cluster in sorted(cl_labels[cl_key].unique()):
+    for cluster in sorted(cl_labels[cluster_key].unique()):
         _LOGGER.info(f"Starting differential CNV analysis for cluster {cluster}")
-        cl_cnv = cnv_array[cl_labels[cl_key] == cluster]
-        rest_cnv = cnv_array[cl_labels[cl_key] != cluster]
+        cl_cnv = cnv_array[cl_labels[cluster_key] == cluster]
+        rest_cnv = cnv_array[cl_labels[cluster_key] != cluster]
 
         for col in cl_cnv:
+            if len(set(cnv_array[col].ravel())) <= 1:
+                pval = 1
+                pgain = np.nan
+                ploss = np.nan
+                rgain = np.nan
+                rloss = np.nan
+            else:
+                pval = diff_function(cl_cnv[col].values, rest_cnv[col].values)[1]
+                pgain = (cl_cnv[col] > 0).sum() / cl_cnv.shape[0]
+                ploss = (cl_cnv[col] < 0).sum() / cl_cnv.shape[0]
+                rgain = (rest_cnv[col] > 0).sum() / rest_cnv.shape[0]
+                rloss = (rest_cnv[col] < 0).sum() / rest_cnv.shape[0]
 
-            all_results[str(cluster) + "_pvalues"].append(diff_function(cl_cnv[col].values, rest_cnv[col].values)[1])
-            all_results[str(cluster) + "_perc_gains"].append((cl_cnv[col] > 0).sum() / cl_cnv.shape[0])
-            all_results[str(cluster) + "_perc_losses"].append((cl_cnv[col] < 0).sum() / cl_cnv.shape[0])
-            all_results[str(cluster) + "_rest_gains"].append((rest_cnv[col] > 0).sum() / rest_cnv.shape[0])
-            all_results[str(cluster) + "_rest_losses"].append((rest_cnv[col] < 0).sum() / rest_cnv.shape[0])
+            # get the p value of the test
+            all_results[str(cluster) + "_pvalues"].append(pval)
+
+            # percentage of cells showing a gain/loss in this region in the cluster
+            all_results[str(cluster) + "_perc_gains"].append(pgain)
+            all_results[str(cluster) + "_perc_losses"].append(ploss)
+
+            # percentage of cells showing a gain/loss in this region in all but this cluster
+            all_results[str(cluster) + "_rest_gains"].append(rgain)
+            all_results[str(cluster) + "_rest_losses"].append(rloss)
+
+        gain_pp = pd.concat([cl_cnv[cl_cnv >= 0].fillna(0), cl_labels[batch_key]], axis=1).groupby(batch_key).sum() > 0
+        gain_pp = list(gain_pp.sum().ravel())
+        loss_pp = pd.concat([cl_cnv[cl_cnv <= 0].fillna(0), cl_labels[batch_key]], axis=1).groupby(batch_key).sum() < 0
+        loss_pp = list(loss_pp.sum().ravel())
+
+        all_results[str(cluster) + "_patients_gain"] = gain_pp
+        all_results[str(cluster) + "_patients_loss"] = loss_pp
 
     diffCNVs = pd.DataFrame(all_results)
 
@@ -139,13 +206,29 @@ def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10):
     return columns
 
 
-def find_differential_cnv(data: anndata.AnnData, diff_method: _TESTTYPE, correction: bool = True) -> pd.DataFrame:
+def find_differential_cnv(
+    data: anndata.AnnData,
+    diff_method: _TESTTYPE,
+    correction: bool = True,
+    subclonal: bool = True,
+    batch_key: str = "batch",
+) -> pd.DataFrame:
 
-    cnv_array = discretize_cnv(data=data, cnv_key="X_cnv")
+    if subclonal:
+        cnv_array = get_subclonal_cnv(data=data, cnv_key="X_cnv", subclonal_key="subclonal")
+    else:
+        cnv_array = discretize_cnv(data=data, cnv_key="X_cnv")
 
-    cl_labels = get_cluster_labels(data=data, cluster_key="new-cluster-column")
+    cl_labels = get_cluster_labels(data=data, cluster_key="new-cluster-column", batch_key=batch_key)
 
-    diffCNVs = get_diff_cnv(cnv_array=cnv_array, cl_labels=cl_labels, diff_method=diff_method, correction=correction)
+    diffCNVs = get_diff_cnv(
+        cnv_array=cnv_array,
+        cl_labels=cl_labels,
+        diff_method=diff_method,
+        correction=correction,
+        cluster_key="new-cluster-column",
+        batch_key=batch_key,
+    )
 
     mapped_columns = get_cnv_mapping(data=data)
     diffCNVs.index = mapped_columns
@@ -154,10 +237,21 @@ def find_differential_cnv(data: anndata.AnnData, diff_method: _TESTTYPE, correct
 
 
 def find_differential_cnv_precomputed(
-    cnv_array: pd.DataFrame, cl_labels: pd.DataFrame, diff_method: _TESTTYPE, correction: bool = True
+    cnv_array: pd.DataFrame,
+    cl_labels: pd.DataFrame,
+    diff_method: _TESTTYPE,
+    correction: bool = True,
+    batch_key: str = "batch",
 ) -> pd.DataFrame:
 
-    diffCNVs = get_diff_cnv(cnv_array=cnv_array, cl_labels=cl_labels, diff_method=diff_method, correction=correction)
+    diffCNVs = get_diff_cnv(
+        cnv_array=cnv_array,
+        cl_labels=cl_labels,
+        diff_method=diff_method,
+        correction=correction,
+        cluster_key="new-cluster-column",
+        batch_key=batch_key,
+    )
 
     return diffCNVs
 
