@@ -90,7 +90,7 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--dim-reduction",
         type=str,
-        choices=["umap", "pca"],
+        choices=["umap", "pca", "both"],
         help="The type of dimensionality reduction method used to plot the latent space",
         default="pca",
     )

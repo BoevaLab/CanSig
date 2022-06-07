@@ -11,20 +11,30 @@ Checklist
 
 General checklist 
 
+.. todo:: 
+
+  Add in the general checklist 
+
 Preprocessing checklist 
 
+.. todo:: 
+
+  Add in the preprocessing checklist 
+
 Differential CNV checklist 
+
+.. todo:: 
+
+  Add in the differential CNV checklist
 
 Troubleshooting
 ^^^^^^^^^^^^^^^
 
-GSEA will not run 
-- Is your gene annotation consistent? 
-    If your genes are annotated using Entrez in your original expression object, then you should run GSEA using an adapted .gmt file. You can download files for official gene ID and for Entrez on the MSigDB website (https://www.gsea-msigdb.org/gsea/downloads.jsp#msigdb).
-    If your genes are annotated using another system, you should first translate into Official Gene ID or Entrez. 
-    
+1. GSEA will not run 
 
-.. todo::
+    * Is your gene annotation consistent? 
+      If your genes are annotated using Entrez in your original expression object, then you should run GSEA using an adapted .gmt file. You can download files for official gene ID and for Entrez on the MSigDB website (https://www.gsea-msigdb.org/gsea/downloads.jsp#msigdb).
+      If your genes are annotated using another system, you should first translate into Official Gene ID or Entrez.
 
-   The tutorial to use CanSig from a python script/jupyter notebook.
-   It will contain a link to a Colab tutorial
+
+2. Other problem...

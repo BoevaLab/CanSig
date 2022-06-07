@@ -1,7 +1,7 @@
 import pathlib
 import logging
 from collections import defaultdict
-from typing import Literal, List  # pytype: disable=not-supported-yet
+from typing import Literal  # pytype: disable=not-supported-yet
 
 import anndata  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
@@ -14,6 +14,8 @@ from statsmodels.stats.multitest import multipletests  # pytype: disable=import-
 _TESTTYPE = Literal["mwu", "ttest"]
 
 _LOGGER = logging.getLogger(__name__)
+
+SUBCLONAL_MAJORITY = 0.5
 
 
 def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFrame:
@@ -32,7 +34,6 @@ def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFram
         dataframe containing the discretized values of the CNV calls
         shape (n_cells, n_regions_called)
     """
-
     if scipy.sparse.issparse(data.obsm[cnv_key]):
         data.obsm[cnv_key] = data.obsm[cnv_key].toarray()
 
@@ -42,33 +43,99 @@ def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFram
     return pd.DataFrame(data.obsm[cnv_key], index=data.obs_names)
 
 
-def get_cluster_labels(data: anndata.AnnData, cluster_key: str = "new-cluster-column") -> pd.DataFrame:
-    """Gets the cluster labels precomputed in the anndata object
+def get_subclonal_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv", subclonal_key: str = "subclonal") -> pd.DataFrame:
+    """Homogeneizes the CNV on a subclonal level rather than on a cell level. The CNV call for a cell will
+    be computed through a majority voting of the subclone it belongs to.
+
+    Arsg:
+        data: anndata object with precomputed cluster labels and CNV calls
+        cnv_key: key for the called CNV calls in the .obsm of data
+        subclonal_key: key for the subclone ID called through infercnvpy during preprocessing
+
+    Returns:
+        cnv array discretized and homogeneized to a subclone level
+    """
+
+    # first discretize the CNVs
+    cnv_array = discretize_cnv(data=data, cnv_key=cnv_key)
+
+    # separate the arrays into an array of gains and losses
+    pos_cnv_array = cnv_array[cnv_array >= 0].fillna(0)
+    neg_cnv_array = cnv_array[cnv_array <= 0].fillna(0)
+
+    sub_pos_cnv_array = pd.concat([pos_cnv_array, data.obs[subclonal_key]], axis=1)
+    sub_neg_cnv_array = pd.concat([neg_cnv_array, data.obs[subclonal_key]], axis=1)
+
+    # get the mean gains at a specific position for a subclone
+    # all regions with more than SUBCLONAL_MAJORITY fraction of cells that show a gain/loss
+    # at the subclone level get called as a gain/loss
+    # the rest is called as 0
+    mean_sub_pos = sub_pos_cnv_array.groupby(subclonal_key).mean()
+    mean_sub_pos[mean_sub_pos > SUBCLONAL_MAJORITY] = 1
+    mean_sub_pos = mean_sub_pos[mean_sub_pos > SUBCLONAL_MAJORITY].fillna(0)
+
+    mean_sub_neg = sub_neg_cnv_array.groupby(subclonal_key).mean()
+    mean_sub_neg[mean_sub_neg < -SUBCLONAL_MAJORITY] = -1
+    mean_sub_neg = mean_sub_neg[mean_sub_neg < -SUBCLONAL_MAJORITY].fillna(0)
+
+    # the subclonal level CNV is the sum of the loss and gains
+    # of note, since SUBCLONAL_MAJORITY should be over 0.5, a position can't be called as a gain
+    # and loss at the same time
+    mean_sub = mean_sub_pos + mean_sub_neg
+
+    # finally, create a cell-level CNV array where the CNV call for a cell is equal
+    # to the call of the subclone that it belongs to
+    subclonal_cnv_array = []
+    for subclone in data.obs.subclonal.unique():
+        subclonal_cells = data.obs[data.obs[subclonal_key] == subclone].index
+
+        subclonal_df = pd.concat([mean_sub.loc[subclone] for i in range(len(subclonal_cells))], axis=1)
+        subclonal_df.columns = subclonal_cells
+        subclonal_df = subclonal_df.T
+
+        subclonal_cnv_array.append(subclonal_df)
+    subclonal_cnv_array = pd.concat(subclonal_cnv_array)
+
+    return subclonal_cnv_array
+
+
+def get_cluster_labels(
+    data: anndata.AnnData, cluster_key: str = "new-cluster-column", batch_key: str = "batch"
+) -> pd.DataFrame:
+    """Gets the cluster labels precomputed in the anndata object and batch key
 
     Args:
         data: anndata object with precomputed cluster labels and CNV calls
         cluster_key: key for the cluster labels in the .obs of the adata
+        batch_key: key for the batch ID in the .obs of the data
     Returns:
-        pd.Df with the cluster labels for each cell
+        pd.Df with the cluster labels and batch id for each cell
     """
-    return data.obs[[cluster_key]]
+    return data.obs[[cluster_key, batch_key]]
 
 
 def get_diff_cnv(
-    cnv_array: pd.DataFrame, cl_labels: pd.DataFrame, diff_method: _TESTTYPE, correction: bool = False
+    cnv_array: pd.DataFrame,
+    cl_labels: pd.DataFrame,
+    diff_method: _TESTTYPE,
+    correction: bool = False,
+    cluster_key: str = "new-cluster-column",
+    batch_key: str = "batch",
 ) -> pd.DataFrame:
     """Computes the differential CNVs between a cluster and the rest, for all clusters
 
     Args:
-        cnv_array: pd.Df containing the discretized CNV calls, either computed using `discretize_cnv`
-            or precomputed if the CNVs were not called using our preprocessing module
+        cnv_array: pd.Df containing the discretized CNV calls, either through `discretize_cnv`,
+            `get_subclonal_cnv` or precomputed if the CNVs were not called using our preprocessing module
             shape (n_cells, n_regions_called)
-        cl_labels: cluster labels associated with the cnv_array, either computed using `get_cluster_labels`
+        cl_labels: cluster labels and batch id associated with the cnv_array, either computed using `get_cluster_labels`
             or precomputed if the CNVs were not called using our preprocessing module
-            shape (n_cells, 1)
+            shape (n_cells, 2)
         diff_method: can be mann-whitney U (mwu) or t-test (ttest), method used to compute the differential
             CNV between a cluster and the rest
         correction: whether to output FDR corrected q values in addition to p values
+        cluster_key: key for the cluster labels
+        batch_key: key for the batch ID
 
     Returns:
         a pd.Df containing for the differential CNV results. For each cluster cl
@@ -88,7 +155,6 @@ def get_diff_cnv(
 
     # make sure the cnv array and cluster labels are in the same order ie correspond to each other
     cnv_array = cnv_array.loc[cl_labels.index]
-    cl_key = cl_labels.columns[0]
 
     # pick the statistical method used
     if diff_method == "mwu":
@@ -97,25 +163,50 @@ def get_diff_cnv(
         diff_function = ttest_ind
 
     all_results = defaultdict(list)
-    for cluster in sorted(cl_labels[cl_key].unique()):
+    for cluster in sorted(cl_labels[cluster_key].unique()):
         _LOGGER.info(f"Starting differential CNV analysis for cluster {cluster}")
 
         # separate the array into the CNVs associated with a cluster and the rest
-        cl_cnv = cnv_array[cl_labels[cl_key] == cluster]
-        rest_cnv = cnv_array[cl_labels[cl_key] != cluster]
+        cl_cnv = cnv_array[cl_labels[cluster_key] == cluster]
+        rest_cnv = cnv_array[cl_labels[cluster_key] != cluster]
 
         for col in cl_cnv:
+            # check at least one value is different to input into the test to avoid ValueError, if not
+            # then there are no significant differences
+            if len(set(cnv_array[col].ravel())) <= 1:
+                pval = 1
+                pgain = np.nan
+                ploss = np.nan
+                rgain = np.nan
+                rloss = np.nan
+            else:
+                pval = diff_function(cl_cnv[col].values, rest_cnv[col].values)[1]
+                pgain = (cl_cnv[col] > 0).sum() / cl_cnv.shape[0]
+                ploss = (cl_cnv[col] < 0).sum() / cl_cnv.shape[0]
+                rgain = (rest_cnv[col] > 0).sum() / rest_cnv.shape[0]
+                rloss = (rest_cnv[col] < 0).sum() / rest_cnv.shape[0]
 
             # get the p value of the test
-            all_results[str(cluster) + "_pvalues"].append(diff_function(cl_cnv[col].values, rest_cnv[col].values)[1])
+            all_results[str(cluster) + "_pvalues"].append(pval)
 
             # percentage of cells showing a gain/loss in this region in the cluster
-            all_results[str(cluster) + "_perc_gains"].append((cl_cnv[col] > 0).sum() / cl_cnv.shape[0])
-            all_results[str(cluster) + "_perc_losses"].append((cl_cnv[col] < 0).sum() / cl_cnv.shape[0])
+            all_results[str(cluster) + "_perc_gains"].append(pgain)
+            all_results[str(cluster) + "_perc_losses"].append(ploss)
 
             # percentage of cells showing a gain/loss in this region in all but this cluster
-            all_results[str(cluster) + "_rest_gains"].append((rest_cnv[col] > 0).sum() / rest_cnv.shape[0])
-            all_results[str(cluster) + "_rest_losses"].append((rest_cnv[col] < 0).sum() / rest_cnv.shape[0])
+            all_results[str(cluster) + "_rest_gains"].append(rgain)
+            all_results[str(cluster) + "_rest_losses"].append(rloss)
+
+        # get the number of batches/patients with at least one cell that shows a gain/loss in the region
+        # if calling with subclones, this will be very robust, if calling on a cell level
+        # this number might be higher because of noise (as one cell is sufficient for a patient to be counted)
+        gain_pp = pd.concat([cl_cnv[cl_cnv >= 0].fillna(0), cl_labels[batch_key]], axis=1).groupby(batch_key).sum() > 0
+        gain_pp = list(gain_pp.sum().ravel())
+        loss_pp = pd.concat([cl_cnv[cl_cnv <= 0].fillna(0), cl_labels[batch_key]], axis=1).groupby(batch_key).sum() < 0
+        loss_pp = list(loss_pp.sum().ravel())
+
+        all_results[str(cluster) + "_patients_gain"] = gain_pp
+        all_results[str(cluster) + "_patients_loss"] = loss_pp
 
     diffCNVs = pd.DataFrame(all_results)
 
@@ -133,7 +224,7 @@ def get_diff_cnv(
     return diffCNVs
 
 
-def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10) -> List[str]:
+def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10):
     """Computes the mapping between the CNV regions called in our preprocessing module
         and the genes used for the computation of the CNV call.
 
@@ -221,7 +312,13 @@ def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10) -> List[str]:
     return columns
 
 
-def find_differential_cnv(data: anndata.AnnData, diff_method: _TESTTYPE, correction: bool = True) -> pd.DataFrame:
+def find_differential_cnv(
+    data: anndata.AnnData,
+    diff_method: _TESTTYPE,
+    correction: bool = True,
+    subclonal: bool = True,
+    batch_key: str = "batch",
+) -> pd.DataFrame:
     """Main function of the differential CNV module. This function is adapted to an anndata object
     as preprocessed by our preprocessing module. If computing differential CNVs on a user-provided
     object, the function `find_differential_cnv_precomputed` is used
@@ -242,6 +339,8 @@ def find_differential_cnv(data: anndata.AnnData, diff_method: _TESTTYPE, correct
         diff_method: can be mann-whitney U (mwu) or t-test (ttest), method used to compute the differential
             CNV between a cluster and the rest
         correction: whether to output FDR corrected q values in addition to p values
+        subclonal: whether to call CNVs using smoothing on a subclonal level
+        batch_key: key for the batch id
 
     Returns:
         a pd.Df containing for the differential CNV results (the index is the mapping as computed in `get_cnv_mapping`).
@@ -252,6 +351,8 @@ def find_differential_cnv(data: anndata.AnnData, diff_method: _TESTTYPE, correct
               a gain/loss at this region
             - "{cl}_rest_{gains/losses}" contains the percentage of cells in all but the cluster
               showing a gain/loss at this region
+            - "{cl}_patients_{gain/loss}" contains the number of patients that have at least one
+              cell in the cluster that shows a gain/loss in the region
             - (optional) "{cl}_qvalues" contains the q values of the test cl vs rest
               (only if correction is True)
 
@@ -263,11 +364,22 @@ def find_differential_cnv(data: anndata.AnnData, diff_method: _TESTTYPE, correct
         `find_differential_cnv_precomputed`, the equivalent function if the anndata object provided
         was not preprocessed using our preprocessing module
     """
-    cnv_array = discretize_cnv(data=data, cnv_key="X_cnv")
+    # either perform subclonal smoothing or just di
+    if subclonal:
+        cnv_array = get_subclonal_cnv(data=data, cnv_key="X_cnv", subclonal_key="subclonal")
+    else:
+        cnv_array = discretize_cnv(data=data, cnv_key="X_cnv")
 
-    cl_labels = get_cluster_labels(data=data, cluster_key="new-cluster-column")
+    cl_labels = get_cluster_labels(data=data, cluster_key="new-cluster-column", batch_key=batch_key)
 
-    diffCNVs = get_diff_cnv(cnv_array=cnv_array, cl_labels=cl_labels, diff_method=diff_method, correction=correction)
+    diffCNVs = get_diff_cnv(
+        cnv_array=cnv_array,
+        cl_labels=cl_labels,
+        diff_method=diff_method,
+        correction=correction,
+        cluster_key="new-cluster-column",
+        batch_key=batch_key,
+    )
 
     mapped_columns = get_cnv_mapping(data=data)
     diffCNVs.index = mapped_columns
@@ -276,7 +388,11 @@ def find_differential_cnv(data: anndata.AnnData, diff_method: _TESTTYPE, correct
 
 
 def find_differential_cnv_precomputed(
-    cnv_array: pd.DataFrame, cl_labels: pd.DataFrame, diff_method: _TESTTYPE, correction: bool = True
+    cnv_array: pd.DataFrame,
+    cl_labels: pd.DataFrame,
+    diff_method: _TESTTYPE,
+    correction: bool = True,
+    batch_key: str = "batch",
 ) -> pd.DataFrame:
     """Equivalent of the `find_differential_cnv` function if no anndata object used for the rest of the
         analysis was not precomputed using our preprocessing module
@@ -287,6 +403,7 @@ def find_differential_cnv_precomputed(
         diff_method: can be mann-whitney U (mwu) or t-test (ttest), method used to compute the differential
             CNV between a cluster and the rest
         correction: whether to output FDR corrected q values in addition to p values
+        batch_key: the key to the batch id
 
     Returns:
         a pd.Df containing for the differential CNV results. For each cluster cl
@@ -296,6 +413,8 @@ def find_differential_cnv_precomputed(
               gain/loss at this region
             - "{cl}_rest_{gains/losses}" contains the percentage of cells in all but the cluster showing a
               gain/loss at this region
+            - "{cl}_patients_{gain/loss}" contains the number of patients that have at least one
+              cell in the cluster that shows a gain/loss in the region
             - (optional) "{cl}_qvalues" contains the q values of the test cl vs rest
               (only if correction is True)
 
@@ -307,7 +426,14 @@ def find_differential_cnv_precomputed(
         `find_differential_cnv_precomputed`, the equivalent function if the anndata object provided
         was not preprocessed using our preprocessing module
     """
-    diffCNVs = get_diff_cnv(cnv_array=cnv_array, cl_labels=cl_labels, diff_method=diff_method, correction=correction)
+    diffCNVs = get_diff_cnv(
+        cnv_array=cnv_array,
+        cl_labels=cl_labels,
+        diff_method=diff_method,
+        correction=correction,
+        cluster_key="new-cluster-column",
+        batch_key=batch_key,
+    )
 
     return diffCNVs
 

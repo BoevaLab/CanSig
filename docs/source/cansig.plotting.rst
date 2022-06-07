@@ -1,5 +1,5 @@
 cansig.plotting package
-=====================
+=======================
 
 Submodules
 ----------
