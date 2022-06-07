@@ -17,6 +17,7 @@ _LOGGER = logging.getLogger(__name__)
 
 SUBCLONAL_MAJORITY = 0.5
 
+
 def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFrame:
     """This function discretizes the CNV values obtained.
     The output of infercnv is a float; during our preprocessing module, these values are
@@ -51,7 +52,7 @@ def get_subclonal_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv", subclonal_k
         data: anndata object with precomputed cluster labels and CNV calls
         cnv_key: key for the called CNV calls in the .obsm of data
         subclonal_key: key for the subclone ID called through infercnvpy during preprocessing
-        
+
     Returns:
         cnv array discretized and homogeneized to a subclone level
     """
@@ -101,7 +102,6 @@ def get_subclonal_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv", subclonal_k
 
 def get_cluster_labels(
     data: anndata.AnnData, cluster_key: str = "new-cluster-column", batch_key: str = "batch"
-
 ) -> pd.DataFrame:
     """Gets the cluster labels precomputed in the anndata object and batch key
 
