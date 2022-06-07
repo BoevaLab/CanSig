@@ -304,5 +304,6 @@ We will describe each flag in detail here
 * ``--disable-signatures``: if set, no information linked to de novo signatures found will be saved (the run will require less memory when this option is on). 
 * ``--diffcnv``: if set, the differential CNV analysis will be run. For more information, see the part about running the differential CNV analysis on this page.
 * ``--diffcnv-method``: the method used to perform the differential CNV (can be ttest or mwu)
+* ``--subclonalcnv``: if set, the differential CNV analysis will be run using the subclonal inferred CNV representation for each cell, rather than the per cell CNV call.
 * ``--diffcnv-correction``: if set, the False Discovery Rate corrected q-value will be computed for the differential CNV analysis.
 * ``--cnvarray``: if running the differential CNV analysis on an external array (for those who did not preprocess their data using our preprocessing module), the path to the CNV array used for differential CNV.
