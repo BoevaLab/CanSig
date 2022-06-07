@@ -17,7 +17,6 @@ _LOGGER = logging.getLogger(__name__)
 
 SUBCLONAL_MAJORITY = 0.5
 
-
 def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFrame:
     """This function discretizes the CNV values obtained.
     The output of infercnv is a float; during our preprocessing module, these values are
@@ -44,14 +43,15 @@ def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFram
 
 
 def get_subclonal_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv", subclonal_key: str = "subclonal") -> pd.DataFrame:
+
     """Homogeneizes the CNV on a subclonal level rather than on a cell level. The CNV call for a cell will
     be computed through a majority voting of the subclone it belongs to.
 
-    Arsg:
+    Args:
         data: anndata object with precomputed cluster labels and CNV calls
         cnv_key: key for the called CNV calls in the .obsm of data
         subclonal_key: key for the subclone ID called through infercnvpy during preprocessing
-
+        
     Returns:
         cnv array discretized and homogeneized to a subclone level
     """
@@ -101,6 +101,7 @@ def get_subclonal_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv", subclonal_k
 
 def get_cluster_labels(
     data: anndata.AnnData, cluster_key: str = "new-cluster-column", batch_key: str = "batch"
+
 ) -> pd.DataFrame:
     """Gets the cluster labels precomputed in the anndata object and batch key
 
@@ -173,6 +174,7 @@ def get_diff_cnv(
         for col in cl_cnv:
             # check at least one value is different to input into the test to avoid ValueError, if not
             # then there are no significant differences
+
             if len(set(cnv_array[col].ravel())) <= 1:
                 pval = 1
                 pgain = np.nan
@@ -200,6 +202,7 @@ def get_diff_cnv(
         # get the number of batches/patients with at least one cell that shows a gain/loss in the region
         # if calling with subclones, this will be very robust, if calling on a cell level
         # this number might be higher because of noise (as one cell is sufficient for a patient to be counted)
+
         gain_pp = pd.concat([cl_cnv[cl_cnv >= 0].fillna(0), cl_labels[batch_key]], axis=1).groupby(batch_key).sum() > 0
         gain_pp = list(gain_pp.sum().ravel())
         loss_pp = pd.concat([cl_cnv[cl_cnv <= 0].fillna(0), cl_labels[batch_key]], axis=1).groupby(batch_key).sum() < 0
@@ -319,6 +322,7 @@ def find_differential_cnv(
     subclonal: bool = True,
     batch_key: str = "batch",
 ) -> pd.DataFrame:
+
     """Main function of the differential CNV module. This function is adapted to an anndata object
     as preprocessed by our preprocessing module. If computing differential CNVs on a user-provided
     object, the function `find_differential_cnv_precomputed` is used
@@ -365,6 +369,7 @@ def find_differential_cnv(
         was not preprocessed using our preprocessing module
     """
     # either perform subclonal smoothing or just di
+
     if subclonal:
         cnv_array = get_subclonal_cnv(data=data, cnv_key="X_cnv", subclonal_key="subclonal")
     else:
@@ -394,6 +399,7 @@ def find_differential_cnv_precomputed(
     correction: bool = True,
     batch_key: str = "batch",
 ) -> pd.DataFrame:
+
     """Equivalent of the `find_differential_cnv` function if no anndata object used for the rest of the
         analysis was not precomputed using our preprocessing module
 
@@ -426,6 +432,7 @@ def find_differential_cnv_precomputed(
         `find_differential_cnv_precomputed`, the equivalent function if the anndata object provided
         was not preprocessed using our preprocessing module
     """
+
     diffCNVs = get_diff_cnv(
         cnv_array=cnv_array,
         cl_labels=cl_labels,
