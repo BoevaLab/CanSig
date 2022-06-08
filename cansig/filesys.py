@@ -155,13 +155,14 @@ def get_file(file_or_dir: types.Pathlike, ext: str) -> pathlib.Path:
 
     Returns:
         `file_or_dir` if it is a regular file, otherwise the unique file
-            with extension `ext` inside
+        with extension `ext` inside
         `ext`: suffix, e.g. ".csv", or ".txt"
 
     Raises:
         FileNotFoundError, if the file doesn't exist
         FileExistsError, if multiple files inside `file_or_dir` have
             matching extension `ext`
+
     """
     fod = pathlib.Path(file_or_dir)
 

@@ -90,7 +90,7 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--dim-reduction",
         type=str,
-        choices=["umap", "pca"],
+        choices=["umap", "pca", "both"],
         help="The type of dimensionality reduction method used to plot the latent space",
         default="pca",
     )
@@ -389,11 +389,12 @@ def main() -> None:
     # Let's filter out these which look valid.
     directories = get_valid_dirs(multirun_dir)
 
-    # Now we run the metaanalysis (generate the heatmap).
+    # Now we run the metaanalysis (first generate the heatmap).
     fig = generate_heatmap(directories)
     fig.tight_layout()
     fig.savefig(multirun_dir.path / "heatmap.pdf")
 
+    # to find a representative directory, we first generate a list of HeatmapItems
     items = generate_items(directories)
     chosen_directory = repdir.find_representative_run(
         items=items, directories=directories, settings=repdir.ReprDirectoryConfig()
