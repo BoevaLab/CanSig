@@ -1,6 +1,6 @@
 """Gene expression analysis utilities."""
 import pathlib
-from typing import Iterable, Dict, List, Optional, Union, Protocol
+from typing import Iterable, Dict, List, Optional, Protocol, Union, Tuple
 from typing import get_args  # pytype: disable=import-error
 from typing import Literal  # pytype: disable=not-supported-yet
 
@@ -300,3 +300,44 @@ class DefaultFormatter(IPathwayFormatter):
 
     def format(self, pathway: str) -> str:
         return pathway.replace("_", " ").replace(" ", "\n")
+
+
+class IGSEADataFrameSummarizer(Protocol):
+    """Interface for dataframe summarizers:
+    we run GSEA in the "one cluster against the rest"
+    fashion.
+
+    Hence, for every cluster we have a lot of pathways.
+
+    A summary is a list of pathways together with some "goodness" score.
+    """
+
+    def summarize(self, df: pd.DataFrame) -> List[Tuple[str, float]]:
+        """
+
+        Args:
+            df: our outputted GSEA dataframe
+
+        Returns:
+            list of tuples (pathway name, some numeric score)
+        """
+
+
+class MaxNESFDRSummarizer(IGSEADataFrameSummarizer):
+    """This summarizer calculates the maximum NES and maximum FDR (q-value) across
+    all clusterings.
+
+    Then returns only the pathways with FDR smaller than a given threshold and positive NES.
+    The returned score is NES.
+    """
+
+    def __init__(self, q_value_threshold: float = 5e-2) -> None:
+        if q_value_threshold <= 0 or q_value_threshold > 1:
+            raise ValueError("Allowed q-value must be in the (0, 1] interval.")
+        self._q_val = q_value_threshold
+
+    def summarize(self, df: pd.DataFrame) -> List[Tuple[str, float]]:
+        new_df = df.groupby("Term").max()
+        new_df = new_df[new_df["fdr"] < 0.05]
+        new_df = new_df[new_df["nes"] > 0]
+        return list(new_df["nes"].items())

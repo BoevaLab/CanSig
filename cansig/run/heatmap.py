@@ -1,6 +1,6 @@
 """Script for running the heatmap."""
 import argparse
-from typing import Iterable, List, Tuple
+from typing import Iterable, List
 
 import matplotlib.pyplot as plt  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
@@ -13,18 +13,32 @@ import cansig.models.api as models
 import cansig.multirun as mr
 
 
-def _get_pathways_and_scores(df: pd.DataFrame) -> List[Tuple[str, float]]:
-    # TODO(Pawel): This is very hacky. Make configurable.
-    new_df = df.groupby("Term").max()
-    new_df = new_df[new_df["fdr"] < 0.05]
-    new_df = new_df[new_df["nes"] > 0]
-    return list(new_df["nes"].items())
+def read_directory(
+    directory: fs.PostprocessingDir,
+    formatter: gsea.IPathwayFormatter,
+    summarizer: gsea.IGSEADataFrameSummarizer,
+) -> List[hm.HeatmapItem]:
+    """This function reads information contained in postprocessing directory
+    and generates a list of heatmap items.
 
+    Args:
+        directory: postprocessing directory
+        formatter: formatter used to rename the pathways
+        summarizer: summarizer used to select pathways (and their scores)
+            from the GSEA dataframe
 
-def read_directory(directory: fs.PostprocessingDir, formatter: gsea.IPathwayFormatter) -> List[hm.HeatmapItem]:
-    # TODO(Pawel): This looks very hacky.
+    Returns:
+        list of heatmap items. Each heatmap item is constructed as:
+            - vertical: the number of clusters
+            - horizontal: the latent space dimensionality
+            - value: score returned by the `summarizer` (per pathway)
+            - panel: pathway name, formatted according to the `formatter`
+               (and the list of pathways is calculated from the `summarizer`)
+    """
     assert directory.valid()
 
+    # TODO(Pawel): Selecting the number of clusters and the number of latent should be made
+    #  more generic, potentially.
     cluster_settings = fs.read_settings(cluster.LeidenNClusterConfig, directory.cluster_settings)
     n_cluster = cluster_settings.clusters
 
@@ -32,7 +46,7 @@ def read_directory(directory: fs.PostprocessingDir, formatter: gsea.IPathwayForm
     n_latent = model_settings.n_latent
 
     gsea_dataframe = pd.read_csv(directory.gsea_output)
-    items = _get_pathways_and_scores(gsea_dataframe)
+    items = summarizer.summarize(gsea_dataframe)
 
     return [
         hm.HeatmapItem(
@@ -47,8 +61,9 @@ def read_directory(directory: fs.PostprocessingDir, formatter: gsea.IPathwayForm
 
 def generate_items(dirs: Iterable[fs.PostprocessingDir]) -> Iterable[hm.HeatmapItem]:
     formatter = gsea.DefaultFormatter()
+    summarizer = gsea.MaxNESFDRSummarizer()
 
-    items = sum([read_directory(directory, formatter=formatter) for directory in dirs], [])
+    items = sum([read_directory(directory, formatter=formatter, summarizer=summarizer) for directory in dirs], [])
     return items
 
 
