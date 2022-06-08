@@ -67,8 +67,10 @@ def generate_items(dirs: Iterable[fs.PostprocessingDir]) -> Iterable[hm.HeatmapI
     return items
 
 
-def generate_heatmap(dirs: Iterable[fs.PostprocessingDir]) -> plt.Figure:
+def generate_heatmap(dirs: Iterable[fs.PostprocessingDir], n_pathways: int) -> plt.Figure:
     items = generate_items(dirs)
+
+    items = hm.MostFoundItemsFilter(k=n_pathways).filter(items)
 
     settings = hm.HeatmapSettings(
         vertical_name="clusters",
@@ -83,6 +85,9 @@ def generate_heatmap(dirs: Iterable[fs.PostprocessingDir]) -> plt.Figure:
 def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument("multirun", type=str, help="Multirun directory.")
+    parser.add_argument(
+        "--n-pathways", type=int, default=5, help="The number of most consistently " "found pathways to be visualised."
+    )
     parser.add_argument(
         "--output", type=str, default="heatmap.pdf", help="Generated heatmap name. Default: heatmap.pdf"
     )
@@ -99,7 +104,7 @@ def main() -> None:
 
     directories = mr.get_valid_dirs(multirur_dir)
 
-    fig = generate_heatmap(directories)
+    fig = generate_heatmap(directories, n_pathways=args.n_pathways)
     fig.savefig(args.output)
 
 

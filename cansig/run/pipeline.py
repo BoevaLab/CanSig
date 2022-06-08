@@ -153,6 +153,12 @@ def create_parser() -> argparse.ArgumentParser:
             IMPORTANT: using this flag will automatically disable running the differential CNV on the anndata object",
         default=None,
     )
+    parser.add_argument(
+        "--n-pathways",
+        type=int,
+        default=5,
+        help="The number of most consistently found pathways to be plotted in the heatmap. Default: 5.",
+    )
     return parser
 
 
@@ -296,7 +302,7 @@ def main() -> None:
     directories = mr.get_valid_dirs(multirun_dir)
 
     # Now we run the metaanalysis (first generate the heatmap).
-    fig = run_heatmap.generate_heatmap(directories)
+    fig = run_heatmap.generate_heatmap(directories, n_pathways=args.n_pathways)
     fig.savefig(multirun_dir.path / "heatmap.pdf")
 
     # to find a representative directory, we first generate a list of HeatmapItems

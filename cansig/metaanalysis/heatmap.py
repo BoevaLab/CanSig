@@ -176,7 +176,7 @@ def plot_heatmap(items: Iterable[HeatmapItem], settings: HeatmapSettings) -> plt
             ax.set_xticklabels(labels=[f"{i} {settings.vertical_name}" for i in vertical])
             ax.xaxis.set_tick_params(labeltop="on")
 
-    fig.subplots_adjust(wspace=0, hspace=0, top=0.97, bottom=0.02, left=0.03)
+    fig.subplots_adjust(wspace=0, hspace=0, top=0.95, bottom=0.02, left=0.03)
     return fig
 
 
