@@ -1,5 +1,7 @@
+import abc
 from collections import defaultdict
-from typing import Iterable, List, Optional, Tuple, Union
+from typing import Callable, Dict, Iterable, List, Optional, Set, Sequence, Tuple, Union
+from typing import Literal  # pytype: disable=not-supported-yet
 
 import matplotlib.pyplot as plt  # pytype: disable=import-error
 import numpy as np
@@ -176,3 +178,100 @@ def plot_heatmap(items: Iterable[HeatmapItem], settings: HeatmapSettings) -> plt
 
     fig.subplots_adjust(wspace=0, hspace=0, top=0.97, bottom=0.02, left=0.03)
     return fig
+
+
+class IFilterItems(abc.ABC):
+    """Interface for a filtering function for heatmap items."""
+
+    @abc.abstractmethod
+    def filter(self, items: Iterable[HeatmapItem]) -> List[HeatmapItem]:
+        """Returns "good" heatmap items.
+
+        Args:
+            items: heatmap items
+
+        Returns:
+            heatmap items
+        """
+        pass
+
+
+class IFilterPanels(IFilterItems, abc.ABC):
+    """Interface for filters which filter out basing on allowed/disallowed panels.
+
+    Each children class should implement `allowed_panels` method.
+    """
+
+    def filter(self, items: Iterable[HeatmapItem]) -> List[HeatmapItem]:
+        items = list(items)
+        allowed_panels = self.allowed_panels(items)
+
+        return [item for item in items if item.panel in allowed_panels]
+
+    @abc.abstractmethod
+    def allowed_panels(self, items: Iterable[HeatmapItem]) -> Set[_PanelType]:
+        pass
+
+
+def _group_by_panel(items: Iterable[HeatmapItem]) -> Dict[_PanelType, List[HeatmapItem]]:
+    dct = defaultdict(lambda: [])
+    for item in items:
+        dct[item.panel].append(item)
+    return dct
+
+
+def _get_k_best_panels(
+    items: Iterable[HeatmapItem], k: int, measure: Callable[[Sequence[HeatmapItem]], float]
+) -> Set[str]:
+    grouped = _group_by_panel(items)
+
+    unsorted = []
+    for panel, values in grouped.items():
+        unsorted.append((panel, measure(values)))
+
+    rank = sorted(unsorted, key=lambda x: x[1], reverse=True)
+    return set(pathway for pathway, _ in rank[:k])
+
+
+class MostFoundItemsFilter(IFilterPanels):
+    """This filter returns the items which correspond to the `k` panels with most items.
+
+    You may use this filter to make sure that the panels have as little blank
+    tiles as possible (corresponding to invalid runs)
+    """
+
+    def __init__(self, k: int = 5) -> None:
+        self._k = k
+
+    def allowed_panels(self, items: Iterable[HeatmapItem]) -> Set[_PanelType]:
+        return _get_k_best_panels(items=items, k=self._k, measure=lambda vals: len(vals))
+
+
+class HighestScoreFilter(IFilterPanels):
+    """This filter returns only the items which correspond to the `k` panels with the highest median/mean/max
+    score across all the corresponding items.
+
+    You may use this filter to make sure that the panels have as little blank
+    tiles as possible (corresponding to invalid runs)
+
+    Note that this filter prefers to pass (the items corresponding to) a panel with a single item with high score
+    rather than panel with two items and not as high scores.
+    """
+
+    def __init__(self, k: int = 5, method: Literal["median", "mean", "max"] = "median") -> None:
+        self._k = k
+
+        if method == "median":
+            self._method = np.median
+        elif method == "mean":
+            self._method = np.mean
+        elif method == "max":
+            self._method = np.max
+        else:
+            raise ValueError(f"Method {method} not known.")
+
+    def allowed_panels(self, items: Iterable[HeatmapItem]) -> Set[_PanelType]:
+        def measure(vals: Sequence[HeatmapItem]) -> float:
+            return self._method([x.value for x in vals])
+
+        return _get_k_best_panels(items=items, k=self._k, measure=measure)
