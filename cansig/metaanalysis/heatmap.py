@@ -26,7 +26,7 @@ class HeatmapSettings(pydantic.BaseModel):
     value_min: Optional[float] = pydantic.Field(default=None)
     value_max: Optional[float] = pydantic.Field(default=None)
 
-    font_size: int = pydantic.Field(default=16)
+    font_size: int = pydantic.Field(default=12)
     spines_linewidth: float = pydantic.Field(default=1.25)
 
 
@@ -50,7 +50,12 @@ def _get_n_runs(items: Iterable[HeatmapItem]) -> int:
 
 
 def _calculate_figsize(
-    settings: HeatmapSettings, n_runs: int, n_vertical: int, n_horizontal: int, n_panel: int
+    settings: HeatmapSettings,
+    n_runs: int,
+    n_vertical: int,
+    n_horizontal: int,
+    n_panel: int,
+    offset_width: Optional[float] = None,
 ) -> Tuple[float, float]:
     # The tiles need the rectangle like base_width x height
     base_width = settings.tile_size * n_runs * n_vertical
@@ -58,7 +63,8 @@ def _calculate_figsize(
     # We will add some offset to the width to accommodate for panel names.
     # Note that this is heuristic, we haven't calibrated this properly
     # (plus, the offset should depend on the maximal length of the panel name)
-    offset_width = (settings.font_size / 8) * settings.tile_size
+    if offset_width is None:
+        offset_width = (settings.font_size / 5) * settings.tile_size
 
     width = base_width + offset_width
     return (width, height)
@@ -99,10 +105,6 @@ def plot_heatmap(items: Iterable[HeatmapItem], settings: HeatmapSettings) -> plt
     n_horizontal = len(horizontal)
     n_panel = len(panels)
     n_runs = _get_n_runs(items)
-
-    # TODO(Pawel): Remove this note
-    #  vertical = clusters
-    #  horizontal = latent dimensionality
 
     figsize = _calculate_figsize(
         settings=settings, n_runs=n_runs, n_vertical=n_vertical, n_horizontal=n_horizontal, n_panel=n_panel
@@ -172,5 +174,5 @@ def plot_heatmap(items: Iterable[HeatmapItem], settings: HeatmapSettings) -> plt
             ax.set_xticklabels(labels=[f"{i} {settings.vertical_name}" for i in vertical])
             ax.xaxis.set_tick_params(labeltop="on")
 
-    fig.subplots_adjust(wspace=0, hspace=0)
+    fig.subplots_adjust(wspace=0, hspace=0, top=0.97, bottom=0.02, left=0.03)
     return fig
