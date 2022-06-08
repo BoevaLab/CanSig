@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>cansig &#8212; CanSig 0.0.1 documentation</title>
+    <title>cansig.types package &#8212; CanSig 0.0.1 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -32,8 +32,8 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="cansig.cluster package" href="cansig.cluster.html" />
-    <link rel="prev" title="Contribution guide" href="../contributing.html" />
+    <link rel="next" title="cansig.filesys package" href="cansig.filesys.html" />
+    <link rel="prev" title="cansig.run package" href="cansig.run.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
     
@@ -111,7 +111,7 @@
 </li>
 
 <li class="toctree-l1 current active nav-item">
- <a class="current reference internal nav-link" href="#">
+ <a class="reference internal nav-link" href="modules.html">
   cansig
  </a>
 </li>
@@ -155,7 +155,7 @@
   Contents:
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="cansig.cluster.html">
    cansig.cluster package
@@ -191,8 +191,8 @@
    cansig.run package
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="cansig.types.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    cansig.types package
   </a>
  </li>
@@ -218,9 +218,24 @@
               
               <div class="toc-item">
                 
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
-    
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-cansig.types">
+   cansig.types module
+  </a>
+ </li>
+</ul>
+
 </nav>
               </div>
               
@@ -240,69 +255,69 @@
               
               <div>
                 
-  <section id="cansig">
-<h1>cansig<a class="headerlink" href="#cansig" title="Permalink to this heading">#</a></h1>
-<div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="cansig.cluster.html">cansig.cluster package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.cluster.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.cluster.html#module-cansig.cluster.api">cansig.cluster.api module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.cluster.html#module-cansig.cluster.leiden">cansig.cluster.leiden module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.cluster.html#module-cansig.cluster">Module contents</a></li>
+  <section id="cansig-types-package">
+<h1>cansig.types package<a class="headerlink" href="#cansig-types-package" title="Permalink to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="module-cansig.types">
+<span id="cansig-types-module"></span><h2>cansig.types module<a class="headerlink" href="#module-cansig.types" title="Permalink to this heading">#</a></h2>
+<p>Convenient generic type definitions (used in multiple places).</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.types.create_latents">
+<span class="sig-prename descclassname"><span class="pre">cansig.types.</span></span><span class="sig-name descname"><span class="pre">create_latents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latent_codes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Latents</span></span></span><a class="headerlink" href="#cansig.types.create_latents" title="Permalink to this definition">#</a></dt>
+<dd><p>A factory method for <cite>Latents</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>latent_codes</strong> – numpy array, shape (n_cells, k),
+where k is the latent space dimension</p></li>
+<li><p><strong>index</strong> – cell identifiers</p></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.cnvanalysis.html">cansig.cnvanalysis package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.cnvanalysis.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.cnvanalysis.html#module-cansig.cnvanalysis.differentialcnvs">cansig.cnvanalysis.differentialcnvs module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.interface.html">cansig.interface package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.interface.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.interface.html#module-cansig.interface.cluster">cansig.interface.cluster module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.interface.html#module-cansig.interface">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.metaanalysis.html">cansig.metaanalysis package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.metaanalysis.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.metaanalysis.html#module-cansig.metaanalysis.heatmap">cansig.metaanalysis.heatmap module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.metaanalysis.html#module-cansig.metaanalysis.repr_directory">cansig.metaanalysis.repr_directory module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.metaanalysis.html#module-cansig.metaanalysis">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.models.html">cansig.models package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.models.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.models.html#module-cansig.models.api">cansig.models.api module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.models.html#module-cansig.models.scvi">cansig.models.scvi module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.models.html#module-cansig.models">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.plotting.html">cansig.plotting package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.plotting.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.plotting.html#module-cansig.plotting.plotting">cansig.plotting.plotting module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.run.html">cansig.run package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run.download">cansig.run.download module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run.integration">cansig.run.integration module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run.pipeline">cansig.run.pipeline module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run.postprocessing">cansig.run.postprocessing module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.types.html">cansig.types package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.types.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.types.html#module-cansig.types">cansig.types module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.filesys.html">cansig.filesys package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.filesys.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.filesys.html#module-cansig.filesys">cansig.filesys module</a></li>
-</ul>
-</li>
-</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Latents</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.types.read_latents">
+<span class="sig-prename descclassname"><span class="pre">cansig.types.</span></span><span class="sig-name descname"><span class="pre">read_latents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Latents</span></span></span><a class="headerlink" href="#cansig.types.read_latents" title="Permalink to this definition">#</a></dt>
+<dd><p>Reads latent codes from the disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> – path where</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>latent codes</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>write_latents, function used to dump the latent codes to the disk</p>
 </div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.types.write_latents">
+<span class="sig-prename descclassname"><span class="pre">cansig.types.</span></span><span class="sig-name descname"><span class="pre">write_latents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latent_codes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Latents</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.types.write_latents" title="Permalink to this definition">#</a></dt>
+<dd><p>Writes latent codes to the disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>latent_codes</strong> – latent codes</p></li>
+<li><p><strong>path</strong> – path where the latent codes should be dumped</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>read_latents, used to read latent codes from the disk</p>
+</div>
+</dd></dl>
+
+</section>
 </section>
 
 
@@ -311,17 +326,17 @@
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../contributing.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="cansig.run.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Contribution guide</p>
+            <p class="prev-next-title">cansig.run package</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="cansig.cluster.html" title="next page">
+    <a class='right-next' id="next-link" href="cansig.filesys.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">cansig.cluster package</p>
+        <p class="prev-next-title">cansig.filesys package</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

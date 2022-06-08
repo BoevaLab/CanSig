@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Formatting your data to run CanSig &#8212; CanSig 0.0.1 documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CanSig for python coders" href="cansig-for-python-coders.html" />
+    <link rel="prev" title="Advanced interpretation tutorial" href="interpretation.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+<a class="navbar-brand" href="index.html">
+<p class="title">CanSig</p>
+</a>
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="preprocessing.html">
+  Preprocessing tutorial
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="pipeline-advanced.html">
+  Advanced pipeline usage
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="interpretation.html">
+  Advanced interpretation tutorial
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="current reference internal nav-link" href="#">
+  Formatting your data to run CanSig
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="cansig-for-python-coders.html">
+  CanSig for python coders
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="troubleshooting.html">
+  Troubleshooting / Checklist
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="contributing.html">
+  Contribution guide
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="source/modules.html">
+  cansig
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/BoevaLab/CanSig" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+
+<nav id="bd-toc-nav">
+    
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="formatting-your-data-to-run-cansig">
+<span id="formatting"></span><h1>Formatting your data to run CanSig<a class="headerlink" href="#formatting-your-data-to-run-cansig" title="Permalink to this heading">#</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This tutorial is meant for researchers with little to no experience with coding.</p>
+</div>
+<p>We highly recommend you use our preprocessing module (see <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing tutorial</span></a>) to preprocess your data.
+This will ensure the data you input in CanSig is in the correct format and will enable smooth use of functionalities like differential CNV analysis.</p>
+<p>However, we support running the pipeline without using our module.
+CanSig takes an .h5ad object as input. This tutorial will walk you through obtaining this format using more a more widespread data format (.csv).</p>
+<p>You must have:</p>
+<ul class="simple">
+<li><p>expression.csv, matrix containing the raw counts (eg UMI), with cell IDs as first column and gene IDs as first row.</p></li>
+<li><p>observation.csv, matrix containing information about the cells. Only mandatory information is the batch ID, but this matrix can contain known signatures pre-scored, cell type annotation, number of counts in the cell, etc.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have a .txt file, this function should also work, if your file is organized in the same manner as a .csv file, meaning that there is a consistent separator (be it tab or comma) that separates your data into columns.</p>
+</div>
+<p>If you are using CanSig as a model, you will need data for malignant and for non-malignant cells. You should thus have two expression matrices (eg expression-malignant.csv and expression-non-malignant.csv) and two associated observation matrices. You should then run the following procedure both for the malignant and non-malignant matrices.
+If you are using scVI as a model, you will only need data for malignant cells.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can use any type of gene annotation for your genes as long as your are consistent throughout the pipeline. In particular, GSEA will only work with either Official Gene ID or Entrez. If you have ENSEMBL annotations, we recommend you map them to Official Gene ID before.</p>
+</div>
+<p>Here is an example of what the beginning of the expression matrix should look like</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>            <span class="n">EEA1</span>  <span class="n">CCDC107</span>  <span class="n">ZNF442</span>  <span class="n">THOC2</span>    <span class="n">GPX3</span>   <span class="n">ASPHD2</span>   <span class="n">GINS1</span>
+<span class="n">cell_1</span>      <span class="mf">0.0</span>     <span class="mf">1.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">3.0</span>     <span class="mf">0.0</span>     <span class="mf">1.0</span>
+<span class="n">cell_2</span>      <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>
+<span class="n">cell_3</span>      <span class="mf">0.0</span>     <span class="mf">4.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">2.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>
+<span class="n">cell_4</span>      <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">3.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>
+<span class="n">cell_5</span>      <span class="mf">0.0</span>     <span class="mf">2.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>
+<span class="n">cell_6</span>      <span class="mf">1.0</span>     <span class="mf">1.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">1.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>
+<span class="n">cell_7</span>      <span class="mf">1.0</span>     <span class="mf">1.0</span>     <span class="mf">0.0</span>     <span class="mf">2.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>
+<span class="n">cell_8</span>      <span class="mf">2.0</span>     <span class="mf">1.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>     <span class="mf">0.0</span>
+</pre></div>
+</div>
+<p>Here is an example of what the beginning of the observation matrix should look like</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>        <span class="n">batch</span>       <span class="n">n_counts</span>   <span class="n">n_genes</span>  <span class="n">pct_counts_mt</span>
+<span class="n">cell_1</span>  <span class="n">P28T</span>        <span class="mf">39525.0</span>    <span class="mi">4551</span>     <span class="mf">0.2504744</span>
+<span class="n">cell_2</span>  <span class="n">P28T</span>        <span class="mf">18224.0</span>    <span class="mi">3826</span>     <span class="mf">0.548727</span>
+<span class="n">cell_3</span>  <span class="n">P30T</span>        <span class="mf">10079.0</span>    <span class="mi">2685</span>     <span class="mf">0.00992162</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The only required column in the observation matrix of malignant cells is batch. However, if you are also using a non-malignant dataset, there should also be a celltype column.</p>
+</div>
+<p>If your data is formatted as previously explained, then you can simply go into the directory that contains your data and run</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.format --expression expression.csv \
+                                        --observation observation.csv \
+                                        --filename full_data
+</pre></div>
+</div>
+<p>This will save a file called “full_data.h5ad” in the current directory.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure you either call the function from the directory where the data is stored or provide the full path to the data in the above call.
+In which case, the call would look something like this</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.format --expression path/to/expression.csv \
+                                        --observation path/to/observation.csv \
+                                        --filename full_data
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are calling this function twice, don’t forget to change the –filename !</p>
+</div>
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="interpretation.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Advanced interpretation tutorial</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="cansig-for-python-coders.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">CanSig for python coders</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022 CanSig team.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.1.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

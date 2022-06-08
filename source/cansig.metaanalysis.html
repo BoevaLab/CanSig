@@ -32,6 +32,8 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cansig.models package" href="cansig.models.html" />
+    <link rel="prev" title="cansig.interface package" href="cansig.interface.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
     
@@ -85,12 +87,30 @@
 </li>
 
 <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../formatting-data.html">
+  Formatting your data to run CanSig
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../cansig-for-python-coders.html">
+  CanSig for python coders
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../troubleshooting.html">
+  Troubleshooting / Checklist
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../contributing.html">
   Contribution guide
  </a>
 </li>
 
-<li class="toctree-l1 nav-item">
+<li class="toctree-l1 current active nav-item">
  <a class="reference internal nav-link" href="modules.html">
   cansig
  </a>
@@ -130,7 +150,59 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
-    
+    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.cluster.html">
+   cansig.cluster package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.cnvanalysis.html">
+   cansig.cnvanalysis package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.interface.html">
+   cansig.interface package
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   cansig.metaanalysis package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.models.html">
+   cansig.models package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.plotting.html">
+   cansig.plotting package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.run.html">
+   cansig.run package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.types.html">
+   cansig.types package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.filesys.html">
+   cansig.filesys package
+  </a>
+ </li>
+</ul>
+
   </div>
 </nav>
               </div>
@@ -160,6 +232,11 @@
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#module-cansig.metaanalysis.heatmap">
    cansig.metaanalysis.heatmap module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-cansig.metaanalysis.repr_directory">
+   cansig.metaanalysis.repr_directory module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -265,12 +342,376 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.get_heatmap_items">
 <span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.heatmap.</span></span><span class="sig-name descname"><span class="pre">get_heatmap_items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.metaanalysis.heatmap.get_heatmap_items" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Returns all the caracteristic of the heatmap items</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>items</strong> – list of HeatmapItem</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of unique number of latent dimensions used in the meta analysis
+horizontal: list of unique number of clusters used in the meta analysis
+panels: list of pathways found
+n_runs: number of runs (ie using different random seeds, either for the model or for the clustering)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>vertical</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.plot_heatmap">
 <span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.heatmap.</span></span><span class="sig-name descname"><span class="pre">plot_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapSettings" title="cansig.metaanalysis.heatmap.HeatmapSettings"><span class="pre">HeatmapSettings</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="headerlink" href="#cansig.metaanalysis.heatmap.plot_heatmap" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
+
+</section>
+<section id="module-cansig.metaanalysis.repr_directory">
+<span id="cansig-metaanalysis-repr-directory-module"></span><h2>cansig.metaanalysis.repr_directory module<a class="headerlink" href="#module-cansig.metaanalysis.repr_directory" title="Permalink to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.ReprDirectoryConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">ReprDirectoryConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NANSTABILITY</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NANVALUES</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-</span> <span class="pre">10000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">COMPLEXITYPEN</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">COMPLEXITYSTAB</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.ReprDirectoryConfig" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>This is the configuration for the optimization to find the
+‘representative’ directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>NANSTABILITY</strong> – value used to fill in np.nan values in the stability computation</p></li>
+<li><p><strong>NANVALUES</strong> – value usde to fill the np.nan values in the NES value computation</p></li>
+<li><p><strong>COMPLEXITYPEN</strong> – the penalization parameter used for the complexity in the objective function</p></li>
+<li><p><strong>COMPLEXITYSTAB</strong> – the penalization parameters used for the stability in the objective function</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.ReprDirectoryConfig.COMPLEXITYPEN">
+<span class="sig-name descname"><span class="pre">COMPLEXITYPEN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#cansig.metaanalysis.repr_directory.ReprDirectoryConfig.COMPLEXITYPEN" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.ReprDirectoryConfig.COMPLEXITYSTAB">
+<span class="sig-name descname"><span class="pre">COMPLEXITYSTAB</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#cansig.metaanalysis.repr_directory.ReprDirectoryConfig.COMPLEXITYSTAB" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.ReprDirectoryConfig.NANSTABILITY">
+<span class="sig-name descname"><span class="pre">NANSTABILITY</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.metaanalysis.repr_directory.ReprDirectoryConfig.NANSTABILITY" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.ReprDirectoryConfig.NANVALUES">
+<span class="sig-name descname"><span class="pre">NANVALUES</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.metaanalysis.repr_directory.ReprDirectoryConfig.NANVALUES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.find_all_config_directories">
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">find_all_config_directories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clusters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directories</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.find_all_config_directories" title="Permalink to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>Returns the list of all postprocessing directories that have the number of clusters</dt><dd><p>and number of latent dimensions of the representative run. We will use these to
+find the one with the correct run number, as we indexed the run number by iterating through the
+directories at the beginning (see <cite>heatmap</cite> submodule for more info)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>clusters</strong> – number of clusters of the representative run</p></li>
+<li><p><strong>latent_dim</strong> – number of latent dimensions of the representative run</p></li>
+<li><p><strong>directories</strong> – list of all the directories for the meta analysis</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of all the directories that have the correct number of clusters
+and number of latent dimensions</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>heatmap</cite> submodule</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.find_representative_run">
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">find_representative_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directories</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.metaanalysis.repr_directory.ReprDirectoryConfig" title="cansig.metaanalysis.repr_directory.ReprDirectoryConfig"><span class="pre">ReprDirectoryConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.find_representative_run" title="Permalink to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>Main function of the module. Takes a list of HeatmapItems, each representing a single run of</dt><dd><p>the meta analysis, the list of all directories associated with all runs, and the
+optimization settings, and returns a representative directory that can be used
+to plot/visualize results.
+A representative directory is a directory that maximizes the score associated with each pathway found,
+minimizes the variance across random seeds for the same configuration or across number of
+latent dimensions, and minimizes the complexity of the solution (ie we favor solutions with less
+clusters and less number of latent dimensions)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>items</strong> – list of heatmap items. These heatmap items are computed using <cite>generate_items</cite> in the
+cansig.run.pipeline submodule</p></li>
+<li><p><strong>directories</strong> – list of all the directories for the meta analysis. This list is computed
+using <cite>get_valid_dirs</cite> in the cansig.run.pipeline submodule</p></li>
+<li><p><strong>settings</strong> – settings as desribed in ReprDirectoryConfig</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the path to the “representative” directory, ie the directory associated with
+the run that minimizes the objective function</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>generate_items</cite> in cansig.run.pipeline
+<cite>get_valid_dirs</cite> in cansig.run.pipeline</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A representative directory is only valid if the results of the stability analysis
+show that the pathways uncovered are consistent across runs and hyperparameters. Although
+this function will always output a representative directory, caution must be taken in interpretation
+as if the results are not stable to start with, this “representative directory” will not be
+“representative”.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.get_all_objective_function">
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">get_all_objective_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.metaanalysis.repr_directory.ReprDirectoryConfig" title="cansig.metaanalysis.repr_directory.ReprDirectoryConfig"><span class="pre">ReprDirectoryConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">defaultdict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_stability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">defaultdict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_complexity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.get_all_objective_function" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns all the objective functions as computed in <cite>get_objective_function</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>settings</strong> – settings as desribed in ReprDirectoryConfig</p></li>
+<li><p><strong>all_values</strong> – dictionary as computed in <cite>get_objective_function_elements</cite></p></li>
+<li><p><strong>all_stability</strong> – dictionary as computed in <cite>get_objective_function_elements</cite></p></li>
+<li><p><strong>all_complexity</strong> – dictionary as computed in <cite>get_objective_function_elements`</cite></p></li>
+<li><p><strong>vertical</strong> – list of unique number of clusters used</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>objective function associated for all runs, shape (n_clusters, n_latent_dimensions, n_runs)</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>ReprDirectoryConfig</cite>,
+<cite>get_objective_function</cite></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.get_complexity">
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">get_complexity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_runs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.get_complexity" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the complexity associated with all the runs for a specific number of clusters.
+The complexity is computed as the sum of the number of clusters used and number of latent dimensions
+used in the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ver</strong> – the number of clusters to consider</p></li>
+<li><p><strong>horizontal</strong> – list of all unique number of latent dimensions used</p></li>
+<li><p><strong>n_runs</strong> – number of runs (ie using different random seeds, either for the model or for the clustering)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>array containing the complexity for all the runs for a specific number of clusters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>complexity</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>this complexity is the same across all panels</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.get_objective_function">
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">get_objective_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.metaanalysis.repr_directory.ReprDirectoryConfig" title="cansig.metaanalysis.repr_directory.ReprDirectoryConfig"><span class="pre">ReprDirectoryConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">defaultdict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_stability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">defaultdict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_complexity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.get_objective_function" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the objective function associated with a specific number of clusters.
+The objective function consists of three parts:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>the NES: we wish to maximize the sum of the NES values over all pathways selected</dt><dd><p>(here we minimize -NES)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>the stability: we wish to minimize the variance over random seeds and number</dt><dd><p>of latent dimensions (we used a penalty coeff, default 1)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>the complexity: we wish to minimize the complexity of the found solution</dt><dd><p>(we used a penalty coeff, default 0.1 to accomodate the difference in range
+between the complexity and the NES values)</p>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>settings</strong> – settings as desribed in ReprDirectoryConfig</p></li>
+<li><p><strong>all_values</strong> – dictionary as computed in <cite>get_objective_function_elements</cite></p></li>
+<li><p><strong>all_stability</strong> – dictionary as computed in <cite>get_objective_function_elements</cite></p></li>
+<li><p><strong>all_complexity</strong> – dictionary as computed in <cite>get_objective_function_elements`</cite></p></li>
+<li><p><strong>ver</strong> – number of clusters to consider</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>objective function associated for all runs for a specific number of clusters
+shape (n_latent_dimensions, n_runs)</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>ReprDirectoryConfig</cite>,
+<cite>get_objective_function_elements</cite></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.get_objective_function_elements">
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">get_objective_function_elements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.metaanalysis.repr_directory.ReprDirectoryConfig" title="cansig.metaanalysis.repr_directory.ReprDirectoryConfig"><span class="pre">ReprDirectoryConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">panels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_runs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">defaultdict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">defaultdict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.get_objective_function_elements" title="Permalink to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>Returns all the elements used to compute the objective function.</dt><dd><p>This includes the NES values for each run, the stability values for each run and
+the complexity</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>settings</strong> – settings as desribed in ReprDirectoryConfig</p></li>
+<li><p><strong>items</strong> – list of heatmap items</p></li>
+<li><p><strong>horizontal</strong> – list of all unique number of latent dimensions used</p></li>
+<li><p><strong>vertical</strong> – list of all unique  number of clusters used</p></li>
+<li><p><strong>panel</strong> – the panel name to consider</p></li>
+<li><p><strong>n_runs</strong> – number of runs (ie using different random seeds, either for the model or for the clustering)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>all_values dictionary with number of clusters as key, and the NES values associated for each run
+for each panel (ie pathway) found as value. The value array will thus be of shape
+(n_panels, n_latent_dimensions, n_runs)</p>
+<p>all_stability dictionary with number of clusters as key, and the stability values associated
+for each run for each panel (ie pathway) found as value. The value array will thus be of shape
+(n_panels, n_latent_dimensions, n_runs)</p>
+<p>all_complexity dictionary with the number of clusters as key, and the complexity values associated
+for each run. The value array will thus be of shape (n_latent_dimensions, n_runs)</p>
+</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>ReprDirectoryConfig</cite>,
+<cite>get_values_panel</cite>,
+<cite>get_stability_panel</cite>,
+<cite>get_complexity</cite></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.get_representative_run">
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">get_representative_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all_obj_function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.get_representative_run" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the run that minimizes the objective function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>all_obj_function</strong> – array as computed in <cite>get_all_objective_function</cite></p></li>
+<li><p><strong>vertical</strong> – list of all unique number of clusters used</p></li>
+<li><p><strong>horizontal</strong> – list of all unique number of latent dimensions used</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>returns the index of the representative run as
+(n_clusters_used, n_latent_dimensions_used, run_number)</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>get_all_objective_function</cite></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.get_stability_panel">
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">get_stability_panel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.metaanalysis.repr_directory.ReprDirectoryConfig" title="cansig.metaanalysis.repr_directory.ReprDirectoryConfig"><span class="pre">ReprDirectoryConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.get_stability_panel" title="Permalink to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>Returns the stability associated for all the runs for a specific number of clusters</dt><dd><p>and a specific panel ie pathway found.
+The stability is computed as the sum of the variance over all random seeds and the variance
+over all number of latent dimensions used in the meta analysis.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>settings</strong> – settings as desribed in ReprDirectoryConfig</p></li>
+<li><p><strong>values</strong> – array as computed in <cite>get_values_panel</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>array containing the stability values for all the runs for a specific number of
+clusters and a specific panel</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>stability</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>ReprDirectoryConfig</cite>
+<cite>get_values_panel</cite></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.get_values_panel">
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">get_values_panel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.metaanalysis.repr_directory.ReprDirectoryConfig" title="cansig.metaanalysis.repr_directory.ReprDirectoryConfig"><span class="pre">ReprDirectoryConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">panel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_runs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.get_values_panel" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the NES values found for all the runs for a specific number of clusters and a specific panel
+ie a specific pathway found</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>settings</strong> – settings as desribed in ReprDirectoryConfig</p></li>
+<li><p><strong>items</strong> – list of heatmap items</p></li>
+<li><p><strong>ver</strong> – the number of clusters to consider</p></li>
+<li><p><strong>horizontal</strong> – list of all unique number of latent dimensions used</p></li>
+<li><p><strong>panel</strong> – the panel name to consider</p></li>
+<li><p><strong>n_runs</strong> – number of runs (ie using different random seeds, either for the model or for the clustering)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>array containing the NES value for all the runs for a specific number of</dt><dd><p>clusters and a specific panel</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>values</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>ReprDirectoryConfig</cite></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.representative_directory">
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">representative_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">representative_run</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directories</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.representative_directory" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the run that minimizes the objective function in a user understandable way
+ie as the name of the postprocessing directory</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.save_chosen_directory">
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">save_chosen_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chosen_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.save_chosen_directory" title="Permalink to this definition">#</a></dt>
+<dd><p>Helper function to save the name of the representative directory</p>
+</dd></dl>
 
 </section>
 <section id="module-cansig.metaanalysis">
@@ -284,6 +725,20 @@
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="cansig.interface.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">cansig.interface package</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="cansig.models.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">cansig.models package</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
               
           </main>

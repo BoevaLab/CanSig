@@ -87,6 +87,24 @@
 </li>
 
 <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="formatting-data.html">
+  Formatting your data to run CanSig
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="cansig-for-python-coders.html">
+  CanSig for python coders
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="troubleshooting.html">
+  Troubleshooting / Checklist
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="contributing.html">
   Contribution guide
  </a>
@@ -155,13 +173,40 @@
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-the-plotting-utilities">
+   Using the plotting utilities
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#saving-signatures-and-scoring-cells">
+   Saving signatures and scoring cells
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#running-differential-cnv-analysis">
+   Running differential CNV analysis
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#differential-cnv-analysis-for-data-preprocessed-with-our-module">
+     Differential CNV analysis for data preprocessed with our module
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#differential-cnv-analysis-for-data-not-processed-with-our-module">
+     Differential CNV analysis for data not processed with our module
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#using-custom-models">
    Using custom models
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#using-the-plotting-utilities">
-   Using the plotting utilities
+  <a class="reference internal nav-link" href="#understanding-all-the-pipeline-command-line-options">
+   Understanding all the pipeline command line options
   </a>
  </li>
 </ul>
@@ -187,6 +232,245 @@
                 
   <section id="advanced-pipeline-usage">
 <span id="pipeline-advanced"></span><h1>Advanced pipeline usage<a class="headerlink" href="#advanced-pipeline-usage" title="Permalink to this heading">#</a></h1>
+<section id="using-the-plotting-utilities">
+<h2>Using the plotting utilities<a class="headerlink" href="#using-the-plotting-utilities" title="Permalink to this heading">#</a></h2>
+<p>By default, running the pipeline will result in a scatter plot being created for every configuration (i.e. for every pair of latent representation/clustering).
+These scatter plots will be colored by default according to (a) the cluster assignments and (b) the batch.</p>
+<p>You have the option to plot using either PCA, UMAP, or both (which will result in a UMAP with a PCA inset as seen in the publication).
+You can add plotting according to pre-scored signatures (i.e. present in the adata.obs object).</p>
+<p>The plotting utilities can be controlled through three arguments in the command line :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--dim-reduction</span></code>: the dimensionality reduction method used for plotting. The options are “pca”, “umap”, or “both”, and defaults to PCA.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--sigcols</span></code>: optionally, the name of the signatures to plot in addition to batch and cluster assignment.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--disable-plots</span></code>: if you do not want plots to be generated, use this flag. This will skip plotting altogether.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The signature column names inputted with <code class="docutils literal notranslate"><span class="pre">--sigcols</span></code> must be in the adata.obs.columns.</p>
+</div>
+<p>Example usage to plot UMAP with additional scored signatures named <code class="docutils literal notranslate"><span class="pre">signature1</span></code> and <code class="docutils literal notranslate"><span class="pre">signature2</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
+                                --batch batch
+                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
+                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
+                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
+                                --output tutorial-output <span class="se">\</span>
+                                --dim-reduction umap <span class="se">\</span>
+                                --sigcols signature1 signature2
+</pre></div>
+</div>
+<p>Example usage to plot the UMAP with PCA inset with additional scored signatures named <code class="docutils literal notranslate"><span class="pre">signature1</span></code> and <code class="docutils literal notranslate"><span class="pre">signature2</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
+                                --batch batch
+                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
+                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
+                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
+                                --output tutorial-output <span class="se">\</span>
+                                --dim-reduction both <span class="se">\</span>
+                                --sigcols signature1 signature2
+</pre></div>
+</div>
+<p>Example usage to disable plotting utilities</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
+                                --batch batch
+                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
+                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
+                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
+                                --output tutorial-output <span class="se">\</span>
+                                --disable-plots
+</pre></div>
+</div>
+</section>
+<section id="saving-signatures-and-scoring-cells">
+<h2>Saving signatures and scoring cells<a class="headerlink" href="#saving-signatures-and-scoring-cells" title="Permalink to this heading">#</a></h2>
+<p>CanSig finds signatures in cancer data: these signatures are defined as the most overexpressed genes in a biologically meaningful part of the subspace (approximated by a cluster).
+By default, running the pipeline will result the results of the differential gene expression analysis to be saved for each cluster (for more information on interpretation, see <a class="reference internal" href="interpretation.html#interpretation"><span class="std std-ref">Advanced interpretation tutorial</span></a>), as wells as the score for each cell for each of the signatures (defined as the 200 most positively differentially expressed genes in the cluster) and the correlation between the signatures.</p>
+<p>The results associated with signatures and scoring can be controlled through the three following command line arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--disable-signatures</span></code>: if you do not want any of the results linked to signatures to be saved (ie differential gene expression analysis for each cluster, scores of each signature for each cell and correlation between signatures), then input this flag.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--ngenessig</span></code>: number of genes that define a signature associated with a cluster. The cells will be scored using the n top positively differentially expressed genes in the cluster, with n being the minimal value between the total number of differentially expressed genes and ngenessig inputted. Defaults to 200.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--corrmethod</span></code>: the method used to compute the correlation between the signatures; can be spearman or pearson. Defaults to pearson.</p></li>
+</ul>
+<p>Example usage to compute scores on cells using the 100 top most differentially expressed genes as a signature and using spearman to compute the correlation between signatures.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
+                                --batch batch
+                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
+                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
+                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
+                                --output tutorial-output <span class="se">\</span>
+                                --ngenessig <span class="m">100</span> <span class="se">\</span>
+                                --corrmethod spearman
+</pre></div>
+</div>
+<p>Example usage to disable saving any results linked to signatures</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
+                                --batch batch
+                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
+                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
+                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
+                                --output tutorial-output <span class="se">\</span>
+                                --disable-signatures
+</pre></div>
+</div>
+</section>
+<section id="running-differential-cnv-analysis">
+<h2>Running differential CNV analysis<a class="headerlink" href="#running-differential-cnv-analysis" title="Permalink to this heading">#</a></h2>
+<p>You have the option to perform differential CNV analysis. With original CNV calls, this will output differential CNV regions between each cluster and the rest, and information about the percentage of gains/losses in the cluster and in the rest, and the number of patients showing a gain/loss in the region.
+This module is deactivated by default. There are two main ways to run this analysis: the first assumes that you are using a data object that has been obtained using our preprocessing module (see <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing tutorial</span></a>), the second can be run if provided with a external discretized CNV calling, even if the data object has not been obtained through our preprocessing module.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>the data provided for the tutorial has been processed using our preprocessing module, and can be thus used for differential CNV analysis assuming so.</p>
+</div>
+<section id="differential-cnv-analysis-for-data-preprocessed-with-our-module">
+<h3>Differential CNV analysis for data preprocessed with our module<a class="headerlink" href="#differential-cnv-analysis-for-data-preprocessed-with-our-module" title="Permalink to this heading">#</a></h3>
+<p>This calling assumes the data was preprocessing using our preprocessing module (see <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing tutorial</span></a>).
+This means that the data object you provide will contain the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>“X_cnv” in data.obsm: the CNV called using our preprocessing module</p></li>
+<li><p>“chromosome” in data.var.columns: the chromosome to which the gene belongs</p></li>
+<li><p>“cnv_called” in data.var.columns: if this gene was used for the infercnv call (see <code class="docutils literal notranslate"><span class="pre">cansig._preprocessing</span></code> for more details on the CNV calling procedure)</p></li>
+<li><p>“start” in data.var.columns: the start position of the gene on the chromosome</p></li>
+<li><p>“cnv” in data.uns: a summary of the infercnv run</p></li>
+<li><p>“chr_pos” in data.uns[“cnv”]: a dictionary containing the mapping between the chromosome and the index of the regions in the cnv array</p></li>
+</ul>
+</div></blockquote>
+<p>The analysis can be controlled through three arguments in the command line:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv</span></code>: this flag needs to be added for the differential CNV analysis to be performed. If not indicated, the differential CNV analysis is skipped.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--subclonalcnv</span></code>: (optional) when added, performs the differential CNV analysis using CNV smoothed by subclone rather than on a cell level. This means the CNV of a cell will be that of the subclone it belongs to. This type of call is less noisy but might hide smaller CNV regions or smaller subclone populations that might not have been found with infercnv.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv-method</span></code>: (optional) the method used to perform the differential CNV analysis. Can be Mann-Whitney U (mwu, default) or a t-test (ttest).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv-correction</span></code>: if you want to obtain False Discovery Rate (FDR) corrected results, add this flag. It is recommended to use these results rather than uncorrected p-values, as these can result in numerous false discoveries when blindly testing for differential expression (for more information, read <a class="reference external" href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1716-1">https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1716-1</a>)</p></li>
+</ul>
+<p>Example usage to compute the differential CNV analysis with default values (Mann Whitney U test, no FDR correction)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
+                                --batch batch
+                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
+                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
+                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
+                                --output tutorial-output <span class="se">\</span>
+                                --diffcnv
+</pre></div>
+</div>
+<p>This will result in the following file being added to the <code class="docutils literal notranslate"><span class="pre">tutorial-output/</span></code> directory, in addition to all the files/directories described on the homepage.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">postprocessing/</span></code>:</dt><dd><ul>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">{rundir}/differential-cnvs.csv</span></code>: file containing the columns for each cluster cl</dt><dd><ul>
+<li><p>{cl}_pvalues: contains the p values of the test cl vs rest</p></li>
+<li><p>{cl}_perc_{gains/losses}: contains the percentage of cells in the cluster showing a gain/loss at this region</p></li>
+<li><p>{cl}_rest_{gains/losses}: contains the percentage of cells in all but the cluster showing a gain/loss at this region</p></li>
+<li><p>{cl}_patients_{gain/loss}: contains the number of patients that show a gain/loss in this region in this cluster. Specifically, we count a patient as showing a gain/loss in the region if at least one cell in the cluster belongs to this patient and shows a gain/loss.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We use the batch ID as a proxy for the patient in the computation of the number of patients showing a gain/loss. If there are several patients in one batch or several batches per patient, this will count the number of batches showing a gain/loss, not the number of patients.</p>
+</div>
+<p>Example usage to compute the differential CNV analysis with a t-test, smoothing on a subclonal level, and with FDR corrected values (ie q-values)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
+                                --batch batch
+                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
+                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
+                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
+                                --output tutorial-output <span class="se">\</span>
+                                --diffcnv <span class="se">\</span>
+                                --subclonalcnv <span class="se">\</span>
+                                --diffcnv-method ttest <span class="se">\</span>
+                                --diffcnv-correction
+</pre></div>
+</div>
+<dl class="simple">
+<dt>This will result in the same file as in the previous example with the addition of the columns</dt><dd><ul class="simple">
+<li><p>“{cl}_qvalues”: contains the q values of the test cl vs rest</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If trying to run this function as such on a data object that has not been processed with our preprocessing module, this will result in an ValueError</p>
+</div>
+</section>
+<section id="differential-cnv-analysis-for-data-not-processed-with-our-module">
+<h3>Differential CNV analysis for data not processed with our module<a class="headerlink" href="#differential-cnv-analysis-for-data-not-processed-with-our-module" title="Permalink to this heading">#</a></h3>
+<p>This calling assumes the data was not processed using our module. In this case, you must provide a path to a .csv file that contains pre-called CNV.
+This array must have the following structure:
+- first column should contain the cell IDs. The cell IDs must correspond to the cell IDs in the data object provided.
+- first row should contain the region IDs. This can correspond to any region you wish - if you have your own mapping, this could also be simply integers corresponding to specific regions.
+- values in the cells must be (positive or negative) integers. We thus assume your data has been discretized - running on a CNV array with non integer values will result in spurious results.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We in the tutorial data, we provide the file <code class="docutils literal notranslate"><span class="pre">cnv_array.csv</span></code> as an example valid CNV array.</p>
+</div>
+<p>The analysis can be controlled through four arguments in the command line:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv</span></code>: this flag needs to be added for the differential CNV analysis to be performed. If not indicated, the differential CNV analysis is skipped.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv-method</span></code>: (optional) the method used to perform the differential CNV analysis. Can be Mann-Whitney U (mwu, default) or a t-test (ttest).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv-correction</span></code>: if you want to obtain False Discovery Rate (FDR) corrected results, add this flag. It is recommended to use these results rather than uncorrected p-values, as these can result in numerous false discoveries when blindly testing for differential expression (for more information, read <a class="reference external" href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1716-1">https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1716-1</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--cnvarray</span></code>: the path to the CNV array as previously described</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Forgetting to add the <code class="docutils literal notranslate"><span class="pre">--cnvarray</span></code> flag will result in the differential CNV analysis being run on the data object provided, and thus will likely throw an error if this data has not been obtained using our preprocessing module.</p>
+</div>
+<p>Example usage to compute the differential CNV analysis with default values (Mann Whitney U test, no FDR correction)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
+                                --batch batch
+                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
+                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
+                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
+                                --output tutorial-output <span class="se">\</span>
+                                --diffcnv <span class="se">\</span>
+                                --cnvarray data/pipeline-tutorial/cnv_array.csv
+</pre></div>
+</div>
+<p>This will result in the following file being added to the <code class="docutils literal notranslate"><span class="pre">tutorial-output/</span></code> directory, in addition to all the files/directories described on the homepage.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">postprocessing/</span></code>:</dt><dd><ul>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">{rundir}/differential-cnvs.csv</span></code>: file containing the columns for each cluster cl</dt><dd><ul>
+<li><p>{cl}_pvalues: contains the p values of the test cl vs rest</p></li>
+<li><p>{cl}_perc_{gains/losses}: contains the percentage of cells in the cluster showing a gain/loss at this region</p></li>
+<li><p>{cl}_rest_{gains/losses}: contains the percentage of cells in all but the cluster showing a gain/loss at this region</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Example usage to compute the differential CNV analysis with a t-test and with FDR corrected values (ie q-values)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
+                                --batch batch
+                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
+                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
+                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
+                                --output tutorial-output <span class="se">\</span>
+                                --diffcnv <span class="se">\</span>
+                                --diffcnv-method ttest <span class="se">\</span>
+                                --diffcnv-correction <span class="se">\</span>
+                                --cnvarray data/pipeline-tutorial/cnv_array.csv
+</pre></div>
+</div>
+<p>This will result in the same file as in the previous example with the addition of the columns</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>“{cl}_qvalues”: contains the q values of the test cl vs rest</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
 <section id="using-custom-models">
 <h2>Using custom models<a class="headerlink" href="#using-custom-models" title="Permalink to this heading">#</a></h2>
 <p>If you would like to try another batch correction/dimension reduction method, you can apply it to the data and run postprocessing manually.
@@ -224,42 +508,44 @@ For every model you consider, create a directory:</p>
 <p>This will create a directory <code class="docutils literal notranslate"><span class="pre">output-dir/</span></code> with the same structure as the original pipeline.
 If you do not wish the <code class="docutils literal notranslate"><span class="pre">my-models/</span></code> directory to be copied over into <code class="docutils literal notranslate"><span class="pre">output-dir/runs/latent</span></code>, use the flag <code class="docutils literal notranslate"><span class="pre">--no-copy</span></code>.</p>
 </section>
-<section id="using-the-plotting-utilities">
-<h2>Using the plotting utilities<a class="headerlink" href="#using-the-plotting-utilities" title="Permalink to this heading">#</a></h2>
-<p>By default, running the pipeline will result in a scatter plot being created for every configuration (i.e. for every pair of latent representation/clustering).
-These scatter plots will be colored by default according to (a) the cluster assignments and (b) the batch.</p>
-<p>You have the option to plot using either PCA or UMAP, and you can add plotting according to pre-scored signatures (i.e. present in the adata.obs object).</p>
-<p>The plotting utilities can be controlled through three arguments in the command line :</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--dim-reduction</span></code>: the dimensionality reduction method used for plotting. The options are “pca” or “umap”, and defaults to PCA.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--sigcols</span></code>: optionally, the name of the signatures to plot in addition to batch and cluster assignment.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--disable-plots</span></code>: if you do not want plots to be generated, use this flag. This will skip plotting altogether.</p></li>
-</ul>
+<section id="understanding-all-the-pipeline-command-line-options">
+<h2>Understanding all the pipeline command line options<a class="headerlink" href="#understanding-all-the-pipeline-command-line-options" title="Permalink to this heading">#</a></h2>
+<p>The crux of CanSig is running the entire tool through the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline
+</pre></div>
+</div>
+<p>This command comes with numerous flags to enable you to control the inputs/outputs of CanSig.
+We will describe each flag in detail here</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The signature column names inputted with <code class="docutils literal notranslate"><span class="pre">--sigcols</span></code> must be in the adata.obs.columns.</p>
-</div>
-<p>Example usage to plot UMAP with additional scored signatures named <code class="docutils literal notranslate"><span class="pre">signature1</span></code> and <code class="docutils literal notranslate"><span class="pre">signature2</span></code>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
-                                --batch batch
-                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
-                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
-                                --output tutorial-output <span class="se">\</span>
-                                --dim-reduction umap <span class="se">\</span>
-                                --sigcols signature1 signature2
+<p>You can get also get information on these flags by running</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline --help
 </pre></div>
 </div>
-<p>Example usage to disable plotting utilities</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
-                                --batch batch
-                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
-                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
-                                --output tutorial-output <span class="se">\</span>
-                                --disable-plots
-</pre></div>
 </div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--batch</span></code>: the name of the column in which the batch information is stored. This will typically be the name of the column where the sample ID is stored, as generally each sample is processed separately.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--continuous-covariates</span></code>: continusous covariates for which one wishes to correct in the integration model. This could be the cell cycle score or the percentage of mitochondrial counts for example.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--discrete-covariates</span></code>: discrete covariates for which one wishes to correct in the integration model. This could be the subclonal structure for example.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--gene-sets</span></code>: gene set to use for GSEA. The input should be a string (valid for Enrichr) or a .gmt file. More information on these sets can found on the MSigDB website.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--model-runs</span></code>: number of random seeds used for initialization of each integration model. If you are running a integration model with 4 latent dimensions and 3 model runs, this will result in 3 different latent representations for the same number of dimensions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--cluster-runs</span></code>: number of random seeds used for initizalization of each postprocessing run. If you are running postprocessing with 6 clusters and 2 cluster runs, this will result in 2 different clustering partitions for the same number of clusters.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--max-epochs</span></code>: maximum number of epochs the integration model will run for</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--dimensions</span></code>: list of number of latent dimensions used for integration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--clusters</span></code>: list of number of clusters used for postprocessing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--output</span></code>: name of the folder in which the output will be stored (the folder will be created if not already present)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--dim-reduction</span></code>: the name of the dimensionality reduction method used to plot the latent space - can be PCA, UMAP or both (using insets)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--sigcols</span></code>: the name of the columns in the .obs according to which to color the plots</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--disable-plots</span></code>: if set, no plots will be created to visualize the latent space (the run will be quicker when this option is on)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--ngenessig</span></code>: number of genes to use to define a signature to score</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--corrmethod</span></code>: correlation method used to correlate de novo found signatures</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--disable-signatures</span></code>: if set, no information linked to de novo signatures found will be saved (the run will require less memory when this option is on).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv</span></code>: if set, the differential CNV analysis will be run. For more information, see the part about running the differential CNV analysis on this page.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv-method</span></code>: the method used to perform the differential CNV (can be ttest or mwu)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--subclonalcnv</span></code>: if set, the differential CNV analysis will be run using the subclonal inferred CNV representation for each cell, rather than the per cell CNV call.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv-correction</span></code>: if set, the False Discovery Rate corrected q-value will be computed for the differential CNV analysis.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--cnvarray</span></code>: if running the differential CNV analysis on an external array (for those who did not preprocess their data using our preprocessing module), the path to the CNV array used for differential CNV.</p></li>
+</ul>
 </section>
 </section>
 

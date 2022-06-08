@@ -32,6 +32,8 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cansig.types package" href="cansig.types.html" />
+    <link rel="prev" title="cansig.plotting package" href="cansig.plotting.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
     
@@ -85,12 +87,30 @@
 </li>
 
 <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../formatting-data.html">
+  Formatting your data to run CanSig
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../cansig-for-python-coders.html">
+  CanSig for python coders
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../troubleshooting.html">
+  Troubleshooting / Checklist
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="../contributing.html">
   Contribution guide
  </a>
 </li>
 
-<li class="toctree-l1 nav-item">
+<li class="toctree-l1 current active nav-item">
  <a class="reference internal nav-link" href="modules.html">
   cansig
  </a>
@@ -130,7 +150,59 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
-    
+    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.cluster.html">
+   cansig.cluster package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.cnvanalysis.html">
+   cansig.cnvanalysis package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.interface.html">
+   cansig.interface package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.metaanalysis.html">
+   cansig.metaanalysis package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.models.html">
+   cansig.models package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.plotting.html">
+   cansig.plotting package
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   cansig.run package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.types.html">
+   cansig.types package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.filesys.html">
+   cansig.filesys package
+  </a>
+ </li>
+</ul>
+
   </div>
 </nav>
               </div>
@@ -329,7 +401,7 @@ In the end, produces summary.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cansig.run.pipeline.MultirunDirectory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">MultirunDirectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.run.pipeline.MultirunDirectory" title="Permalink to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="cansig.html#cansig.filesys.StructuredDir" title="cansig.filesys.StructuredDir"><code class="xref py py-class docutils literal notranslate"><span class="pre">StructuredDir</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="cansig.filesys.html#cansig.filesys.StructuredDir" title="cansig.filesys.StructuredDir"><code class="xref py py-class docutils literal notranslate"><span class="pre">StructuredDir</span></code></a></p>
 <dl class="py property">
 <dt class="sig sig-object py" id="cansig.run.pipeline.MultirunDirectory.analysis_directory">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">analysis_directory</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.run.pipeline.MultirunDirectory.analysis_directory" title="Permalink to this definition">#</a></dt>
@@ -369,12 +441,12 @@ In the end, produces summary.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.pipeline.generate_heatmap">
-<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">generate_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="headerlink" href="#cansig.run.pipeline.generate_heatmap" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">generate_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="headerlink" href="#cansig.run.pipeline.generate_heatmap" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.pipeline.generate_items">
-<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">generate_items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.run.pipeline.generate_items" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">generate_items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.run.pipeline.generate_items" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -384,12 +456,12 @@ In the end, produces summary.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.pipeline.generate_plotting_config">
-<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">generate_plotting_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ScatterPlotConfig</span></span></span><a class="headerlink" href="#cansig.run.pipeline.generate_plotting_config" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">generate_plotting_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig" title="cansig.plotting.plotting.ScatterPlotConfig"><span class="pre">ScatterPlotConfig</span></a></span></span><a class="headerlink" href="#cansig.run.pipeline.generate_plotting_config" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.pipeline.get_valid_dirs">
-<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">get_valid_dirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">multirun_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.run.pipeline.MultirunDirectory" title="cansig.run.pipeline.MultirunDirectory"><span class="pre">MultirunDirectory</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.run.pipeline.get_valid_dirs" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">get_valid_dirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">multirun_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.run.pipeline.MultirunDirectory" title="cansig.run.pipeline.MultirunDirectory"><span class="pre">MultirunDirectory</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.run.pipeline.get_valid_dirs" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -399,12 +471,12 @@ In the end, produces summary.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.pipeline.read_directory">
-<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">read_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.run.pipeline.read_directory" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">read_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.run.pipeline.read_directory" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.pipeline.single_integration_run">
-<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">single_integration_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integration_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig" title="cansig.models.scvi.SCVIConfig"><span class="pre">SCVIConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">clustering_configs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig" title="cansig.cluster.leiden.LeidenNClusterConfig"><span class="pre">LeidenNClusterConfig</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gsea_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeneExpressionConfig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multirun_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.run.pipeline.MultirunDirectory" title="cansig.run.pipeline.MultirunDirectory"><span class="pre">MultirunDirectory</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotting_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ScatterPlotConfig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savesig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_genes_sig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corr_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pearson'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'spearman'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subclonalcnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'mwu'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ttest'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv_correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnvarray_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.run.pipeline.single_integration_run" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">single_integration_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integration_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig" title="cansig.models.scvi.SCVIConfig"><span class="pre">SCVIConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">clustering_configs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig" title="cansig.cluster.leiden.LeidenNClusterConfig"><span class="pre">LeidenNClusterConfig</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gsea_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeneExpressionConfig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multirun_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.run.pipeline.MultirunDirectory" title="cansig.run.pipeline.MultirunDirectory"><span class="pre">MultirunDirectory</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotting_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig" title="cansig.plotting.plotting.ScatterPlotConfig"><span class="pre">ScatterPlotConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savesig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_genes_sig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corr_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pearson'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'spearman'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subclonalcnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'mwu'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ttest'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv_correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnvarray_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.run.pipeline.single_integration_run" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -427,8 +499,79 @@ In the end, produces summary.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.postprocessing.postprocess">
-<span class="sig-prename descclassname"><span class="pre">cansig.run.postprocessing.</span></span><span class="sig-name descname"><span class="pre">postprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latents_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig" title="cansig.cluster.leiden.LeidenNClusterConfig"><span class="pre">LeidenNClusterConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">gsea_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeneExpressionConfig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotting_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ScatterPlotConfig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savesig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_genes_sig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corr_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pearson'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'spearman'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subclonalcnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'mwu'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ttest'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv_correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnvarray_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cansig.run.postprocessing.postprocess" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">cansig.run.postprocessing.</span></span><span class="sig-name descname"><span class="pre">postprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latents_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig" title="cansig.cluster.leiden.LeidenNClusterConfig"><span class="pre">LeidenNClusterConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">gsea_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeneExpressionConfig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotting_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig" title="cansig.plotting.plotting.ScatterPlotConfig"><span class="pre">ScatterPlotConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savesig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_genes_sig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corr_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pearson'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'spearman'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subclonalcnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'mwu'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ttest'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv_correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnvarray_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cansig.run.postprocessing.postprocess" title="Permalink to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>Main function of the postprocessing module. Will perform all steps of postprocessing ie:</dt><dd><ul class="simple">
+<li><p>perform clustering with a specific amount of clusters</p></li>
+<li><p>perform GSEA with a user-chosen gene set</p></li>
+<li><dl class="simple">
+<dt>by default (optional) plot the latent representations colored according to batch ID, cluster</dt><dd><p>label and optionally known precomputed signatures</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>by default (optional) save the results of the differential gene expression analysis,</dt><dd><p>score all cells according to the de novo found signatures and compute correlation
+between de novo found signatures</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>optional step (skipped by default) compute the differential CNVs between the clusters</dt><dd><p>and save the results</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_path</strong> – path to where the .h5ad data is stored (see cansig._preprocessing for more
+details on the format)</p></li>
+<li><p><strong>latents_dir</strong> – path to the directory containig the results of the integration step
+performed on the same data as indicated in the data_path, using our
+integration module (see cansig.run.integration for more details)</p></li>
+<li><p><strong>output_dir</strong> – path to the postprocessing directory to save the results</p></li>
+<li><p><strong>cluster_config</strong> – configuration to run clustering (see cansig.cluster for more details)</p></li>
+<li><p><strong>gsea_config</strong> – configuration to run GSEA (see cansig.gsea for more details)</p></li>
+<li><p><strong>plotting_config</strong> – configuration for plotting (see cansig.plotting for more details)</p></li>
+<li><p><strong>plot</strong> – whether to produce &amp; save the plots or not</p></li>
+<li><p><strong>savesig</strong> – whether to save the de novo signatures and score the cells according to these</p></li>
+<li><p><strong>n_genes_sig</strong> – number of genes used to define a signature to score the cells</p></li>
+<li><p><strong>corr_method</strong> – correlation (spearman or pearson) to compute the correlation between
+de novo signatures</p></li>
+<li><p><strong>diffcnv</strong> – whether to perform differential CNV analysis</p></li>
+<li><p><strong>diffcnv_method</strong> – either mwu or ttest, the statistical test used to perform the differential
+CNV analysis</p></li>
+<li><p><strong>diffcnv_correction</strong> – whether to compute the FDR corrected results for the differential
+CNV analysis</p></li>
+<li><p><strong>cnvarray_path</strong> – optional, if computing the differential CNV analysis on an anndata object
+not preprocessed using our preprocessing module, the path to the CNV calling for each
+cell</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A boolean that verifies the directory is not corrupted</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<dl class="simple">
+<dt>This function saves a number of analyses in the output_dir:</dt><dd><ul class="simple">
+<li><p>settings for clustering</p></li>
+<li><p>cluster labels</p></li>
+<li><p>settings for GSEA</p></li>
+<li><p>(by default) scatter plot of the latent space</p></li>
+<li><p>(by default) differential gene expression results</p></li>
+<li><p>(by default) cell score for each of the de novo found signatures</p></li>
+<li><p>(by default) correlation between de novo found signatures</p></li>
+<li><p>GSEA results for each cluster</p></li>
+<li><p>(optionally) results for the differential CNV analysis</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+</dd></dl>
 
 </section>
 <section id="module-cansig.run">
@@ -442,6 +585,20 @@ In the end, produces summary.</p>
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="cansig.plotting.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">cansig.plotting package</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="cansig.types.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">cansig.types package</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
               
           </main>

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Advanced interpretation tutorial &#8212; CanSig 0.0.1 documentation</title>
+    <title>Troubleshooting / Checklist &#8212; CanSig 0.0.1 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -32,8 +32,8 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Formatting your data to run CanSig" href="formatting-data.html" />
-    <link rel="prev" title="Advanced pipeline usage" href="pipeline-advanced.html" />
+    <link rel="next" title="Contribution guide" href="contributing.html" />
+    <link rel="prev" title="CanSig for python coders" href="cansig-for-python-coders.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
     
@@ -80,8 +80,8 @@
  </a>
 </li>
 
-<li class="toctree-l1 current active nav-item">
- <a class="current reference internal nav-link" href="#">
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="interpretation.html">
   Advanced interpretation tutorial
  </a>
 </li>
@@ -98,8 +98,8 @@
  </a>
 </li>
 
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="troubleshooting.html">
+<li class="toctree-l1 current active nav-item">
+ <a class="current reference internal nav-link" href="#">
   Troubleshooting / Checklist
  </a>
 </li>
@@ -166,9 +166,24 @@
               
               <div class="toc-item">
                 
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
-    
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#checklist">
+   Checklist
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   Troubleshooting
+  </a>
+ </li>
+</ul>
+
 </nav>
               </div>
               
@@ -188,13 +203,43 @@
               
               <div>
                 
-  <section id="advanced-interpretation-tutorial">
-<span id="interpretation"></span><h1>Advanced interpretation tutorial<a class="headerlink" href="#advanced-interpretation-tutorial" title="Permalink to this heading">#</a></h1>
+  <section id="troubleshooting-checklist">
+<span id="troubleshooting"></span><h1>Troubleshooting / Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permalink to this heading">#</a></h1>
+<p>On this page you will find a checklist to go through before running CanSig to ensure it will run as smoothly as possible, as well as a troubleshooting section for most common encountered problems.
+If you are confident you tick all the boxes for the checklist and cannot find your issue mentioned in the troubleshooting, please open an issue so we can adress it!</p>
+<section id="checklist">
+<h2>Checklist<a class="headerlink" href="#checklist" title="Permalink to this heading">#</a></h2>
+<p>General checklist</p>
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
-<p>The interpretation tutorial. (Probably to be written by Josephine).
-It should cover e.g., additional methods to validate the results (literature, survival analysis, differential CNVs).</p>
+<p>Add in the general checklist</p>
 </div>
+<p>Preprocessing checklist</p>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Add in the preprocessing checklist</p>
+</div>
+<p>Differential CNV checklist</p>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>Add in the differential CNV checklist</p>
+</div>
+</section>
+<section id="id4">
+<h2>Troubleshooting<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<ol class="arabic">
+<li><p>GSEA will not run</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Is your gene annotation consistent?
+If your genes are annotated using Entrez in your original expression object, then you should run GSEA using an adapted .gmt file. You can download files for official gene ID and for Entrez on the MSigDB website (<a class="reference external" href="https://www.gsea-msigdb.org/gsea/downloads.jsp#msigdb">https://www.gsea-msigdb.org/gsea/downloads.jsp#msigdb</a>).
+If your genes are annotated using another system, you should first translate into Official Gene ID or Entrez.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Other problem…</p></li>
+</ol>
+</section>
 </section>
 
 
@@ -203,17 +248,17 @@ It should cover e.g., additional methods to validate the results (literature, su
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="pipeline-advanced.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="cansig-for-python-coders.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Advanced pipeline usage</p>
+            <p class="prev-next-title">CanSig for python coders</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="formatting-data.html" title="next page">
+    <a class='right-next' id="next-link" href="contributing.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Formatting your data to run CanSig</p>
+        <p class="prev-next-title">Contribution guide</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

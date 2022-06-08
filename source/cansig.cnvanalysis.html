@@ -1,0 +1,570 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>cansig.cnvanalysis package &#8212; CanSig 0.0.1 documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cansig.interface package" href="cansig.interface.html" />
+    <link rel="prev" title="cansig.cluster package" href="cansig.cluster.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+<a class="navbar-brand" href="../index.html">
+<p class="title">CanSig</p>
+</a>
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../preprocessing.html">
+  Preprocessing tutorial
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../pipeline-advanced.html">
+  Advanced pipeline usage
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../interpretation.html">
+  Advanced interpretation tutorial
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../formatting-data.html">
+  Formatting your data to run CanSig
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../cansig-for-python-coders.html">
+  CanSig for python coders
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../troubleshooting.html">
+  Troubleshooting / Checklist
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../contributing.html">
+  Contribution guide
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="modules.html">
+  cansig
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/BoevaLab/CanSig" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.cluster.html">
+   cansig.cluster package
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   cansig.cnvanalysis package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.interface.html">
+   cansig.interface package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.metaanalysis.html">
+   cansig.metaanalysis package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.models.html">
+   cansig.models package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.plotting.html">
+   cansig.plotting package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.run.html">
+   cansig.run package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.types.html">
+   cansig.types package
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cansig.filesys.html">
+   cansig.filesys package
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-cansig.cnvanalysis.differentialcnvs">
+   cansig.cnvanalysis.differentialcnvs module
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="cansig-cnvanalysis-package">
+<h1>cansig.cnvanalysis package<a class="headerlink" href="#cansig-cnvanalysis-package" title="Permalink to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="module-cansig.cnvanalysis.differentialcnvs">
+<span id="cansig-cnvanalysis-differentialcnvs-module"></span><h2>cansig.cnvanalysis.differentialcnvs module<a class="headerlink" href="#module-cansig.cnvanalysis.differentialcnvs" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.cnvanalysis.differentialcnvs.discretize_cnv">
+<span class="sig-prename descclassname"><span class="pre">cansig.cnvanalysis.differentialcnvs.</span></span><span class="sig-name descname"><span class="pre">discretize_cnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnv_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'X_cnv'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.cnvanalysis.differentialcnvs.discretize_cnv" title="Permalink to this definition">#</a></dt>
+<dd><p>This function discretizes the CNV values obtained.
+The output of infercnv is a float; during our preprocessing module, these values are
+already de-noised to remove spurious calls using the Dynamic Thresholding procedure
+as described here <a class="reference external" href="https://github.com/broadinstitute/inferCNV/wiki/De-noising-Filters">https://github.com/broadinstitute/inferCNV/wiki/De-noising-Filters</a>
+All remaining positive values are turned into 1 = a gain and all negative values a -1 = a loss
+using this function. We thus only gain general gains and losses and do not keep the amplitude
+of this gain or loss (ie do not call 2 gains or -2 losses)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – anndata object with precomputed cluster labels and CNV calls</p></li>
+<li><p><strong>cnv_key</strong> – key for the called CNV calls in the .obsm of data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dataframe containing the discretized values of the CNV calls
+shape (n_cells, n_regions_called)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.cnvanalysis.differentialcnvs.find_differential_cnv">
+<span class="sig-prename descclassname"><span class="pre">cansig.cnvanalysis.differentialcnvs.</span></span><span class="sig-name descname"><span class="pre">find_differential_cnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'mwu'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ttest'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subclonal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'batch'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.cnvanalysis.differentialcnvs.find_differential_cnv" title="Permalink to this definition">#</a></dt>
+<dd><p>Main function of the differential CNV module. This function is adapted to an anndata object
+as preprocessed by our preprocessing module. If computing differential CNVs on a user-provided
+object, the function <cite>find_differential_cnv_precomputed</cite> is used</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – anndata object as preprocessed using our preprocessing module. Must contain</p>
+<ul>
+<li><p>“X_cnv” in data.obsm: the CNV called using our preprocessin module</p></li>
+<li><p>“new-cluster-column” in data.obs: the column with the precomputed cluster labels</p></li>
+<li><p>“chromosome” in data.var.columns: the chromosome to which the gene belongs</p></li>
+<li><p>“cnv_called” in data.var.columns: if this gene was used for the infercnv call (see
+<cite>cansig._preprocessing</cite> for more details on the CNV calling procedure)</p></li>
+<li><p>“start” in data.var.columns: the start position of the gene on the chromosome</p></li>
+<li><p>“cnv” in data.uns: a summary of the infercnv run</p></li>
+<li><p>“chr_pos” in data.uns[“cnv”]: a dictionary containing the mapping between the chromosome and
+the index of the regions in the cnv array</p></li>
+</ul>
+</li>
+<li><p><strong>diff_method</strong> – can be mann-whitney U (mwu) or t-test (ttest), method used to compute the differential
+CNV between a cluster and the rest</p></li>
+<li><p><strong>correction</strong> – whether to output FDR corrected q values in addition to p values</p></li>
+<li><p><strong>subclonal</strong> – whether to call CNVs using smoothing on a subclonal level</p></li>
+<li><p><strong>batch_key</strong> – key for the batch id</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>a pd.Df containing for the differential CNV results (the index is the mapping as computed in <cite>get_cnv_mapping</cite>).
+For each cluster cl</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>”{cl}_pvalues” contains the p values of the test cl vs rest</p></li>
+<li><p>”{cl}_perc_{gains/losses}” contains the percentage of cells in the cluster showing
+a gain/loss at this region</p></li>
+<li><p>”{cl}_rest_{gains/losses}” contains the percentage of cells in all but the cluster
+showing a gain/loss at this region</p></li>
+<li><p>”{cl}_patients_{gain/loss}” contains the number of patients that have at least one
+cell in the cluster that shows a gain/loss in the region</p></li>
+<li><p>(optional) “{cl}_qvalues” contains the q values of the test cl vs rest
+(only if correction is True)</p></li>
+</ul>
+</div></blockquote>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>this function is only called if computing the differential CNV on an Anndata object
+preprocessed using our preprocessing module.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>find_differential_cnv_precomputed</cite>, the equivalent function if the anndata object provided
+was not preprocessed using our preprocessing module</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.cnvanalysis.differentialcnvs.find_differential_cnv_precomputed">
+<span class="sig-prename descclassname"><span class="pre">cansig.cnvanalysis.differentialcnvs.</span></span><span class="sig-name descname"><span class="pre">find_differential_cnv_precomputed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cnv_array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cl_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'mwu'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ttest'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'batch'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.cnvanalysis.differentialcnvs.find_differential_cnv_precomputed" title="Permalink to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>Equivalent of the <cite>find_differential_cnv</cite> function if no anndata object used for the rest of the</dt><dd><p>analysis was not precomputed using our preprocessing module</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cnv_array</strong> – pd.Df containing the discretized CNV calls, shape (n_cells, n_regions_called)</p></li>
+<li><p><strong>cl_labels</strong> – cluster labels associated with the cnv_array, shape (n_cells, 1)</p></li>
+<li><p><strong>diff_method</strong> – can be mann-whitney U (mwu) or t-test (ttest), method used to compute the differential
+CNV between a cluster and the rest</p></li>
+<li><p><strong>correction</strong> – whether to output FDR corrected q values in addition to p values</p></li>
+<li><p><strong>batch_key</strong> – the key to the batch id</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>a pd.Df containing for the differential CNV results. For each cluster cl</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>”{cl}_pvalues” contains the p values of the test cl vs rest</p></li>
+<li><p>”{cl}_perc_{gains/losses}” contains the percentage of cells in the cluster showing a
+gain/loss at this region</p></li>
+<li><p>”{cl}_rest_{gains/losses}” contains the percentage of cells in all but the cluster showing a
+gain/loss at this region</p></li>
+<li><p>”{cl}_patients_{gain/loss}” contains the number of patients that have at least one
+cell in the cluster that shows a gain/loss in the region</p></li>
+<li><p>(optional) “{cl}_qvalues” contains the q values of the test cl vs rest
+(only if correction is True)</p></li>
+</ul>
+</div></blockquote>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>this function is only called if computing the differential CNV on an Anndata object
+preprocessed using our preprocessing module.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>find_differential_cnv_precomputed</cite>, the equivalent function if the anndata object provided
+was not preprocessed using our preprocessing module</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.cnvanalysis.differentialcnvs.get_cluster_labels">
+<span class="sig-prename descclassname"><span class="pre">cansig.cnvanalysis.differentialcnvs.</span></span><span class="sig-name descname"><span class="pre">get_cluster_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'new-cluster-column'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'batch'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.cnvanalysis.differentialcnvs.get_cluster_labels" title="Permalink to this definition">#</a></dt>
+<dd><p>Gets the cluster labels precomputed in the anndata object and batch key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – anndata object with precomputed cluster labels and CNV calls</p></li>
+<li><p><strong>cluster_key</strong> – key for the cluster labels in the .obs of the adata</p></li>
+<li><p><strong>batch_key</strong> – key for the batch ID in the .obs of the data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>pd.Df with the cluster labels and batch id for each cell</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.cnvanalysis.differentialcnvs.get_cnv_mapping">
+<span class="sig-prename descclassname"><span class="pre">cansig.cnvanalysis.differentialcnvs.</span></span><span class="sig-name descname"><span class="pre">get_cnv_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.cnvanalysis.differentialcnvs.get_cnv_mapping" title="Permalink to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>Computes the mapping between the CNV regions called in our preprocessing module</dt><dd><p>and the genes used for the computation of the CNV call.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – anndata object as preprocessed using our preprocessing module. Must contain</p>
+<ul>
+<li><p>“chromosome” in data.var.columns: the chromosome to which the gene belongs</p></li>
+<li><p>“cnv_called” in data.var.columns: if this gene was used for the infercnv call (see
+<cite>cansig._preprocessing</cite> for more details on the CNV calling procedure)</p></li>
+<li><p>“start” in data.var.columns: the start position of the gene on the chromosome</p></li>
+<li><p>“cnv” in data.uns: a summary of the infercnv run</p></li>
+<li><p>“chr_pos” in data.uns[“cnv”]: a dictionary containing the mapping between the chromosome and
+the index of the regions in the cnv array</p></li>
+</ul>
+</li>
+<li><p><strong>window_size</strong> – the window size used for the CNV call (see <cite>cansig._preprocessing</cite> for more details
+on the CNV calling procedure)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the name of the regions as “chrXXX;gene1;gene2;…;gene_windowsize”</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if the data object doesn’t fit the above mentioned criteria (this is automatic
+    if the data object was processed using our preprocessing module)</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>this function is only called if computing the differential CNV on an Anndata object
+preprocessed using our preprocessing module. If using an external CNV array, we assume
+you have your own mapping for the regions you are using</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.cnvanalysis.differentialcnvs.get_diff_cnv">
+<span class="sig-prename descclassname"><span class="pre">cansig.cnvanalysis.differentialcnvs.</span></span><span class="sig-name descname"><span class="pre">get_diff_cnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cnv_array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cl_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'mwu'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ttest'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'new-cluster-column'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'batch'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.cnvanalysis.differentialcnvs.get_diff_cnv" title="Permalink to this definition">#</a></dt>
+<dd><p>Computes the differential CNVs between a cluster and the rest, for all clusters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cnv_array</strong> – pd.Df containing the discretized CNV calls, either through <cite>discretize_cnv</cite>,
+<cite>get_subclonal_cnv</cite> or precomputed if the CNVs were not called using our preprocessing module
+shape (n_cells, n_regions_called)</p></li>
+<li><p><strong>cl_labels</strong> – cluster labels and batch id associated with the cnv_array, either computed using <cite>get_cluster_labels</cite>
+or precomputed if the CNVs were not called using our preprocessing module
+shape (n_cells, 2)</p></li>
+<li><p><strong>diff_method</strong> – can be mann-whitney U (mwu) or t-test (ttest), method used to compute the differential
+CNV between a cluster and the rest</p></li>
+<li><p><strong>correction</strong> – whether to output FDR corrected q values in addition to p values</p></li>
+<li><p><strong>cluster_key</strong> – key for the cluster labels</p></li>
+<li><p><strong>batch_key</strong> – key for the batch ID</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>a pd.Df containing for the differential CNV results. For each cluster cl</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>”{cl}_pvalues” contains the p values of the test cl vs rest</p></li>
+<li><p>”{cl}_perc_{gains/losses}” contains the percentage of cells in the cluster showing a
+gain/loss at this region</p></li>
+<li><p>”{cl}_rest_{gains/losses}” contains the percentage of cells in all but the cluster showing a
+gain/loss at this region</p></li>
+<li><p>(optional) “{cl}_qvalues” contains the q values of the test cl vs rest
+(only if correction is True)</p></li>
+</ul>
+</div></blockquote>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.cnvanalysis.differentialcnvs.get_subclonal_cnv">
+<span class="sig-prename descclassname"><span class="pre">cansig.cnvanalysis.differentialcnvs.</span></span><span class="sig-name descname"><span class="pre">get_subclonal_cnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnv_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'X_cnv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subclonal_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'subclonal'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.cnvanalysis.differentialcnvs.get_subclonal_cnv" title="Permalink to this definition">#</a></dt>
+<dd><p>Homogeneizes the CNV on a subclonal level rather than on a cell level. The CNV call for a cell will
+be computed through a majority voting of the subclone it belongs to.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – anndata object with precomputed cluster labels and CNV calls</p></li>
+<li><p><strong>cnv_key</strong> – key for the called CNV calls in the .obsm of data</p></li>
+<li><p><strong>subclonal_key</strong> – key for the subclone ID called through infercnvpy during preprocessing</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>cnv array discretized and homogeneized to a subclone level</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.cnvanalysis.differentialcnvs.save_diffcnv">
+<span class="sig-prename descclassname"><span class="pre">cansig.cnvanalysis.differentialcnvs.</span></span><span class="sig-name descname"><span class="pre">save_diffcnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diffCNVs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.cnvanalysis.differentialcnvs.save_diffcnv" title="Permalink to this definition">#</a></dt>
+<dd><p>Helper function to save the differential CNV results</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="cansig.cluster.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">cansig.cluster package</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="cansig.interface.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">cansig.interface package</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022 CanSig team.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.1.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>
