@@ -302,13 +302,7 @@ def _get_pathways_and_scores(df: pd.DataFrame) -> List[Tuple[str, float]]:
     return list(new_df["nes"].items())
 
 
-def _format_pathway_name(pathway: str) -> str:
-    """Function replacing spaces and _ with newlines, so that long pathway names span multiple lines,
-    instead of being a very long one-line string."""
-    return pathway.replace(" ", "\n").replace("_", "\n")
-
-
-def read_directory(directory: fs.PostprocessingDir) -> List[heatmap.HeatmapItem]:
+def read_directory(directory: fs.PostprocessingDir, formatter: gsea.IPathwayFormatter) -> List[heatmap.HeatmapItem]:
     # TODO(Pawel): This looks very hacky.
     assert directory.valid()
 
@@ -326,14 +320,21 @@ def read_directory(directory: fs.PostprocessingDir) -> List[heatmap.HeatmapItem]
             vertical=n_cluster,
             horizontal=n_latent,
             value=score,
-            panel=_format_pathway_name(pathway),
+            panel=formatter.format(pathway),
         )
         for pathway, score in items
     ]
 
 
+def generate_items(dirs: Iterable[fs.PostprocessingDir]) -> Iterable[heatmap.HeatmapItem]:
+    formatter = gsea.DefaultFormatter()
+
+    items = sum([read_directory(directory, formatter=formatter) for directory in dirs], [])
+    return items
+
+
 def generate_heatmap(dirs: Iterable[fs.PostprocessingDir]) -> plt.Figure:
-    items = sum([read_directory(directory) for directory in dirs], [])
+    items = generate_items(dirs)
 
     settings = heatmap.HeatmapSettings(
         vertical_name="clusters",
@@ -343,12 +344,6 @@ def generate_heatmap(dirs: Iterable[fs.PostprocessingDir]) -> plt.Figure:
         value_max=2,
     )
     return heatmap.plot_heatmap(items, settings=settings)
-
-
-def generate_items(dirs: Iterable[fs.PostprocessingDir]) -> Iterable[heatmap.HeatmapItem]:
-    items = sum([read_directory(directory) for directory in dirs], [])
-
-    return items
 
 
 def main() -> None:

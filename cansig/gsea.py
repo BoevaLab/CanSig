@@ -1,6 +1,6 @@
 """Gene expression analysis utilities."""
 import pathlib
-from typing import Iterable, Dict, List, Optional, Union
+from typing import Iterable, Dict, List, Optional, Union, Protocol
 from typing import get_args  # pytype: disable=import-error
 from typing import Literal  # pytype: disable=not-supported-yet
 
@@ -277,3 +277,26 @@ def score_signature(
 
     # save the correlation between the scores
     signature_df.corr(method=corr_method).to_csv(sig_correlation_file)
+
+
+class IPathwayFormatter(Protocol):
+    """Interface for formatters used to adjust pathway names."""
+
+    def format(self, pathway: str) -> str:
+        """Formats pathway name.
+
+        Args:
+            pathway: pathway name
+
+        Returns:
+             formatted pathway name
+        """
+        pass
+
+
+class DefaultFormatter(IPathwayFormatter):
+    """The default formatter, used to remove underscores
+    and split long pathway names into multiple lines."""
+
+    def format(self, pathway: str) -> str:
+        return pathway.replace("_", " ").replace(" ", "\n")
