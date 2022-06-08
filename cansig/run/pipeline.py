@@ -189,7 +189,7 @@ def generate_gsea_config(args) -> gsea.GeneExpressionConfig:
 def generate_plotting_config(args) -> plotting.ScatterPlotConfig:
 
     return plotting.ScatterPlotConfig(
-        dim_red=args.dim_reduction,
+        dim_reduction=args.dim_reduction,
         signature_columns=args.sigcols,
         batch_column=args.batch,
     )
