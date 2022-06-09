@@ -96,13 +96,13 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output", type=str, default="heatmap.pdf", help="Generated heatmap name. Default: heatmap.pdf"
     )
-    parser.add_argument("--value-max", type=float, default=2.0, help="Upper value to plot the heatmap. Default: 2.0.")
+    parser.add_argument("--value-max", type=float, default=2.0, help="Upper value to plot the heatmap. Default: 2.0")
     parser.add_argument(
         "--pathway-sort-method",
         type=str,
-        default="count",
+        default="mean",
         choices=get_args(hm.PanelFilterTypes),
-        help="How the panels (pathways) should be sorted.",
+        help="How the panels (pathways) should be sorted. Default: by highest mean NES across the runs.",
     )
 
     return parser
