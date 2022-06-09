@@ -1,6 +1,6 @@
 import abc
 from collections import defaultdict
-from typing import Callable, Dict, Iterable, List, Optional, Set, Sequence, Tuple, Union
+from typing import Callable, Dict, Iterable, List, Optional, Sequence, Tuple, Union
 from typing import Literal  # pytype: disable=not-supported-yet
 
 import matplotlib.pyplot as plt  # pytype: disable=import-error
@@ -96,17 +96,39 @@ def get_heatmap_items(
     return vertical, horizontal, panels, n_runs
 
 
-def plot_heatmap(items: Iterable[HeatmapItem], settings: HeatmapSettings) -> plt.Figure:
+def plot_heatmap(
+    items: Iterable[HeatmapItem], settings: HeatmapSettings, panels: Optional[Sequence[_PanelType]] = None
+) -> plt.Figure:
+    """Plots the heatmap. Each panel contains a grid coloured by the items' values.
+
+    Args:
+        items: items to be plotted
+        settings: heatmap settings
+        panels: panels to be plotted. By default, we plot all panels from all the items.
+
+    Returns:
+        a matplotlib figure
+
+    Note:
+        We advise *against* running `fig.tight_layout()` on the returned figure.
+    """
     items = list(items)
 
     vertical = _get_vertical(items)
     horizontal = _get_horizontal(items)
-    panels = _get_panels(items)
+
+    if panels is None:
+        panels = _get_panels(items)
+    else:
+        panels = list(panels)
 
     n_vertical = len(vertical)
     n_horizontal = len(horizontal)
     n_panel = len(panels)
     n_runs = _get_n_runs(items)
+
+    if n_panel == 0:
+        raise ValueError("No panels selected.")
 
     figsize = _calculate_figsize(
         settings=settings, n_runs=n_runs, n_vertical=n_vertical, n_horizontal=n_horizontal, n_panel=n_panel
@@ -209,7 +231,10 @@ class IFilterPanels(IFilterItems, abc.ABC):
         return [item for item in items if item.panel in allowed_panels]
 
     @abc.abstractmethod
-    def allowed_panels(self, items: Iterable[HeatmapItem]) -> Set[_PanelType]:
+    def allowed_panels(self, items: Iterable[HeatmapItem]) -> List[_PanelType]:
+        """Returns the list of allowed panels (i.e., the item is allowed only if its panel
+        is allowed).
+        """
         pass
 
 
@@ -222,7 +247,7 @@ def _group_by_panel(items: Iterable[HeatmapItem]) -> Dict[_PanelType, List[Heatm
 
 def _get_k_best_panels(
     items: Iterable[HeatmapItem], k: int, measure: Callable[[Sequence[HeatmapItem]], float]
-) -> Set[str]:
+) -> List[str]:
     grouped = _group_by_panel(items)
 
     unsorted = []
@@ -230,7 +255,7 @@ def _get_k_best_panels(
         unsorted.append((panel, measure(values)))
 
     rank = sorted(unsorted, key=lambda x: x[1], reverse=True)
-    return set(pathway for pathway, _ in rank[:k])
+    return [pathway for pathway, _ in rank[:k]]
 
 
 class MostFoundItemsFilter(IFilterPanels):
@@ -243,7 +268,7 @@ class MostFoundItemsFilter(IFilterPanels):
     def __init__(self, k: int = 5) -> None:
         self._k = k
 
-    def allowed_panels(self, items: Iterable[HeatmapItem]) -> Set[_PanelType]:
+    def allowed_panels(self, items: Iterable[HeatmapItem]) -> List[_PanelType]:
         return _get_k_best_panels(items=items, k=self._k, measure=lambda vals: len(vals))
 
 
@@ -270,8 +295,19 @@ class HighestScoreFilter(IFilterPanels):
         else:
             raise ValueError(f"Method {method} not known.")
 
-    def allowed_panels(self, items: Iterable[HeatmapItem]) -> Set[_PanelType]:
+    def allowed_panels(self, items: Iterable[HeatmapItem]) -> List[_PanelType]:
         def measure(vals: Sequence[HeatmapItem]) -> float:
             return self._method([x.value for x in vals])
 
         return _get_k_best_panels(items=items, k=self._k, measure=measure)
+
+
+PanelFilterTypes = Literal["median", "mean", "max", "count"]
+
+
+def panel_filter_factory(k: int, method: PanelFilterTypes) -> IFilterPanels:
+    """Factory method for panel filters."""
+    if method == "count":
+        return MostFoundItemsFilter(k=k)
+    else:
+        return HighestScoreFilter(k=k, method=method)

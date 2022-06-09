@@ -1,6 +1,7 @@
 """Script for running the heatmap."""
 import argparse
 from typing import Iterable, List
+from typing import get_args  # pytype: disable=import-error
 
 import matplotlib.pyplot as plt  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
@@ -67,19 +68,23 @@ def generate_items(dirs: Iterable[fs.PostprocessingDir]) -> Iterable[hm.HeatmapI
     return items
 
 
-def generate_heatmap(dirs: Iterable[fs.PostprocessingDir], n_pathways: int) -> plt.Figure:
+def generate_heatmap(
+    dirs: Iterable[fs.PostprocessingDir], n_pathways: int, method: hm.PanelFilterTypes = "count", value_max: float = 2.0
+) -> plt.Figure:
     items = generate_items(dirs)
 
-    items = hm.MostFoundItemsFilter(k=n_pathways).filter(items)
+    panel_filter = hm.panel_filter_factory(k=n_pathways, method=method)
+    plotted_items = panel_filter.filter(items)
+    plotted_panels = panel_filter.allowed_panels(items)
 
     settings = hm.HeatmapSettings(
         vertical_name="clusters",
         horizontal_name="dim",
         # TODO(Pawel): Consider making this configurable.
         value_min=0,
-        value_max=2,
+        value_max=value_max,
     )
-    return hm.plot_heatmap(items, settings=settings)
+    return hm.plot_heatmap(plotted_items, settings=settings, panels=plotted_panels)
 
 
 def create_parser() -> argparse.ArgumentParser:
@@ -90,6 +95,14 @@ def create_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--output", type=str, default="heatmap.pdf", help="Generated heatmap name. Default: heatmap.pdf"
+    )
+    parser.add_argument("--value-max", type=float, default=2.0, help="Upper value to plot the heatmap. Default: 2.0.")
+    parser.add_argument(
+        "--pathway-sort-method",
+        type=str,
+        default="count",
+        choices=get_args(hm.PanelFilterTypes),
+        help="How the panels (pathways) should be sorted.",
     )
 
     return parser
@@ -104,7 +117,9 @@ def main() -> None:
 
     directories = mr.get_valid_dirs(multirur_dir)
 
-    fig = generate_heatmap(directories, n_pathways=args.n_pathways)
+    fig = generate_heatmap(
+        directories, n_pathways=args.n_pathways, method=args.pathway_sort_method, value_max=args.value_max
+    )
     fig.savefig(args.output)
 
 
