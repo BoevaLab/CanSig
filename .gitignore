@@ -7,6 +7,8 @@ outputs/
 
 # Data (disable adding data files by default)
 # If really needed, use `git add --force FILENAME`
+*.pdf
+*.svg
 *.png
 *.jpeg
 *.jpg

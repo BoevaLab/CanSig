@@ -7,22 +7,20 @@ In the end, produces summary.
 import argparse
 import logging
 import pathlib
-from typing import Iterable, List, Tuple, Optional, Literal  # pytype: disable=not-supported-yet
-
-import matplotlib.pyplot as plt  # pytype: disable=import-error
-import pandas as pd  # pytype: disable=import-error
+from typing import Iterable, List, Optional, Literal  # pytype: disable=not-supported-yet
 
 import cansig.cluster.api as cluster
 import cansig.filesys as fs
 import cansig.gsea as gsea
-import cansig.metaanalysis.heatmap as heatmap
 import cansig.metaanalysis.repr_directory as repdir
 import cansig.plotting.plotting as plotting
 import cansig.models.api as models
 import cansig.models.scvi as _scvi
+import cansig.multirun as mr
 
 import cansig.run.integration as integration
 import cansig.run.postprocessing as postprocessing
+import cansig.run.heatmap as run_heatmap
 
 _TESTTYPE = Literal["mwu", "ttest"]
 _CORRTYPE = Literal["pearson", "spearman"]
@@ -155,6 +153,12 @@ def create_parser() -> argparse.ArgumentParser:
             IMPORTANT: using this flag will automatically disable running the differential CNV on the anndata object",
         default=None,
     )
+    parser.add_argument(
+        "--n-pathways",
+        type=int,
+        default=5,
+        help="The number of most consistently found pathways to be plotted in the heatmap. Default: 5.",
+    )
     return parser
 
 
@@ -187,7 +191,6 @@ def generate_gsea_config(args) -> gsea.GeneExpressionConfig:
 
 
 def generate_plotting_config(args) -> plotting.ScatterPlotConfig:
-
     return plotting.ScatterPlotConfig(
         dim_reduction=args.dim_reduction,
         signature_columns=args.sigcols,
@@ -208,30 +211,12 @@ def generate_clustering_configs(args) -> List[cluster.LeidenNClusterConfig]:
     return lst
 
 
-class MultirunDirectory(fs.StructuredDir):
-    def valid(self) -> bool:
-        # TODO(Pawel): Consider making this more elaborate.
-        return True
-
-    @property
-    def integration_directories(self) -> pathlib.Path:
-        return self.path / "integration"
-
-    @property
-    def postprocessing_directories(self) -> pathlib.Path:
-        return self.path / "postprocessing"
-
-    @property
-    def analysis_directory(self) -> pathlib.Path:
-        return self.path / "final_analysis"
-
-
 def single_integration_run(
     data_path: pathlib.Path,
     integration_config: models.SCVIConfig,
     clustering_configs: Iterable[cluster.LeidenNClusterConfig],
     gsea_config: gsea.GeneExpressionConfig,
-    multirun_dir: MultirunDirectory,
+    multirun_dir: mr.MultirunDirectory,
     plotting_config: plotting.ScatterPlotConfig,
     batch: str,
     plot: bool,
@@ -278,79 +263,6 @@ def single_integration_run(
             print(f"Caught exception {type(e)}: {e}.")
 
 
-def get_valid_dirs(multirun_dir: MultirunDirectory) -> List[fs.PostprocessingDir]:
-    valid_dirs = []
-    invalid_dirs = []
-    for path in multirun_dir.postprocessing_directories.glob("*"):
-        wrapped_path = fs.PostprocessingDir(path)
-        if wrapped_path.valid():
-            valid_dirs.append(wrapped_path)
-        else:
-            invalid_dirs.append(path)
-
-    if invalid_dirs:
-        print(f"The following directories seem to be corrupted: {invalid_dirs}.")
-
-    return valid_dirs
-
-
-def _get_pathways_and_scores(df: pd.DataFrame) -> List[Tuple[str, float]]:
-    # TODO(Pawel): This is very hacky. Make configurable.
-    new_df = df.groupby("Term").max()
-    new_df = new_df[new_df["fdr"] < 0.05]
-    new_df = new_df[new_df["nes"] > 0]
-    return list(new_df["nes"].items())
-
-
-def _format_pathway_name(pathway: str) -> str:
-    """Function replacing spaces and _ with newlines, so that long pathway names span multiple lines,
-    instead of being a very long one-line string."""
-    return pathway.replace(" ", "\n").replace("_", "\n")
-
-
-def read_directory(directory: fs.PostprocessingDir) -> List[heatmap.HeatmapItem]:
-    # TODO(Pawel): This looks very hacky.
-    assert directory.valid()
-
-    cluster_settings = fs.read_settings(cluster.LeidenNClusterConfig, directory.cluster_settings)
-    n_cluster = cluster_settings.clusters
-
-    model_settings = fs.read_settings(models.SCVIConfig, directory.integration_settings)
-    n_latent = model_settings.n_latent
-
-    gsea_dataframe = pd.read_csv(directory.gsea_output)
-    items = _get_pathways_and_scores(gsea_dataframe)
-
-    return [
-        heatmap.HeatmapItem(
-            vertical=n_cluster,
-            horizontal=n_latent,
-            value=score,
-            panel=_format_pathway_name(pathway),
-        )
-        for pathway, score in items
-    ]
-
-
-def generate_heatmap(dirs: Iterable[fs.PostprocessingDir]) -> plt.Figure:
-    items = sum([read_directory(directory) for directory in dirs], [])
-
-    settings = heatmap.HeatmapSettings(
-        vertical_name="clusters",
-        horizontal_name="dim",
-        # TODO(Pawel): Consider making this configurable.
-        value_min=0,
-        value_max=2,
-    )
-    return heatmap.plot_heatmap(items, settings=settings)
-
-
-def generate_items(dirs: Iterable[fs.PostprocessingDir]) -> Iterable[heatmap.HeatmapItem]:
-    items = sum([read_directory(directory) for directory in dirs], [])
-
-    return items
-
-
 def main() -> None:
     # Read the CLI arguments
     parser = create_parser()
@@ -358,7 +270,7 @@ def main() -> None:
     validate_args(args)
 
     # Create a new directory, storing all the generated results
-    multirun_dir = MultirunDirectory(path=args.output, create=True)
+    multirun_dir = mr.MultirunDirectory(path=args.output, create=True)
 
     # Now for each integration algorithm, we run all specified clusterings.
     # We catch the errors at this stage
@@ -387,15 +299,14 @@ def main() -> None:
 
     # We have all the data generated, but perhaps some of these are corrupted.
     # Let's filter out these which look valid.
-    directories = get_valid_dirs(multirun_dir)
+    directories = mr.get_valid_dirs(multirun_dir)
 
     # Now we run the metaanalysis (first generate the heatmap).
-    fig = generate_heatmap(directories)
-    fig.tight_layout()
+    fig = run_heatmap.generate_heatmap(directories, n_pathways=args.n_pathways)
     fig.savefig(multirun_dir.path / "heatmap.pdf")
 
     # to find a representative directory, we first generate a list of HeatmapItems
-    items = generate_items(directories)
+    items = run_heatmap.generate_items(directories)
     chosen_directory = repdir.find_representative_run(
         items=items, directories=directories, settings=repdir.ReprDirectoryConfig()
     )

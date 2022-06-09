@@ -1,6 +1,6 @@
 """Gene expression analysis utilities."""
 import pathlib
-from typing import Iterable, Dict, List, Optional, Union
+from typing import Iterable, Dict, List, Optional, Protocol, Union, Tuple
 from typing import get_args  # pytype: disable=import-error
 from typing import Literal  # pytype: disable=not-supported-yet
 
@@ -277,3 +277,73 @@ def score_signature(
 
     # save the correlation between the scores
     signature_df.corr(method=corr_method).to_csv(sig_correlation_file)
+
+
+class IPathwayFormatter(Protocol):
+    """Interface for formatters used to adjust pathway names."""
+
+    def format(self, pathway: str) -> str:
+        """Formats pathway name.
+
+        Args:
+            pathway: pathway name
+
+        Returns:
+             formatted pathway name
+        """
+        pass
+
+
+class DefaultFormatter(IPathwayFormatter):
+    """The default formatter, used to remove underscores
+    and split long pathway names into multiple lines."""
+
+    def format(self, pathway: str) -> str:
+        return pathway.replace("_", " ").replace(" ", "\n")
+
+
+class IGSEADataFrameSummarizer(Protocol):
+    """Interface for dataframe summarizers:
+    we run GSEA in the "one cluster against the rest"
+    fashion.
+
+    Hence, for every cluster we have a lot of pathways and every
+    pathway may appear in different clusterings.
+
+    We have something like multiple comparisons problem, so we need
+    to summarize it, probably in a somewhat conservative manner.
+
+    A summary is a list of pathways together with some "goodness" score to be visualised in the heatmap.
+    """
+
+    def summarize(self, df: pd.DataFrame) -> List[Tuple[str, float]]:
+        """
+
+        Args:
+            df: our outputted GSEA dataframe
+
+        Returns:
+            list of tuples (pathway name, some numeric score)
+        """
+
+
+class MaxNESFDRSummarizer(IGSEADataFrameSummarizer):
+    """This summarizer calculates the maximum NES and maximum FDR (q-value) across
+    all clusterings.
+
+    Then returns only the pathways with maximum FDR across all clusterings smaller than
+    a given threshold and positive NES.
+
+    The returned score is (maximum among all clusterings) NES.
+    """
+
+    def __init__(self, q_value_threshold: float = 5e-2) -> None:
+        if q_value_threshold <= 0 or q_value_threshold > 1:
+            raise ValueError("Allowed q-value must be in the (0, 1] interval.")
+        self._q_val = q_value_threshold
+
+    def summarize(self, df: pd.DataFrame) -> List[Tuple[str, float]]:
+        new_df = df.groupby("Term").max()
+        new_df = new_df[new_df["fdr"] < self._q_val]
+        new_df = new_df[new_df["nes"] > 0]
+        return list(new_df["nes"].items())
