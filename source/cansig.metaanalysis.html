@@ -4,15 +4,19 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>cansig.metaanalysis package &#8212; CanSig 0.0.1 documentation</title>
-    
-  <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
 
-    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
   <link rel="stylesheet"
     href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
@@ -21,9 +25,9 @@
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    
+
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -34,32 +38,40 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="cansig.models package" href="cansig.models.html" />
     <link rel="prev" title="cansig.interface package" href="cansig.interface.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en">
-    
-
-    <!-- Google Analytics -->
-    
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="en">
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
 
     
-    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
 
   <div id="navbar-start">
     
     
-<a class="navbar-brand" href="../index.html">
-<p class="title">CanSig</p>
-</a>
+  
 
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">CanSig 0.0.1 documentation</p>
+  
+</a>
     
   </div>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <span class="fas fa-bars"></span>
   </button>
 
   
@@ -125,6 +137,14 @@
     <div id="navbar-end">
       
       <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
           <a class="nav-link" href="https://github.com/BoevaLab/CanSig" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
@@ -139,13 +159,13 @@
     </nav>
     
 
-    <div class="container-xl">
-      <div class="row">
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
           
-            
-            <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar">
-              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -205,19 +225,20 @@
 
   </div>
 </nav>
-              </div>
-              <div class="sidebar-end-items">
-              </div>
-            </div>
-            
-          
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
 
           
-          <div class="d-none d-xl-block col-xl-2 bd-toc">
-            
-              
-              <div class="toc-item">
-                
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+    
+    <div class="toc-item">
+      
 <div class="tocsection onthispage mt-5 pt-1 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
@@ -247,23 +268,21 @@
 </ul>
 
 </nav>
-              </div>
-              
-              <div class="toc-item">
-                
-              </div>
-              
-            
-          </div>
-          
+    </div>
+    
+    <div class="toc-item">
+      
+    </div>
+    
+  
+</div>
+
 
           
           
-            
-          
-          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+          <div class="bd-content col-12 col-md-9 col-xl-7">
               
-              <div>
+              <article class="bd-article" role="main">
                 
   <section id="cansig-metaanalysis-package">
 <h1>cansig.metaanalysis package<a class="headerlink" href="#cansig-metaanalysis-package" title="Permalink to this heading">#</a></h1>
@@ -300,7 +319,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.HeatmapSettings">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.heatmap.</span></span><span class="sig-name descname"><span class="pre">HeatmapSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveFloat</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spines_linewidth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.25</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.metaanalysis.heatmap.HeatmapSettings" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.heatmap.</span></span><span class="sig-name descname"><span class="pre">HeatmapSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveFloat</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spines_linewidth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.25</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.metaanalysis.heatmap.HeatmapSettings" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.HeatmapSettings.font_size">
@@ -339,30 +358,138 @@
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.HighestScoreFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.heatmap.</span></span><span class="sig-name descname"><span class="pre">HighestScoreFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'median'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'mean'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'max'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'median'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.metaanalysis.heatmap.HighestScoreFilter" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cansig.metaanalysis.heatmap.IFilterPanels" title="cansig.metaanalysis.heatmap.IFilterPanels"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFilterPanels</span></code></a></p>
+<p>This filter returns only the items which correspond to the <cite>k</cite> panels with the highest median/mean/max
+score across all the corresponding items.</p>
+<p>You may use this filter to make sure that the panels have as little blank
+tiles as possible (corresponding to invalid runs)</p>
+<p>Note that this filter prefers to pass (the items corresponding to) a panel with a single item with high score
+rather than panel with two items and not as high scores.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.HighestScoreFilter.allowed_panels">
+<span class="sig-name descname"><span class="pre">allowed_panels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.metaanalysis.heatmap.HighestScoreFilter.allowed_panels" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the list of allowed panels (i.e., the item is allowed only if its panel
+is allowed).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.IFilterItems">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.heatmap.</span></span><span class="sig-name descname"><span class="pre">IFilterItems</span></span><a class="headerlink" href="#cansig.metaanalysis.heatmap.IFilterItems" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Interface for a filtering function for heatmap items.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.IFilterItems.filter">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.metaanalysis.heatmap.IFilterItems.filter" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns “good” heatmap items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>items</strong> – heatmap items</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>heatmap items</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.IFilterPanels">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.heatmap.</span></span><span class="sig-name descname"><span class="pre">IFilterPanels</span></span><a class="headerlink" href="#cansig.metaanalysis.heatmap.IFilterPanels" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cansig.metaanalysis.heatmap.IFilterItems" title="cansig.metaanalysis.heatmap.IFilterItems"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFilterItems</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Interface for filters which filter out basing on allowed/disallowed panels.</p>
+<p>Each children class should implement <cite>allowed_panels</cite> method.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.IFilterPanels.allowed_panels">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">allowed_panels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.metaanalysis.heatmap.IFilterPanels.allowed_panels" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the list of allowed panels (i.e., the item is allowed only if its panel
+is allowed).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.IFilterPanels.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.metaanalysis.heatmap.IFilterPanels.filter" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns “good” heatmap items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>items</strong> – heatmap items</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>heatmap items</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.MostFoundItemsFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.heatmap.</span></span><span class="sig-name descname"><span class="pre">MostFoundItemsFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.metaanalysis.heatmap.MostFoundItemsFilter" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cansig.metaanalysis.heatmap.IFilterPanels" title="cansig.metaanalysis.heatmap.IFilterPanels"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFilterPanels</span></code></a></p>
+<p>This filter returns the items which correspond to the <cite>k</cite> panels with most items.</p>
+<p>You may use this filter to make sure that the panels have as little blank
+tiles as possible (corresponding to invalid runs)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.MostFoundItemsFilter.allowed_panels">
+<span class="sig-name descname"><span class="pre">allowed_panels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.metaanalysis.heatmap.MostFoundItemsFilter.allowed_panels" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the list of allowed panels (i.e., the item is allowed only if its panel
+is allowed).</p>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.get_heatmap_items">
 <span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.heatmap.</span></span><span class="sig-name descname"><span class="pre">get_heatmap_items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.metaanalysis.heatmap.get_heatmap_items" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns all the caracteristic of the heatmap items</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>items</strong> – list of HeatmapItem</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>list of unique number of latent dimensions used in the meta analysis
 horizontal: list of unique number of clusters used in the meta analysis
 panels: list of pathways found
 n_runs: number of runs (ie using different random seeds, either for the model or for the clustering)</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>vertical</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.panel_filter_factory">
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.heatmap.</span></span><span class="sig-name descname"><span class="pre">panel_filter_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'median'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'mean'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'max'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'count'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cansig.metaanalysis.heatmap.IFilterPanels" title="cansig.metaanalysis.heatmap.IFilterPanels"><span class="pre">IFilterPanels</span></a></span></span><a class="headerlink" href="#cansig.metaanalysis.heatmap.panel_filter_factory" title="Permalink to this definition">#</a></dt>
+<dd><p>Factory method for panel filters.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.plot_heatmap">
-<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.heatmap.</span></span><span class="sig-name descname"><span class="pre">plot_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapSettings" title="cansig.metaanalysis.heatmap.HeatmapSettings"><span class="pre">HeatmapSettings</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="headerlink" href="#cansig.metaanalysis.heatmap.plot_heatmap" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.heatmap.</span></span><span class="sig-name descname"><span class="pre">plot_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapSettings" title="cansig.metaanalysis.heatmap.HeatmapSettings"><span class="pre">HeatmapSettings</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">panels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="headerlink" href="#cansig.metaanalysis.heatmap.plot_heatmap" title="Permalink to this definition">#</a></dt>
+<dd><p>Plots the heatmap. Each panel contains a grid coloured by the items’ values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>items</strong> – items to be plotted</p></li>
+<li><p><strong>settings</strong> – heatmap settings</p></li>
+<li><p><strong>panels</strong> – panels to be plotted. By default, we plot all panels from all the items.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a matplotlib figure</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We advise <em>against</em> running <cite>fig.tight_layout()</cite> on the returned figure.</p>
+</div>
+</dd></dl>
 
 </section>
 <section id="module-cansig.metaanalysis.repr_directory">
@@ -374,7 +501,7 @@ n_runs: number of runs (ie using different random seeds, either for the model or
 <p>This is the configuration for the optimization to find the
 ‘representative’ directory</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>NANSTABILITY</strong> – value used to fill in np.nan values in the stability computation</p></li>
 <li><p><strong>NANVALUES</strong> – value usde to fill the np.nan values in the NES value computation</p></li>
@@ -415,14 +542,14 @@ directories at the beginning (see <cite>heatmap</cite> submodule for more info)<
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>clusters</strong> – number of clusters of the representative run</p></li>
 <li><p><strong>latent_dim</strong> – number of latent dimensions of the representative run</p></li>
 <li><p><strong>directories</strong> – list of all the directories for the meta analysis</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>list of all the directories that have the correct number of clusters
 and number of latent dimensions</p>
 </dd>
@@ -447,7 +574,7 @@ clusters and less number of latent dimensions)</p>
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>items</strong> – list of heatmap items. These heatmap items are computed using <cite>generate_items</cite> in the
 cansig.run.pipeline submodule</p></li>
@@ -456,7 +583,7 @@ using <cite>get_valid_dirs</cite> in the cansig.run.pipeline submodule</p></li>
 <li><p><strong>settings</strong> – settings as desribed in ReprDirectoryConfig</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the path to the “representative” directory, ie the directory associated with
 the run that minimizes the objective function</p>
 </dd>
@@ -481,7 +608,7 @@ as if the results are not stable to start with, this “representative directory
 <span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">get_all_objective_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.metaanalysis.repr_directory.ReprDirectoryConfig" title="cansig.metaanalysis.repr_directory.ReprDirectoryConfig"><span class="pre">ReprDirectoryConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">defaultdict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_stability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">defaultdict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_complexity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.get_all_objective_function" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns all the objective functions as computed in <cite>get_objective_function</cite></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>settings</strong> – settings as desribed in ReprDirectoryConfig</p></li>
 <li><p><strong>all_values</strong> – dictionary as computed in <cite>get_objective_function_elements</cite></p></li>
@@ -490,7 +617,7 @@ as if the results are not stable to start with, this “representative directory
 <li><p><strong>vertical</strong> – list of unique number of clusters used</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>objective function associated for all runs, shape (n_clusters, n_latent_dimensions, n_runs)</p>
 </dd>
 </dl>
@@ -508,17 +635,17 @@ as if the results are not stable to start with, this “representative directory
 The complexity is computed as the sum of the number of clusters used and number of latent dimensions
 used in the model</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ver</strong> – the number of clusters to consider</p></li>
 <li><p><strong>horizontal</strong> – list of all unique number of latent dimensions used</p></li>
 <li><p><strong>n_runs</strong> – number of runs (ie using different random seeds, either for the model or for the clustering)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>array containing the complexity for all the runs for a specific number of clusters</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>complexity</p>
 </dd>
 </dl>
@@ -552,7 +679,7 @@ between the complexity and the NES values)</p>
 </li>
 </ul>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>settings</strong> – settings as desribed in ReprDirectoryConfig</p></li>
 <li><p><strong>all_values</strong> – dictionary as computed in <cite>get_objective_function_elements</cite></p></li>
@@ -561,7 +688,7 @@ between the complexity and the NES values)</p>
 <li><p><strong>ver</strong> – number of clusters to consider</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>objective function associated for all runs for a specific number of clusters
 shape (n_latent_dimensions, n_runs)</p>
 </dd>
@@ -582,7 +709,7 @@ the complexity</p>
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>settings</strong> – settings as desribed in ReprDirectoryConfig</p></li>
 <li><p><strong>items</strong> – list of heatmap items</p></li>
@@ -592,7 +719,7 @@ the complexity</p>
 <li><p><strong>n_runs</strong> – number of runs (ie using different random seeds, either for the model or for the clustering)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>all_values dictionary with number of clusters as key, and the NES values associated for each run
 for each panel (ie pathway) found as value. The value array will thus be of shape
 (n_panels, n_latent_dimensions, n_runs)</p>
@@ -618,14 +745,14 @@ for each run. The value array will thus be of shape (n_latent_dimensions, n_runs
 <span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">get_representative_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all_obj_function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.get_representative_run" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the run that minimizes the objective function</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>all_obj_function</strong> – array as computed in <cite>get_all_objective_function</cite></p></li>
 <li><p><strong>vertical</strong> – list of all unique number of clusters used</p></li>
 <li><p><strong>horizontal</strong> – list of all unique number of latent dimensions used</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>returns the index of the representative run as
 (n_clusters_used, n_latent_dimensions_used, run_number)</p>
 </dd>
@@ -646,17 +773,17 @@ over all number of latent dimensions used in the meta analysis.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>settings</strong> – settings as desribed in ReprDirectoryConfig</p></li>
 <li><p><strong>values</strong> – array as computed in <cite>get_values_panel</cite></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>array containing the stability values for all the runs for a specific number of
 clusters and a specific panel</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>stability</p>
 </dd>
 </dl>
@@ -673,7 +800,7 @@ clusters and a specific panel</p>
 <dd><p>Returns the NES values found for all the runs for a specific number of clusters and a specific panel
 ie a specific pathway found</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>settings</strong> – settings as desribed in ReprDirectoryConfig</p></li>
 <li><p><strong>items</strong> – list of heatmap items</p></li>
@@ -683,14 +810,14 @@ ie a specific pathway found</p>
 <li><p><strong>n_runs</strong> – number of runs (ie using different random seeds, either for the model or for the clustering)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><dl class="simple">
 <dt>array containing the NES value for all the runs for a specific number of</dt><dd><p>clusters and a specific panel</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>values</p>
 </dd>
 </dl>
@@ -720,51 +847,55 @@ ie as the name of the postprocessing directory</p>
 </section>
 
 
-              </div>
+              </article>
               
-              
-              <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="cansig.interface.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">cansig.interface package</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="cansig.models.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">cansig.models package</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
-</div>
-              
-          </main>
-          
 
+              
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="cansig.interface.html" title="previous page">
+      <i class="fas fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">cansig.interface package</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="cansig.models.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">cansig.models package</p>
+  </div>
+  <i class="fas fa-angle-right"></i>
+  </a>
+</div>
+              </footer>
+              
+          </div>
+          
       </div>
     </div>
+
+  
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
-<footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    
-    <div class="footer-item">
-      <p class="copyright">
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
     &copy; Copyright 2022 CanSig team.<br>
 </p>
-    </div>
-    
-    <div class="footer-item">
-      <p class="sphinx-version">
+  </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
 Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.1.<br>
 </p>
-    </div>
-    
   </div>
+  
+</div>
 </footer>
   </body>
 </html>
