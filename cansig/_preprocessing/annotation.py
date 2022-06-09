@@ -1,15 +1,16 @@
-from typing import List
+from typing import List, Iterable
 
 import infercnvpy as cnv  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
-import scipy  # pytype: disable=import-error
 from anndata import AnnData  # pytype: disable=import-error
-from scipy.cluster.hierarchy import to_tree, linkage  # pytype: disable=import-error
+from scipy.cluster.hierarchy import to_tree, linkage, ClusterNode  # pytype: disable=import-error
+from scipy.sparse import issparse  # pytype: disable=import-error
 
 
 class CellStatusConfig(pydantic.BaseModel):
-    """This namespace holds all statuses a cell can have during preprocessing."""
+    """This namespace holds all statuses (malignant, non-malignant and undecided) a
+    cell can have during preprocessing."""
 
     malignant: str = "malignant"
     non_malignant: str = "non-malignant"
@@ -17,6 +18,8 @@ class CellStatusConfig(pydantic.BaseModel):
 
 
 class AnnotationConfig(pydantic.BaseModel):
+    """Config for cell annotation."""
+
     cell_status: CellStatusConfig
     threshold: float
     depth: int
@@ -27,6 +30,8 @@ class AnnotationConfig(pydantic.BaseModel):
 
 
 class CellAnnotation:
+    """Class handling cell annotations."""
+
     def __init__(
         self,
         annotation_config: AnnotationConfig,
@@ -42,11 +47,23 @@ class CellAnnotation:
         self.undetermined_celltypes = undetermined_celltypes
 
     def annotate_using_celltype(self, adata: AnnData):
+        """
+
+        Args:
+            adata (AnnData): annotated data matrix
+        """
         adata.obs[self._config.malignant_annotation] = adata.obs[self.celltype_column].apply(
             lambda cell_type: self._annotate_malignant_using_celltype(cell_type)
         )
 
     def _annotate_malignant_using_celltype(self, celltype: str) -> str:
+        """Helper function tht returns the correct cell status for a given cell type.
+
+        Args:
+            celltype (str): Cell type
+        Returns:
+             cell status, see `CellAnnotation`
+        """
         cell_status = self._config.cell_status
         if celltype in self.malignant_celltypes:
             return cell_status.malignant
@@ -65,13 +82,29 @@ class CellAnnotation:
             cluster, adata.obs.columns.get_loc(self._config.malignant_cnv)
         ] = self._config.cell_status.non_malignant
 
-    def combine_annotations(self, adata: AnnData):
-        """Combines the annotations based on celltype and cnvs."""
+    def combine_annotations(self, adata: AnnData) -> None:
+        """Combines the annotations based on celltype and CNVs. Cells that are
+        considered malignant or undecided based on the cell type and present CNVs are
+        annotated as malignant. Cells that are annotated as non-malignant based on
+        cell type and don't show CNVs are annotated as non-malignant. The rest is
+        annotated as undecided.
+
+        Args:
+            adata: annotated data matrix."""
         adata.obs[self._config.malignant_combined] = adata.obs[
             [self._config.malignant_cnv, self._config.malignant_annotation]
         ].apply(lambda x: self._get_malignant_status(*x), axis=1)
 
-    def _get_cluster(self, adata: AnnData):
+    def _get_cluster(self, adata: AnnData) -> Iterable[int]:
+        """
+        Returns a list of indices corresponding to cells not presenting CNVs. For less
+        than 10_000 cells we use ward clustering and traverse the generated dendrogram.
+        Since ward clustering requires a euclidean distance matrix, we use leiden
+        clustering if we have more than 10_000 cells.
+
+        Args:
+            adata: annotated data matrix
+        """
         if adata.n_obs <= 10_000:
             cluster = self._get_cluster_ward(
                 adata, cnv_key=self.cnv_key, threshold=self._config.threshold, depth=self._config.depth
@@ -91,10 +124,30 @@ class CellAnnotation:
                 return self._config.cell_status.non_malignant
             return self._config.cell_status.undecided
 
-    def _get_cluster_ward(self, adata: AnnData, cnv_key: str = "cnv", threshold: float = 0.6, depth: int = 5) -> List:
+    def _get_cluster_ward(
+        self, adata: AnnData, cnv_key: str = "cnv", threshold: float = 0.6, depth: int = 5
+    ) -> List[int]:
         """
-        Returns a list of cells that do not show copy numbers by traversing the dendrogram
-        build from adata.obsm[key].
+        Returns a list of cells that show no CNVs using a dendrogram.  Starting at
+        the root node, we iteratively assigned a CNV status to each nodes according
+        to the composition of their subtrees. Specifically, a node and all nodes in
+        its subtree were annotated as presenting no CNVs if the percentage of
+        non-malignant cells in both of its subtrees is great than the threshold. We
+        traversed the dendrogram until we reached all nodes or a maximum depth of in
+        the dendrogram is reached.
+
+        Args:
+            adata (AnnData): annotated data matrix
+            cnv_key (str): Key under which the CNVs are stored in
+        adata. Notice that infercnvpy's convention is to store the CNV matrix in
+        `.obsm["X_{cnv_key}"]. The same applies here.
+            threshold (float): Threshold used to determine if a cluster is
+        non-malignant.
+            depth (int): Maximum depth to which
+        the dendrogram is traversed. Unused for leiden clustering.
+
+        Returns:
+            A list of indices corresponding to cells not presenting CNVs
         """
         dendrogram = self._get_dendrogram(adata, cnv_key=cnv_key)
         healthy = []
@@ -119,10 +172,29 @@ class CellAnnotation:
 
         return healthy
 
-    def _get_cluster_leiden(self, adata: AnnData, threshold: float = 0.6, cnv_key: str = "cnv"):
+    def _get_cluster_leiden(self, adata: AnnData, threshold: float = 0.6, cnv_key: str = "cnv", resolution=5):
+        """
+        Returns a list of cells that show no CNVs using leiden clustering. Cells are
+        clustered using leiden clustering. For each cluster, all cells in that cluster
+        are added to a lsit of cells not showing CNVs if the percentage of non-malignant
+        cells is greater than the threshold.
+
+        Args:
+            adata: annotated data matrix
+            threshold: Threshold used to determine if a cluster is
+        non-malignant.
+            cnv_key: Key under which the CNVs are stored in
+        adata. Notice that infercnvpy's convention is to store the CNV matrix in
+        `.obsm["X_{cnv_key}"]. The same applies here.
+            resolution: A parameter value controlling the coarseness of the clustering.
+
+        Returns:
+            A list of indices corresponding to cells not presenting CNVs
+
+        """
         cnv.tl.pca(adata, n_comps=np.min([200, np.min(adata.shape) - 1]), use_rep=cnv_key)
         cnv.pp.neighbors(adata)
-        cnv.tl.leiden(adata, resolution=5, key_added=self._config.leiden_cnv_key)
+        cnv.tl.leiden(adata, resolution=resolution, key_added=self._config.leiden_cnv_key)
         healthy = []
 
         for cluster in adata.obs[self._config.leiden_cnv_key].unique():
@@ -132,10 +204,19 @@ class CellAnnotation:
 
         return healthy
 
-    def _cluster_healthy(self, idx: List[int], adata: AnnData, threshold: float = 0.6) -> bool:
+    def _cluster_healthy(self, idx: Iterable[int], adata: AnnData, threshold: float = 0.6) -> bool:
         """
-        A node is considered healthy if the percentage of non-malignant cells of the
-        determined cells is higher than the threshold.
+        Returns if a cluster is healty or not. A cluster is considered healthy if the
+        percentage of non-malignant cells of the determined cells is higher than the
+        threshold.
+
+        Args:
+            idx (List[int]): List of indices of cells belonging to that cluster.
+            adata (AnnData):  annotated data matrix.
+            threshold (float): Threshold that determines at which percentage of
+        non-malignant cells a node is considered
+        healthy.
+
         """
 
         cell_status = self._config.cell_status
@@ -147,15 +228,22 @@ class CellAnnotation:
             return False
 
     @staticmethod
-    def _get_leaves(node):
-        """Returns all the leaves of the subtree of a node."""
+    def _get_leaves(node: ClusterNode) -> Iterable[int]:
+        """Returns a list of all the leaves of the subtree of `node`."""
         if node.is_leaf():
             return [node.id]
         return node.pre_order(lambda x: x.id)
 
     @staticmethod
-    def _get_dendrogram(adata: AnnData, cnv_key: str):
-        if isinstance(adata.obsm[f"X_{cnv_key}"], scipy.sparse.csr.csr_matrix):
+    def _get_dendrogram(adata: AnnData, cnv_key: str) -> ClusterNode:
+        """Returns a dendrogram of the CNVs using ward linkage.
+
+        Args: adata (AnnData):
+        cnv_key (str): Key under which the CNVs are stored in
+        adata. Notice that infercnvpy's convention is to store the CNV matrix in
+        `.obsm["X_{cnv_key}"]. The same applies here.
+        """
+        if issparse(adata.obsm[f"X_{cnv_key}"]):
             Z = linkage(adata.obsm[f"X_{cnv_key}"].todense(), "ward")
         else:
             Z = linkage(adata.obsm[f"X_{cnv_key}"], "ward")

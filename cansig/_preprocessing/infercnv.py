@@ -29,13 +29,23 @@ class InferCNVConfig(pydantic.BaseModel):
 
 
 class InferCNV:
+    """Class handeling calling of CNVs."""
+
     def __init__(self, config: InferCNVConfig, gene_order: Union[Pathlike, pd.DataFrame], gene_list: List[str]) -> None:
         self._config = config
         self.gene_order = self.get_gene_order(gene_order=gene_order, gene_list=gene_list)
 
     def infer(self, adata: anndata.AnnData, reference_cat: List[str]):
         """
-        Infers copy number variations using infercnvpy.
+        Infers Copy Number Variant by using `cnv.tl.infercnv` from infercnvpy (
+        https://icbi-lab.github.io/infercnvpy/generated/infercnvpy.tl.infercnv.html
+        #infercnvpy.tl.infercnv).
+
+        Args:
+            adata (AnnData): annotated data matrix
+            reference_cat (List[str): One or multiple values in
+        `adata.obs[self.reference_key]` that annotate groups of normal cells with
+        similar gene expression.
         """
         adata.var = self.merge_gene_order(adata.var)
         adata.var[self._config.cnv_called] = self.get_cnv_called(adata)
@@ -56,15 +66,22 @@ class InferCNV:
         cnv_dict = {"chr_pos": chr_position, "window_size": self._config.window_size, "step": self._config.step}
         adata.uns[self._config.cnv_key], adata.obsm[f"X_{self._config.cnv_key}"] = cnv_dict, X_cnv
 
-    def get_cnv_called(self, adata):
-        """Adds a boolean vector to .obs indicating if a gene has been used for cnv
-        inference."""
+    def get_cnv_called(self, adata: anndata.AnnData):
+        """Returns a boolean vector indicating if a gene has been used to call CNVs.
+
+        Args:
+            adata (AnnData):  annotated data matrix"""
         cnv_called = adata.var[self._config.chromosome].notnull() & ~adata.var[self._config.chromosome].isin(
             self._config.exclude_chromosome
         )
         return cnv_called
 
-    def merge_gene_order(self, var: pd.DataFrame):
+    def merge_gene_order(self, var: pd.DataFrame) -> pd.DataFrame:
+        """Merges the gene order DataFrame with `var`.
+
+        Args:
+            var (pd.DataFrame): DataFrame to merge the gene order with. Typically, this will be`adata.var`.
+        """
         return var.merge(self.gene_order, how="left", left_index=True, right_index=True)
 
     def get_gene_order(self, gene_order: Union[Pathlike, pd.DataFrame], gene_list: List[str]) -> pd.DataFrame:
@@ -184,6 +201,18 @@ def reduce_reference_groups(
     reference_key: str,
     config: ReferenceConfig,
 ):
+    """
+
+    Args:
+        adata: annotated data matrix
+        valid_ref_groups:
+        min_reference_groups:
+        reference_key:
+        config:
+
+    Returns:
+
+    """
     if len(valid_ref_groups) < min_reference_groups:
         adata.obs.loc[
             adata.obs[reference_key].str.startswith(config.reference_prefix), reference_key
