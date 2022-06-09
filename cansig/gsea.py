@@ -307,9 +307,13 @@ class IGSEADataFrameSummarizer(Protocol):
     we run GSEA in the "one cluster against the rest"
     fashion.
 
-    Hence, for every cluster we have a lot of pathways.
+    Hence, for every cluster we have a lot of pathways and every
+    pathway may appear in different clusterings.
 
-    A summary is a list of pathways together with some "goodness" score.
+    We have something like multiple comparisons problem, so we need
+    to summarize it, probably in a somewhat conservative manner.
+
+    A summary is a list of pathways together with some "goodness" score to be visualised in the heatmap.
     """
 
     def summarize(self, df: pd.DataFrame) -> List[Tuple[str, float]]:
@@ -327,8 +331,10 @@ class MaxNESFDRSummarizer(IGSEADataFrameSummarizer):
     """This summarizer calculates the maximum NES and maximum FDR (q-value) across
     all clusterings.
 
-    Then returns only the pathways with FDR smaller than a given threshold and positive NES.
-    The returned score is NES.
+    Then returns only the pathways with maximum FDR across all clusterings smaller than
+    a given threshold and positive NES.
+
+    The returned score is (maximum among all clusterings) NES.
     """
 
     def __init__(self, q_value_threshold: float = 5e-2) -> None:
@@ -338,6 +344,6 @@ class MaxNESFDRSummarizer(IGSEADataFrameSummarizer):
 
     def summarize(self, df: pd.DataFrame) -> List[Tuple[str, float]]:
         new_df = df.groupby("Term").max()
-        new_df = new_df[new_df["fdr"] < 0.05]
+        new_df = new_df[new_df["fdr"] < self._q_val]
         new_df = new_df[new_df["nes"] > 0]
         return list(new_df["nes"].items())
