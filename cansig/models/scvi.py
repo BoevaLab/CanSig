@@ -198,18 +198,19 @@ class SCVI:
 
         scvibase.settings.seed = config.random_seed
 
-        data = _preprocessing(data, config.preprocessing)
+        copy = data.copy()
+        copy = _preprocessing(copy, config.preprocessing)
 
         # Setup the data
-        data = _data_setup_wrapper(data=data, config=config)
+        copy = _data_setup_wrapper(data=copy, config=config)
 
         # Initialize the model
-        self.model = _scvi_factory_wrapper(data=data, n_latent=config.n_latent, config=config.model)
+        self.model = _scvi_factory_wrapper(data=copy, n_latent=config.n_latent, config=config.model)
         # Train the model
         _train_scvi_wrapper(model=self.model, config=config.train)
 
         # Record the index, to be returned by `get_latent_codes`
-        self._index = data.obs_names
+        self._index = copy.obs_names
 
     def evaluate(self) -> EvaluationResults:
         return _evaluate_model(model=self.model, config=self._config.evaluation)

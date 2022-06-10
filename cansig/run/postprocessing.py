@@ -38,6 +38,13 @@ def parse_args():
         help="Gene sets database to be used. Alternatively, the path to a GMT file.",
     )
     parser.add_argument(
+        "--dgex-method",
+        type=str,
+        default="t-test",
+        choices=["logreg", "t-test", "wilcoxon", "t-test_overestim_var"],
+        help="Method used to perform the differential gene expression analysis",
+    )
+    parser.add_argument(
         "--dim-reduction",
         type=str,
         choices=["umap", "pca", "both"],
@@ -273,7 +280,7 @@ def main(args):
         latents_dir=args.latents,
         batch=args.batch,
         output_dir=args.output,
-        gsea_config=gsea.GeneExpressionConfig(gene_sets=args.gene_sets),
+        gsea_config=gsea.GeneExpressionConfig(gene_sets=args.gene_sets, method=args.dgex_method),
         cluster_config=cluster.LeidenNClusterConfig(clusters=args.clusters),
         plotting_config=plotting.ScatterPlotConfig(
             dim_red=args.dim_reduction, signature_columns=args.sigcols, batch_columns=args.batch

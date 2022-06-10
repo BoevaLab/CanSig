@@ -47,6 +47,13 @@ def create_parser() -> argparse.ArgumentParser:
         help="Gene sets database to be used. Alternatively, the path to a GMT file.",
     )
     parser.add_argument(
+        "--dgex-method",
+        type=str,
+        default="t-test",
+        choices=["logreg", "t-test", "wilcoxon", "t-test_overestim_var"],
+        help="Method used to perform the differential gene expression analysis",
+    )
+    parser.add_argument(
         "--discrete-covariates",
         nargs="+",
         default=None,
@@ -183,6 +190,7 @@ def generate_model_configs(args) -> List[models.SCVIConfig]:
 def generate_gsea_config(args) -> gsea.GeneExpressionConfig:
     return gsea.GeneExpressionConfig(
         gene_sets=args.gene_sets,
+        method=args.dgex_method,
     )
 
 
