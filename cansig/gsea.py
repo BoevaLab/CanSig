@@ -229,27 +229,56 @@ def save_signatures(diff_genes: Dict[str, pd.DataFrame], res_dir: pathlib.Path) 
         diff_genes[cluster].to_csv(res_dir / f"signature_cl{cluster}.csv")
 
 
+def diff_genes_to_sig(
+    diff_genes: Dict[str, pd.DataFrame],
+    n_genes_sig: int,
+) -> Dict[str, List]:
+    """Transforms results from the differential gene expression analysis into a signature dictionnary.
+
+    Args:
+        diff_genes: a dict containing the results of the differential gene expression as computed
+            in `diff_gex`
+        n_genes_sig: the signature is defined as the top n_genes_sig most differentially expressed genes
+
+    Returns:
+        a dictionnary with signature name as key and a list of genes belonging to the signature as value
+    """
+
+    dict_signatures = {}
+    for cluster in np.sort(list(diff_genes.keys())):
+
+        sig = diff_genes[cluster]
+        # select the genes for the signature, which must be overexpressed in the
+        # cluster and within the n_genes_sig top differentially expressed
+        sig = sig[sig.zscores > 0]
+        sig = list(sig.iloc[:n_genes_sig].index)
+
+        dict_signatures[f"signature_{cluster}"] = sig
+
+    return dict_signatures
+
+
 def score_signature(
     adata: anndata.AnnData,
-    n_genes_sig: int,
-    corr_method: _CORRTYPE,
-    diff_genes: Dict[str, pd.DataFrame],
-    cell_score_file: pathlib.Path,
-    sig_correlation_file: pathlib.Path,
-) -> None:
+    dict_signatures: Dict[str, List],
+    cell_score_file: pathlib.Path = None,
+    sig_correlation_file: pathlib.Path = None,
+    corr_method: _CORRTYPE = "pearson",
+    save_score: bool = True,
+) -> pd.DataFrame:
     """Scores all cells present in the Anndata object using the uncovered de novo signatures.
 
     Args:
         adata: Anndata object inputted at the beginning of the pipeline
-        n_genes_sig: the signature is defined as the top n_genes_sig most differentially expressed genes
-        corr_method: can be either pearson or spearman, the method used to compute the correlation between
-            the found signatures
-        diff_genes: a dict containing the results of the differential gene expression as computed
-            in `diff_gex`
+        dict_signatures: a dictionnary containing the signature name as key and a list of genes
+        belonging to the signature as value
         cell_score_file: path to the file to save the cell scores
         sig_correlation_file: path to the file to save the correlation between signatures
+        corr_method: can be either pearson or spearman, the method used to compute the correlation between
+        the found signatures
+        save_score: whether to save the cell scores and the correlation
     Returns:
-        None
+        a dataframe containing the cells scored according to the signatures in dict_signatures
 
     See Also:
         `diff_gex`, function used to perform the differential gene expression
@@ -260,20 +289,17 @@ def score_signature(
     sc.pp.normalize_total(copy, target_sum=10000)
     sc.pp.log1p(copy)
 
-    added_signature = []
-    for cluster in np.sort(list(diff_genes.keys())):
-        added_signature.append(f"signature_{cluster}")
-        sig = diff_genes[cluster]
-        # select the genes for the signature, which must be overexpressed in the
-        # cluster and within the n_genes_sig top differentially expressed
-        sig = sig[sig.zscores > 0]
-        sig = list(sig.iloc[:n_genes_sig].index)
+    for signature in dict_signatures:
 
-        sc.tl.score_genes(copy, gene_list=sig, score_name=added_signature[-1])
+        sc.tl.score_genes(copy, gene_list=dict_signatures[signature], score_name=signature)
 
-    # save the scores
-    signature_df = copy.obs[added_signature]
-    signature_df.to_csv(cell_score_file)
+    signature_df = copy.obs[list(dict_signatures.keys())]
 
-    # save the correlation between the scores
-    signature_df.corr(method=corr_method).to_csv(sig_correlation_file)
+    if save_score:
+        # save the scores
+        signature_df.to_csv(cell_score_file)
+
+        # save the correlation between the scores
+        signature_df.corr(method=corr_method).to_csv(sig_correlation_file)
+
+    return signature_df

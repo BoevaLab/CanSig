@@ -225,13 +225,13 @@ def postprocess(
     if savesig:
         output_dir.make_sig_dir()
         gsea.save_signatures(diff_genes=gene_ranks, res_dir=output_dir.signature_output)
+        dict_signatures = gsea.diff_genes_to_sig(diff_genes=gene_ranks, n_genes_sig=n_genes_sig)
         gsea.score_signature(
             adata=adata,
-            diff_genes=gene_ranks,
-            n_genes_sig=n_genes_sig,
-            corr_method=corr_method,
+            dict_signatures=dict_signatures,
             cell_score_file=output_dir.cell_score_output,
             sig_correlation_file=output_dir.sig_correlation_output,
+            corr_method=corr_method,
         )
 
     results = gex_object.perform_gsea(gene_ranks)

@@ -3,6 +3,7 @@ import pathlib
 from typing import cast, Protocol
 
 import anndata  # pytype: disable=import-error
+import pandas as pd  # pytype: disable=import-error
 
 import cansig.filesys as fs
 import cansig.models.api as models
@@ -52,6 +53,17 @@ def parse_args() -> Arguments:
 
     args = parser.parse_args()
     return cast(Arguments, args)
+
+
+def integrate_adata(
+    data: anndata.AnnData,
+    config: models.SCVIConfig,
+) -> pd.DataFrame:
+
+    model = models.SCVI(config=config, data=data)
+    representations = model.get_latent_codes()
+
+    return representations
 
 
 def integrate(
