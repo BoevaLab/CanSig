@@ -77,8 +77,7 @@ def integrate(
 
     # Train the model and get the representations
     data = anndata.read_h5ad(data_path)
-    model = models.SCVI(config=config, data=data)
-    representations = model.get_latent_codes()
+    representations = integrate_adata(data=data, config=config)
 
     # Save the representations
     fs.save_latent_representations(representations=representations, path=output_dir.latent_representations)
