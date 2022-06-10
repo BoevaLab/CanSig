@@ -261,8 +261,8 @@ def diff_genes_to_sig(
 def score_signature(
     adata: anndata.AnnData,
     dict_signatures: Dict[str, List],
-    cell_score_file: pathlib.Path = None,
-    sig_correlation_file: pathlib.Path = None,
+    cell_score_file: Optional[pathlib.Path] = None,
+    sig_correlation_file: Optional[pathlib.Path] = None,
     corr_method: _CORRTYPE = "pearson",
     save_score: bool = True,
 ) -> pd.DataFrame:
