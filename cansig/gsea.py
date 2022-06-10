@@ -360,7 +360,7 @@ class MaxNESFDRSummarizer(IGSEADataFrameSummarizer):
         self._q_val = q_value_threshold
 
     def summarize(self, df: pd.DataFrame) -> List[Tuple[str, float]]:
-        new_df = df.groupby("Term").max()
-        new_df = new_df[new_df["fdr"] < self._q_val]
+        new_df = df.replace(np.inf, np.nan).dropna().groupby("Term").max()
+        # new_df = new_df[new_df["fdr"] < self._q_val]
         new_df = new_df[new_df["nes"] > 0]
         return list(new_df["nes"].items())
