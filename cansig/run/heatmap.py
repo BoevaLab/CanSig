@@ -69,7 +69,11 @@ def generate_items(dirs: Iterable[fs.PostprocessingDir]) -> Iterable[hm.HeatmapI
 
 
 def generate_heatmap(
-    dirs: Iterable[fs.PostprocessingDir], n_pathways: int, method: hm.PanelFilterTypes = "count", value_max: float = 2.0
+    dirs: Iterable[fs.PostprocessingDir],
+    n_pathways: int,
+    method: hm.PanelFilterTypes = "count",
+    value_min: float = 0.0,
+    value_max: float = 2.0,
 ) -> plt.Figure:
     items = generate_items(dirs)
 
@@ -80,9 +84,9 @@ def generate_heatmap(
     settings = hm.HeatmapSettings(
         vertical_name="clusters",
         horizontal_name="dim",
-        # TODO(Pawel): Consider making this configurable.
-        value_min=0,
+        value_min=value_min,
         value_max=value_max,
+        score_name="NES",
     )
     return hm.plot_heatmap(plotted_items, settings=settings, panels=plotted_panels)
 
@@ -96,7 +100,8 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output", type=str, default="heatmap.pdf", help="Generated heatmap name. Default: heatmap.pdf"
     )
-    parser.add_argument("--value-max", type=float, default=2.0, help="Upper value to plot the heatmap. Default: 2.0")
+    parser.add_argument("--value-min", type=float, default=0.0, help="Lower value to plot on the heatmap. Default: 0.0")
+    parser.add_argument("--value-max", type=float, default=2.0, help="Upper value to plot on the heatmap. Default: 2.0")
     parser.add_argument(
         "--pathway-sort-method",
         type=str,
@@ -118,7 +123,11 @@ def main() -> None:
     directories = mr.get_valid_dirs(multirur_dir)
 
     fig = generate_heatmap(
-        directories, n_pathways=args.n_pathways, method=args.pathway_sort_method, value_max=args.value_max
+        directories,
+        n_pathways=args.n_pathways,
+        method=args.pathway_sort_method,
+        value_min=args.value_min,
+        value_max=args.value_max,
     )
     fig.savefig(args.output)
 

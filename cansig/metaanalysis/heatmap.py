@@ -3,6 +3,7 @@ from collections import defaultdict
 from typing import Callable, Dict, Iterable, List, Optional, Sequence, Tuple, Union
 from typing import Literal  # pytype: disable=not-supported-yet
 
+import matplotlib as mpl  # pytype: disable=import-error
 import matplotlib.pyplot as plt  # pytype: disable=import-error
 import numpy as np
 import pydantic  # pytype: disable=import-error
@@ -24,9 +25,10 @@ class HeatmapSettings(pydantic.BaseModel):
 
     vertical_name: str
     horizontal_name: str
+    score_name: str = pydantic.Field(description="Name to be plotted on the color bar.")
 
-    value_min: Optional[float] = pydantic.Field(default=None)
-    value_max: Optional[float] = pydantic.Field(default=None)
+    value_min: float = pydantic.Field(default=0.0, description="Minimum value for the colorbar.")
+    value_max: float = pydantic.Field(default=2.0, description="Maximum value for the colorbar.")
 
     font_size: int = pydantic.Field(default=12)
     spines_linewidth: float = pydantic.Field(default=1.25)
@@ -61,7 +63,7 @@ def _calculate_figsize(
 ) -> Tuple[float, float]:
     # The tiles need the rectangle like base_width x height
     base_width = settings.tile_size * n_runs * n_vertical
-    height = settings.tile_size * n_panel * n_horizontal
+    height = settings.tile_size * n_panel * n_horizontal * 1.1
     # We will add some offset to the width to accommodate for panel names.
     # Note that this is heuristic, we haven't calibrated this properly
     # (plus, the offset should depend on the maximal length of the panel name)
@@ -159,8 +161,8 @@ def plot_heatmap(
             # We fill in the missing value
             values[index_horizontal, index_vertical * n_runs + run_index] = item.value
 
-        min_value = settings.value_min or min(item.value for item in items)
-        max_value = settings.value_max or max(item.value for item in items)
+        min_value = settings.value_min
+        max_value = settings.value_max
 
         horizontal_labels = [f"{x} {settings.horizontal_name}" for x in horizontal]
         sns.heatmap(
@@ -198,7 +200,16 @@ def plot_heatmap(
             ax.set_xticklabels(labels=[f"{i} {settings.vertical_name}" for i in vertical])
             ax.xaxis.set_tick_params(labeltop="on")
 
-    fig.subplots_adjust(wspace=0, hspace=0, top=0.95, bottom=0.02, left=0.03)
+    fig.subplots_adjust(wspace=0, hspace=0, top=0.95, bottom=0.1, left=0.03)
+
+    colorbar_ax = fig.add_axes([0.1, 0.05, 0.8, 0.04])
+
+    cmap = mpl.cm.coolwarm
+    norm = mpl.colors.Normalize(vmin=settings.value_min, vmax=settings.value_max)
+
+    cb1 = mpl.colorbar.ColorbarBase(colorbar_ax, cmap=cmap, norm=norm, orientation="horizontal")
+    cb1.set_label(settings.score_name)
+
     return fig
 
 
