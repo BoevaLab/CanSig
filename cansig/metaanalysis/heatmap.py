@@ -21,16 +21,15 @@ class HeatmapItem(pydantic.BaseModel):
 
 
 class HeatmapSettings(pydantic.BaseModel):
-    tile_size: pydantic.PositiveFloat = pydantic.Field(default=1.0, description="Size of each tile in the heatmap.")
-
-    vertical_name: str
-    horizontal_name: str
+    vertical_name: str = pydantic.Field(description="Name of the vertical variable.")
+    horizontal_name: str = pydantic.Field(description="Name of the horizontal variable.")
     score_name: str = pydantic.Field(description="Name to be plotted on the color bar.")
 
-    value_min: float = pydantic.Field(default=0.0, description="Minimum value for the colorbar.")
-    value_max: float = pydantic.Field(default=2.0, description="Maximum value for the colorbar.")
+    value_min: float = pydantic.Field(description="Minimum value for the heatmap and the colorbar.")
+    value_max: float = pydantic.Field(description="Maximum value for the heatmap and the colorbar.")
 
     font_size: int = pydantic.Field(default=12)
+    tile_size: pydantic.PositiveFloat = pydantic.Field(default=1.0, description="Size of each tile in the heatmap.")
     spines_linewidth: float = pydantic.Field(default=1.25)
 
 
@@ -63,14 +62,17 @@ def _calculate_figsize(
 ) -> Tuple[float, float]:
     # The tiles need the rectangle like base_width x height
     base_width = settings.tile_size * n_runs * n_vertical
-    height = settings.tile_size * n_panel * n_horizontal * 1.1
+    height = settings.tile_size * n_panel * n_horizontal
     # We will add some offset to the width to accommodate for panel names.
     # Note that this is heuristic, we haven't calibrated this properly
     # (plus, the offset should depend on the maximal length of the panel name)
     if offset_width is None:
         offset_width = (settings.font_size / 5) * settings.tile_size
-
     width = base_width + offset_width
+
+    # We will add 10% offset for the colorbar (below the plots)
+    height *= 1.1
+
     return (width, height)
 
 
@@ -207,8 +209,8 @@ def plot_heatmap(
     cmap = mpl.cm.coolwarm
     norm = mpl.colors.Normalize(vmin=settings.value_min, vmax=settings.value_max)
 
-    cb1 = mpl.colorbar.ColorbarBase(colorbar_ax, cmap=cmap, norm=norm, orientation="horizontal")
-    cb1.set_label(settings.score_name)
+    colorbar = mpl.colorbar.ColorbarBase(colorbar_ax, cmap=cmap, norm=norm, orientation="horizontal")
+    colorbar.set_label(settings.score_name)
 
     return fig
 
