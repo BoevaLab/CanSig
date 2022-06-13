@@ -3,7 +3,8 @@
 CanSig for python coders
 ================================
   
-.. todo::
+We also offer the possibility to use CanSig directly from a script/jupyter notebook. 
 
-   The tutorial to use CanSig from a python script/jupyter notebook.
-   It will contain a link to a Colab tutorial
+You can take a look at the API for more details. 
+
+Here is a `tutorial in Colab for a quick start using CanSig <https://colab.research.google.com/drive/1GSGIqvp_kkG05n0qTY_aYxaDJqllRDWb?usp=sharing>``

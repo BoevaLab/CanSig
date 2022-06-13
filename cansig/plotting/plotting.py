@@ -75,7 +75,10 @@ class ScatterPlot:
         copy = adata.copy()
         copy = self._put_latent_in_adata(z=representations, adata=copy)
 
-        default_columns = ["new-cluster-column", self._settings.batch_column]
+        if "new-cluster-column" in copy.obs:
+            default_columns = ["new-cluster-column", self._settings.batch_column]
+        else:
+            default_columns = [self._settings.batch_column]
 
         if self._settings.signature_columns is None:
             colors = default_columns

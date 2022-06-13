@@ -227,7 +227,7 @@ def get_diff_cnv(
     return diffCNVs
 
 
-def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10):
+def get_cnv_mapping(data: anndata.AnnData):
     """Computes the mapping between the CNV regions called in our preprocessing module
         and the genes used for the computation of the CNV call.
 
@@ -242,11 +242,8 @@ def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10):
             - "chr_pos" in data.uns["cnv"]: a dictionary containing the mapping between the chromosome and
               the index of the regions in the cnv array
 
-        window_size: the window size used for the CNV call (see `cansig._preprocessing` for more details
-            on the CNV calling procedure)
-
     Returns:
-        the name of the regions as "chrXXX;gene1;gene2;...;gene_windowsize"
+        the name of the regions as "chrXXX;gene1;gene2;...;gene_step"
 
     Raises:
         ValueError: if the data object doesn't fit the above mentioned criteria (this is automatic
@@ -272,6 +269,7 @@ def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10):
     if "chr_pos" not in data.uns["cnv"]:
         raise ValueError("The anndata object passed must contain the key 'chr_pos' in data.uns['cnv']")
 
+    step = data.uns["cnv"]["step"]
     # this is to ensure that we add the mapping in the right order
     # we get the order in which the chromosomes are stored with infercnv
     chromosomes = list(dict(sorted(data.uns["cnv"]["chr_pos"].items(), key=lambda item: item[1])).keys())
@@ -289,15 +287,15 @@ def get_cnv_mapping(data: anndata.AnnData, window_size: int = 10):
         # position on the chromosome
         chrom_df = sorted_genes[sorted_genes.chromosome == chrom].sort_values(by="start")
 
-        # infercnv works by inferring a CNV on a region of window_size
+        # infercnv works by inferring a CNV on a region of step
         # mapping will contain the boundaries (start, end) for every region inferred
         # ie mapping[n] will contain the start position on the chromosome
         # of the region n in the cnvarray object, and mapping[n+1]
         # will contain the end position on the chromosome of the
         # region n in the cnvarray object
-        mapping = np.arange(0, chrom_df.shape[0], window_size)
+        mapping = np.arange(0, chrom_df.shape[0], step)
         # the chromosome size is not necessarily a multiple of
-        # the window_size, this adds the last genes belonging to the last
+        # the step, this adds the last genes belonging to the last
         # inferred region of infercnv
         if mapping[-1] != chrom_df.shape[0]:
             mapping = np.append(mapping, chrom_df.shape[0])
