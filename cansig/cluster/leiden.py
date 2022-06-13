@@ -144,7 +144,7 @@ class LeidenNCluster(ICluster):
         # In case that for multiple random seeds we didn't find a resolution that matches
         # the number of clusters, we raise a ValueError.
         else:
-            raise ValueError(f"No resolution for the number of clusters " f"{self._settings.clusters}found.")
+            raise ValueError(f"No resolution for the number of clusters {self._settings.clusters}found.")
 
         return points.obs[key_added].astype(int).values
 
