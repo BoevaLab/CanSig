@@ -1,6 +1,6 @@
 """Gene expression analysis utilities."""
 import pathlib
-from typing import Iterable, Dict, List, Optional, Union, Protocol, Tuple  # pytype: disable=import-error
+from typing import Iterable, Dict, List, Optional, Protocol, Union, Tuple
 from typing import get_args  # pytype: disable=import-error
 from typing import Literal  # pytype: disable=not-supported-yet
 
@@ -310,8 +310,10 @@ class IPathwayFormatter(Protocol):
 
     def format(self, pathway: str) -> str:
         """Formats pathway name.
+
         Args:
             pathway: pathway name
+
         Returns:
              formatted pathway name
         """
