@@ -209,7 +209,6 @@ class SCVI:
 
         else:
             data = _preprocessing(data, config.preprocessing)
-            data = _preprocessing(data, config.preprocessing)
             # Setup the data
             data = _data_setup_wrapper(data=data, config=config)
 
