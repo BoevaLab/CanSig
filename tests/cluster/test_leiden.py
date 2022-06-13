@@ -1,6 +1,6 @@
-import cansig.cluster.leiden as le
+import cansig.cluster.leiden as le  # pytype: disable=import-error
 import pytest  # pytype: disable=import-error
-from cansig.cluster.leiden import _binary_search_leiden_resolution
+from cansig.cluster.leiden import _binary_search_leiden_resolution  # pytype: disable=import-error
 from sklearn import datasets  # pytype: disable=import-error
 
 _binary_search = _binary_search_leiden_resolution
@@ -10,7 +10,8 @@ def binary_search_matching_random_seed(*args, **kwargs):
     if kwargs["random_state"] == 0:
         return None
     else:
-        return _binary_search_leiden_resolution(*args, **kwargs)
+        assert kwargs["random_state"] == 20_000
+        return _binary_search(*args, **kwargs)
 
 
 def binary_search_no_matching_random_seed(*args, **kwargs):
