@@ -433,16 +433,15 @@ was not preprocessed using our preprocessing module</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.cnvanalysis.differentialcnvs.get_cnv_mapping">
-<span class="sig-prename descclassname"><span class="pre">cansig.cnvanalysis.differentialcnvs.</span></span><span class="sig-name descname"><span class="pre">get_cnv_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.cnvanalysis.differentialcnvs.get_cnv_mapping" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cansig.cnvanalysis.differentialcnvs.</span></span><span class="sig-name descname"><span class="pre">get_cnv_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.cnvanalysis.differentialcnvs.get_cnv_mapping" title="Permalink to this definition">#</a></dt>
 <dd><dl class="simple">
 <dt>Computes the mapping between the CNV regions called in our preprocessing module</dt><dd><p>and the genes used for the computation of the CNV call.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> – anndata object as preprocessed using our preprocessing module. Must contain</p>
-<ul>
+<dd class="field-odd"><p><strong>data</strong> – anndata object as preprocessed using our preprocessing module. Must contain</p>
+<ul class="simple">
 <li><p>“chromosome” in data.var.columns: the chromosome to which the gene belongs</p></li>
 <li><p>“cnv_called” in data.var.columns: if this gene was used for the infercnv call (see
 <cite>cansig._preprocessing</cite> for more details on the CNV calling procedure)</p></li>
@@ -451,13 +450,9 @@ was not preprocessed using our preprocessing module</p>
 <li><p>“chr_pos” in data.uns[“cnv”]: a dictionary containing the mapping between the chromosome and
 the index of the regions in the cnv array</p></li>
 </ul>
-</li>
-<li><p><strong>window_size</strong> – the window size used for the CNV call (see <cite>cansig._preprocessing</cite> for more details
-on the CNV calling procedure)</p></li>
-</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>the name of the regions as “chrXXX;gene1;gene2;…;gene_windowsize”</p>
+<dd class="field-even"><p>the name of the regions as “chrXXX;gene1;gene2;…;gene_step”</p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ValueError</strong> – if the data object doesn’t fit the above mentioned criteria (this is automatic
