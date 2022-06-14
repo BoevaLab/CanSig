@@ -12,6 +12,8 @@ _LOGGER = logging.Logger(__name__)
 
 
 class SubclonalConfig(pydantic.BaseModel):
+    """Config for subclonal clustering."""
+
     batch_id_column: str
     cnv_key: str
     malignant_key: str
@@ -28,19 +30,16 @@ class Subclonal:
         self._config = config
 
     def cluster(self, adata):
-
         """
-        Infers subclonal_key clusters in the malignant cells using leiden clustering. The number
-        of clusters is chosen based on the maximum silhouette score. However, we only
-        split the data into two or more subclones if the maximum silhouette score is
-        positive. Otherwise, we would always find at least two subclones. Subclones are
-        annotated as <batch_id>-<number of subclone>.
+        Infers subclonal clusters in the malignant cells using leiden clustering. The
+        number of clusters is chosen based on the maximum silhouette score. However,
+        we only split the data into two or more subclones if the maximum silhouette
+        score is positive. Otherwise, we would always find at least two subclones.
+        Subclones are annotated as <batch_id>-<number of subclone> in
+        `.obs[self.subclonal_key]`.
 
         Args:
-            adata:
-            batch_id_column:
-            cnv_key:
-            subclonal_key:
+            adata (AnnData): Annotated data matrix.
         """
         malignant_idx = adata.obs[self._config.malignant_key] == self._config.malignant_status
         bdata = adata[malignant_idx, :].copy()
@@ -62,6 +61,12 @@ class Subclonal:
         self.assign_subclonal_cluster(adata, cluster)
 
     def assign_subclonal_cluster(self, adata: anndata.AnnData, cluster: pd.Series):
+        """Adds the inferred subclones to adata.
+
+        Args:
+            adata (Anndata): Annotated data matrix.
+            cluster (pd.Series): Subclones inferred on the malignant cells.
+        """
         subclonal_key = self._config.subclonal_key
         sample_id = adata.obs[self._config.batch_id_column][0]
         adata.obs[subclonal_key] = self._config.non_malignant_marker
