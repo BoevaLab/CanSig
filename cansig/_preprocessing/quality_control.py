@@ -2,6 +2,7 @@ import logging
 from typing import Optional
 
 import anndata as ad  # pytype: disable=import-error
+import numpy as np
 import scanpy as sc  # pytype: disable=import-error
 
 from cansig.types import Pathlike
@@ -39,7 +40,7 @@ def quality_control(
     adata = adata[adata.obs["pct_counts_mt"] < threshold_mt].copy()
     sc.pp.filter_cells(adata, min_genes=min_genes)
     filter_cells = adata.n_obs
-
+    adata.obs["log_counts"] = np.log(adata.obs["n_counts"])
     _LOGGER.info(f"Finished qc with {adata.n_obs} cells remaining and removed {raw_cells - filter_cells} cells.")
 
     return adata
