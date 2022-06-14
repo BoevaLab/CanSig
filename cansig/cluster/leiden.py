@@ -118,21 +118,34 @@ class LeidenNCluster(ICluster):
         self._settings = settings
 
     def fit_predict(self, X: ArrayLike, y=None) -> np.ndarray:
-        points = an.AnnData(X=np.asarray(X), dtype=X.dtype)
-        _build_neighborhood_graph(points, config=self._settings.nngraph, random_state=self._settings.random_state)
+        adata = an.AnnData(X=np.asarray(X), dtype=X.dtype)
+        _build_neighborhood_graph(adata, config=self._settings.nngraph, random_state=self._settings.random_state)
 
         key_added = "cluster-labels"
-        points = _binary_search_leiden_resolution(
-            points,
-            k=self._settings.clusters,
-            key_added=key_added,
-            random_state=self._settings.random_state,
-            directed=self._settings.directed,
-            use_weights=self._settings.use_weights,
-            start=self._settings.binsearch.start,
-            end=self._settings.binsearch.end,
-            _epsilon=self._settings.binsearch.epsilon,
-        )
+
+        # For certain starting points leiden clustering fails to produce the correct
+        # number of clusters. When this happens, we change the starting point by adding
+        # an offset to the random state. Adding large constants avoids potential
+        # collisions with random seeds for other runs.
+        for offset in [0, 20_000, 30_000, 40_000]:
+            points = _binary_search_leiden_resolution(
+                adata,
+                k=self._settings.clusters,
+                key_added=key_added,
+                random_state=self._settings.random_state + offset,
+                directed=self._settings.directed,
+                use_weights=self._settings.use_weights,
+                start=self._settings.binsearch.start,
+                end=self._settings.binsearch.end,
+                _epsilon=self._settings.binsearch.epsilon,
+            )
+            if points is not None:
+                break
+        # In case that for multiple random seeds we didn't find a resolution that matches
+        # the number of clusters, we raise a ValueError.
+        else:
+            raise ValueError(f"No resolution for the number of clusters {self._settings.clusters}found.")
+
         return points.obs[key_added].astype(int).values
 
 
@@ -146,7 +159,7 @@ def _binary_search_leiden_resolution(
     directed: bool,
     use_weights: bool,
     _epsilon: float,
-) -> an.AnnData:
+) -> Optional[an.AnnData]:
     """Binary search to get the resolution corresponding
     to the right k."""
     # We try the resolution which is in the middle of the interval
@@ -170,7 +183,7 @@ def _binary_search_leiden_resolution(
     # If the start and the end are too close (and there is no point in doing another iteration),
     # we raise an error that one can't find the required number of clusters
     if abs(end - start) < _epsilon * res:
-        raise ValueError(f"The resolution for the number of clusters {k} not found.")
+        return None
 
     if selected_k > k:
         return _binary_search_leiden_resolution(
