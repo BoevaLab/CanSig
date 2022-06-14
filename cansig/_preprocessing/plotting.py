@@ -6,7 +6,9 @@ from anndata import AnnData  # pytype: disable=import-error
 def embeddings_counts(adata: AnnData) -> None:
     """
     Calculates PCA and UMAP embedding for counts.
-    :param adata: Anndata object
+
+    Args:
+        adata (AnnData): Annotated data matrix.
     """
     sc.tl.pca(adata)
     sc.pp.neighbors(adata)
@@ -15,10 +17,11 @@ def embeddings_counts(adata: AnnData) -> None:
 
 def embeddings_cnv(adata: AnnData) -> None:
     """
-    Calculates PCA and UMAP embedding for copy numbers.
-    :param adata: Anndata object
+    Calculates PCA and UMAP embedding for CNVs.
+
+    Args:
+        adata (AnnData): Annotated data matrix.
     """
     cnv.tl.pca(adata)
     cnv.pp.neighbors(adata)
     cnv.tl.umap(adata)
-    cnv.tl.leiden(adata)
