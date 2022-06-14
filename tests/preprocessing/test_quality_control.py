@@ -42,3 +42,10 @@ class TestQualityControl:
 
         adata = quality_control(adata, min_counts=0, max_counts=999999999, min_genes=min_genes, threshold_mt=100.0)
         assert np.greater_equal(adata.X.sum(1), min_genes).all()
+
+    def test_log_counts(self):
+        X = np.array([[1000, 1000, 1000], [500, 1000, 1000], [100, 200, 100], [200, 300, 200]])
+        adata = ad.AnnData(X=X)
+        adata = quality_control(adata, min_counts=0, max_counts=999999999, min_genes=0, threshold_mt=100.0)
+        assert "log_counts" in adata.obs.columns
+        assert np.allclose(np.exp(adata.obs["log_counts"]), adata.obs["n_counts"].values)
