@@ -124,7 +124,7 @@ def create_parser() -> argparse.ArgumentParser:
         help="a flag used when the user does not want the signatures to be saved",
     )
     parser.add_argument(
-        "--ngenessig",
+        "--n-genessig",
         type=int,
         help="number of genes to take into consideration as a signature to rescore \
              the cells according to de novo found signatures",
