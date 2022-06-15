@@ -166,8 +166,8 @@ def create_parser() -> argparse.ArgumentParser:
         default=5,
         help="The number of most consistently found pathways to be plotted in the heatmap. Default: 5.",
     )
-    parser.add_argument("--value-min", type=float, default=0.0, help="Lower value to plot on the heatmap. Default: 0.0")
-    parser.add_argument("--value-max", type=float, default=2.0, help="Upper value to plot on the heatmap. Default: 2.0")
+    parser.add_argument("--value-min", type=float, default=1.0, help="Lower value to plot on the heatmap. Default: 0.0")
+    parser.add_argument("--value-max", type=float, default=3.0, help="Upper value to plot on the heatmap. Default: 2.0")
     parser.add_argument(
         "--pathway-sort-method",
         type=str,
