@@ -40,4 +40,4 @@ Troubleshooting
 2. The differential CNV analysis doesn't work 
 
     * Did you run our preprocessing module? If not you need to run the differential CNV analysis in a slightly different way, see :ref:`pipeline-advanced`.
-    * If you get a message error saying the mapping shapes do not coincide, it is possible the window size you used for preprocessing is too big. When the window size is bigger than the number of regions for a specific chromosome, infercnvpy returns an object the size of the window, thus losing mappability to specific chromosomal regions (see Issue open on their github). Try decreasing the window size.
+    * If you get a message error saying the mapping shapes do not coincide, it is possible the window size you used for preprocessing is too big. When the window size is bigger than the number of regions for a specific chromosome, infercnvpy returns an object the size of the window, thus losing mappability to specific chromosomal regions (see `Issue <https://github.com/icbi-lab/infercnvpy/issues/37>` open on their github). Try decreasing the window size.
