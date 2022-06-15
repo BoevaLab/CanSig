@@ -199,9 +199,9 @@ def postprocess(
     representations = fs.read_latent_representations(model_dir.latent_representations)
     clustering_algorithm = cluster.LeidenNCluster(cluster_config)
     labels = clustering_algorithm.fit_predict(representations.values)
-
+    labels = pd.Series(labels, dtype="category", index=representations.index)
     # Save the cluster labels
-    fs.save_cluster_labels(labels=labels, index=representations.index, path=output_dir.cluster_labels)
+    fs.save_cluster_labels(labels=labels, path=output_dir.cluster_labels)
 
     # *** Gene Set Enrichment Analysis ***
     # Set up and save GSEA settings
@@ -212,7 +212,8 @@ def postprocess(
     #  Or maybe this should be in the GEX object?
     adata = anndata.read_h5ad(data_path)
     cluster_col = "new-cluster-column"
-    adata.obs[cluster_col] = pd.Categorical(labels)
+    adata = adata[labels.index, :].copy()
+    adata.obs[cluster_col] = labels
 
     # *** Plotting ***
     # by default, plotting is activated with PCA (plot=True), can be disabled by the user
