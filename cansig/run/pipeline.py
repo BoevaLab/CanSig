@@ -13,13 +13,14 @@ import cansig.cluster.api as cluster
 import cansig.filesys as fs
 import cansig.gsea as gsea
 import cansig.metaanalysis.repr_directory as repdir
+import cansig.plotting.plotting as plotting
 import cansig.models.api as models
 import cansig.models.scvi as _scvi
 import cansig.multirun as mr
-import cansig.plotting.plotting as plotting
-import cansig.run.heatmap as run_heatmap
+
 import cansig.run.integration as integration
 import cansig.run.postprocessing as postprocessing
+import cansig.run.heatmap as run_heatmap
 
 _TESTTYPE = Literal["mwu", "ttest"]
 _CORRTYPE = Literal["pearson", "spearman"]
@@ -171,6 +172,15 @@ def create_parser() -> argparse.ArgumentParser:
         type=int,
         default=5,
         help="The number of most consistently found pathways to be plotted in the heatmap. Default: 5.",
+    )
+    parser.add_argument("--value-min", type=float, default=1.0, help="Lower value to plot on the heatmap. Default: 0.0")
+    parser.add_argument("--value-max", type=float, default=3.0, help="Upper value to plot on the heatmap. Default: 2.0")
+    parser.add_argument(
+        "--pathway-sort-method",
+        type=str,
+        default="mean",
+        choices=["median", "mean", "max", "count"],
+        help="How the panels (pathways) should be sorted. Default: by highest mean NES across the runs.",
     )
     # Args used in cansig
     parser.add_argument(
@@ -342,7 +352,14 @@ def main() -> None:
     directories = mr.get_valid_dirs(multirun_dir)
 
     # Now we run the metaanalysis (first generate the heatmap).
-    fig = run_heatmap.generate_heatmap(directories, n_pathways=args.n_pathways)
+
+    fig = run_heatmap.generate_heatmap(
+        directories,
+        n_pathways=args.n_pathways,
+        method=args.pathway_sort_method,
+        value_min=args.value_min,
+        value_max=args.value_max,
+    )
     fig.savefig(multirun_dir.path / "heatmap.pdf")
 
     # to find a representative directory, we first generate a list of HeatmapItems
