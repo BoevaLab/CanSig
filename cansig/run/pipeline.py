@@ -173,29 +173,6 @@ def create_parser() -> argparse.ArgumentParser:
         default=5,
         help="The number of most consistently found pathways to be plotted in the heatmap. Default: 5.",
     )
-    parser.add_argument("--value-min", type=float, default=1.0, help="Lower value to plot on the heatmap. Default: 0.0")
-    parser.add_argument("--value-max", type=float, default=3.0, help="Upper value to plot on the heatmap. Default: 2.0")
-    parser.add_argument(
-        "--pathway-sort-method",
-        type=str,
-        default="mean",
-        choices=["median", "mean", "max", "count"],
-        help="How the panels (pathways) should be sorted. Default: by highest mean NES across the runs.",
-    )
-    # Args used in cansig
-    parser.add_argument(
-        "--n-latent-batch-effect",
-        type=int,
-        default=5,
-        help="The number of latent dimensions for the batch effect module of cansig. " "Default: 5.",
-    )
-    parser.add_argument(
-        "--n-latent-cnv",
-        type=int,
-        default=10,
-        help="The number of latent dimensions for the cnv module of cansig. " "Default: 10.",
-    )
-
     return parser
 
 
