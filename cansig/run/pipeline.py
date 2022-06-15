@@ -13,14 +13,13 @@ import cansig.cluster.api as cluster
 import cansig.filesys as fs
 import cansig.gsea as gsea
 import cansig.metaanalysis.repr_directory as repdir
-import cansig.plotting.plotting as plotting
 import cansig.models.api as models
 import cansig.models.scvi as _scvi
 import cansig.multirun as mr
-
+import cansig.plotting.plotting as plotting
+import cansig.run.heatmap as run_heatmap
 import cansig.run.integration as integration
 import cansig.run.postprocessing as postprocessing
-import cansig.run.heatmap as run_heatmap
 
 _TESTTYPE = Literal["mwu", "ttest"]
 _CORRTYPE = Literal["pearson", "spearman"]
@@ -43,6 +42,13 @@ def create_parser() -> argparse.ArgumentParser:
         type=str,
         default="MSigDB_Hallmark_2020",
         help="Gene sets database to be used. Alternatively, the path to a GMT file.",
+    )
+    parser.add_argument(
+        "--model",
+        type=str,
+        default="scvi",
+        choices=["scvi", "cansig"],
+        help="Which models is used for dataset integration.",
     )
     parser.add_argument(
         "--dgex-method",
@@ -166,6 +172,20 @@ def create_parser() -> argparse.ArgumentParser:
         default=5,
         help="The number of most consistently found pathways to be plotted in the heatmap. Default: 5.",
     )
+    # Args used in cansig
+    parser.add_argument(
+        "--n-latent-batch-effect",
+        type=int,
+        default=5,
+        help="The number of latent dimensions for the batch effect module of cansig. " "Default: 5.",
+    )
+    parser.add_argument(
+        "--n-latent-cnv",
+        type=int,
+        default=10,
+        help="The number of latent dimensions for the cnv module of cansig. " "Default: 10.",
+    )
+
     return parser
 
 
@@ -178,14 +198,26 @@ def generate_model_configs(args) -> List[models.SCVIConfig]:
     lst = []
     for seed in range(args.model_runs):
         for dim in args.dimensions:
-            config = models.SCVIConfig(
-                batch=args.batch,
-                n_latent=dim,
-                random_seed=seed,
-                train=_scvi.TrainConfig(max_epochs=args.max_epochs),
-                continuous_covariates=args.continuous_covariates,
-                discrete_covariates=args.discrete_covariates,
-            )
+            if args.model == "scvi":
+                config = models.SCVIConfig(
+                    batch=args.batch,
+                    n_latent=dim,
+                    random_seed=seed,
+                    train=_scvi.TrainConfig(max_epochs=args.max_epochs),
+                    continuous_covariates=args.continuous_covariates,
+                    discrete_covariates=args.discrete_covariates,
+                )
+            elif args.model == "cansig":
+                config = models.CanSigConfig(
+                    batch=args.batch,
+                    n_latent=dim,
+                    random_seed=seed,
+                    train=_scvi.TrainConfig(max_epochs=args.max_epochs),
+                    continuous_covariates=args.continuous_covariates,
+                    discrete_covariates=args.discrete_covariates,
+                )
+            else:
+                raise NotImplementedError(f"Model {args.model} not implemented.")
             lst.append(config)
 
     return lst
