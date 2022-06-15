@@ -95,6 +95,12 @@ def _cast_covariates(listlike: Sequence[str]) -> Optional[list]:
 class CanSigConfig(pydantic.BaseModel):
     batch: str
     n_latent: pydantic.PositiveInt = pydantic.Field(default=10, description="The dimensionality of the latent space.")
+    n_latent_batch_effect: pydantic.PositiveInt = pydantic.Field(
+        default=10, description="The dimensionality of the latent space for the batch effect model."
+    )
+    n_latent_cnv: pydantic.PositiveInt = pydantic.Field(
+        default=10, description="The dimensionality of the latent space for the CNV model."
+    )
     random_seed: int = 0
     preprocessing: PreprocessingConfig = pydantic.Field(default_factory=PreprocessingConfig)
     model: ModelConfig = pydantic.Field(default_factory=ModelConfig)

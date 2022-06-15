@@ -7,7 +7,7 @@ In the end, produces summary.
 import argparse
 import logging
 import pathlib
-from typing import Iterable, List, Optional, Literal  # pytype: disable=not-supported-yet
+from typing import Iterable, List, Optional, Literal, Union  # pytype: disable=not-supported-yet
 
 import cansig.cluster.api as cluster
 import cansig.filesys as fs
@@ -173,8 +173,8 @@ def create_parser() -> argparse.ArgumentParser:
         default=5,
         help="The number of most consistently found pathways to be plotted in the heatmap. Default: 5.",
     )
-    parser.add_argument("--value-min", type=float, default=1.0, help="Lower value to plot on the heatmap. Default: 0.0")
-    parser.add_argument("--value-max", type=float, default=3.0, help="Upper value to plot on the heatmap. Default: 2.0")
+    parser.add_argument("--value-min", type=float, default=1.0, help="Lower value to plot on the heatmap. Default: 1.0")
+    parser.add_argument("--value-max", type=float, default=3.0, help="Upper value to plot on the heatmap. Default: 3.0")
     parser.add_argument(
         "--pathway-sort-method",
         type=str,
@@ -182,6 +182,10 @@ def create_parser() -> argparse.ArgumentParser:
         choices=["median", "mean", "max", "count"],
         help="How the panels (pathways) should be sorted. Default: by highest mean NES across the runs.",
     )
+    # CanSig Args
+    parser.add_argument("--n-latent-batch-effect", type=int, default=5)
+    parser.add_argument("--n-latent-cnv", type=int, default=10)
+
     return parser
 
 
@@ -190,7 +194,7 @@ def validate_args(args) -> None:
         raise NotImplementedError
 
 
-def generate_model_configs(args) -> List[models.SCVIConfig]:
+def generate_model_configs(args) -> List[Union[models.SCVIConfig, models.CanSigConfig]]:
     lst = []
     for seed in range(args.model_runs):
         for dim in args.dimensions:
@@ -207,6 +211,8 @@ def generate_model_configs(args) -> List[models.SCVIConfig]:
                 config = models.CanSigConfig(
                     batch=args.batch,
                     n_latent=dim,
+                    n_latent_batch_effect=args.n_latent_batch_effect,
+                    n_latent_cnv=args.n_latent_cnv,
                     random_seed=seed,
                     train=_scvi.TrainConfig(max_epochs=args.max_epochs),
                     continuous_covariates=args.continuous_covariates,
@@ -322,7 +328,7 @@ def main() -> None:
                 batch=args.batch,
                 plot=(not args.disable_plots),
                 savesig=(not args.disable_signatures),
-                n_genes_sig=args.ngenessig,
+                n_genes_sig=args.n_genessig,
                 corr_method=args.corrmethod,
                 diffcnv=args.diffcnv,
                 subclonalcnv=args.subclonalcnv,

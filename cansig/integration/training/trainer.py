@@ -53,7 +53,7 @@ class UnsupervisedTrainingCanSig:
         **trainer_kwargs
             Other keyword args for :class:`~scvi.train.Trainer`.
         """
-
+        # TODO currently training parameters are shared across training runs.
         self._train(
             self.module_batch_effect,
             load_malignant_cells=False,
@@ -87,8 +87,10 @@ class UnsupervisedTrainingCanSig:
             REGISTRY_KEYS.BATCH_EFFECT_BUFFER: np.float32,
             REGISTRY_KEYS.CNV_BUFFER: np.float32,
         }
-        if REGISTRY_KEYS.CAT_COVS_KEY in self.adata_manager.data_registry:
+        if REGISTRY_KEYS.CONT_COVS_KEY in self.adata_manager.data_registry.keys():
             data_and_attributes[REGISTRY_KEYS.CONT_COVS_KEY] = np.float32
+        if REGISTRY_KEYS.CAT_COVS_KEY in self.adata_manager.data_registry:
+            data_and_attributes[REGISTRY_KEYS.CAT_COVS_KEY] = np.float32
 
         self._train(
             self.module,
