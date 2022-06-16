@@ -24,7 +24,7 @@ def parse_args():
     parser.add_argument("latents", type=pathlib.Path, help="The path to the directory with integration results.")
     parser.add_argument("--batch", type=str, help="Name of the column with batch (or sample) index.")
     parser.add_argument("--clusters", type=int, help="The number of clusters.", default=5)
-
+    parser.add_argument("--random-seed", type=int, help="Random seed used for clustering.", default=0)
     parser.add_argument(
         "--output",
         type=pathlib.Path,
@@ -282,7 +282,7 @@ def main(args):
         batch=args.batch,
         output_dir=args.output,
         gsea_config=gsea.GeneExpressionConfig(gene_sets=args.gene_sets, method=args.dgex_method),
-        cluster_config=cluster.LeidenNClusterConfig(clusters=args.clusters),
+        cluster_config=cluster.LeidenNClusterConfig(clusters=args.clusters, random_state=args.random_seed),
         plotting_config=plotting.ScatterPlotConfig(
             dim_red=args.dim_reduction, signature_columns=args.sigcols, batch_columns=args.batch
         ),
