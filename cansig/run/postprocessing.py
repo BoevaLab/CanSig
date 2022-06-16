@@ -284,7 +284,7 @@ def main(args):
         gsea_config=gsea.GeneExpressionConfig(gene_sets=args.gene_sets, method=args.dgex_method),
         cluster_config=cluster.LeidenNClusterConfig(clusters=args.clusters, random_state=args.random_seed),
         plotting_config=plotting.ScatterPlotConfig(
-            dim_red=args.dim_reduction, signature_columns=args.sigcols, batch_columns=args.batch
+            batch_column=args.batch, dim_red=args.dim_reduction, signature_columns=args.sigcols
         ),
         plot=(not args.disable_plots),
         savesig=(not args.disable_signatures),
