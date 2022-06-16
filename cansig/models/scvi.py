@@ -196,6 +196,7 @@ class SCVI:
     def __init__(self, config: SCVIConfig, data: anndata.AnnData) -> None:
         self._config = config
 
+        scvibase.settings.seed = config.random_seed
         data.raw = data
         data = _preprocessing(data, config.preprocessing)
         # Setup the data
