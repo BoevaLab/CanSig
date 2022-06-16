@@ -72,10 +72,10 @@ class ScatterPlot:
         """
 
         _LOGGER.info(f"Plotting {self._settings.dim_reduction.upper()}...")
-        copy = adata.copy()
-        copy = self._put_latent_in_adata(z=representations, adata=copy)
+        adata.raw = adata
+        adata = self._put_latent_in_adata(z=representations, adata=adata)
 
-        if "new-cluster-column" in copy.obs:
+        if "new-cluster-column" in adata.obs:
             default_columns = ["new-cluster-column", self._settings.batch_column]
         else:
             default_columns = [self._settings.batch_column]
@@ -86,25 +86,25 @@ class ScatterPlot:
             colors = list(self._settings.signature_columns) + default_columns
 
         if self._settings.dim_reduction == "pca":
-            copy.obsm["X_pca"] = sc.tl.pca(copy.obsm[self._settings.latent_key])
+            adata.obsm["X_pca"] = sc.tl.pca(adata.obsm[self._settings.latent_key])
             fig = sc.pl.pca(
-                copy, color=colors, ncols=self._settings.ncols, color_map=self._settings.color_map, return_fig=True
+                adata, color=colors, ncols=self._settings.ncols, color_map=self._settings.color_map, return_fig=True
             )
 
         elif self._settings.dim_reduction == "umap":
-            sc.pp.neighbors(copy, use_rep=self._settings.latent_key)
-            sc.tl.umap(copy)
+            sc.pp.neighbors(adata, use_rep=self._settings.latent_key)
+            sc.tl.umap(adata)
             fig = sc.pl.umap(
-                copy, color=colors, ncols=self._settings.ncols, color_map=self._settings.color_map, return_fig=True
+                adata, color=colors, ncols=self._settings.ncols, color_map=self._settings.color_map, return_fig=True
             )
 
         elif self._settings.dim_reduction == "both":
-            copy.obsm["X_pca"] = sc.tl.pca(copy.obsm[self._settings.latent_key])
-            sc.pp.neighbors(copy, use_rep=self._settings.latent_key)
-            sc.tl.umap(copy)
+            adata.obsm["X_pca"] = sc.tl.pca(adata.obsm[self._settings.latent_key])
+            sc.pp.neighbors(adata, use_rep=self._settings.latent_key)
+            sc.tl.umap(adata)
 
             fig = plot_insets(
-                copy,
+                adata,
                 color=colors,
                 ncols=self._settings.ncols,
                 color_map=self._settings.color_map,
@@ -114,6 +114,7 @@ class ScatterPlot:
             raise NotImplementedError(
                 f"Dimensionality reduction method: {self._settings.dim_reduction} is not implemented."
             )
+        adata = adata.raw.to_adata()
         return fig
 
     @staticmethod
@@ -121,11 +122,11 @@ class ScatterPlot:
         fig.savefig(fname=output_file)
 
 
-def plot_insets(copy: anndata.AnnData, color: Union[str, List[str]], ncols: int, color_map: str):
+def plot_insets(adata: anndata.AnnData, color: Union[str, List[str]], ncols: int, color_map: str):
     """plots umap with pca inset
 
     Args:
-        copy: Anndata object to plot
+        adata: Anndata object to plot
         color: str or list of str describing the observations/variables to plot
         ncols: number of columns to plot on
         color_map: color map used
@@ -143,7 +144,7 @@ def plot_insets(copy: anndata.AnnData, color: Union[str, List[str]], ncols: int,
 
     for ax, col in zip_longest(axs.flatten(), color):
         if col:
-            plot_inset(copy, color=col, ax=ax, color_map=color_map)
+            plot_inset(adata, color=col, ax=ax, color_map=color_map)
         else:
             ax.remove()
     return fig
@@ -153,7 +154,7 @@ def plot_inset(adata: anndata.AnnData, color: str, ax: plt.Axes, color_map: str)
     """inplace function to plot a single inset
 
     Args:
-        copy: Anndata object to plot
+        adata: Anndata object to plot
         color: str or list of str describing the observations/variables to plot
         color_map: color map used
 
