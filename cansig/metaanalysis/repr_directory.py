@@ -213,8 +213,8 @@ def get_objective_function(
         `get_objective_function_elements`
     """
     return (
-        -np.sum(all_values[ver], axis=0)
-        + settings.COMPLEXITYSTAB * np.sum(all_stability[ver], axis=0)
+        -np.mean(all_values[ver], axis=0)
+        + settings.COMPLEXITYSTAB * np.mean(all_stability[ver], axis=0)
         + settings.COMPLEXITYPEN * all_complexity[ver]
     )
 

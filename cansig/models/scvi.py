@@ -106,7 +106,6 @@ class SCVIConfig(pydantic.BaseModel):
     model: ModelConfig = pydantic.Field(default_factory=ModelConfig)
     train: TrainConfig = pydantic.Field(default_factory=TrainConfig)
     evaluation: EvaluationConfig = pydantic.Field(default_factory=EvaluationConfig)
-    inplace: bool = True
 
     # Covariates
     continuous_covariates: Optional[List[str]] = pydantic.Field(default=None)
@@ -198,28 +197,20 @@ class SCVI:
         self._config = config
 
         scvibase.settings.seed = config.random_seed
-        if not (config.inplace):
-            copy = data.copy()
-            copy = _preprocessing(copy, config.preprocessing)
-            # Setup the data
-            copy = _data_setup_wrapper(data=copy, config=config)
+        data.raw = data
+        data = _preprocessing(data, config.preprocessing)
+        # Setup the data
+        data = _data_setup_wrapper(data=data, config=config)
 
-            # Initialize the model
-            self.model = _scvi_factory_wrapper(data=copy, n_latent=config.n_latent, config=config.model)
-
-        else:
-            data = _preprocessing(data, config.preprocessing)
-            # Setup the data
-            data = _data_setup_wrapper(data=data, config=config)
-
-            # Initialize the model
-            self.model = _scvi_factory_wrapper(data=data, n_latent=config.n_latent, config=config.model)
+        # Initialize the model
+        self.model = _scvi_factory_wrapper(data=data, n_latent=config.n_latent, config=config.model)
 
         # Train the model
         _train_scvi_wrapper(model=self.model, config=config.train)
 
         # Record the index, to be returned by `get_latent_codes`
         self._index = data.obs_names
+        data = data.raw.to_adata()
 
     def evaluate(self) -> EvaluationResults:
         return _evaluate_model(model=self.model, config=self._config.evaluation)
