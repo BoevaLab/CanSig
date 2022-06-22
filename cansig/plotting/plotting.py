@@ -34,6 +34,14 @@ class ScatterPlotConfig(pydantic.BaseModel):
     color_map: str = "viridis"
     latent_key: str = "X_latent"
     ncols: int = 3
+    groups: Optional[str] = None
+    vmin: Union[str, float, List[float], None] = None
+    vmax: Union[str, float, List[float], None] = None
+    vcenter: Union[str, float, List[float], None] = None
+    legend_loc: Optional[str] = "right margin"
+    legend_fontsize: Union[
+        int, float, Literal["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"], None
+    ] = None
 
 
 class ScatterPlot:
@@ -88,14 +96,34 @@ class ScatterPlot:
         if self._settings.dim_reduction == "pca":
             adata.obsm["X_pca"] = sc.tl.pca(adata.obsm[self._settings.latent_key])
             fig = sc.pl.pca(
-                adata, color=colors, ncols=self._settings.ncols, color_map=self._settings.color_map, return_fig=True
+                adata,
+                color=colors,
+                ncols=self._settings.ncols,
+                color_map=self._settings.color_map,
+                return_fig=True,
+                groups=self._settings.groups,
+                vmin=self._settings.vmin,
+                vmax=self._settings.vmax,
+                vcenter=self._settings.vcenter,
+                legend_loc=self._settings.legend_loc,
+                legend_fontsize=self._settings.legend_fontsize,
             )
 
         elif self._settings.dim_reduction == "umap":
             sc.pp.neighbors(adata, use_rep=self._settings.latent_key)
             sc.tl.umap(adata)
             fig = sc.pl.umap(
-                adata, color=colors, ncols=self._settings.ncols, color_map=self._settings.color_map, return_fig=True
+                adata,
+                color=colors,
+                ncols=self._settings.ncols,
+                color_map=self._settings.color_map,
+                return_fig=True,
+                groups=self._settings.groups,
+                vmin=self._settings.vmin,
+                vmax=self._settings.vmax,
+                vcenter=self._settings.vcenter,
+                legend_loc=self._settings.legend_loc,
+                legend_fontsize=self._settings.legend_fontsize,
             )
 
         elif self._settings.dim_reduction == "both":
@@ -108,6 +136,12 @@ class ScatterPlot:
                 color=colors,
                 ncols=self._settings.ncols,
                 color_map=self._settings.color_map,
+                groups=self._settings.groups,
+                vmin=self._settings.vmin,
+                vmax=self._settings.vmax,
+                vcenter=self._settings.vcenter,
+                legend_loc=self._settings.legend_loc,
+                legend_fontsize=self._settings.legend_fontsize,
             )
 
         else:
@@ -122,7 +156,20 @@ class ScatterPlot:
         fig.savefig(fname=output_file)
 
 
-def plot_insets(adata: anndata.AnnData, color: Union[str, List[str]], ncols: int, color_map: str):
+def plot_insets(
+    adata: anndata.AnnData,
+    color: Union[str, List[str]],
+    ncols: int,
+    color_map: str,
+    groups: Optional[str],
+    vmin: Union[str, float, List[float], None],
+    vmax: Union[str, float, List[float], None],
+    vcenter: Union[str, float, List[float], None],
+    legend_loc: str,
+    legend_fontsize: Union[
+        int, float, Literal["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"], None
+    ],
+):
     """plots umap with pca inset
 
     Args:
@@ -144,13 +191,37 @@ def plot_insets(adata: anndata.AnnData, color: Union[str, List[str]], ncols: int
 
     for ax, col in zip_longest(axs.flatten(), color):
         if col:
-            plot_inset(adata, color=col, ax=ax, color_map=color_map)
+            plot_inset(
+                adata,
+                color=col,
+                ax=ax,
+                color_map=color_map,
+                groups=groups,
+                vmin=vmin,
+                vmax=vmax,
+                vcenter=vcenter,
+                legend_loc=legend_loc,
+                legend_fontsize=legend_fontsize,
+            )
         else:
             ax.remove()
     return fig
 
 
-def plot_inset(adata: anndata.AnnData, color: str, ax: plt.Axes, color_map: str):
+def plot_inset(
+    adata: anndata.AnnData,
+    color: str,
+    ax: plt.Axes,
+    color_map: str,
+    groups: Optional[str],
+    vmin: Union[str, float, List[float], None],
+    vmax: Union[str, float, List[float], None],
+    vcenter: Union[str, float, List[float], None],
+    legend_loc: str,
+    legend_fontsize: Union[
+        int, float, Literal["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"], None
+    ],
+):
     """inplace function to plot a single inset
 
     Args:
@@ -161,7 +232,19 @@ def plot_inset(adata: anndata.AnnData, color: str, ax: plt.Axes, color_map: str)
     See Also:
         scanpy.pl.pca function for more details on args
     """
-    sc.pl.umap(adata, color=color, ax=ax, show=False, color_map=color_map)
+    sc.pl.umap(
+        adata,
+        color=color,
+        ax=ax,
+        show=False,
+        color_map=color_map,
+        groups=groups,
+        vmin=vmin,
+        vmax=vmax,
+        vcenter=vcenter,
+        legend_loc=legend_loc,
+        legend_fontsize=legend_fontsize,
+    )
     prettify_axis(ax)
     x_lim = ax.get_xlim()
     y_lim = ax.get_ylim()
