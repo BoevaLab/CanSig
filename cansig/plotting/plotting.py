@@ -156,6 +156,7 @@ class ScatterPlot:
         fig.savefig(fname=output_file)
 
 
+
 def plot_insets(
     adata: anndata.AnnData,
     color: Union[str, List[str]],
@@ -191,6 +192,7 @@ def plot_insets(
 
     for ax, col in zip_longest(axs.flatten(), color):
         if col:
+
             plot_inset(
                 adata,
                 color=col,
@@ -203,6 +205,7 @@ def plot_insets(
                 legend_loc=legend_loc,
                 legend_fontsize=legend_fontsize,
             )
+
         else:
             ax.remove()
     return fig
