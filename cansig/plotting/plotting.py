@@ -156,7 +156,6 @@ class ScatterPlot:
         fig.savefig(fname=output_file)
 
 
-
 def plot_insets(
     adata: anndata.AnnData,
     color: Union[str, List[str]],
