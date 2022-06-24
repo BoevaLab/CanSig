@@ -111,7 +111,11 @@ def preprocessing(
         )
 
         if check_min_reference_cells(
-            adata, infercnv_config.reference_key, reference_cat, min_reference_cells, min_reference_groups
+            adata,
+            reference_key=infercnv_config.reference_key,
+            reference_cat=reference_cat,
+            min_reference_cells=min_reference_cells,
+            min_reference_groups=min_reference_groups,
         ):
             continue
         cnv.infer(adata, reference_cat)
@@ -119,7 +123,10 @@ def preprocessing(
         cell_annotation.combine_annotations(adata)
 
         if check_min_malignant_cells(
-            adata, annotation_config.malignant_combined, min_malignant_cells, cell_status_config.malignant
+            adata,
+            malignant_key=annotation_config.malignant_combined,
+            min_malignant_cells=min_malignant_cells,
+            malignant_celltype=cell_status_config.malignant,
         ):
             continue
         subclonal.cluster(adata)
