@@ -40,12 +40,48 @@ def preprocessing(
     threshold: float = 0.6,
     depth: int = 6,
 ) -> ad.AnnData:
+
+    """
     if undetermined_celltypes is None:
         undetermined_celltypes = []
 
-    if copy:
-        input_adatas = input_adatas.copy()
+    Args:
+        input_adatas:
+        malignant_celltypes: List of celltypes that are considered malignant.
+        gene_order:
+        reference_groups:
+        celltype_column: column name in `adata.obs` that stores the celltype annotation.
+        batch_id_column: column name in `adata.obs` that stores the batch id.
+        undetermined_celltypes:
+        min_counts: Cells with a total count lower than `min_counts` are removed.
+        max_counts: Cells with a total count higher than `max_counts` are removed.
+        min_genes: Cells with fewer genes expressed than `min_genes` are removed.
+        threshold_mt: Cells with a higher percentage of counts in mitochondrial
+        genes than the `threshold_mt` are being removed.
+        min_reference_groups:
+        min_reference_cells:
+        min_malignant_cells:
+        reference_key: column name in `adata.obs` to store to which reference group a
+        cell belongs.
+        window_size: size of the running window used in infercnv.
+        step: In infercnv only every `step`-th running window is computed. This saves
+        memory and computation time. Set to 1 to compute all windows.
+        cnv_key: Key under which the cnv matrix will be store. Notice: Infercnv has the
+        convention to store the matrix in `adata.obsm["X_{key_added}"]` and additional
+        information in `adata.uns[key_added]`.
+        scoring_dict: Dictionary containing the name of a
+        signature as key and a list of its associated genes as value.
+        g2m_genes:
+        s_genes:
+        figure_dir:
+        copy: If True, `input_adatas` remains unchanged. (This is only advised for small
+        datasets.)
+        threshold:
+        depth:
 
+    Returns: the combined, preprocessed AnnData.
+
+    """
     cell_status_config = CellStatusConfig()
     reference_config = ReferenceConfig()
     infercnv_config = InferCNVConfig(
@@ -70,6 +106,9 @@ def preprocessing(
         cnv_key=cnv_key,
     )
     subclonal = Subclonal(subclonal_config)
+
+    if copy:
+        input_adatas = input_adatas.copy()
 
     input_adatas, gene_list = load_adatas(input_adatas, batch_id_column)
     cnv = InferCNV(infercnv_config, gene_order=gene_order, gene_list=gene_list)
