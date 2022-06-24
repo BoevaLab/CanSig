@@ -3,7 +3,6 @@ import pytest  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
 
 from cansig._preprocessing.scoring import SignatureScorer
-from cansig._preprocessing.utils import NormalizedConfig
 from tests.preprocessing.utils import generate_adata, is_normalized
 
 _cell_cycle_scoring = sc.tl.score_genes_cell_cycle
@@ -27,7 +26,6 @@ def adata():
 
 
 def get_scorer(scoring_dict, gene_list, g2m_genes, s_genes):
-    normalized_config = NormalizedConfig()
     scorer = SignatureScorer(
         scoring_dict=scoring_dict,
         gene_list=gene_list,
@@ -35,7 +33,6 @@ def get_scorer(scoring_dict, gene_list, g2m_genes, s_genes):
         s_genes=s_genes,
         malignant_key="maligant",
         malignant_status="malignant",
-        normalized_config=normalized_config,
     )
 
     return scorer
