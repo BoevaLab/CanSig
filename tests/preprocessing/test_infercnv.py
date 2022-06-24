@@ -3,7 +3,6 @@ import pandas as pd  # pytype: disable=import-error
 import pytest  # pytype: disable=import-error
 
 from cansig._preprocessing.infercnv import InferCNV, InferCNVConfig
-from cansig._preprocessing.utils import NormalizedConfig
 from tests.preprocessing.utils import generate_adata, is_normalized
 
 
@@ -35,8 +34,7 @@ def gene_list():
 
 @pytest.fixture()
 def cnv(gene_annotation):
-    normalization_config = NormalizedConfig()
-    infercnv_config = InferCNVConfig(normalize_config=normalization_config)
+    infercnv_config = InferCNVConfig()
     cnv = InferCNV(infercnv_config, gene_order=gene_annotation, gene_list=gene_annotation.index.tolist())
     return cnv
 

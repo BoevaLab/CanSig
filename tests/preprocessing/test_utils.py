@@ -8,7 +8,6 @@ from cansig._preprocessing.utils import (
     check_min_malignant_cells,
     check_min_reference_cells,
     Normalized,
-    NormalizedConfig,
     load_adatas,
     validate_adatas,
 )
@@ -79,9 +78,8 @@ class TestCheckMinRefCells:
 class TestNormalized:
     def test_normalized(self):
         adata = generate_adata(n_cells=100, n_genes=1000)
-        normalized_config = NormalizedConfig()
-        with Normalized(adata, normalized_config):
-            assert np.allclose((np.exp(adata.X) - 1).sum(1), normalized_config.target_sum)
+        with Normalized(adata):
+            assert np.allclose((np.exp(adata.X) - 1).sum(1), 1e4)
 
         assert np.allclose(adata.X, 1.0)
 

@@ -9,13 +9,7 @@ from cansig._preprocessing.infercnv import InferCNVConfig, InferCNV, get_referen
 from cansig._preprocessing.quality_control import quality_control
 from cansig._preprocessing.scoring import SignatureScorer
 from cansig._preprocessing.subclonal import Subclonal, SubclonalConfig
-from cansig._preprocessing.utils import (
-    check_min_malignant_cells,
-    check_min_reference_cells,
-    load_adatas,
-    pop_adatas,
-    NormalizedConfig,
-)
+from cansig._preprocessing.utils import check_min_malignant_cells, check_min_reference_cells, load_adatas, pop_adatas
 from cansig.types import Pathlike, ScoringDict, GeneList
 
 
@@ -32,7 +26,7 @@ def preprocessing(
     threshold_pct_mt_counts: float = 30.0,
     min_reference_groups: int = 2,
     min_reference_cells: int = 20,
-    min_malignant_cells: int = 50,
+    min_malignant_cells: int = 20,
     gene_order: Union[pd.DataFrame, Pathlike] = None,
     reference_key: str = "reference",
     window_size: int = 200,
@@ -46,11 +40,10 @@ def preprocessing(
     threshold: float = 0.6,
     depth: int = 6,
 ) -> ad.AnnData:
-    normalize_config = NormalizedConfig()
+
     cell_status_config = CellStatusConfig()
     reference_config = ReferenceConfig()
     infercnv_config = InferCNVConfig(
-        normalize_config=normalize_config,
         step=step,
         window_size=window_size,
         cnv_key=cnv_key,
@@ -83,7 +76,6 @@ def preprocessing(
         gene_list,
         g2m_genes,
         s_genes,
-        normalized_config=normalize_config,
         malignant_key=annotation_config.malignant_combined,
         malignant_status=cell_status_config.malignant,
     )
@@ -99,6 +91,15 @@ def preprocessing(
             threshold_mt=threshold_pct_mt_counts,
             figure_dir=figure_dir,
         )
+
+        if check_min_malignant_cells(
+            adata,
+            malignant_key=annotation_config.malignant_annotation,
+            min_malignant_cells=min_malignant_cells,
+            malignant_celltype=cell_status_config.malignant,
+        ):
+            continue
+
         reference_cat = get_reference_groups(
             adata,
             celltype_column=celltype_column,
@@ -110,17 +111,26 @@ def preprocessing(
         )
 
         if check_min_reference_cells(
-            adata, infercnv_config.reference_key, reference_cat, min_reference_cells, min_reference_groups
+            adata,
+            reference_key=infercnv_config.reference_key,
+            reference_cat=reference_cat,
+            min_reference_cells=min_reference_cells,
+            min_reference_groups=min_reference_groups,
         ):
-            cnv.infer(adata, reference_cat)
-            cell_annotation.annotate_using_cnv(adata)
-            cell_annotation.combine_annotations(adata)
+            continue
+        cnv.infer(adata, reference_cat)
+        cell_annotation.annotate_using_cnv(adata)
+        cell_annotation.combine_annotations(adata)
 
-            if check_min_malignant_cells(
-                adata, annotation_config.malignant_combined, min_malignant_cells, cell_status_config.malignant
-            ):
-                subclonal.cluster(adata)
-                recorder.append(adata)
+        if check_min_malignant_cells(
+            adata,
+            malignant_key=annotation_config.malignant_combined,
+            min_malignant_cells=min_malignant_cells,
+            malignant_celltype=cell_status_config.malignant,
+        ):
+            continue
+        subclonal.cluster(adata)
+        recorder.append(adata)
 
     adata = recorder.concatenate()
     signature_scorer.score(adata)

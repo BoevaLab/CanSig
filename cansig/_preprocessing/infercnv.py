@@ -6,7 +6,7 @@ import infercnvpy as cnv_base  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 
-from cansig._preprocessing.utils import NormalizedConfig, Normalized
+from cansig._preprocessing.utils import Normalized
 from cansig.types import Pathlike
 
 _LOGGER = logging.Logger(__name__)
@@ -15,7 +15,6 @@ _LOGGER = logging.Logger(__name__)
 class InferCNVConfig(pydantic.BaseModel):
     """Config used for InferCNV."""
 
-    normalize_config: NormalizedConfig
     window_size: int = pydantic.Field(default=200)
     step: int = pydantic.Field(default=5)
     reference_key: str = "reference"
@@ -43,7 +42,7 @@ class InferCNV:
         # Here we subset to just the genes that will be used for InferCNV.
         bdata = adata[:, adata.var[self._config.cnv_called]].copy()
 
-        with Normalized(bdata, self._config.normalize_config):
+        with Normalized(bdata):
             chr_position, X_cnv = cnv_base.tl.infercnv(
                 bdata,
                 reference_key=self._config.reference_key,
