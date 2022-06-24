@@ -44,6 +44,7 @@ def preprocessing(
     cell_status_config = CellStatusConfig()
     reference_config = ReferenceConfig()
     infercnv_config = InferCNVConfig(
+        normalize_config=normalize_config,
         step=step,
         window_size=window_size,
         cnv_key=cnv_key,
