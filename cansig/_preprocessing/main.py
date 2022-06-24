@@ -95,7 +95,7 @@ def preprocessing(
         if check_min_malignant_cells(
             adata,
             malignant_key=annotation_config.malignant_annotation,
-            min_malignant_cells=1,
+            min_malignant_cells=min_malignant_cells,
             malignant_celltype=cell_status_config.malignant,
         ):
             continue
