@@ -6,7 +6,7 @@ import anndata  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
 
-from cansig._preprocessing.utils import Normalized, NormalizedConfig
+from cansig._preprocessing.utils import Normalized
 from cansig.types import GeneList, ScoringDict
 
 _LOGGER = logging.Logger(__name__)
@@ -124,17 +124,17 @@ class SignatureScorer:
         s_genes: Optional[GeneList],
         malignant_key: str,
         malignant_status: str,
-        normalized_config: NormalizedConfig,
+        target_sum: float = 1e4,
     ) -> None:
         self.scoring_dict = self.update_scoring_dict(scoring_dict, gene_list=gene_list)
         self.g2m_genes, self.s_genes = self.update_cell_cycle_genes(g2m_genes, s_genes, gene_list)
 
         self.malignant_status = malignant_status
         self.malignant_key = malignant_key
-        self.normalized_config = normalized_config
+        self.target_sum = target_sum
 
     def score(self, adata: anndata.AnnData):
-        with Normalized(adata, self.normalized_config):
+        with Normalized(adata, target_sum=self.target_sum):
             self.score_cell_cycle(adata)
 
             if self.scoring_dict is None:

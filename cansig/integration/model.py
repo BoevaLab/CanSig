@@ -4,7 +4,7 @@ from typing import List, Optional
 import anndata
 import scanpy as sc
 from anndata import AnnData
-from cansig._preprocessing.utils import Normalized, NormalizedConfig
+from cansig._preprocessing.utils import Normalized
 from cansig.integration._CONSTANTS import REGISTRY_KEYS
 from cansig.integration.base.model import RepresentationModel
 from cansig.integration.data.fields import CellTypeField
@@ -151,9 +151,8 @@ class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
         batch_key: str = None,
     ):
         bdata = adata[adata.obs[malignant_key] == malignant_cat].copy()
-        normalized_config = NormalizedConfig(taget_sum=target_sum)
 
-        with Normalized(bdata, normalized_config):
+        with Normalized(bdata, target_sum=target_sum):
             sc.pp.highly_variable_genes(bdata, n_top_genes=n_highly_variable_genes, batch_key=batch_key)
 
         adata = adata[:, bdata.var["highly_variable"]].copy()
