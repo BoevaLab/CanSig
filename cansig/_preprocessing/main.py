@@ -26,7 +26,7 @@ def preprocessing(
     threshold_pct_mt_counts: float = 30.0,
     min_reference_groups: int = 2,
     min_reference_cells: int = 20,
-    min_malignant_cells: int = 50,
+    min_malignant_cells: int = 20,
     gene_order: Union[pd.DataFrame, Pathlike] = None,
     reference_key: str = "reference",
     window_size: int = 200,
