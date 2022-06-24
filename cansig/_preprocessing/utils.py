@@ -4,7 +4,6 @@ import os
 import anndata  # pytype: disable=import-error
 import anndata as ad  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
-import pydantic  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
 
 _LOGGER = logging.Logger(__name__)
@@ -48,18 +47,12 @@ def check_min_malignant_cells(adata: ad.AnnData, malignant_key: str, min_maligna
     return (adata.obs[malignant_key] == malignant_celltype).sum() >= min_malignant_cells
 
 
-class NormalizedConfig(pydantic.BaseModel):
-    """Holds all configurations that are shared across multiple classes."""
-
-    target_sum: float = 1e4
-
-
 class Normalized:
     """Context manager to normalize .X."""
 
-    def __init__(self, adata: anndata.AnnData, config: NormalizedConfig):
+    def __init__(self, adata: anndata.AnnData, target_sum: float = 1e4):
         self.adata = adata
-        self._config = config
+        self.target_sum = 1e4
 
     def __enter__(self):
         self.raw_counts = self.adata.X.copy()
@@ -73,7 +66,7 @@ class Normalized:
             del self.adata.uns["log1p"]
 
     def normalize_adata(self):
-        sc.pp.normalize_total(self.adata, target_sum=self._config.target_sum)
+        sc.pp.normalize_total(self.adata, target_sum=self.target_sum)
         sc.pp.log1p(self.adata)
 
 
