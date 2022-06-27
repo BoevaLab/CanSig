@@ -44,7 +44,6 @@ def preprocessing(
     cell_status_config = CellStatusConfig()
     reference_config = ReferenceConfig()
     infercnv_config = InferCNVConfig(
-        normalize_config=normalize_config,
         step=step,
         window_size=window_size,
         cnv_key=cnv_key,
@@ -93,7 +92,7 @@ def preprocessing(
             figure_dir=figure_dir,
         )
 
-        if check_min_malignant_cells(
+        if not check_min_malignant_cells(
             adata,
             malignant_key=annotation_config.malignant_annotation,
             min_malignant_cells=min_malignant_cells,
@@ -111,7 +110,7 @@ def preprocessing(
             reference_key=infercnv_config.reference_key,
         )
 
-        if check_min_reference_cells(
+        if not check_min_reference_cells(
             adata,
             reference_key=infercnv_config.reference_key,
             reference_cat=reference_cat,
@@ -123,13 +122,14 @@ def preprocessing(
         cell_annotation.annotate_using_cnv(adata)
         cell_annotation.combine_annotations(adata)
 
-        if check_min_malignant_cells(
+        if not check_min_malignant_cells(
             adata,
             malignant_key=annotation_config.malignant_combined,
             min_malignant_cells=min_malignant_cells,
             malignant_celltype=cell_status_config.malignant,
         ):
             continue
+
         subclonal.cluster(adata)
         recorder.append(adata)
 
