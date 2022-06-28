@@ -182,7 +182,7 @@ def create_parser() -> argparse.ArgumentParser:
         choices=["median", "mean", "max", "count"],
         help="How the panels (pathways) should be sorted. Default: by highest mean NES across the runs.",
     )
-    
+
     # CanSig Args
     parser.add_argument("--n-latent-batch-effect", type=int, default=5)
     parser.add_argument("--n-latent-cnv", type=int, default=10)
