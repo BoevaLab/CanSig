@@ -41,11 +41,23 @@ def preprocessing(
     depth: int = 6,
 ) -> ad.AnnData:
     """
-    hjhjhj
+    This is the pre-processing module of CanSig. For every sample several preprocessing
+    steps are run:
+     1. Running of standard quality control for scRNA-seq data.
+     2. Calling of CNVs.
+     3. Improving the split of malignant and non-malignant cells based on CNVs.
+     4. INference of subclones based on the CNVs.
+    Finally, all samples are combined in an AnnData. After combining known gene
+    signatures and the cell cycle is scored.
+
     Args:
         input_adatas: List of AnnDatas or paths to .h5ad files.
         malignant_celltypes: List of celltypes that are considered malignant.
-        gene_order:
+        gene_order: Either a pandas DataFrame or a path to a .csv file containing the
+            gene annotations. The Dataframe needs to contain the gene names as index and
+            chromosome, start and end as columns. The chromosome needs to be stored as
+            "chr<number of the chromsome that the gene belongs to>". In the .csv file
+            the gene names are expected as the first column. Example:
         reference_groups: List of reference groups. A reference group is a tuple of
             celltypes that will be used together as one reference for infercnv. Cells in
             a reference group should have similar gene expression. Example:
@@ -69,25 +81,25 @@ def preprocessing(
             the finale AnnData. Setting this to a lower number will reduce the quality
             of inferred CNVs but might allow to use more samples.
         min_malignant_cells: If a sample has less than `min_malignant_cells` it won't
-        be added to the final dataset. Notice: running infercnv requires at least
-        one malignant cell. Therefore, this has to be a positive integer.
-        reference_key: column name in `adata.obs` to store to which reference group a
-        cell belongs.
+            be added to the final dataset. Notice: running infercnv requires at least
+            one malignant cell. Therefore, this has to be a positive integer.
+        reference_key: column name in `adata.obs` to store to which reference group
+            a cell belongs.
         window_size: size of the running window used in infercnv.
         step: In infercnv only every `step`-th running window is computed. This saves
-        memory and computation time. Set to 1 to compute all windows.
+            memory and computation time. Set to 1 to compute all windows.
         cnv_key: Key under which the cnv matrix will be store. Notice: Infercnv has the
-        convention to store the matrix in `adata.obsm["X_{key_added}"]` and additional
-        information in `adata.uns[key_added]`.
-        scoring_dict: Dictionary containing the name of a
-        signature as key and a list of its associated genes as value.
+            convention to store the matrix in `adata.obsm["X_{key_added}"]` and
+            additional information in `adata.uns[key_added]`.
+        scoring_dict: Dictionary containing the name of a signature as key and a list of
+            its associated genes as value.
         g2m_genes: Optional list of genes to score the G2M phase of the cell cycle. If
-        None uses a default gene list.
+            None a default gene list is used.
         s_genes: Optional list of genes to score the S phase of the cell cycle. If
-        None uses a default gene list.
+            None a default gene list is used.
         figure_dir: Path to directory to store figures.
         copy: If True, `input_adatas` remains unchanged. (This is only advised for small
-        datasets.)
+            datasets.)
         threshold:
         depth:
 
