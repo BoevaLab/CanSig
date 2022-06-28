@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>CanSig: discovering cancer signatures &#8212; CanSig 0.0.1 documentation</title>
+    <title>CanSig: discovering cancer signatures &#8212; CanSig  documentation</title>
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
   document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
@@ -36,7 +36,7 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Preprocessing tutorial" href="preprocessing.html" />
+    <link rel="next" title="Preprocessing" href="preprocessing.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -63,7 +63,7 @@
   
   
   
-    <p class="title logo__title">CanSig 0.0.1 documentation</p>
+    <p class="title logo__title">CanSig  documentation</p>
   
 </a>
     
@@ -81,7 +81,7 @@
         <ul id="navbar-main-elements" class="navbar-nav">
     <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="preprocessing.html">
-  Preprocessing tutorial
+  Preprocessing
  </a>
 </li>
 
@@ -93,19 +93,19 @@
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="interpretation.html">
-  Advanced interpretation tutorial
+  Data interpretation
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="formatting-data.html">
-  Formatting your data to run CanSig
+  Input data format
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="cansig-for-python-coders.html">
-  CanSig for python coders
+  CanSig for Pythonists
  </a>
 </li>
 
@@ -117,7 +117,7 @@
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="contributing.html">
-  Contribution guide
+  Contributing
  </a>
 </li>
 
@@ -193,11 +193,6 @@
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#navigation">
-   Navigation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#getting-started">
    Getting started
   </a>
@@ -234,6 +229,11 @@
    Contributing
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#navigation">
+   Navigation
+  </a>
+ </li>
 </ul>
 
 </nav>
@@ -257,7 +257,7 @@
 <h1>CanSig: discovering cancer signatures<a class="headerlink" href="#cansig-discovering-cancer-signatures" title="Permalink to this heading">#</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This package is currently <em>not</em> ready to be used. We hope it will be available to public use in June.</p>
+<p>This package is currently in experimental stage. Changes in the API may appear.</p>
 </div>
 <p>Human tumors are highly heterogeneous in their cell composition; specifically, they exhibit heterogeneity in transcriptional states of malignant cells, as has been recently discovered through single-cell RNA sequencing (scRNA-seq). Distinct states of malignant cells have been linked to variability in tumorigenic properties and resistance to anti-cancer treatment. Despite the fact that scRNA-seq data contain all necessary information to uncover shared transcriptional states of malignant cells in tumors, jointly analyzing cells from multiple cancer patients comes with its set of challenges including batch correction and accounting for patient-specific genetic background driving differences between gene expression vectors. We propose CanSig, an easy-to-use approach designed to discover known and de novo shared signatures in cancer single cells. CanSig preprocesses, integrates and analyzes scRNA-seq data to provide new signatures of shared transcriptional states and links these states to known pathways.</p>
 <div class="admonition-todo admonition" id="id1">
@@ -268,60 +268,6 @@
 <p class="admonition-title">Note</p>
 <p>A preprint describing the pipeline and case studies is <a class="reference external" href="https://doi.org/10.1101/2022.04.14.488324">now available</a>.</p>
 </div>
-<section id="navigation">
-<h2>Navigation<a class="headerlink" href="#navigation" title="Permalink to this heading">#</a></h2>
-<div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#loading-the-data">Loading the data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#id3">Preprocessing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#outputs">Outputs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#references">References</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="pipeline-advanced.html">Advanced pipeline usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pipeline-advanced.html#using-the-plotting-utilities">Using the plotting utilities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pipeline-advanced.html#saving-signatures-and-scoring-cells">Saving signatures and scoring cells</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pipeline-advanced.html#running-differential-cnv-analysis">Running differential CNV analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pipeline-advanced.html#using-custom-models">Using custom models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pipeline-advanced.html#understanding-all-the-pipeline-command-line-options">Understanding all the pipeline command line options</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="interpretation.html">Advanced interpretation tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="formatting-data.html">Formatting your data to run CanSig</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cansig-for-python-coders.html">CanSig for python coders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting / Checklist</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#checklist">Checklist</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#id4">Troubleshooting</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contribution guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="contributing.html#submitting-an-issue">Submitting an issue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contributing.html#submitting-a-pull-request">Submitting a Pull Request</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contributing.html#for-new-developers">For new developers</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="source/modules.html">cansig</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="source/cansig.cluster.html">cansig.cluster package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="source/cansig.cnvanalysis.html">cansig.cnvanalysis package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="source/cansig.interface.html">cansig.interface package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="source/cansig.metaanalysis.html">cansig.metaanalysis package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="source/cansig.models.html">cansig.models package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="source/cansig.plotting.html">cansig.plotting package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="source/cansig.run.html">cansig.run package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="source/cansig.types.html">cansig.types package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="source/cansig.filesys.html">cansig.filesys package</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
-</section>
 <section id="getting-started">
 <h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
 <p>This tutorial assumes you have access to a Unix terminal (e.g., Linux, BSD, MacOS). If you use Windows, install <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install">Windows Subsystem for Linux</a> first.</p>
@@ -339,7 +285,7 @@
 </section>
 <section id="example-dataset">
 <h3>Example dataset<a class="headerlink" href="#example-dataset" title="Permalink to this heading">#</a></h3>
-<p>To demonstrate the pipeline usage, we will analyse a small esophageal dataset, which has been already preprocessed (for more information about the dataset and the data curation, see <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing tutorial</span></a>).</p>
+<p>To demonstrate the pipeline usage, we will analyse a small esophageal dataset, which has been already preprocessed (for more information about the dataset and the data curation, see <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing</span></a>).</p>
 <p>We will download it using an auxiliary script:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.download PIPELINE
 </pre></div>
@@ -445,23 +391,77 @@ Options include running your own integration model, controlling the plotting uti
 <p class="admonition-title">Todo</p>
 <p>Basic discussion how to interpret the results.</p>
 </div>
-<p>For more advanced analysis, including drawing biological insights, see <a class="reference internal" href="interpretation.html#interpretation"><span class="std std-ref">Advanced interpretation tutorial</span></a>.</p>
+<p>For more advanced analysis, including drawing biological insights, see <a class="reference internal" href="interpretation.html#interpretation"><span class="std std-ref">Data interpretation</span></a>.</p>
 </section>
 </section>
 <section id="tutorials">
 <h2>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>To learn more about the pipeline (parallelization, using custom models, plotting), see <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a>.</p></li>
-<li><p>For a tutorial how to interpret the results from the biological perspective, see <a class="reference internal" href="interpretation.html#interpretation"><span class="std std-ref">Advanced interpretation tutorial</span></a>.</p></li>
-<li><p>To learn about the preprocessing module (used to prepare the raw data into the .h5ad format), see the <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing tutorial</span></a>.</p></li>
-<li><p>To learn how to format already preprocessed .csv files into .h5ad files, see <a class="reference internal" href="formatting-data.html#formatting"><span class="std std-ref">Formatting your data to run CanSig</span></a>.</p></li>
+<li><p>For a tutorial how to interpret the results from the biological perspective, see <a class="reference internal" href="interpretation.html#interpretation"><span class="std std-ref">Data interpretation</span></a>.</p></li>
+<li><p>To learn about the preprocessing module (used to prepare the raw data into the .h5ad format), see the <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing</span></a>.</p></li>
+<li><p>To learn how to format already preprocessed .csv files into .h5ad files, see <a class="reference internal" href="formatting-data.html#formatting"><span class="std std-ref">Input data format</span></a>.</p></li>
 <li><p>To learn how to run CanSig in a python script/jupyter notebook, see <a class="reference internal" href="cansig-for-python-coders.html#coders"><span class="std std-ref">Cansig for python coders</span></a>.</p></li>
 <li><p>To ensure smooth running of CanSig, check out <a class="reference internal" href="troubleshooting.html#troubleshooting"><span class="std std-ref">the checklist and troubleshooting page.</span></a>.</p></li>
 </ul>
 </section>
 <section id="contributing">
 <h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this heading">#</a></h2>
-<p>For the contribution guide and instructions for new developers, see <a class="reference internal" href="contributing.html#contribution-guide"><span class="std std-ref">Contribution guide</span></a>.</p>
+<p>For the contribution guide and instructions for new developers, see <a class="reference internal" href="contributing.html#contribution-guide"><span class="std std-ref">Contributing</span></a>.</p>
+</section>
+<section id="navigation">
+<h2>Navigation<a class="headerlink" href="#navigation" title="Permalink to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#loading-the-data">Loading the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#id4">Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#outputs">Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline-advanced.html">Advanced pipeline usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pipeline-advanced.html#using-the-plotting-utilities">Using the plotting utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline-advanced.html#saving-signatures-and-scoring-cells">Saving signatures and scoring cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline-advanced.html#running-differential-cnv-analysis">Running differential CNV analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline-advanced.html#using-custom-models">Using custom models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline-advanced.html#understanding-all-the-pipeline-command-line-options">Understanding all the pipeline command line options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interpretation.html">Data interpretation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formatting-data.html">Input data format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cansig-for-python-coders.html">CanSig for Pythonists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting / Checklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#checklist">Checklist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#id4">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#submitting-an-issue">Submitting an issue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#submitting-a-pull-request">Submitting a Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#for-new-developers">For new developers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="source/modules.html">cansig</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/cansig.cluster.html">cansig.cluster package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/cansig.cnvanalysis.html">cansig.cnvanalysis package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/cansig.interface.html">cansig.interface package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/cansig.metaanalysis.html">cansig.metaanalysis package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/cansig.models.html">cansig.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/cansig.plotting.html">cansig.plotting package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/cansig.run.html">cansig.run package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/cansig.types.html">cansig.types package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/cansig.filesys.html">cansig.filesys package</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
 </section>
 </section>
 
@@ -476,7 +476,7 @@ Options include running your own integration model, controlling the plotting uti
   <a class='right-next' id="next-link" href="preprocessing.html" title="next page">
   <div class="prev-next-info">
       <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">Preprocessing tutorial</p>
+      <p class="prev-next-title">Preprocessing</p>
   </div>
   <i class="fas fa-angle-right"></i>
   </a>

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Advanced pipeline usage &#8212; CanSig 0.0.1 documentation</title>
+    <title>Advanced pipeline usage &#8212; CanSig  documentation</title>
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
   document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
@@ -36,8 +36,8 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Advanced interpretation tutorial" href="interpretation.html" />
-    <link rel="prev" title="Preprocessing tutorial" href="preprocessing.html" />
+    <link rel="next" title="Data interpretation" href="interpretation.html" />
+    <link rel="prev" title="Preprocessing" href="preprocessing.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -64,7 +64,7 @@
   
   
   
-    <p class="title logo__title">CanSig 0.0.1 documentation</p>
+    <p class="title logo__title">CanSig  documentation</p>
   
 </a>
     
@@ -82,7 +82,7 @@
         <ul id="navbar-main-elements" class="navbar-nav">
     <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="preprocessing.html">
-  Preprocessing tutorial
+  Preprocessing
  </a>
 </li>
 
@@ -94,19 +94,19 @@
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="interpretation.html">
-  Advanced interpretation tutorial
+  Data interpretation
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="formatting-data.html">
-  Formatting your data to run CanSig
+  Input data format
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="cansig-for-python-coders.html">
-  CanSig for python coders
+  CanSig for Pythonists
  </a>
 </li>
 
@@ -118,7 +118,7 @@
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="contributing.html">
-  Contribution guide
+  Contributing
  </a>
 </li>
 
@@ -303,7 +303,7 @@ You can add plotting according to pre-scored signatures (i.e. present in the ada
 <section id="saving-signatures-and-scoring-cells">
 <h2>Saving signatures and scoring cells<a class="headerlink" href="#saving-signatures-and-scoring-cells" title="Permalink to this heading">#</a></h2>
 <p>CanSig finds signatures in cancer data: these signatures are defined as the most overexpressed genes in a biologically meaningful part of the subspace (approximated by a cluster).
-By default, running the pipeline will result the results of the differential gene expression analysis to be saved for each cluster (for more information on interpretation, see <a class="reference internal" href="interpretation.html#interpretation"><span class="std std-ref">Advanced interpretation tutorial</span></a>), as wells as the score for each cell for each of the signatures (defined as the 200 most positively differentially expressed genes in the cluster) and the correlation between the signatures.</p>
+By default, running the pipeline will result the results of the differential gene expression analysis to be saved for each cluster (for more information on interpretation, see <a class="reference internal" href="interpretation.html#interpretation"><span class="std std-ref">Data interpretation</span></a>), as wells as the score for each cell for each of the signatures (defined as the 200 most positively differentially expressed genes in the cluster) and the correlation between the signatures.</p>
 <p>The results associated with signatures and scoring can be controlled through the three following command line arguments:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--disable-signatures</span></code>: if you do not want any of the results linked to signatures to be saved (ie differential gene expression analysis for each cluster, scores of each signature for each cell and correlation between signatures), then input this flag.</p></li>
@@ -335,14 +335,14 @@ By default, running the pipeline will result the results of the differential gen
 <section id="running-differential-cnv-analysis">
 <h2>Running differential CNV analysis<a class="headerlink" href="#running-differential-cnv-analysis" title="Permalink to this heading">#</a></h2>
 <p>You have the option to perform differential CNV analysis. With original CNV calls, this will output differential CNV regions between each cluster and the rest, and information about the percentage of gains/losses in the cluster and in the rest, and the number of patients showing a gain/loss in the region.
-This module is deactivated by default. There are two main ways to run this analysis: the first assumes that you are using a data object that has been obtained using our preprocessing module (see <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing tutorial</span></a>), the second can be run if provided with a external discretized CNV calling, even if the data object has not been obtained through our preprocessing module.</p>
+This module is deactivated by default. There are two main ways to run this analysis: the first assumes that you are using a data object that has been obtained using our preprocessing module (see <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing</span></a>), the second can be run if provided with a external discretized CNV calling, even if the data object has not been obtained through our preprocessing module.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>the data provided for the tutorial has been processed using our preprocessing module, and can be thus used for differential CNV analysis assuming so.</p>
 </div>
 <section id="differential-cnv-analysis-for-data-preprocessed-with-our-module">
 <h3>Differential CNV analysis for data preprocessed with our module<a class="headerlink" href="#differential-cnv-analysis-for-data-preprocessed-with-our-module" title="Permalink to this heading">#</a></h3>
-<p>This calling assumes the data was preprocessing using our preprocessing module (see <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing tutorial</span></a>).
+<p>This calling assumes the data was preprocessing using our preprocessing module (see <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing</span></a>).
 This means that the data object you provide will contain the following:</p>
 <blockquote>
 <div><ul class="simple">
@@ -580,13 +580,13 @@ We will describe each flag in detail here</p>
       <i class="fas fa-angle-left"></i>
       <div class="prev-next-info">
           <p class="prev-next-subtitle">previous</p>
-          <p class="prev-next-title">Preprocessing tutorial</p>
+          <p class="prev-next-title">Preprocessing</p>
       </div>
   </a>
   <a class='right-next' id="next-link" href="interpretation.html" title="next page">
   <div class="prev-next-info">
       <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">Advanced interpretation tutorial</p>
+      <p class="prev-next-title">Data interpretation</p>
   </div>
   <i class="fas fa-angle-right"></i>
   </a>

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Preprocessing tutorial &#8212; CanSig 0.0.1 documentation</title>
+    <title>Preprocessing &#8212; CanSig  documentation</title>
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
   document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
@@ -64,7 +64,7 @@
   
   
   
-    <p class="title logo__title">CanSig 0.0.1 documentation</p>
+    <p class="title logo__title">CanSig  documentation</p>
   
 </a>
     
@@ -82,7 +82,7 @@
         <ul id="navbar-main-elements" class="navbar-nav">
     <li class="toctree-l1 current active nav-item">
  <a class="current reference internal nav-link" href="#">
-  Preprocessing tutorial
+  Preprocessing
  </a>
 </li>
 
@@ -94,19 +94,19 @@
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="interpretation.html">
-  Advanced interpretation tutorial
+  Data interpretation
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="formatting-data.html">
-  Formatting your data to run CanSig
+  Input data format
  </a>
 </li>
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="cansig-for-python-coders.html">
-  CanSig for python coders
+  CanSig for Pythonists
  </a>
 </li>
 
@@ -118,7 +118,7 @@
 
 <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="contributing.html">
-  Contribution guide
+  Contributing
  </a>
 </li>
 
@@ -199,7 +199,7 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
+  <a class="reference internal nav-link" href="#id4">
    Preprocessing
   </a>
  </li>
@@ -232,21 +232,21 @@
               
               <article class="bd-article" role="main">
                 
-  <section id="preprocessing-tutorial">
-<span id="preprocessing"></span><h1>Preprocessing tutorial<a class="headerlink" href="#preprocessing-tutorial" title="Permalink to this heading">#</a></h1>
+  <section id="preprocessing">
+<span id="id1"></span><h1>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this heading">#</a></h1>
 <p>The pre-processing module of CanSig consists of multiple steps.
 In the first step, we apply standard quality control measures.
 The second step consists in CNV inference to remove cells annotated as malignant that do not
 present CNVs and cells annotated as non-malignant that present CNVs.
 In the optional, third step, known gene signatures can be scored.</p>
-<div class="admonition-todo admonition" id="id1">
+<div class="admonition-todo admonition" id="id2">
 <p class="admonition-title">Todo</p>
 <p>Add graphic.</p>
 </div>
 <section id="loading-the-data">
 <h2>Loading the data<a class="headerlink" href="#loading-the-data" title="Permalink to this heading">#</a></h2>
 <p>To illustrate the usage of the pre-processing module of CanSig, we use three samples from
-<a class="reference internal" href="#zhang2021" id="id2"><span>[Zhang2021]</span></a>.</p>
+<a class="reference internal" href="#zhang2021" id="id3"><span>[Zhang2021]</span></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cansig.tutorial</span> <span class="kn">import</span> <span class="n">load_data</span>
 <span class="n">adatas</span><span class="p">,</span> <span class="n">gene_order</span><span class="p">,</span> <span class="n">scoring_dict</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">()</span>
 </pre></div>
@@ -280,8 +280,8 @@ counts as input. We apply the scoring function per batch and not on the combined
 dataset. See <a class="reference external" href="https://scanpy.readthedocs.io/en/stable/generated/scanpy.tl.score_genes.html">score_genes</a>
 for more details.</p>
 </section>
-<section id="id3">
-<h2>Preprocessing<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<section id="id4">
+<h2>Preprocessing<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
 <p>Before we can start with the preprocessing, we need to define which cell types are
 considered as malignant or undetermined. The remaining cell types will be considered as
 non-malignant. Furthermore, we need to define which cell types are used as reference for
@@ -354,7 +354,7 @@ final AnnData (This behavior can be changed by setting <cite>join</cite> to “o
 </ul>
 <p>For more details on the malignant/non-malignant status annotation, see  the Methods section
 of our <a class="reference external" href="https://www.biorxiv.org/content/10.1101/2022.04.14.488324v1">paper</a>.</p>
-<div class="admonition-todo admonition" id="id4">
+<div class="admonition-todo admonition" id="id5">
 <p class="admonition-title">Todo</p>
 <p>Do we want to add cell cycle scores? Problem: When different gene names are used?</p>
 </div>
@@ -366,7 +366,7 @@ that are annotated as non-malignant but show CNVs will not be considered as
 malignant cells.</p>
 </div>
 <p>In additions to the above annotations, a column for each element in the <cite>scoring_dict</cite> is
-added <cite>adata.obs</cite>. For this tutorial, these are the known signature from <a class="reference internal" href="#zhang2021" id="id5"><span>[Zhang2021]</span></a>,</p>
+added <cite>adata.obs</cite>. For this tutorial, these are the known signature from <a class="reference internal" href="#zhang2021" id="id6"><span>[Zhang2021]</span></a>,</p>
 <ul class="simple">
 <li><p><cite>Mucosal</cite>: The mucosal immunity-like (Mucosal) program was characterized by the expression of genes associated with innate immune response (e.g., S100P) and mucosal defensive mechanisms including mucosal chemokine (e.g., CXCL17) and mucus production (e.g., AGR2 and MUC20)</p></li>
 <li><p><cite>Stress</cite>: The stress responses (Stress) program consisted of immediate early genes (e.g., EGR1, JUN, and FOS) that are activated in response to widespread cellular stimuli and displayed upregulation of TNFα signaling, UV response, p53, and apoptosis pathways</p></li>
@@ -396,25 +396,25 @@ plots for each sample to assess the quality of the data and the split into malig
 non-malignant cells. The plots are stored in &lt;figure_dir&gt;/&lt;batch_id&gt;. The first plot is
 created during the quality control step and gives insights into which cells are being
 filtered out. This plot is saved to quality_control.png.</p>
-<div class="admonition-todo admonition" id="id7">
+<div class="admonition-todo admonition" id="id8">
 <p class="admonition-title">Todo</p>
 <p>Add image for quality control
 Figure caption:  (A) Histogram of count depth per cell. (B) Histogram of number
 of genes detected per cell. (C) Count depth distribution. (D) Number of genes versus
 the count depth coloured by the fraction of mitochondrial reads. Mitochondrial read
 fractions are only high in particularly low count cells with few detected genes.
-Source: <a class="reference internal" href="#luecken2019" id="id6"><span>[Luecken2019]</span></a></p>
+Source: <a class="reference internal" href="#luecken2019" id="id7"><span>[Luecken2019]</span></a></p>
 </div>
 <p>The next plot is generated after inferring CNVs. It shows the chromosome heatmap
 separated into malignant and non-malignant and the malignant cells are further divided
 into reference and non-reference Cells. The non-malignant cells should not show CNVs.
 This plot is saved to chromosome_heatmap.png</p>
-<div class="admonition-todo admonition" id="id8">
+<div class="admonition-todo admonition" id="id9">
 <p class="admonition-title">Todo</p>
 <p>Add image of the chromosome heatmap showing separation of malignant and
 non-malignant cells.</p>
 </div>
-<div class="admonition-todo admonition" id="id9">
+<div class="admonition-todo admonition" id="id10">
 <p class="admonition-title">Todo</p>
 <p>umap for each score + umap for malignant/non-malignant cells in CNV space.</p>
 </div>
@@ -427,12 +427,12 @@ non-malignant cells.</p>
 separated into malignant and non-malignant and the malignant cells are further divided
 into reference and non-reference Cells. The non-malignant cells should not show CNVs.
 This plot is saved to chromosome_heatmap.png</p>
-<div class="admonition-todo admonition" id="id10">
+<div class="admonition-todo admonition" id="id11">
 <p class="admonition-title">Todo</p>
 <p>Add image of the chromosome heatmap showing separation of malignant and
 non-malignant cells.</p>
 </div>
-<div class="admonition-todo admonition" id="id11">
+<div class="admonition-todo admonition" id="id12">
 <p class="admonition-title">Todo</p>
 <p>umap for each score + umap for malignant/non-malignant cells in CNV space.</p>
 </div>
@@ -440,7 +440,7 @@ non-malignant cells.</p>
 <p class="admonition-title">Note</p>
 <p>For faster pre-processing plotting can be turned off by setting plot to False.</p>
 </div>
-<div class="admonition-todo admonition" id="id12">
+<div class="admonition-todo admonition" id="id13">
 <p class="admonition-title">Todo</p>
 <p>Are there other useful plots that we want to add here???</p>
 </div>
@@ -450,12 +450,12 @@ non-malignant cells.</p>
 <div role="list" class="citation-list">
 <div class="citation" id="zhang2021" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span>Zhang2021<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a role="doc-backlink" href="#id2">1</a>,<a role="doc-backlink" href="#id5">2</a>)</span>
-<p>Zhang, X., Peng, L., Luo, Y. et al. Dissecting esophageal squamous-cell carcinoma ecosystem by single-cell transcriptomic analysis. Nat Commun 12, 5291 (2021). <a class="reference external" href="https://doi.org/10.1038/s41467-021-25539-x">https://doi.org/10.1038/s41467-021-25539-x</a></p>
+<span class="backrefs">(<a role="doc-backlink" href="#id3">1</a>,<a role="doc-backlink" href="#id6">2</a>)</span>
+<p>Zhang, X., Peng, L., Luo, Y. et al. <a class="reference external" href="https://doi.org/10.1038/s41467-021-25539-x">Dissecting esophageal squamous-cell carcinoma ecosystem by single-cell transcriptomic analysis</a>. Nat Commun 12, 5291 (2021).</p>
 </div>
 <div class="citation" id="luecken2019" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">Luecken2019</a><span class="fn-bracket">]</span></span>
-<p>Luecken, M. D., Theis, F. J. Current best practices in single-cell RNA-seq analysis: a tutorial. Molecular systems biology, 15(6), e8746 (2019). <a class="reference external" href="https://doi.org/10.15252/msb.20188746">https://doi.org/10.15252/msb.20188746</a></p>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">Luecken2019</a><span class="fn-bracket">]</span></span>
+<p>Luecken, M. D., Theis, F. J. <a class="reference external" href="https://doi.org/10.15252/msb.20188746">Current best practices in single-cell RNA-seq analysis: a tutorial</a>. Molecular systems biology, 15(6), e8746 (2019).</p>
 </div>
 </div>
 </section>
