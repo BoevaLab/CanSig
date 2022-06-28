@@ -41,24 +41,36 @@ def preprocessing(
     depth: int = 6,
 ) -> ad.AnnData:
     """
+    hjhjhj
     Args:
-        input_adatas:
+        input_adatas: List of AnnDatas or paths to .h5ad files.
         malignant_celltypes: List of celltypes that are considered malignant.
         gene_order:
-        reference_groups:
+        reference_groups: List of reference groups. A reference group is a tuple of
+            celltypes that will be used together as one reference for infercnv. Cells in
+            a reference group should have similar gene expression. Example:
+            `[("T.cells.CD8", "T.cell.CD8.exhausted"), ("Macrophages",), ...]`
         celltype_column: column name in `adata.obs` that stores the celltype annotation.
         batch_id_column: column name in `adata.obs` that stores the batch id.
-        undetermined_celltypes: Optional list of celltypes that are considered malignant.
-        Cells of undertermined celltype will be separated into malignant and
-        non-malignant
+        undetermined_celltypes: Optional list of celltypes that are considered
+            malignant. Cells of undertermined celltype will be separated into malignant
+            and non-malignant based on CNVs.
         min_counts: Cells with a total count lower than `min_counts` are removed.
         max_counts: Cells with a total count higher than `max_counts` are removed.
         min_genes: Cells with fewer genes expressed than `min_genes` are removed.
         threshold_mt: Cells with a higher percentage of counts in mitochondrial
-        genes than the `threshold_mt` are being removed.
+            genes than the `threshold_mt` are being removed.
         min_reference_groups:
-        min_reference_cells:
-        min_malignant_cells:
+        min_reference_cells: If the number of cells in a reference group is less than
+            `min_reference_cells` that reference group will not be used for CNV
+            inference. If the total number of reference cells (any cell belonging to a
+            reference group) in a sample is lower than `min_reference_groups *
+            min_reference_cells` the sample will not be added to
+            the finale AnnData. Setting this to a lower number will reduce the quality
+            of inferred CNVs but might allow to use more samples.
+        min_malignant_cells: If a sample has less than `min_malignant_cells` it won't
+        be added to the final dataset. Notice: running infercnv requires at least
+        one malignant cell. Therefore, this has to be a positive integer.
         reference_key: column name in `adata.obs` to store to which reference group a
         cell belongs.
         window_size: size of the running window used in infercnv.
@@ -69,15 +81,24 @@ def preprocessing(
         information in `adata.uns[key_added]`.
         scoring_dict: Dictionary containing the name of a
         signature as key and a list of its associated genes as value.
-        g2m_genes:
-        s_genes:
-        figure_dir:
+        g2m_genes: Optional list of genes to score the G2M phase of the cell cycle. If
+        None uses a default gene list.
+        s_genes: Optional list of genes to score the S phase of the cell cycle. If
+        None uses a default gene list.
+        figure_dir: Path to directory to store figures.
         copy: If True, `input_adatas` remains unchanged. (This is only advised for small
         datasets.)
         threshold:
         depth:
 
     Returns: the combined, preprocessed AnnData.
+
+    Notes
+    -----
+    See further usage examples in the following tutorials:
+
+    1. :doc:`/preprocessing`
+    2. TODO: add link to colab
 
     """
     if undetermined_celltypes is None:
