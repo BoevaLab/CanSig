@@ -13,10 +13,10 @@ def _normalized(*args, **kwargs):
 
 
 @pytest.fixture()
-def gene_annotation():
-    df = pd.DataFrame(index=[f"gene_{i}" for i in range(400)])
-    df["chromosome"] = ["chr1"] * 200 + ["chr2"] * 200
-    df["start"] = list(range(400))
+def gene_annotation(n_genes=400):
+    df = pd.DataFrame(index=[f"gene_{i}" for i in range(n_genes)])
+    df["chromosome"] = ["chr1"] * (n_genes // 2) + ["chr2"] * (n_genes // 2)
+    df["start"] = list(range(n_genes))
     df["end"] = df["start"] + 1
     return df
 
