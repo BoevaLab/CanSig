@@ -1,7 +1,7 @@
 .. _formatting:
 
-Formatting your data to run CanSig
-==================================
+Input data format
+=================
 .. note::
     This tutorial is meant for researchers with little to no experience with coding.
 
@@ -71,6 +71,6 @@ This will save a file called "full_data.h5ad" in the current directory.
                                                 --observation path/to/observation.csv \
                                                 --filename full_data
 .. note::
-    If you are calling this function twice, don't forget to change the --filename !
+    If you are calling this function twice, don't forget to change the ``--filename`` argument!
 
  

@@ -1,7 +1,7 @@
 .. _interpretation:
 
-Advanced interpretation tutorial
-================================
+Data interpretation
+===================
 
 .. todo::
 

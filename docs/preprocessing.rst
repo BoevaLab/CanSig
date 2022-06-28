@@ -1,7 +1,7 @@
 .. _preprocessing:
 
-Preprocessing tutorial
-======================
+Preprocessing
+=============
 
 The pre-processing module of CanSig consists of multiple steps.
 In the first step, we apply standard quality control measures.
@@ -214,6 +214,5 @@ This plot is saved to chromosome_heatmap.png
 References
 ----------
 
-.. [Zhang2021] Zhang, X., Peng, L., Luo, Y. et al. Dissecting esophageal squamous-cell carcinoma ecosystem by single-cell transcriptomic analysis. Nat Commun 12, 5291 (2021). https://doi.org/10.1038/s41467-021-25539-x
-
-.. [Luecken2019] Luecken, M. D., Theis, F. J. Current best practices in single-cell RNA-seq analysis: a tutorial. Molecular systems biology, 15(6), e8746 (2019). https://doi.org/10.15252/msb.20188746
+.. [Zhang2021] Zhang, X., Peng, L., Luo, Y. et al. `Dissecting esophageal squamous-cell carcinoma ecosystem by single-cell transcriptomic analysis <https://doi.org/10.1038/s41467-021-25539-x>`_. Nat Commun 12, 5291 (2021).
+.. [Luecken2019] Luecken, M. D., Theis, F. J. `Current best practices in single-cell RNA-seq analysis: a tutorial <https://doi.org/10.15252/msb.20188746>`_. Molecular systems biology, 15(6), e8746 (2019).

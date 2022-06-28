@@ -1,7 +1,7 @@
 .. _contribution-guide:
 
-Contribution guide
-==================
+Contributing
+============
 
 
 Submitting an issue
