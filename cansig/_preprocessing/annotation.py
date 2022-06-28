@@ -37,8 +37,8 @@ class CellAnnotation:
         annotation_config: AnnotationConfig,
         celltype_column: str,
         cnv_key: str,
-        malignant_celltypes: List[str],
-        undetermined_celltypes: List[str],
+        malignant_celltypes: Iterable[str],
+        undetermined_celltypes: Iterable[str],
     ):
         self._config = annotation_config
         self.celltype_column = celltype_column

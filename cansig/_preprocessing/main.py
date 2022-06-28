@@ -1,4 +1,4 @@
-from typing import List, Union, Optional
+from typing import List, Union, Tuple, Optional
 
 import anndata as ad  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
@@ -17,7 +17,7 @@ def preprocessing(
     input_adatas: List[Union[ad.AnnData, Pathlike]],
     malignant_celltypes: List[str],
     gene_order: Union[pd.DataFrame, Pathlike],
-    reference_groups: List[str],
+    reference_groups: List[Tuple[str]],
     celltype_column: str,
     batch_id_column: str,
     undetermined_celltypes: Optional[List[str]] = None,
@@ -48,7 +48,9 @@ def preprocessing(
         reference_groups:
         celltype_column: column name in `adata.obs` that stores the celltype annotation.
         batch_id_column: column name in `adata.obs` that stores the batch id.
-        undetermined_celltypes:
+        undetermined_celltypes: Optional list of celltypes that are considered malignant.
+        Cells of undertermined celltype will be separated into malignant and
+        non-malignant
         min_counts: Cells with a total count lower than `min_counts` are removed.
         max_counts: Cells with a total count higher than `max_counts` are removed.
         min_genes: Cells with fewer genes expressed than `min_genes` are removed.
