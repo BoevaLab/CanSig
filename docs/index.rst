@@ -12,26 +12,6 @@ Human tumors are highly heterogeneous in their cell composition; specifically, t
 .. note::
    A preprint describing the pipeline and case studies is `now available <https://doi.org/10.1101/2022.04.14.488324>`_.
 
-Navigation
-----------
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   preprocessing
-   pipeline-advanced
-   interpretation
-   formatting-data
-   cansig-for-python-coders
-   troubleshooting
-   contributing
-   source/modules
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
 Getting started
 ---------------
 
@@ -177,6 +157,24 @@ Contributing
 
 For the contribution guide and instructions for new developers, see :ref:`contribution-guide`.
 
+Navigation
+----------
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   preprocessing
+   pipeline-advanced
+   interpretation
+   formatting-data
+   cansig-for-python-coders
+   troubleshooting
+   contributing
+   source/modules
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
 
