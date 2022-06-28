@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Iterable, Optional
 
 import torch  # pytype: disable=import-error
 import torch.nn as nn  # pytype: disable=import-error
@@ -44,7 +44,7 @@ class CNVDecoder(nn.Module):
         self,
         n_input: int,
         n_output: int,
-        n_cat_list: Iterable[int] = None,
+        n_cat_list: Optional[Iterable[int]] = None,
         n_layers: int = 1,
         n_hidden: int = 128,
         **kwargs,
