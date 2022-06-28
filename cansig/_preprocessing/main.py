@@ -58,6 +58,10 @@ def preprocessing(
             chromosome, start and end as columns. The chromosome needs to be stored as
             "chr<number of the chromsome that the gene belongs to>". In the .csv file
             the gene names are expected as the first column. Example:
+            >>> print(gene_order.head(2))
+            >>>             chromosome   start     end
+            >>>MIR1302-9.3        chr1   29554   31109
+            >>>FAM87B             chr1  752751  755214
         reference_groups: List of reference groups. A reference group is a tuple of
             celltypes that will be used together as one reference for infercnv. Cells in
             a reference group should have similar gene expression. Example:
@@ -77,9 +81,9 @@ def preprocessing(
             `min_reference_cells` that reference group will not be used for CNV
             inference. If the total number of reference cells (any cell belonging to a
             reference group) in a sample is lower than `min_reference_groups *
-            min_reference_cells` the sample will not be added to
-            the finale AnnData. Setting this to a lower number will reduce the quality
-            of inferred CNVs but might allow to use more samples.
+            min_reference_cells` the sample will not be added to the finale AnnData.
+            Setting this to a lower number will reduce the quality of inferred CNVs but
+            might allow to use more samples.
         min_malignant_cells: If a sample has less than `min_malignant_cells` it won't
             be added to the final dataset. Notice: running infercnv requires at least
             one malignant cell. Therefore, this has to be a positive integer.
@@ -103,7 +107,7 @@ def preprocessing(
         threshold:
         depth:
 
-    Returns: the combined, preprocessed AnnData.
+    Returns: combined and preprocessed AnnData.
 
     Notes
     -----
