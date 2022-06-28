@@ -148,7 +148,7 @@ class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
         discretize_cnvs: bool = True,
         cnv_key: str = "cnv",
         target_sum: float = 1e4,
-        batch_key: str = None,
+        batch_key: Optional[str] = None,
     ):
         bdata = adata[adata.obs[malignant_key] == malignant_cat].copy()
 

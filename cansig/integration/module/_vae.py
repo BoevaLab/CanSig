@@ -124,7 +124,7 @@ class VAECanSig(CanSigBaseModule):
         self.use_size_factor_key = use_size_factor_key
 
         if self.dispersion == "gene":
-            self.px_r = torch.nn.Parameter(torch.randn(n_input))
+            self.px_r = torch.nn.Parameter(torch.randn(n_input))  # pytype: disable=module-attr
         elif self.dispersion == "gene-cell":
             pass
         else:

@@ -135,9 +135,9 @@ class VAEBatchEffect(CanSigBaseModule):
             self.register_buffer("library_log_vars", torch.from_numpy(library_log_vars).float())
 
         if self.dispersion == "gene":
-            self.px_r = torch.nn.Parameter(torch.randn(n_input))
+            self.px_r = torch.nn.Parameter(torch.randn(n_input))  # pytype: disable=module-attr
         elif self.dispersion == "gene-celltype":
-            self.px_r = torch.nn.Parameter(torch.randn(n_input, n_celltype))
+            self.px_r = torch.nn.Parameter(torch.randn(n_input, n_celltype))  # pytype: disable=module-attr
         elif self.dispersion == "gene-cell":
             pass
         else:
