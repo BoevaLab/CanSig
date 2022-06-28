@@ -1,5 +1,6 @@
 import anndata  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
+import pandas as pd  # pytype: disable=import-error
 
 
 def generate_adata(n_cells, n_genes, obs_dict=None, obs_names=None, var_names=None, sample_id=None):
@@ -37,3 +38,11 @@ def tuples_to_list(tuples):
 
 def is_normalized(adata, taget_sum=1e4):
     return np.allclose((np.exp(adata.X) - 1).sum(1), taget_sum)
+
+
+def gene_annotation(n_genes=400):
+    df = pd.DataFrame(index=[f"gene_{i}" for i in range(n_genes)])
+    df["chromosome"] = ["chr1"] * (n_genes // 2) + ["chr2"] * (n_genes // 2)
+    df["start"] = list(range(n_genes))
+    df["end"] = df["start"] + 1
+    return df
