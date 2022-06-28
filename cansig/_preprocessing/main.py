@@ -40,16 +40,7 @@ def preprocessing(
     threshold: float = 0.6,
     depth: int = 6,
 ) -> ad.AnnData:
-    if undetermined_celltypes is None:
-        undetermined_celltypes = []
-
-    if copy:
-        input_adatas = input_adatas.copy()
-
     """
-    if undetermined_celltypes is None:
-        undetermined_celltypes = []
-
     Args:
         input_adatas:
         malignant_celltypes: List of celltypes that are considered malignant.
@@ -87,6 +78,12 @@ def preprocessing(
     Returns: the combined, preprocessed AnnData.
 
     """
+    if undetermined_celltypes is None:
+        undetermined_celltypes = []
+
+    if copy:
+        input_adatas = input_adatas.copy()
+
     cell_status_config = CellStatusConfig()
     reference_config = ReferenceConfig()
     infercnv_config = InferCNVConfig(

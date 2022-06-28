@@ -45,7 +45,6 @@ def test_integation(monkeypatch):
         adatas,
         reference_groups=[("good")],
         malignant_celltypes=["evil"],
-        undetermined_celltypes=[],
         gene_order=gene_anno,
         celltype_column="celltype",
         batch_id_column="sample_id",

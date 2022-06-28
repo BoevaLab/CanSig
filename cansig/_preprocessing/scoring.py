@@ -134,7 +134,7 @@ class SignatureScorer:
         self.target_sum = target_sum
 
     def score(self, adata: anndata.AnnData):
-        with Normalized(adata, self.normalized_config):
+        with Normalized(adata):
             self.score_cell_cycle(adata)
 
             if self.scoring_dict is None:
