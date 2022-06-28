@@ -9,7 +9,7 @@ A pipeline for single-cell cancer data sets analysis.
 
 This repository accompanies [our preprint](https://doi.org/10.1101/2022.04.14.488324).
 
-_Note: This repository is in the development stage. We hope it will soon become available._
+_Note: This repository is in an experimental stage. Changes to the API may appear.__
 
 ## Resources
 
