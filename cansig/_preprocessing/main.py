@@ -61,10 +61,10 @@ def preprocessing(
             chromosome, start and end as columns. The chromosome needs to be stored as
             "chr<number of the chromsome that the gene belongs to>". In the .csv file
             the gene names are expected as the first column. Example:
-            >>> print(gene_order.head(2))
-            >>>             chromosome   start     end
-            >>>MIR1302-9.3        chr1   29554   31109
-            >>>FAM87B             chr1  752751  755214
+                >>> print(gene_order.head(2))
+                >>>             chromosome   start     end
+                >>>MIR1302-9.3        chr1   29554   31109
+                >>>FAM87B             chr1  752751  755214
         reference_groups: List of reference groups. A reference group is a tuple of
             celltypes that will be used together as one reference for infercnv. Cells in
             a reference group should have similar gene expression. Example:
