@@ -24,7 +24,7 @@ class DataRecorder:
     def append(self, adata: ad.AnnData) -> None:
         """
         Removes unneeded fields from adata and then appends it to `self.data`.
-        Furhtermore, keeps track of the batch id for each sample in `self.batch_ids` to
+        Furthermore, keeps track of the batch id for each sample in `self.batch_ids` to
         ensure that the cell index will be unique after concatenation.
 
         Args:

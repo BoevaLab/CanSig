@@ -129,10 +129,10 @@ class CellAnnotation:
     ) -> List[int]:
         """
         Returns a list of cells that show no CNVs using a dendrogram.  Starting at
-        the root node, we iteratively assigned a CNV status to each nodes according
+        the root node, we iteratively assigned a CNV status to each node according
         to the composition of their subtrees. Specifically, a node and all nodes in
         its subtree were annotated as presenting no CNVs if the percentage of
-        non-malignant cells in both of its subtrees is great than the threshold. We
+        non-malignant cells in both of its subtrees is greater than the threshold. We
         traversed the dendrogram until we reached all nodes or a maximum depth of in
         the dendrogram is reached.
 
@@ -176,7 +176,7 @@ class CellAnnotation:
         """
         Returns a list of cells that show no CNVs using leiden clustering. Cells are
         clustered using leiden clustering. For each cluster, all cells in that cluster
-        are added to a lsit of cells not showing CNVs if the percentage of non-malignant
+        are added to a list of cells not showing CNVs if the percentage of non-malignant
         cells is greater than the threshold.
 
         Args:
@@ -206,7 +206,7 @@ class CellAnnotation:
 
     def _cluster_healthy(self, idx: Iterable[int], adata: AnnData, threshold: float = 0.6) -> bool:
         """
-        Returns if a cluster is healty or not. A cluster is considered healthy if the
+        Returns if a cluster is healthy or not. A cluster is considered healthy if the
         percentage of non-malignant cells of the determined cells is higher than the
         threshold.
 

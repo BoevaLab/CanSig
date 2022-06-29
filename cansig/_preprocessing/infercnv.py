@@ -29,7 +29,7 @@ class InferCNVConfig(pydantic.BaseModel):
 
 
 class InferCNV:
-    """Class handeling calling of CNVs."""
+    """Class handling calling of CNVs."""
 
     def __init__(self, config: InferCNVConfig, gene_order: Union[Pathlike, pd.DataFrame], gene_list: List[str]) -> None:
         self._config = config
@@ -88,7 +88,7 @@ class InferCNV:
         """
 
         Args:
-            gene_order: Either a DataFrame a path to a csv file contaning the gene
+            gene_order: Either a DataFrame a path to a csv file containing the gene
             ordering.
             gene_list: List of genes present in all AnnDatas.
 
