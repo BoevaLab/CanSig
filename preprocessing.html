@@ -284,18 +284,21 @@ for more details.</p>
 <h2>Preprocessing<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
 <p>Before we can start with the preprocessing, we need to define which cell types are
 considered as malignant or undetermined. The remaining cell types will be considered as
-non-malignant. Furthermore, we need to define which cell types are used as reference for
-InferCNV. These are typically non-malignant cells representing a variety of different
-cell types. For more details, see <a class="reference external" href="https://github.com/broadinstitute/inferCNV/wiki">InferCNV</a>.</p>
+non-malignant.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">malignant_celltypes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Epi&quot;</span><span class="p">]</span>
 <span class="n">undetermined_celltypes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Undetermined&quot;</span><span class="p">]</span>
-<span class="n">reference_celltypes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Pericytes&quot;</span><span class="p">,</span>
-                       <span class="s2">&quot;Bcells&quot;</span><span class="p">,</span>
-                       <span class="s2">&quot;FRC&quot;</span><span class="p">,</span>
-                       <span class="s2">&quot;Endothelial&quot;</span><span class="p">,</span>
-                       <span class="s2">&quot;Fibroblasts&quot;</span><span class="p">,</span>
-                       <span class="s2">&quot;Myeloid&quot;</span><span class="p">,</span>
-                       <span class="s2">&quot;Tcells&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Furthermore, we need to define groups of cell types that are used as
+references in InferCNV. A reference groups is a tuple containing non-malignant cells
+types that show similar gene expression. For more details,
+see <a class="reference external" href="https://github.com/broadinstitute/inferCNV/wiki">InferCNV</a>.</p>
+<p>For our example, we define the following reference groups.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reference_groups</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;Pericytes&quot;</span><span class="p">,</span> <span class="s2">&quot;Fibroblasts&quot;</span><span class="p">),</span>
+                       <span class="p">(</span><span class="s2">&quot;Bcells&quot;</span><span class="p">,),</span>
+                       <span class="p">(</span><span class="s2">&quot;FRC&quot;</span><span class="p">,</span> <span class="s2">&quot;Endothelial&quot;</span><span class="p">),</span>
+                       <span class="p">(</span><span class="s2">&quot;Myeloid&quot;</span><span class="p">,),</span>
+                       <span class="p">(</span><span class="s2">&quot;Tcells&quot;</span><span class="p">,),]</span>
 </pre></div>
 </div>
 <p>Now, we can run preprocessing by importing the function and defining the thresholds
@@ -307,39 +310,38 @@ used for quality control.</p>
                      <span class="n">celltype_column</span> <span class="o">=</span> <span class="s1">&#39;cell_type&#39;</span><span class="p">,</span>
                      <span class="n">malignant_celltypes</span><span class="o">=</span><span class="n">malignant_celltypes</span><span class="p">,</span>
                      <span class="n">undetermined_celltypes</span><span class="o">=</span><span class="n">undetermined_celltypes</span><span class="p">,</span>
-                     <span class="n">reference_celltypes</span><span class="o">=</span><span class="n">reference_celltypes</span><span class="p">,</span>
+                     <span class="n">reference_groups</span><span class="o">=</span><span class="n">reference_groups</span><span class="p">,</span>
+                     <span class="n">gene_order</span><span class="o">=</span><span class="n">gene_order</span><span class="p">,</span>
                      <span class="n">min_counts</span><span class="o">=</span><span class="mi">1_500</span><span class="p">,</span>
                      <span class="n">max_counts</span><span class="o">=</span><span class="mi">50_000</span><span class="p">,</span>
                      <span class="n">min_genes</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span>
                      <span class="n">threshold_pct_mt_counts</span><span class="o">=</span><span class="mf">30.</span><span class="p">,</span>
                      <span class="n">gene_order</span><span class="o">=</span><span class="n">gene_order</span><span class="p">,</span>
-                     <span class="n">scoring_dict</span><span class="o">=</span><span class="n">scoring_dict</span><span class="p">,</span>
-                     <span class="n">figure_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+                     <span class="n">scoring_dict</span><span class="o">=</span><span class="n">scoring_dict</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Instead of calling the function with the AnnData objects in memory, we can also
-provide a list of paths to .h5ad files. This can save memory if many
-samples are preprocessed. If the data is loaded from memory we have to define
-a column that contains the batch_id. If the data is loaded from disc and the
+<p>Instead of calling the function with a list of AnnData objects, we can also
+provide a list of paths to .h5ad files. If the data is loaded from memory we have to
+define a column that contains the batch_id. If the data is loaded from disc and the
 batch_id_column is not already in <cite>adata.obs</cite> it will be set to the filename.</p>
 </div>
-<p>Cells with less than <cite>min_counts</cite> counts or more than <cite>max_counts</cite> counts will be filtered out.
-Furthermore, cells with fewer than <cite>min_genes</cite> genes expressed or with a higher
+<p>Cells with less than <cite>min_counts</cite> counts or more than <cite>max_counts</cite> counts will be
+filtered. Furthermore, cells with fewer than <cite>min_genes</cite> genes expressed or with a higher
 percentage count in mitochondrial genes than <cite>threshold_pct_mt_counts</cite> will also be removed.
 All plots generated during preprocessing will be stored in <cite>figure_dir</cite>. For more detail,
-see preprocessing docs (TODO: add link here).</p>
+on the method, see here.</p>
 </section>
 <section id="outputs">
 <h2>Outputs<a class="headerlink" href="#outputs" title="Permalink to this heading">#</a></h2>
-<p>The function <cite>preprocessing</cite> returns a single AnnData object containing all the high quality cells
-from the inputted samples.</p>
+<p>The function <cite>preprocessing</cite> returns a single AnnData object containing all the high
+quality cells from the inputted samples.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since the goal of CanSig is to discover shared signatures, we do an inner join
 for the genes. This means only genes present in all samples will be kept in the
-final AnnData (This behavior can be changed by setting <cite>join</cite> to “outer”.).</p>
+final AnnData.</p>
 </div>
 <p>For each cell the following annotations are added in <cite>adata.obs</cite>:</p>
 <ul class="simple">
@@ -348,16 +350,12 @@ final AnnData (This behavior can be changed by setting <cite>join</cite> to “o
 <li><p><cite>n_genes</cite>: The number of genes expressed in the cell.</p></li>
 <li><p><cite>pct_zero_genes</cite>: <cite>n_genes</cite> divided by the number of all genes.</p></li>
 <li><p><cite>pct_counts_mt</cite>: The counts corresponding to mitochondrial RNA divided by <cite>total_counts</cite>.</p></li>
-<li><p><cite>malignant_annotation</cite>: Boolean indicating if the cell is considered malignant based on it cell type.</p></li>
-<li><p><cite>malignant_cnvs</cite>: Boolean indicating if the cell is considered malignant based on its inferred CNV profile.</p></li>
-<li><p><cite>malignant</cite>: Boolean indicating if the cell is considered malignant based on its celltype and CNV profile.</p></li>
+<li><p><cite>malignant_celltype</cite>:</p></li>
+<li><p><cite>malignant_cnvs</cite>:</p></li>
+<li><p><cite>malignant_combined</cite>:</p></li>
 </ul>
 <p>For more details on the malignant/non-malignant status annotation, see  the Methods section
 of our <a class="reference external" href="https://www.biorxiv.org/content/10.1101/2022.04.14.488324v1">paper</a>.</p>
-<div class="admonition-todo admonition" id="id5">
-<p class="admonition-title">Todo</p>
-<p>Do we want to add cell cycle scores? Problem: When different gene names are used?</p>
-</div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Rare malignant cells might be difficult to annotate. Therefore, we consider
@@ -366,7 +364,7 @@ that are annotated as non-malignant but show CNVs will not be considered as
 malignant cells.</p>
 </div>
 <p>In additions to the above annotations, a column for each element in the <cite>scoring_dict</cite> is
-added <cite>adata.obs</cite>. For this tutorial, these are the known signature from <a class="reference internal" href="#zhang2021" id="id6"><span>[Zhang2021]</span></a>,</p>
+added <cite>adata.obs</cite>. For this tutorial, these are the known signature from <a class="reference internal" href="#zhang2021" id="id5"><span>[Zhang2021]</span></a>,</p>
 <ul class="simple">
 <li><p><cite>Mucosal</cite>: The mucosal immunity-like (Mucosal) program was characterized by the expression of genes associated with innate immune response (e.g., S100P) and mucosal defensive mechanisms including mucosal chemokine (e.g., CXCL17) and mucus production (e.g., AGR2 and MUC20)</p></li>
 <li><p><cite>Stress</cite>: The stress responses (Stress) program consisted of immediate early genes (e.g., EGR1, JUN, and FOS) that are activated in response to widespread cellular stimuli and displayed upregulation of TNFα signaling, UV response, p53, and apoptosis pathways</p></li>
@@ -396,25 +394,25 @@ plots for each sample to assess the quality of the data and the split into malig
 non-malignant cells. The plots are stored in &lt;figure_dir&gt;/&lt;batch_id&gt;. The first plot is
 created during the quality control step and gives insights into which cells are being
 filtered out. This plot is saved to quality_control.png.</p>
-<div class="admonition-todo admonition" id="id8">
+<div class="admonition-todo admonition" id="id7">
 <p class="admonition-title">Todo</p>
 <p>Add image for quality control
 Figure caption:  (A) Histogram of count depth per cell. (B) Histogram of number
 of genes detected per cell. (C) Count depth distribution. (D) Number of genes versus
 the count depth coloured by the fraction of mitochondrial reads. Mitochondrial read
 fractions are only high in particularly low count cells with few detected genes.
-Source: <a class="reference internal" href="#luecken2019" id="id7"><span>[Luecken2019]</span></a></p>
+Source: <a class="reference internal" href="#luecken2019" id="id6"><span>[Luecken2019]</span></a></p>
 </div>
 <p>The next plot is generated after inferring CNVs. It shows the chromosome heatmap
 separated into malignant and non-malignant and the malignant cells are further divided
 into reference and non-reference Cells. The non-malignant cells should not show CNVs.
 This plot is saved to chromosome_heatmap.png</p>
-<div class="admonition-todo admonition" id="id9">
+<div class="admonition-todo admonition" id="id8">
 <p class="admonition-title">Todo</p>
 <p>Add image of the chromosome heatmap showing separation of malignant and
 non-malignant cells.</p>
 </div>
-<div class="admonition-todo admonition" id="id10">
+<div class="admonition-todo admonition" id="id9">
 <p class="admonition-title">Todo</p>
 <p>umap for each score + umap for malignant/non-malignant cells in CNV space.</p>
 </div>
@@ -427,12 +425,12 @@ non-malignant cells.</p>
 separated into malignant and non-malignant and the malignant cells are further divided
 into reference and non-reference Cells. The non-malignant cells should not show CNVs.
 This plot is saved to chromosome_heatmap.png</p>
-<div class="admonition-todo admonition" id="id11">
+<div class="admonition-todo admonition" id="id10">
 <p class="admonition-title">Todo</p>
 <p>Add image of the chromosome heatmap showing separation of malignant and
 non-malignant cells.</p>
 </div>
-<div class="admonition-todo admonition" id="id12">
+<div class="admonition-todo admonition" id="id11">
 <p class="admonition-title">Todo</p>
 <p>umap for each score + umap for malignant/non-malignant cells in CNV space.</p>
 </div>
@@ -440,7 +438,7 @@ non-malignant cells.</p>
 <p class="admonition-title">Note</p>
 <p>For faster pre-processing plotting can be turned off by setting plot to False.</p>
 </div>
-<div class="admonition-todo admonition" id="id13">
+<div class="admonition-todo admonition" id="id12">
 <p class="admonition-title">Todo</p>
 <p>Are there other useful plots that we want to add here???</p>
 </div>
@@ -450,11 +448,11 @@ non-malignant cells.</p>
 <div role="list" class="citation-list">
 <div class="citation" id="zhang2021" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span>Zhang2021<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a role="doc-backlink" href="#id3">1</a>,<a role="doc-backlink" href="#id6">2</a>)</span>
+<span class="backrefs">(<a role="doc-backlink" href="#id3">1</a>,<a role="doc-backlink" href="#id5">2</a>)</span>
 <p>Zhang, X., Peng, L., Luo, Y. et al. <a class="reference external" href="https://doi.org/10.1038/s41467-021-25539-x">Dissecting esophageal squamous-cell carcinoma ecosystem by single-cell transcriptomic analysis</a>. Nat Commun 12, 5291 (2021).</p>
 </div>
 <div class="citation" id="luecken2019" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">Luecken2019</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">Luecken2019</a><span class="fn-bracket">]</span></span>
 <p>Luecken, M. D., Theis, F. J. <a class="reference external" href="https://doi.org/10.15252/msb.20188746">Current best practices in single-cell RNA-seq analysis: a tutorial</a>. Molecular systems biology, 15(6), e8746 (2019).</p>
 </div>
 </div>
