@@ -11,7 +11,9 @@ class TestQualityControl:
         X = np.array([[1000, 1000, 1000], [500, 1000, 1000], [100, 200, 100], [200, 300, 200]])
         adata = ad.AnnData(X=X)
 
-        adata = quality_control(adata, min_counts=min_count, max_counts=999999, min_genes=0, threshold_mt=100.0)
+        adata = quality_control(
+            adata, min_counts=min_count, max_counts=999999, min_genes=0, threshold_mt=100.0, sample_id="test"
+        )
 
         assert np.greater_equal(adata.X.sum(1), min_count).all()
 
@@ -20,7 +22,9 @@ class TestQualityControl:
         X = np.array([[10000, 1000, 1000], [5000, 2600, 2600], [100, 200, 100], [200, 300, 200]])
         adata = ad.AnnData(X=X)
 
-        adata = quality_control(adata, min_counts=0, max_counts=max_count, min_genes=0, threshold_mt=100.0)
+        adata = quality_control(
+            adata, min_counts=0, max_counts=max_count, min_genes=0, threshold_mt=100.0, sample_id="test"
+        )
         assert np.less_equal(adata.X.sum(1), max_count).all()
 
     @pytest.mark.parametrize("threshold_mt", (45.0, 30.0, 25.0))
@@ -29,7 +33,9 @@ class TestQualityControl:
         adata = ad.AnnData(X)
         adata.var_names = ["MT-gene", "gene"]
 
-        adata = quality_control(adata, min_counts=0, max_counts=999999999, min_genes=0, threshold_mt=threshold_mt)
+        adata = quality_control(
+            adata, min_counts=0, max_counts=999999999, min_genes=0, threshold_mt=threshold_mt, sample_id="test"
+        )
         assert np.less_equal((adata.X[:, 0] / adata.X.sum(1)) * 100.0, threshold_mt).all()
 
     @pytest.mark.parametrize("min_genes", (600, 800))
@@ -40,12 +46,16 @@ class TestQualityControl:
         )
         adata = ad.AnnData(X)
 
-        adata = quality_control(adata, min_counts=0, max_counts=999999999, min_genes=min_genes, threshold_mt=100.0)
+        adata = quality_control(
+            adata, min_counts=0, max_counts=999999999, min_genes=min_genes, threshold_mt=100.0, sample_id="test"
+        )
         assert np.greater_equal(adata.X.sum(1), min_genes).all()
 
     def test_log_counts(self):
         X = np.array([[1000, 1000, 1000], [500, 1000, 1000], [100, 200, 100], [200, 300, 200]])
         adata = ad.AnnData(X=X)
-        adata = quality_control(adata, min_counts=0, max_counts=999999999, min_genes=0, threshold_mt=100.0)
+        adata = quality_control(
+            adata, min_counts=0, max_counts=999999999, min_genes=0, threshold_mt=100.0, sample_id="test"
+        )
         assert "log_counts" in adata.obs.columns
         assert np.allclose(np.exp(adata.obs["log_counts"]), adata.obs["n_counts"].values)

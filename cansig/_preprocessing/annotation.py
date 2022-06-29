@@ -93,7 +93,7 @@ class CellAnnotation:
             adata: annotated data matrix."""
         adata.obs[self._config.malignant_combined] = adata.obs[
             [self._config.malignant_cnv, self._config.malignant_annotation]
-        ].apply(lambda x: self._get_malignant_status(*x), axis=1)
+        ].apply(lambda x: self._combine_annotations(*x), axis=1)
 
     def _get_cluster(self, adata: AnnData) -> Iterable[int]:
         """
@@ -114,13 +114,13 @@ class CellAnnotation:
 
         return cluster
 
-    def _get_malignant_status(self, malignant_cnv, malignant_status):
+    def _combine_annotations(self, malignant_cnv, malignant_celltype):
         if malignant_cnv == self._config.cell_status.malignant:
-            if malignant_status == self._config.cell_status.non_malignant:
+            if malignant_celltype == self._config.cell_status.non_malignant:
                 return self._config.cell_status.undecided
             return self._config.cell_status.malignant
         if malignant_cnv == self._config.cell_status.non_malignant:
-            if malignant_status == self._config.cell_status.non_malignant:
+            if malignant_celltype == self._config.cell_status.non_malignant:
                 return self._config.cell_status.non_malignant
             return self._config.cell_status.undecided
 

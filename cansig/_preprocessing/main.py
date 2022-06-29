@@ -10,6 +10,7 @@ from cansig._preprocessing.quality_control import quality_control
 from cansig._preprocessing.scoring import SignatureScorer
 from cansig._preprocessing.subclonal import Subclonal, SubclonalConfig
 from cansig._preprocessing.utils import check_min_malignant_cells, check_min_reference_cells, load_adatas, pop_adatas
+from cansig._preprocessing.plotting import plot_chromosomal_heatmap
 from cansig.types import Pathlike, ScoringDict, GeneList
 
 
@@ -41,14 +42,16 @@ def preprocessing(
     depth: int = 6,
 ) -> ad.AnnData:
     """
-    This is the pre-processing module of CanSig. For every sample several preprocessing
+    This is the pre-processing module of CanSig. For every batch several preprocessing
     steps are run:
      1. Running of standard quality control for scRNA-seq data.
      2. Calling of CNVs.
-     3. Improving the split of malignant and non-malignant cells based on CNVs.
+     3. Improving the split of malignant and non-malignant cells by clustering cells by
+        CNVs.
      4. INference of subclones based on the CNVs.
-    Finally, all samples are combined in an AnnData. After combining known gene
-    signatures and the cell cycle is scored.
+    In the end, all high quality cells are combined. After combining, known gene
+    signatures are scored only on malignant cells and the cell cycle is scored on all
+    cells.
 
     Args:
         input_adatas: List of AnnDatas or paths to .h5ad files.
@@ -164,6 +167,7 @@ def preprocessing(
 
         adata = quality_control(
             adata,
+            sample_id=adata.obs[batch_id_column][0],
             min_counts=min_counts,
             max_counts=max_counts,
             min_genes=min_genes,
@@ -210,6 +214,17 @@ def preprocessing(
             continue
 
         subclonal.cluster(adata)
+
+        if figure_dir:
+            plot_chromosomal_heatmap(
+                adata,
+                figure_dir=figure_dir,
+                sample_id=adata.obs[batch_id_column][0],
+                subclonal_key=subclonal_config.subclonal_key,
+                malignant_key=annotation_config.malignant_combined,
+                cnv_key=infercnv_config.cnv_key,
+            )
+
         recorder.append(adata)
 
     adata = recorder.concatenate()
