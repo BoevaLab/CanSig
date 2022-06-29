@@ -110,14 +110,14 @@ def preprocessing(
         threshold:
         depth:
 
-    Returns: combined and preprocessed AnnData.
+    Returns:
+        combined and preprocessed AnnData.
 
-    Notes
-    -----
-    See further usage examples in the following tutorials:
+    Notes:
+        See further usage examples in the following tutorials:
 
-    1. :doc:`/preprocessing`
-    2. TODO: add link to colab
+        1. :doc:`/preprocessing`
+        2. TODO: add link to colab
 
     """
     if undetermined_celltypes is None:
