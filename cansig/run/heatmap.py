@@ -100,8 +100,8 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output", type=str, default="heatmap.pdf", help="Generated heatmap name. Default: heatmap.pdf"
     )
-    parser.add_argument("--value-min", type=float, default=1.0, help="Lower value to plot on the heatmap. Default: 0.0")
-    parser.add_argument("--value-max", type=float, default=3.0, help="Upper value to plot on the heatmap. Default: 2.0")
+    parser.add_argument("--value-min", type=float, default=1.0, help="Lower value to plot on the heatmap. Default: 1.0")
+    parser.add_argument("--value-max", type=float, default=3.0, help="Upper value to plot on the heatmap. Default: 3.0")
     parser.add_argument(
         "--pathway-sort-method",
         type=str,

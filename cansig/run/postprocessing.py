@@ -24,7 +24,7 @@ def parse_args():
     parser.add_argument("latents", type=pathlib.Path, help="The path to the directory with integration results.")
     parser.add_argument("--batch", type=str, help="Name of the column with batch (or sample) index.")
     parser.add_argument("--clusters", type=int, help="The number of clusters.", default=5)
-
+    parser.add_argument("--random-seed", type=int, help="Random seed used for clustering.", default=0)
     parser.add_argument(
         "--output",
         type=pathlib.Path,
@@ -199,9 +199,9 @@ def postprocess(
     representations = fs.read_latent_representations(model_dir.latent_representations)
     clustering_algorithm = cluster.LeidenNCluster(cluster_config)
     labels = clustering_algorithm.fit_predict(representations.values)
-
+    labels = pd.Series(labels, dtype="category", index=representations.index)
     # Save the cluster labels
-    fs.save_cluster_labels(labels=labels, index=representations.index, path=output_dir.cluster_labels)
+    fs.save_cluster_labels(labels=labels, path=output_dir.cluster_labels)
 
     # *** Gene Set Enrichment Analysis ***
     # Set up and save GSEA settings
@@ -212,7 +212,8 @@ def postprocess(
     #  Or maybe this should be in the GEX object?
     adata = anndata.read_h5ad(data_path)
     cluster_col = "new-cluster-column"
-    adata.obs[cluster_col] = pd.Categorical(labels)
+    adata = adata[labels.index, :].copy()
+    adata.obs[cluster_col] = labels
 
     # *** Plotting ***
     # by default, plotting is activated with PCA (plot=True), can be disabled by the user
@@ -281,9 +282,9 @@ def main(args):
         batch=args.batch,
         output_dir=args.output,
         gsea_config=gsea.GeneExpressionConfig(gene_sets=args.gene_sets, method=args.dgex_method),
-        cluster_config=cluster.LeidenNClusterConfig(clusters=args.clusters),
+        cluster_config=cluster.LeidenNClusterConfig(clusters=args.clusters, random_state=args.random_seed),
         plotting_config=plotting.ScatterPlotConfig(
-            dim_red=args.dim_reduction, signature_columns=args.sigcols, batch_columns=args.batch
+            batch_column=args.batch, dim_red=args.dim_reduction, signature_columns=args.sigcols
         ),
         plot=(not args.disable_plots),
         savesig=(not args.disable_signatures),
