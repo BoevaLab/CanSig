@@ -43,7 +43,7 @@ def test_integation(monkeypatch):
 
     adata = preprocessing(
         adatas,
-        reference_groups=[("good")],
+        reference_groups=[("good",)],
         malignant_celltypes=["evil"],
         gene_order=gene_anno,
         celltype_column="celltype",
