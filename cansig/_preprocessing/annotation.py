@@ -172,7 +172,7 @@ class CellAnnotation:
 
         return healthy
 
-    def _get_cluster_leiden(self, adata: AnnData, threshold: float = 0.6, cnv_key: str = "cnv", resolution=5):
+    def _get_cluster_leiden(self, adata: AnnData, threshold: float = 0.6, cnv_key: str = "cnv", resolution: float = 5):
         """
         Returns a list of cells that show no CNVs using leiden clustering. Cells are
         clustered using leiden clustering. For each cluster, all cells in that cluster
