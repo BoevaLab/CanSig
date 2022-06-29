@@ -101,7 +101,6 @@ used for quality control.
                          max_counts=50_000,
                          min_genes=700,
                          threshold_pct_mt_counts=30.,
-                         gene_order=gene_order,
                          scoring_dict=scoring_dict)
 
 
