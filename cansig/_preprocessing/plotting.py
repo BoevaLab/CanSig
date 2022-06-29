@@ -38,7 +38,9 @@ def embeddings_cnv(adata: AnnData) -> None:
 
 
 def qc_plots(adata: AnnData, min_counts: int, max_counts: int, min_genes: int, show: bool = False) -> plt.Figure:
-    """Generates the plots to visualize the quality control step."""
+    """Generates the plots to visualize the quality control step. The idea for this plot
+    is taken from Current best practices in single-cell RNA-seq analysis: a tutorial by
+    Malte D Luecken and Fabian J Theis"""
     sc.pp.calculate_qc_metrics(adata, log1p=False, inplace=True, percent_top=[])
     fig, axs = plt.subplots(2, 2, figsize=(10, 10))
     _total_counts_plot(
