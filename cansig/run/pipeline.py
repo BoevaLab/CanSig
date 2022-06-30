@@ -178,9 +178,20 @@ def create_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def generate_gsea_config(args) -> gsea.GeneExpressionConfig:
+    return gsea.GeneExpressionConfig(
+        gene_sets=args.gene_sets,
+        method=args.dgex_method,
+    )
+
+
 def validate_args(args) -> None:
     if not args.save_intermediate:
         raise NotImplementedError
+
+    # Try to generate a GSEA config.
+    # It has its own validators throwing exceptions.
+    generate_gsea_config(args)
 
 
 def generate_model_configs(args) -> List[models.SCVIConfig]:
@@ -198,13 +209,6 @@ def generate_model_configs(args) -> List[models.SCVIConfig]:
             lst.append(config)
 
     return lst
-
-
-def generate_gsea_config(args) -> gsea.GeneExpressionConfig:
-    return gsea.GeneExpressionConfig(
-        gene_sets=args.gene_sets,
-        method=args.dgex_method,
-    )
 
 
 def generate_plotting_config(args) -> plotting.ScatterPlotConfig:

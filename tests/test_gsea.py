@@ -15,10 +15,15 @@ def test_default_formatter(input_output: Tuple[str, str]) -> None:
     assert out_ == out
 
 
-def test_gmt_validation(tmp_path):
+def test_invalid_gmt(tmp_path):
     path = tmp_path / "wrong.gmt"
     with open(path, "w") as f:
         f.write("This is a wrong GMT file!")
 
     with pytest.raises(pydantic.ValidationError):
         cgsea.GeneExpressionConfig(gene_sets=path)
+
+
+def test_gmt_doesnt_exist():
+    with pytest.raises(pydantic.ValidationError):
+        cgsea.GeneExpressionConfig(gene_sets="this-file-doesnt-exist.gmt")
