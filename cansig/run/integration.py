@@ -1,13 +1,16 @@
 import argparse
 import pathlib
+import logging
 from typing import cast, Protocol, Union
 
 import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 
 import cansig.filesys as fs
+import cansig.logger as clogger
 import cansig.models.api as models
 
+LOGGER = logging.getLogger(__name__)
 DEFAULT_OUTPUT_BASE_PATH = pathlib.Path("./outputs/batch-integration")
 
 
@@ -44,6 +47,10 @@ class Arguments(Protocol):
     def max_epochs(self) -> int:
         raise NotImplementedError
 
+    @property
+    def log(self) -> pathlib.Path:
+        raise NotImplementedError
+
 
 def parse_args() -> Arguments:
     parser = argparse.ArgumentParser()
@@ -54,6 +61,9 @@ def parse_args() -> Arguments:
     parser.add_argument("--model", type=str, default="scvi", choices=["scvi", "cansig"])
     default_output = DEFAULT_OUTPUT_BASE_PATH / fs.get_directory_name()
     parser.add_argument("--output", type=pathlib.Path, help="Output directory.", default=default_output)
+    parser.add_argument(
+        "--log", type=pathlib.Path, help="Where the log file should be saved.", default=pathlib.Path("integration.log")
+    )
 
     args = parser.parse_args()
     return cast(Arguments, args)
@@ -94,6 +104,9 @@ def integrate(
 
 
 def main(args: Arguments) -> None:
+    clogger.configure_logging(args.log)
+
+    LOGGER.info(f"Initializing integration model config for {args.model}...")
     # pytype: disable=attribute-error
     if args.model == "scvi":
         config = models.SCVIConfig(
@@ -113,6 +126,8 @@ def main(args: Arguments) -> None:
     # It's a bit hacky, as we could do that at the initialization stage.
     config.train.max_epochs = args.max_epochs
     integrate(data_path=args.data, config=config, output=args.output)
+
+    LOGGER.info("Run finished.")
 
 
 if __name__ == "__main__":
