@@ -6,11 +6,18 @@ import anndata as ad  # pytype: disable=import-error
 
 def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--expression-file", type=str, help="path to the file containing expressino data.")
+    parser.add_argument("--expression-file", type=str, help="Path to the file containing expression data.")
     parser.add_argument("--observation-file", type=str, help="Name of the column with batch (or sample) index.")
-    parser.add_argument("--filename", type=str, help="name of the file to save")
+    parser.add_argument("--filename", type=str, help="Name of the output file (with or without .h5ad suffix).")
 
     return parser
+
+
+def output_path(raw: str) -> str:
+    if raw.endswith(".h5ad"):
+        return raw
+    else:
+        return f"{raw}.h5ad"
 
 
 def main() -> None:
@@ -23,4 +30,4 @@ def main() -> None:
 
     adata = ad.AnnData(expression_data, obs=observation_data)
 
-    adata.write_h5ad(args.filename + ".h5ad", as_dense="X")
+    adata.write_h5ad(output_path(args.filename), as_dense="X")
