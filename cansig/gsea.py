@@ -6,7 +6,6 @@ from typing import Literal  # pytype: disable=not-supported-yet
 
 import anndata  # pytype: disable=import-error
 import gseapy as gp  # pytype: disable=import-error
-import gseapy.gsea as gseapy_gsea  # pytype: disable=import-error
 import numpy as np
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
@@ -196,6 +195,15 @@ class GeneExpressionAnalysis:
         return pd.concat(gsea_dfs)
 
 
+def _try_to_read_gmt_file(gmt: str):
+    def read_line(line):
+        split = line.strip().split("\t")
+        return (split[0], split[2:])
+
+    with open(gmt) as genesets:
+        dict(read_line(line) for line in genesets.readlines())
+
+
 class GeneExpressionConfig(pydantic.BaseModel):
     method: _Method = pydantic.Field(default="t-test")
     gene_sets: str = pydantic.Field(default="MSigDB_Hallmark_2020")
@@ -204,8 +212,18 @@ class GeneExpressionConfig(pydantic.BaseModel):
 
     @pydantic.validator("gene_sets")
     def looks_as_valid_gmt(cls, v):
-        v = str(v)
-        gseapy_gsea.GSEAbase().parse_gmt(v)
+        gmt = str(v)
+
+        # This is essentially what GSEAPy does to load a file.
+        if gmt.lower().endswith(".gmt"):
+            if not pathlib.Path(gmt).is_file():
+                raise ValueError(f"The GMT path {gmt} does not exist.")
+
+            try:
+                _try_to_read_gmt_file(gmt)
+            except Exception as e:
+                raise ValueError(f"Reading the GMT file {gmt} raised the following exception: {e}")
+
         return v
 
 
@@ -251,7 +269,7 @@ def diff_genes_to_sig(
         n_genes_sig: the signature is defined as the top n_genes_sig most differentially expressed genes
 
     Returns:
-        a dictionnary with signature name as key and a list of genes belonging to the signature as value
+        a dictionary with signature name as key and a list of genes belonging to the signature as value
     """
 
     dict_signatures = {}
