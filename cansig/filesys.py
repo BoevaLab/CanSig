@@ -54,8 +54,8 @@ def read_latent_representations(path: types.Pathlike) -> pd.DataFrame:
     return pd.read_csv(path, index_col=0, header=None)
 
 
-def save_cluster_labels(labels, index, path: types.Pathlike) -> None:
-    return pd.DataFrame(labels, index=index).to_csv(path, index=True, header=False)
+def save_cluster_labels(labels: pd.Series, path: types.Pathlike) -> None:
+    return labels.to_csv(path, index=True, header=False)
 
 
 def read_cluster_labels(path: types.Pathlike) -> pd.DataFrame:

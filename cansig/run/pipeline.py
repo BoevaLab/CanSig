@@ -7,7 +7,7 @@ In the end, produces summary.
 import argparse
 import logging
 import pathlib
-from typing import Iterable, List, Optional, Literal  # pytype: disable=not-supported-yet
+from typing import Iterable, List, Optional, Literal, Union  # pytype: disable=not-supported-yet
 
 import cansig.cluster.api as cluster
 import cansig.filesys as fs
@@ -43,6 +43,13 @@ def create_parser() -> argparse.ArgumentParser:
         type=str,
         default="MSigDB_Hallmark_2020",
         help="Gene sets database to be used. Alternatively, the path to a GMT file.",
+    )
+    parser.add_argument(
+        "--model",
+        type=str,
+        default="scvi",
+        choices=["scvi", "cansig"],
+        help="Which models is used for dataset integration.",
     )
     parser.add_argument(
         "--dgex-method",
@@ -117,7 +124,7 @@ def create_parser() -> argparse.ArgumentParser:
         help="a flag used when the user does not want the signatures to be saved",
     )
     parser.add_argument(
-        "--ngenessig",
+        "--n-genessig",
         type=int,
         help="number of genes to take into consideration as a signature to rescore \
              the cells according to de novo found signatures",
@@ -175,6 +182,11 @@ def create_parser() -> argparse.ArgumentParser:
         choices=["median", "mean", "max", "count"],
         help="How the panels (pathways) should be sorted. Default: by highest mean NES across the runs.",
     )
+
+    # CanSig Args
+    parser.add_argument("--n-latent-batch-effect", type=int, default=5)
+    parser.add_argument("--n-latent-cnv", type=int, default=10)
+
     return parser
 
 
@@ -194,18 +206,32 @@ def validate_args(args) -> None:
     generate_gsea_config(args)
 
 
-def generate_model_configs(args) -> List[models.SCVIConfig]:
+def generate_model_configs(args) -> List[Union[models.SCVIConfig, models.CanSigConfig]]:
     lst = []
     for seed in range(args.model_runs):
         for dim in args.dimensions:
-            config = models.SCVIConfig(
-                batch=args.batch,
-                n_latent=dim,
-                random_seed=seed,
-                train=_scvi.TrainConfig(max_epochs=args.max_epochs),
-                continuous_covariates=args.continuous_covariates,
-                discrete_covariates=args.discrete_covariates,
-            )
+            if args.model == "scvi":
+                config = models.SCVIConfig(
+                    batch=args.batch,
+                    n_latent=dim,
+                    random_seed=seed,
+                    train=_scvi.TrainConfig(max_epochs=args.max_epochs),
+                    continuous_covariates=args.continuous_covariates,
+                    discrete_covariates=args.discrete_covariates,
+                )
+            elif args.model == "cansig":
+                config = models.CanSigConfig(
+                    batch=args.batch,
+                    n_latent=dim,
+                    n_latent_batch_effect=args.n_latent_batch_effect,
+                    n_latent_cnv=args.n_latent_cnv,
+                    random_seed=seed,
+                    train=_scvi.TrainConfig(max_epochs=args.max_epochs),
+                    continuous_covariates=args.continuous_covariates,
+                    discrete_covariates=args.discrete_covariates,
+                )
+            else:
+                raise NotImplementedError(f"Model {args.model} not implemented.")
             lst.append(config)
 
     return lst
@@ -307,7 +333,7 @@ def main() -> None:
                 batch=args.batch,
                 plot=(not args.disable_plots),
                 savesig=(not args.disable_signatures),
-                n_genes_sig=args.ngenessig,
+                n_genes_sig=args.n_genessig,
                 corr_method=args.corrmethod,
                 diffcnv=args.diffcnv,
                 subclonalcnv=args.subclonalcnv,

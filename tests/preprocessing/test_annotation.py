@@ -51,7 +51,7 @@ class TestCellAnnotation:
         ],
     )
     def test_get_malignant(self, cnv, annotation, expected, cell_annotater):
-        assert cell_annotater._get_malignant_status(cnv, annotation) == expected
+        assert cell_annotater._combine_annotations(cnv, annotation) == expected
 
     @pytest.mark.parametrize(
         "celltype,expected",

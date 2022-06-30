@@ -5,6 +5,7 @@ import anndata as ad  # pytype: disable=import-error
 import numpy as np
 import scanpy as sc  # pytype: disable=import-error
 
+from cansig._preprocessing.plotting import qc_plots, save_fig
 from cansig.types import Pathlike
 
 _LOGGER = logging.Logger(__name__)
@@ -12,6 +13,7 @@ _LOGGER = logging.Logger(__name__)
 
 def quality_control(
     adata: ad.AnnData,
+    sample_id: str,
     min_counts: int = 1500,
     max_counts: int = 50000,
     min_genes: int = 700,
@@ -34,6 +36,9 @@ def quality_control(
     _LOGGER.info(f"Stating qc with {adata.n_obs} cells.")
     adata.var["mt"] = adata.var_names.str.startswith("MT-")
     sc.pp.calculate_qc_metrics(adata, qc_vars=["mt"], percent_top=None, log1p=False, inplace=True)
+    if figure_dir:
+        fig = qc_plots(adata, min_counts=min_counts, max_counts=max_counts, min_genes=min_genes)
+        save_fig(fig, figure_dir, sample_id=sample_id, name="pc_plot")
     raw_cells = adata.n_obs
     sc.pp.filter_cells(adata, min_counts=min_counts)
     sc.pp.filter_cells(adata, max_counts=max_counts)

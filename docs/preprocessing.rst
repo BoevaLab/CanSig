@@ -1,7 +1,7 @@
 .. _preprocessing:
 
-Preprocessing tutorial
-======================
+Preprocessing
+=============
 
 The pre-processing module of CanSig consists of multiple steps.
 In the first step, we apply standard quality control measures.
@@ -60,21 +60,28 @@ Preprocessing
 -------------
 Before we can start with the preprocessing, we need to define which cell types are
 considered as malignant or undetermined. The remaining cell types will be considered as
-non-malignant. Furthermore, we need to define which cell types are used as reference for
-InferCNV. These are typically non-malignant cells representing a variety of different
-cell types. For more details, see `InferCNV <https://github.com/broadinstitute/inferCNV/wiki>`_.
+non-malignant.
 
 .. code-block:: python
 
     malignant_celltypes = ["Epi"]
     undetermined_celltypes = ["Undetermined"]
-    reference_celltypes = ["Pericytes",
-                           "Bcells",
-                           "FRC",
-                           "Endothelial",
-                           "Fibroblasts",
-                           "Myeloid",
-                           "Tcells"]
+
+
+Furthermore, we need to define groups of cell types that are used as
+references in InferCNV. A reference groups is a tuple containing non-malignant cells
+types that show similar gene expression. For more details,
+see `InferCNV <https://github.com/broadinstitute/inferCNV/wiki>`_.
+
+For our example, we define the following reference groups.
+
+.. code-block:: python
+
+    reference_groups = [("Pericytes", "Fibroblasts"),
+                           ("Bcells",),
+                           ("FRC", "Endothelial"),
+                           ("Myeloid",),
+                           ("Tcells",),]
 
 Now, we can run preprocessing by importing the function and defining the thresholds
 used for quality control.
@@ -88,36 +95,34 @@ used for quality control.
                          celltype_column = 'cell_type',
                          malignant_celltypes=malignant_celltypes,
                          undetermined_celltypes=undetermined_celltypes,
-                         reference_celltypes=reference_celltypes,
+                         reference_groups=reference_groups,
+                         gene_order=gene_order,
                          min_counts=1_500,
                          max_counts=50_000,
                          min_genes=700,
                          threshold_pct_mt_counts=30.,
-                         gene_order=gene_order,
-                         scoring_dict=scoring_dict,
-                         figure_dir=None)
+                         scoring_dict=scoring_dict)
 
 
-.. note:: Instead of calling the function with the AnnData objects in memory, we can also
-    provide a list of paths to .h5ad files. This can save memory if many
-    samples are preprocessed. If the data is loaded from memory we have to define
-    a column that contains the batch_id. If the data is loaded from disc and the
+.. note:: Instead of calling the function with a list of AnnData objects, we can also
+    provide a list of paths to .h5ad files. If the data is loaded from memory we have to
+    define a column that contains the batch_id. If the data is loaded from disc and the
     batch_id_column is not already in `adata.obs` it will be set to the filename.
 
-Cells with less than `min_counts` counts or more than `max_counts` counts will be filtered out.
-Furthermore, cells with fewer than `min_genes` genes expressed or with a higher
+Cells with less than `min_counts` counts or more than `max_counts` counts will be
+filtered. Furthermore, cells with fewer than `min_genes` genes expressed or with a higher
 percentage count in mitochondrial genes than `threshold_pct_mt_counts` will also be removed.
 All plots generated during preprocessing will be stored in `figure_dir`. For more detail,
-see preprocessing docs (TODO: add link here).
+on the method, see here.
 
 Outputs
 --------
-The function `preprocessing` returns a single AnnData object containing all the high quality cells
-from the inputted samples.
+The function `preprocessing` returns a single AnnData object containing all the high
+quality cells from the inputted samples.
 
 .. note:: Since the goal of CanSig is to discover shared signatures, we do an inner join
     for the genes. This means only genes present in all samples will be kept in the
-    final AnnData (This behavior can be changed by setting `join` to "outer".).
+    final AnnData.
 
 
 For each cell the following annotations are added in `adata.obs`:
@@ -127,14 +132,12 @@ For each cell the following annotations are added in `adata.obs`:
 - `n_genes`: The number of genes expressed in the cell.
 - `pct_zero_genes`: `n_genes` divided by the number of all genes.
 - `pct_counts_mt`: The counts corresponding to mitochondrial RNA divided by `total_counts`.
-- `malignant_annotation`: Boolean indicating if the cell is considered malignant based on it cell type.
-- `malignant_cnvs`: Boolean indicating if the cell is considered malignant based on its inferred CNV profile.
-- `malignant`: Boolean indicating if the cell is considered malignant based on its celltype and CNV profile.
+- `malignant_celltype`:
+- `malignant_cnvs`:
+- `malignant_combined`:
 
 For more details on the malignant/non-malignant status annotation, see  the Methods section
 of our `paper <https://www.biorxiv.org/content/10.1101/2022.04.14.488324v1>`_.
-
-.. todo:: Do we want to add cell cycle scores? Problem: When different gene names are used?
 
 .. important:: Rare malignant cells might be difficult to annotate. Therefore, we consider
     cells, that show CNVs but are annotated as undetermined, as malignant. However, cells
@@ -214,6 +217,5 @@ This plot is saved to chromosome_heatmap.png
 References
 ----------
 
-.. [Zhang2021] Zhang, X., Peng, L., Luo, Y. et al. Dissecting esophageal squamous-cell carcinoma ecosystem by single-cell transcriptomic analysis. Nat Commun 12, 5291 (2021). https://doi.org/10.1038/s41467-021-25539-x
-
-.. [Luecken2019] Luecken, M. D., Theis, F. J. Current best practices in single-cell RNA-seq analysis: a tutorial. Molecular systems biology, 15(6), e8746 (2019). https://doi.org/10.15252/msb.20188746
+.. [Zhang2021] Zhang, X., Peng, L., Luo, Y. et al. `Dissecting esophageal squamous-cell carcinoma ecosystem by single-cell transcriptomic analysis <https://doi.org/10.1038/s41467-021-25539-x>`_. Nat Commun 12, 5291 (2021).
+.. [Luecken2019] Luecken, M. D., Theis, F. J. `Current best practices in single-cell RNA-seq analysis: a tutorial <https://doi.org/10.15252/msb.20188746>`_. Molecular systems biology, 15(6), e8746 (2019).

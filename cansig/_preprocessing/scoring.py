@@ -1,6 +1,6 @@
 import logging
 import warnings
-from typing import Dict, List, Union, Optional
+from typing import Dict, List, Optional, Tuple
 
 import anndata  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
@@ -134,7 +134,7 @@ class SignatureScorer:
         self.target_sum = target_sum
 
     def score(self, adata: anndata.AnnData):
-        with Normalized(adata, target_sum=self.target_sum):
+        with Normalized(adata):
             self.score_cell_cycle(adata)
 
             if self.scoring_dict is None:
@@ -142,7 +142,11 @@ class SignatureScorer:
             self.score_malignant_cells(adata)
 
     def score_cell_cycle(self, adata: anndata.AnnData) -> None:
-
+        """
+        Scores the cell cycle and adds the `phase` of the cell cycle.
+        Args:
+            adata (AnnData): Annotated data matrix.
+        """
         if self.s_genes and self.g2m_genes:
             # Pandas throws a FutureWarning here.
             with warnings.catch_warnings():
@@ -151,6 +155,11 @@ class SignatureScorer:
             adata.obs["phase"] = adata.obs["phase"].astype("category")
 
     def score_malignant_cells(self, adata: anndata.AnnData) -> None:
+        """
+        Scores the signatures from the scoring dict on just the malignant cells.
+        Args:
+            adata (AnnData): Annotated data matrix.
+        """
         adata_malignant = self.subset_malignant_cells(adata)
         signatures = []
         for name, signature_genes in self.scoring_dict.items():
@@ -162,18 +171,43 @@ class SignatureScorer:
 
     @staticmethod
     def score_signature(adata: anndata.AnnData, gene_list: GeneList, score_name: str) -> None:
+        """
+        Wrapper around scanpy's `sc.tl.score_genes` function to avoid unnecessary warnings.
+        Args:
+            adata (AnnData): Annotated data matrix.
+            gene_list (List[str]): The list of gene names used for score calculation.
+            score_name (str): Name of the field to be added in `.obs`.
+        """
         # Pandas throws a FutureWarning here.
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", FutureWarning)
             sc.tl.score_genes(adata, gene_list=gene_list, score_name=score_name)
 
     def subset_malignant_cells(self, adata: anndata.AnnData) -> anndata.AnnData:
+        """Return a copy of adata just containing the malignant cells.
+
+        Args:
+            adata (AnnData): Annotated data matrix.
+        """
         malignant_idx = adata.obs[self.malignant_key] == self.malignant_status
         bdata = adata[malignant_idx, :].copy()
         return bdata
 
     @staticmethod
-    def update_scoring_dict(scoring_dict: Union[Dict[str, list], None], gene_list: List[str]) -> Optional[ScoringDict]:
+    def update_scoring_dict(scoring_dict: Optional[Dict[str, list]], gene_list: List[str]) -> Optional[ScoringDict]:
+        """
+        Subsets the genes in the scoring dict to the genes in the gene_list. Returns
+        None if None is passed for the scoring dict.
+
+        Args:
+            scoring_dict Optional[Dict[str, list]]: Dictionary containing the name of a
+        signature as key and a list of its associated genes as value.
+            gene_list (List[str]): List of genes used to subset the scoring dict.
+
+        Returns  Optional[Dict[str, list]]:
+        If a scoring dict was passed returns it with the subset of scoring gens in the gene_list else it returns None.
+
+        """
         if scoring_dict is None:
             return None
 
@@ -186,7 +220,10 @@ class SignatureScorer:
         return scoring_dict_subset
 
     @staticmethod
-    def update_cell_cycle_genes(g2m_genes, s_genes, gene_list):
+    def update_cell_cycle_genes(
+        g2m_genes: Optional[List[str]], s_genes: Optional[List[str]], gene_list: List[str]
+    ) -> Tuple[Optional[List[str]], Optional[List[str]]]:
+
         if g2m_genes is None:
             g2m_genes = _DEFAULT_G2M_GENES
         if s_genes is None:

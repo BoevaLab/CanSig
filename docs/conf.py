@@ -26,7 +26,8 @@ copyright = "2022 CanSig team"
 author = "CanSig contributors"
 
 # The full version, including alpha/beta/rc tags
-release = "0.0.1"
+release = ""
+latex_elements = {"releasename": ""}
 
 
 # -- General configuration ---------------------------------------------------
