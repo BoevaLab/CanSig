@@ -6,6 +6,7 @@ from typing import Literal  # pytype: disable=not-supported-yet
 
 import anndata  # pytype: disable=import-error
 import gseapy as gp  # pytype: disable=import-error
+import gseapy.gsea as gseapy_gsea  # pytype: disable=import-error
 import numpy as np
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
@@ -63,7 +64,10 @@ class GeneExpressionAnalysis:
         self.method = method
         self._check_method()
         self.n_diff_genes = n_diff_genes
-        self.gene_sets = gene_sets
+        # GSEAPy implicitly requires the genesets to be a string,
+        #  either representing a valid name in Enrichr database
+        #  or a path. Hence, we need to convert from pathlib's Path to str.
+        self.gene_sets: str = str(gene_sets)
         self.permutation_num = permutation_num
 
     def _check_method(self) -> None:
@@ -194,9 +198,15 @@ class GeneExpressionAnalysis:
 
 class GeneExpressionConfig(pydantic.BaseModel):
     method: _Method = pydantic.Field(default="t-test")
-    gene_sets: _GENESETS = pydantic.Field(default="MSigDB_Hallmark_2020")
+    gene_sets: str = pydantic.Field(default="MSigDB_Hallmark_2020")
     n_diff_genes: Optional[int] = pydantic.Field(default=None)
     permutation_num: int = pydantic.Field(default=100)
+
+    @pydantic.validator("gene_sets")
+    def looks_as_valid_gmt(cls, v):
+        v = str(v)
+        gseapy_gsea.GSEAbase().parse_gmt(v)
+        return v
 
 
 def gex_factory(cluster_name: str, config: GeneExpressionConfig) -> GeneExpressionAnalysis:
