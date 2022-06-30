@@ -1,3 +1,4 @@
+import logging
 from typing import Optional, Literal  # pytype: disable=not-supported-yet
 
 import argparse
@@ -9,8 +10,11 @@ import pandas as pd  # pytype: disable=import-error
 import cansig.cluster.api as cluster
 import cansig.filesys as fs
 import cansig.gsea as gsea
+import cansig.logger as clogger
 import cansig.plotting.plotting as plotting
 import cansig.cnvanalysis.differentialcnvs as cnv
+
+LOGGER = logging.getLogger(__name__)
 
 _TESTTYPE = Literal["mwu", "ttest"]
 _CORRTYPE = Literal["pearson", "spearman"]
@@ -110,6 +114,12 @@ def parse_args():
         help="if computing differential CNVs with user provided CNV array, the path to the .csv containing the CNV information. \
             IMPORTANT: using this flag will automatically disable running the differential CNV on the anndata object",
         default=None,
+    )
+    parser.add_argument(
+        "--log",
+        type=str,
+        help="Generated log file.",
+        default="postprocessing.log",
     )
 
     args = parser.parse_args()
@@ -276,6 +286,9 @@ def postprocess(
 
 
 def main(args):
+    clogger.configure_logging(args.log)
+    LOGGER.info("Starting a postprocessing run...")
+
     postprocess(
         data_path=args.data,
         latents_dir=args.latents,
@@ -296,6 +309,8 @@ def main(args):
         diffcnv_correction=args.diffcnv_correction,
         cnvarray_path=args.cnvarray,
     )
+
+    LOGGER.info(f"Postproccessing run finished. The generated output is in {args.output}.")
 
 
 if __name__ == "__main__":
