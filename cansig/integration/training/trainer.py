@@ -1,15 +1,16 @@
 from typing import Optional, Union
 
 import numpy as np  # pytype: disable=import-error
+
 from cansig.integration._CONSTANTS import REGISTRY_KEYS
 from cansig.integration.base.module import CanSigBaseModule
 from cansig.integration.data.datasplitter import DataSplitter
 from cansig.integration.training.runner import TrainRunner
-from scvi.module.base import BaseModuleClass  # pytype: disable=import-error
-from scvi.train import TrainingPlan  # pytype: disable=import-error
-
 
 # pytype: disable=attribute-error
+from cansig.integration.training.training_plan import CanSigTrainingPlan
+
+
 class UnsupervisedTrainingCanSig:
     """General purpose unsupervised train method."""
 
@@ -17,12 +18,16 @@ class UnsupervisedTrainingCanSig:
 
     def train(
         self,
-        max_epochs: Optional[int] = None,
+        max_epochs: int = 400,
+        cnv_max_epochs=400,
+        batch_effect_max_epochs=400,
         use_gpu: Optional[Union[str, int, bool]] = None,
-        train_size: float = 0.9,
+        train_size: float = 1.0,
         validation_size: Optional[float] = None,
         batch_size: int = 128,
         early_stopping: bool = False,
+        cnv_plan_kwargs: Optional[dict] = None,
+        batch_effect_plan_kwargs: Optional[dict] = None,
         plan_kwargs: Optional[dict] = None,
         **trainer_kwargs,
     ):
@@ -58,13 +63,13 @@ class UnsupervisedTrainingCanSig:
             self.module_batch_effect,
             load_malignant_cells=False,
             data_and_attributes={REGISTRY_KEYS.X_KEY: np.float32, REGISTRY_KEYS.CELLTYPE_KEY: np.float32},
-            max_epochs=max_epochs,
+            max_epochs=batch_effect_max_epochs,
             use_gpu=use_gpu,
             train_size=train_size,
             validation_size=validation_size,
             batch_size=batch_size,
             early_stopping=early_stopping,
-            plan_kwargs=plan_kwargs,
+            plan_kwargs=batch_effect_plan_kwargs,
             **trainer_kwargs,
         )
         self.fill_batch_effect_buffer()
@@ -72,14 +77,13 @@ class UnsupervisedTrainingCanSig:
             self.module_cnv,
             load_malignant_cells=True,
             data_and_attributes={REGISTRY_KEYS.CNV_KEY: np.float32},
-            max_epochs=max_epochs,
+            max_epochs=cnv_max_epochs,
             use_gpu=use_gpu,
             train_size=train_size,
             validation_size=validation_size,
             batch_size=batch_size,
             early_stopping=early_stopping,
-            plan_kwargs=plan_kwargs,
-            **trainer_kwargs,
+            plan_kwargs=cnv_plan_kwargs,
         )
         self.fill_cnv_buffer()
         data_and_attributes = {
@@ -108,7 +112,7 @@ class UnsupervisedTrainingCanSig:
 
     def _train(
         self,
-        module: BaseModuleClass,
+        module: CanSigBaseModule,
         load_malignant_cells: bool,
         data_and_attributes: dict,
         max_epochs: int,
@@ -120,9 +124,6 @@ class UnsupervisedTrainingCanSig:
         plan_kwargs,
         **trainer_kwargs,
     ):
-        if max_epochs is None:
-            n_cells = self.adata.n_obs
-            max_epochs = np.min([round((20000 / n_cells) * 400), 400])
 
         plan_kwargs = plan_kwargs if isinstance(plan_kwargs, dict) else dict()
 
@@ -135,10 +136,12 @@ class UnsupervisedTrainingCanSig:
             use_gpu=use_gpu,
             data_and_attributes=data_and_attributes,
         )
-        training_plan = TrainingPlan(module, **plan_kwargs)
+        training_plan = CanSigTrainingPlan(module, **plan_kwargs)
 
         es = "early_stopping"
+        # pytype: disable=key-error
         trainer_kwargs[es] = early_stopping if es not in trainer_kwargs.keys() else trainer_kwargs[es]
+        # pytype: enable=key-error
         runner = TrainRunner(
             self,
             module,

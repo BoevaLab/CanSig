@@ -4,14 +4,6 @@ from typing import List, Optional
 import anndata
 import scanpy as sc
 from anndata import AnnData
-from cansig._preprocessing.utils import Normalized
-from cansig.integration._CONSTANTS import REGISTRY_KEYS
-from cansig.integration.base.model import RepresentationModel
-from cansig.integration.data.fields import CellTypeField
-from cansig.integration.module._batcheffectvae import VAEBatchEffect
-from cansig.integration.module._cnvvae import VAECNV
-from cansig.integration.module._vae import VAECanSig
-from cansig.integration.training.trainer import UnsupervisedTrainingCanSig
 from scvi._compat import Literal
 from scvi.data import AnnDataManager
 from scvi.data.fields import (
@@ -24,12 +16,22 @@ from scvi.data.fields import (
 from scvi.model.base import BaseModelClass
 from scvi.utils import setup_anndata_dsp
 
+from cansig._preprocessing.utils import Normalized
+from cansig.integration._CONSTANTS import REGISTRY_KEYS
+from cansig.integration.base.model import RepresentationModel
+from cansig.integration.data.fields import CellTypeField
+from cansig.integration.module._batcheffectvae import VAEBatchEffect
+from cansig.integration.module._cnvvae import VAECNV
+from cansig.integration.module._vae import VAECanSig
+from cansig.integration.training.trainer import UnsupervisedTrainingCanSig
+
+
 # pytype: enable=import-error
 
 
 class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
     """
-    single-cell Variational Inference [Lopez18]_.
+    CanSig integration model.
     """
 
     def __init__(
@@ -46,9 +48,16 @@ class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
         dispersion: Literal["gene", "gene-batch", "gene-label", "gene-cell"] = "gene",
         gene_likelihood: Literal["zinb", "nb", "poisson"] = "zinb",
         latent_distribution: Literal["normal", "ln"] = "normal",
+        cnv_model_kwargs=None,
+        batch_effect_model_kwargs=None,
         **model_kwargs,
     ):
         super(CanSig, self).__init__(adata)
+        if cnv_model_kwargs is None:
+            cnv_model_kwargs = {}
+        if batch_effect_model_kwargs is None:
+            batch_effect_model_kwargs = {}
+
         self.subclonal_key = subclonal_key
         self._validate_key(self.subclonal_key, adata)
         self.sample_id_key = sample_id_key
@@ -63,9 +72,12 @@ class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
         use_size_factor_key = REGISTRY_KEYS.SIZE_FACTOR_KEY in self.adata_manager.data_registry
         library_log_means, library_log_vars = None, None
 
-        self.module_cnv = VAECNV(self.summary_stats.n_cnv, n_latent=n_latent_cnv)
+        self.module_cnv = VAECNV(self.summary_stats.n_cnv, n_latent=n_latent_cnv, **cnv_model_kwargs)
         self.module_batch_effect = VAEBatchEffect(
-            self.summary_stats.n_vars, n_latent=n_latent_batch_effect, n_celltype=self.summary_stats.n_celltype
+            self.summary_stats.n_vars,
+            n_latent=n_latent_batch_effect,
+            n_celltype=self.summary_stats.n_celltype,
+            **batch_effect_model_kwargs,
         )
         self.module = VAECanSig(
             n_input=self.summary_stats.n_vars,
@@ -105,24 +117,12 @@ class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
         continuous_covariate_keys: Optional[List[str]] = None,
         **kwargs,
     ):
-        """
-        %(summary)s.
-
-        Parameters
-        ----------
-        %(param_layer)s
-        %(param_batch_key)s
-        %(param_labels_key)s
-        %(param_size_factor_key)s
-        %(param_cat_cov_keys)s
-        %(param_cont_cov_keys)s
-        """
 
         # Here we are saving malignant_key, malignant_cat and non-malignant to the
         # registry to creat subsets later.
         setup_method_args = cls._get_setup_method_args(**locals())
         # We register buffers for the latent representation of the batch effect and
-        # the CNVs. We don't know there size yet because the model is not instantiated,
+        # the CNVs. We don't know their size yet because the model is not instantiated,
         # but we need a placeholder to reference them in the AnnDataManager.
         cls.register_rep_buffers(adata)
         anndata_fields = [
