@@ -1,3 +1,4 @@
+import warnings
 from typing import Optional, Union
 
 import numpy as np  # pytype: disable=import-error
@@ -59,6 +60,7 @@ class UnsupervisedTrainingCanSig:
             Other keyword args for :class:`~scvi.train.Trainer`.
         """
         # TODO currently training parameters are shared across training runs.
+
         self._train(
             self.module_batch_effect,
             load_malignant_cells=False,
@@ -73,6 +75,7 @@ class UnsupervisedTrainingCanSig:
             **trainer_kwargs,
         )
         self.fill_batch_effect_buffer()
+
         self._train(
             self.module_cnv,
             load_malignant_cells=True,
@@ -126,6 +129,12 @@ class UnsupervisedTrainingCanSig:
     ):
 
         plan_kwargs = plan_kwargs if isinstance(plan_kwargs, dict) else dict()
+        if "n_steps_kl_warmup" not in plan_kwargs and "n_epochs_kl_warmup" not in plan_kwargs:
+            if max_epochs < 400:
+                warnings.warn(
+                    f"{max_epochs=} was smaller than n_epochs_kl_warmup. Setting " f"n_epochs_kl_warmup to max_epochs"
+                )
+                plan_kwargs["n_epochs_kl_warmup"] = max_epochs
 
         data_splitter = DataSplitter(
             self.adata_manager,

@@ -89,5 +89,6 @@ html_theme_options = {
             "icon": "fab fa-github-square",
             "type": "fontawesome",
         }
-    ]
+    ],
+    "navigation_depth": 2,
 }

@@ -14,7 +14,6 @@ from scvi.data.fields import (
     ObsmField,
 )
 from scvi.model.base import BaseModelClass
-from scvi.utils import setup_anndata_dsp
 
 from cansig._preprocessing.utils import Normalized
 from cansig.integration._CONSTANTS import REGISTRY_KEYS
@@ -101,14 +100,13 @@ class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
         self.init_params_ = self._get_init_params(locals())
 
     @classmethod
-    @setup_anndata_dsp.dedent
     def setup_anndata(
         cls,
         adata: AnnData,
         malignant_key: str = "malignant_key",
         malignant_cat: str = "malignant",
         non_malignant_cat: str = "non-malignant",
-        cnv_key: str = "X_cnv",
+        cnv_key: str = "cnv",
         layer: Optional[str] = None,
         celltype_key: str = "celltype",
         labels_key: Optional[str] = None,
@@ -131,7 +129,7 @@ class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
             NumericalObsField(REGISTRY_KEYS.SIZE_FACTOR_KEY, size_factor_key, required=False),
             CategoricalJointObsField(REGISTRY_KEYS.CAT_COVS_KEY, categorical_covariate_keys),
             NumericalJointObsField(REGISTRY_KEYS.CONT_COVS_KEY, continuous_covariate_keys),
-            ObsmField(REGISTRY_KEYS.CNV_KEY, cnv_key),
+            ObsmField(REGISTRY_KEYS.CNV_KEY, f"X_{cnv_key}"),
             ObsmField(REGISTRY_KEYS.CNV_BUFFER, REGISTRY_KEYS.CNV_BUFFER),
             ObsmField(REGISTRY_KEYS.BATCH_EFFECT_BUFFER, REGISTRY_KEYS.BATCH_EFFECT_BUFFER),
         ]
