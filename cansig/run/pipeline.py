@@ -12,6 +12,7 @@ from typing import Iterable, List, Optional, Literal, Union  # pytype: disable=n
 import cansig.cluster.api as cluster
 import cansig.filesys as fs
 import cansig.gsea as gsea
+import cansig.logger as clogger
 import cansig.metaanalysis.repr_directory as repdir
 import cansig.plotting.plotting as plotting
 import cansig.models.api as models
@@ -25,7 +26,7 @@ import cansig.run.heatmap as run_heatmap
 _TESTTYPE = Literal["mwu", "ttest"]
 _CORRTYPE = Literal["pearson", "spearman"]
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 def create_parser() -> argparse.ArgumentParser:
@@ -319,6 +320,11 @@ def main() -> None:
     # Create a new directory, storing all the generated results
     multirun_dir = mr.MultirunDirectory(path=args.output, create=True)
 
+    # Configure logger
+    clogger.configure_logging(args.output / "logs.log")
+
+    LOGGER.info(f"Pipeline run starting. Please, do not modify {args.output}...")
+
     # Now for each integration algorithm, we run all specified clusterings.
     # We catch the errors at this stage
     for model_config in generate_model_configs(args):
@@ -342,7 +348,7 @@ def main() -> None:
                 cnvarray_path=args.cnvarray,
             )
         except Exception as e:
-            print(f"Caught exception {type(e)}: {e}.")
+            LOGGER.warning(f"Caught exception {type(e)}: {e}.")
 
     # We have all the data generated, but perhaps some of these are corrupted.
     # Let's filter out these which look valid.
@@ -350,6 +356,7 @@ def main() -> None:
 
     # Now we run the metaanalysis (first generate the heatmap).
 
+    LOGGER.info("Generating heatmap...")
     fig = run_heatmap.generate_heatmap(
         directories,
         n_pathways=args.n_pathways,
@@ -359,7 +366,8 @@ def main() -> None:
     )
     fig.savefig(multirun_dir.path / "heatmap.pdf")
 
-    # to find a representative directory, we first generate a list of HeatmapItems
+    # To find a representative directory, we first generate a list of HeatmapItems
+    LOGGER.info("Finding a representative directory...")
     items = run_heatmap.generate_items(directories)
     chosen_directory = repdir.find_representative_run(
         items=items, directories=directories, settings=repdir.ReprDirectoryConfig()
@@ -367,6 +375,7 @@ def main() -> None:
     repdir.save_chosen_directory(
         chosen_directory=chosen_directory, filepath=multirun_dir.path / "representative-directory.txt"
     )
+    LOGGER.info(f"Pipeline run finished. The generated data is in {args.output}.")
 
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 """Script for running the heatmap."""
 import argparse
+import logging
 from typing import Iterable, List
 from typing import get_args  # pytype: disable=import-error
 
@@ -9,9 +10,13 @@ import pandas as pd  # pytype: disable=import-error
 import cansig.cluster.api as cluster
 import cansig.filesys as fs
 import cansig.gsea as gsea
+import cansig.logger as clogger
 import cansig.metaanalysis.heatmap as hm
 import cansig.models.api as models
 import cansig.multirun as mr
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 def read_directory(
@@ -100,6 +105,9 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output", type=str, default="heatmap.pdf", help="Generated heatmap name. Default: heatmap.pdf"
     )
+    parser.add_argument(
+        "--output-log", type=str, default="heatmap-log.log", help="Logging output. Default: heatmap-log.log"
+    )
     parser.add_argument("--value-min", type=float, default=1.0, help="Lower value to plot on the heatmap. Default: 1.0")
     parser.add_argument("--value-max", type=float, default=3.0, help="Upper value to plot on the heatmap. Default: 3.0")
     parser.add_argument(
@@ -116,6 +124,9 @@ def create_parser() -> argparse.ArgumentParser:
 def main() -> None:
     parser = create_parser()
     args = parser.parse_args()
+    clogger.configure_logging(filename=args.output_log)
+
+    LOGGER.info(f"Starting heatmap run on directory {args.multirun}...")
 
     multirur_dir = mr.MultirunDirectory(args.multirun, create=False)
     assert multirur_dir.valid(), "Multirun directory has invalid format."
@@ -130,6 +141,7 @@ def main() -> None:
         value_max=args.value_max,
     )
     fig.savefig(args.output)
+    LOGGER.info(f"Heatmap saved at {args.output}. Run finished.")
 
 
 if __name__ == "__main__":
