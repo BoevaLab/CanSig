@@ -14,12 +14,14 @@ seaborn
 scikit-learn
 scipy
 scvi-tools
+sphinx
 statsmodels
 protobuf~=3.19.0
 # requirements-dev.txt
 black
 flake8
 pre-commit
+pydata-sphinx-theme
 pytest
 pytest-cov
 pytest-xdist

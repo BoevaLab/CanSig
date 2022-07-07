@@ -61,7 +61,7 @@ At this point you should be able to run the unit test suite:
 Tooling
 ^^^^^^^
 
-As a developer, you will use some tools increasing code quality. You can install them by running
+As a developer, you will use some tools increasing code quality as well as packages used to build the documentation. You can install them by running
 
 .. code-block:: bash
 
@@ -81,6 +81,7 @@ Although docstrings (in Python code) are assembled automatically, high-level doc
 
 Whenever a Pull Request is submitted (but not merged yet), we do a test build.
 Whenever a Pull Request is merged into the ``main`` branch, a new version of the documentation is automatically built and deployed. Both workflows are in ``.github/workflows``.
+(Note that if you want to change the Sphinx theme you will need to modify both workflows as well as the requirements files).
 
 We store the source code of the documentation in the ``docs`` directory. To build it locally, use
 
