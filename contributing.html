@@ -296,7 +296,7 @@ $ <span class="nb">cd</span> CanSig
 </section>
 <section id="tooling">
 <h3>Tooling<a class="headerlink" href="#tooling" title="Permalink to this heading">#</a></h3>
-<p>As a developer, you will use some tools increasing code quality. You can install them by running</p>
+<p>As a developer, you will use some tools increasing code quality as well as packages used to build the documentation. You can install them by running</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install -r requirements-dev.txt
 $ pre-commit install
 </pre></div>
@@ -309,7 +309,8 @@ These code quality checks are applied to every Pull Request via a workflow in th
 <p>We write <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google-style docstrings</a> and high-level documentation (e.g., examples and tutorials, illustrating introduced features) in <code class="docutils literal notranslate"><span class="pre">docs</span></code>.</p>
 <p>Although docstrings (in Python code) are assembled automatically, high-level documentation (including tutorials), needs to be written manually. For this, we use <a class="reference external" href="https://www.sphinx-doc.org">Sphinx</a>  and <a class="reference external" href="https://docutils.sourceforge.io/rst.html">ReStructuredText</a>. For a reference, see e.g., <a class="reference external" href="https://sphinx-tutorial.readthedocs.io/cheatsheet/">this cheatsheet</a>.</p>
 <p>Whenever a Pull Request is submitted (but not merged yet), we do a test build.
-Whenever a Pull Request is merged into the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch, a new version of the documentation is automatically built and deployed. Both workflows are in <code class="docutils literal notranslate"><span class="pre">.github/workflows</span></code>.</p>
+Whenever a Pull Request is merged into the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch, a new version of the documentation is automatically built and deployed. Both workflows are in <code class="docutils literal notranslate"><span class="pre">.github/workflows</span></code>.
+(Note that if you want to change the Sphinx theme you will need to modify both workflows as well as the requirements files).</p>
 <p>We store the source code of the documentation in the <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory. To build it locally, use</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> docs
 $ sphinx-apidoc -o source/ ../cansig
