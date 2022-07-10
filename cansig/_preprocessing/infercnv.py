@@ -54,7 +54,7 @@ class InferCNV:
         adata.var = self.merge_gene_order(adata.var)
         adata.var[self._config.cnv_called] = self.get_cnv_called(adata)
         # Here we subset to just the genes that will be used for InferCNV.
-        bdata = adata[:, adata.var[self._config.cnv_called]]
+        bdata = adata[:, adata.var[self._config.cnv_called]].copy()
 
         with Normalized(bdata):
             chr_position, X_cnv = cnv_base.tl.infercnv(

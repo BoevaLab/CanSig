@@ -21,7 +21,8 @@ class SubclonalConfig(pydantic.BaseModel):
     malignant_status: str
     cluster_key: str = "cansig_cnv_leiden"
     subclonal_key: str = "subclonal"
-    n_cells_per_subclone: int = 50
+    max_subclones: int = 5
+    min_cells_per_subclone: int = 50
     non_malignant_marker: str = "-1"
     silhouette_score_lower_bound: float = 0.0
     resolutions: List[float] = [0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 1]
@@ -45,11 +46,11 @@ class Subclonal:
         """
         malignant_idx = adata.obs[self._config.malignant_key] == self._config.malignant_status
         bdata = adata[malignant_idx, :].copy()
-        n_subclones = bdata.n_obs // self._config.n_cells_per_subclone
+        max_subclones = min(self._config.max_subclones, bdata.n_obs // self._config.min_cells_per_subclone)
         cnv.tl.pca(bdata, use_rep=self._config.cnv_key)
         silscore = self._config.silhouette_score_lower_bound
         cluster_labels = pd.Series("1", index=bdata.obs_names)
-        for n_cluster in range(2, n_subclones + 1):
+        for n_cluster in range(2, max_subclones):
             config = LeidenNClusterConfig(clusters=n_cluster)
             cluster_algo = LeidenNCluster(config)
             try:
