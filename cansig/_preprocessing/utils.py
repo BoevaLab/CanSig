@@ -110,6 +110,6 @@ def _validate_adata(adata: AnnData, n_adata: int):
     # TODO: check for celltype column
 
     count = adata.X.sum(0)
-    count = pd.DataFrame([count], index=[n_adata], columns=adata.var_names)
+    count = pd.DataFrame(np.atleast_2d(count), index=[n_adata], columns=adata.var_names)
 
     return count
