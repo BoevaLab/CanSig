@@ -44,6 +44,7 @@ class NeighborsGraphConfig(pydantic.BaseModel):
 
     n_neighbors: int = pydantic.Field(default=15)
     n_pcs: Optional[int] = pydantic.Field(default=None)
+    use_rep: str = "X"
     knn: bool = pydantic.Field(default=True)
     # TODO(Pawel): Check whether we can support other methods as well.
     method: Literal["umap"] = pydantic.Field(default="umap")
@@ -56,6 +57,7 @@ def _build_neighborhood_graph(data: an.AnnData, config: NeighborsGraphConfig, ra
         data,
         n_neighbors=config.n_neighbors,
         n_pcs=config.n_pcs,
+        use_rep=config.use_rep,
         random_state=random_state,
         method=config.method,
         metric=config.metric,
