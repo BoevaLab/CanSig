@@ -22,7 +22,8 @@ def adatas() -> List[anndata.AnnData]:
 
 class TestAdatas:
     def test_append_concate_adata(self, adatas):
-        adatas, gene_list = load_adatas(adatas, "sample_id")
+        adatas, mean_counts_per_gene = load_adatas(adatas, "sample_id")
+        gene_list = mean_counts_per_gene.index.to_list()
         Xs = [adata[:, gene_list].X.copy() for adata in adatas]
         data = DataRecorder(batch_id_column="sample_id")
         for adata in adatas:

@@ -32,14 +32,15 @@ def preprocessing(
     reference_key: str = "reference",
     window_size: int = 200,
     step: int = 5,
+    threshold: float = 0.1,
     cnv_key: str = "cnv",
     scoring_dict: Optional[ScoringDict] = None,
     g2m_genes: Optional[GeneList] = None,
     s_genes: Optional[GeneList] = None,
     figure_dir: Optional[Pathlike] = None,
     copy: bool = False,
-    threshold: float = 0.6,
-    depth: int = 6,
+    threshold_annotation: float = 0.6,
+    depth_annotation: int = 6,
 ) -> ad.AnnData:
     """
     This is the pre-processing module of CanSig. For every batch several preprocessing
@@ -107,8 +108,8 @@ def preprocessing(
         figure_dir: Path to directory to store figures.
         copy: If True, `input_adatas` remains unchanged. (This is only advised for small
             datasets.)
-        threshold:
-        depth:
+        threshold_annotation:
+        depth_annotation:
 
     Returns:
         combined and preprocessed AnnData.
@@ -131,10 +132,13 @@ def preprocessing(
     infercnv_config = InferCNVConfig(
         step=step,
         window_size=window_size,
+        threshold=threshold,
         cnv_key=cnv_key,
         reference_key=reference_key,
     )
-    annotation_config = AnnotationConfig(cell_status=cell_status_config, depth=depth, threshold=threshold)
+    annotation_config = AnnotationConfig(
+        cell_status=cell_status_config, depth=depth_annotation, threshold=threshold_annotation
+    )
     subclonal_config = SubclonalConfig(
         batch_id_column=batch_id_column,
         cnv_key=cnv_key,
@@ -151,8 +155,9 @@ def preprocessing(
     )
     subclonal = Subclonal(subclonal_config)
 
-    input_adatas, gene_list = load_adatas(input_adatas, batch_id_column)
-    cnv = InferCNV(infercnv_config, gene_order=gene_order, gene_list=gene_list)
+    input_adatas, mean_counts_per_gene = load_adatas(input_adatas, batch_id_column)
+    gene_list = mean_counts_per_gene.index.to_list()
+    cnv = InferCNV(infercnv_config, gene_order=gene_order, mean_counts_per_gene=mean_counts_per_gene)
     signature_scorer = SignatureScorer(
         scoring_dict,
         gene_list,
