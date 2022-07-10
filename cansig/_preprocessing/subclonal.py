@@ -3,7 +3,6 @@ from typing import List
 
 import anndata  # pytype: disable=import-error
 import infercnvpy as cnv  # pytype: disable=import-error
-import numpy as np  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 from sklearn.metrics import silhouette_score  # pytype: disable=import-error
@@ -47,7 +46,7 @@ class Subclonal:
         malignant_idx = adata.obs[self._config.malignant_key] == self._config.malignant_status
         bdata = adata[malignant_idx, :].copy()
         n_subclones = bdata.n_obs // self._config.n_cells_per_subclone
-        cnv.tl.pca(bdata, n_comps=np.min([200, np.min(bdata.shape) - 1]), use_rep=self._config.cnv_key)
+        cnv.tl.pca(bdata, use_rep=self._config.cnv_key)
         silscore = self._config.silhouette_score_lower_bound
         cluster_labels = pd.Series("1", index=bdata.obs_names)
         for n_cluster in range(2, n_subclones + 1):
