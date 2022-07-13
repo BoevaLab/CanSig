@@ -8,7 +8,7 @@ import seaborn as sns  # pytype: disable=import-error
 from anndata import AnnData  # pytype: disable=import-error
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes  # pytype: disable=import-error
 
-from cansig.types import Pathlike
+from cansig.types import Pathlike  # pytype: disable=import-error
 
 FONT_DICT = {"fontweight": "bold"}
 
@@ -69,11 +69,23 @@ def qc_plots(adata: AnnData, min_counts: int, max_counts: int, min_genes: int, s
 
 
 def plot_chromosomal_heatmap(
-    adata: AnnData, figure_dir: Pathlike, sample_id: str, subclonal_key: str, malignant_key: str, cnv_key=None
+    adata: AnnData,
+    figure_dir: Pathlike,
+    sample_id: str,
+    subclonal_key: str,
+    malignant_key: str,
+    malignant_cat: str,
+    cnv_key=None,
 ):
     sc.settings.figdir = Path(figure_dir).joinpath(sample_id)
     cnv.pl.chromosome_heatmap(adata, groupby=malignant_key, use_rep=cnv_key, show=False, save="_malignant.png")
-    cnv.pl.chromosome_heatmap(adata, groupby=subclonal_key, use_rep=cnv_key, show=False, save="_subclonal.png")
+    cnv.pl.chromosome_heatmap(
+        adata[adata.obs[malignant_key] == malignant_cat, :],
+        groupby=subclonal_key,
+        use_rep=cnv_key,
+        show=False,
+        save="_subclonal.png",
+    )
 
 
 def _total_counts_plot(ax: plt.Axes, total_counts: np.ndarray, min_counts: int, max_counts: int):

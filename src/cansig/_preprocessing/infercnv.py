@@ -9,6 +9,7 @@ import pydantic  # pytype: disable=import-error
 from cansig._preprocessing.utils import Normalized  # pytype: disable=import-error
 from cansig.types import Pathlike  # pytype: disable=import-error
 
+
 _LOGGER = logging.Logger(__name__)
 
 

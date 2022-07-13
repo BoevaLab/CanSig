@@ -5,6 +5,7 @@ import anndata as ad  # pytype: disable=import-error
 
 from cansig._preprocessing.utils import DisableLogger  # pytype: disable=import-error
 
+
 _DEFAULT_VARS_TO_DROP = ("n_cells_by_counts", "mean_counts", "pct_dropout_by_counts", "total_counts", "mean", "std")
 
 _DEFAULT_OBS_TO_DROP = ("total_counts", "n_genes_by_counts", "cansig_leiden_cnv")

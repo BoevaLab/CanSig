@@ -1,12 +1,12 @@
 import logging
-from typing import List
 
 import anndata  # pytype: disable=import-error
 import infercnvpy as cnv  # pytype: disable=import-error
-import numpy as np  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 from sklearn.metrics import silhouette_score  # pytype: disable=import-error
+
+from cansig.cluster.leiden import LeidenNClusterConfig, LeidenNCluster  # pytype: disable=import-error
 
 _LOGGER = logging.Logger(__name__)
 
@@ -20,9 +20,9 @@ class SubclonalConfig(pydantic.BaseModel):
     malignant_status: str
     cluster_key: str = "cansig_cnv_leiden"
     subclonal_key: str = "subclonal"
+    max_subclones: int = 5
     non_malignant_marker: str = "-1"
     silhouette_score_lower_bound: float = 0.0
-    resolutions: List[float] = [0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 1]
 
 
 class Subclonal:
@@ -43,22 +43,23 @@ class Subclonal:
         """
         malignant_idx = adata.obs[self._config.malignant_key] == self._config.malignant_status
         bdata = adata[malignant_idx, :].copy()
-
-        cnv.tl.pca(bdata, n_comps=np.min([200, np.min(bdata.shape) - 1]), use_rep=self._config.cnv_key)
-        cnv.pp.neighbors(bdata)
+        cnv.tl.pca(bdata, use_rep=self._config.cnv_key)
         silscore = self._config.silhouette_score_lower_bound
-        cluster = pd.Series("0", index=bdata.obs_names)
-        for res in self._config.resolutions:
-            cnv.tl.leiden(bdata, resolution=res, key_added=self._config.cluster_key)
-            if bdata.obs[self._config.cluster_key].nunique() < 2:
-                s = self._config.silhouette_score_lower_bound
+        cluster_labels = pd.Series("1", index=bdata.obs_names)
+        for n_cluster in range(2, self._config.max_subclones + 1):
+            config = LeidenNClusterConfig(clusters=n_cluster)
+            cluster_algo = LeidenNCluster(config)
+            try:
+                cluster_labels_tmp = cluster_algo.fit_predict(bdata.obsm["X_cnv_pca"])
+            except ValueError as e:
+                print(e)
             else:
-                s = silhouette_score(bdata.obsm[f"X_{self._config.cnv_key}"], bdata.obs[self._config.cluster_key])
-            if s > silscore:
-                silscore = s
-                cluster = bdata.obs[self._config.cluster_key].astype(str)
+                s = silhouette_score(bdata.obsm[f"X_{self._config.cnv_key}"], cluster_labels_tmp)
+                if s > silscore:
+                    silscore = s
+                    cluster_labels = pd.Series(cluster_labels_tmp + 1, index=bdata.obs_names)
 
-        self.assign_subclonal_cluster(adata, cluster)
+        self.assign_subclonal_cluster(adata, cluster_labels)
 
     def assign_subclonal_cluster(self, adata: anndata.AnnData, cluster: pd.Series):
         """Adds the inferred subclones to adata.
@@ -70,5 +71,5 @@ class Subclonal:
         subclonal_key = self._config.subclonal_key
         sample_id = adata.obs[self._config.batch_id_column][0]
         adata.obs[subclonal_key] = self._config.non_malignant_marker
-        adata.obs.loc[cluster.index, subclonal_key] = sample_id + "-" + cluster
+        adata.obs.loc[cluster.index, subclonal_key] = sample_id + "-" + cluster.astype(str)
         adata.obs[subclonal_key] = adata.obs[subclonal_key].astype("category")
