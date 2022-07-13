@@ -227,6 +227,7 @@ def preprocessing(
                 sample_id=adata.obs[batch_id_column][0],
                 subclonal_key=subclonal_config.subclonal_key,
                 malignant_key=annotation_config.malignant_combined,
+                malignant_cat=cell_status_config.malignant,
                 cnv_key=infercnv_config.cnv_key,
             )
 
