@@ -111,8 +111,10 @@ def parse_args():
     parser.add_argument(
         "--cnvarray",
         type=pathlib.Path,
-        help="if computing differential CNVs with user provided CNV array, the path to the .csv containing the CNV information. \
-            IMPORTANT: using this flag will automatically disable running the differential CNV on the anndata object",
+        help="if computing differential CNVs with user provided CNV array, "
+        "the path to the .csv containing the CNV information. "
+        "IMPORTANT: using this flag will automatically disable "
+        "running the differential CNV on the anndata object",
         default=None,
     )
     parser.add_argument(
