@@ -88,7 +88,7 @@ We store the source code of the documentation in the ``docs`` directory. To buil
 .. code-block:: bash
 
    $ cd docs
-   $ sphinx-apidoc -o source/ ../cansig
+   $ sphinx-apidoc -o source/ ../src/cansig
    $ make html
 
 In the ``_build`` directory, you should see ``index.html`` file. Open it with a web-browser of your choice.

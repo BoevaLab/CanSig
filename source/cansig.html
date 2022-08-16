@@ -1,0 +1,1195 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>cansig package &#8212; CanSig  documentation</title>
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
+
+    
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
+
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">CanSig  documentation</p>
+  
+</a>
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="fas fa-bars"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../preprocessing.html">
+  Preprocessing
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../pipeline-advanced.html">
+  Advanced pipeline usage
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../interpretation.html">
+  Data interpretation
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../formatting-data.html">
+  Input data format
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../cansig-for-python-coders.html">
+  CanSig for Pythonists
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../troubleshooting.html">
+  Troubleshooting / Checklist
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../contributing.html">
+  Contributing
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/BoevaLab/CanSig" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
+          
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
+
+          
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+    
+    <div class="toc-item">
+      
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#subpackages">
+   Subpackages
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-cansig.api">
+   cansig.api module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-cansig.filesys">
+   cansig.filesys module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-cansig.gsea">
+   cansig.gsea module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-cansig.logger">
+   cansig.logger module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-cansig.multirun">
+   cansig.multirun module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-cansig.tutorial">
+   cansig.tutorial module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-cansig.types">
+   cansig.types module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-cansig">
+   Module contents
+  </a>
+ </li>
+</ul>
+
+</nav>
+    </div>
+    
+    <div class="toc-item">
+      
+    </div>
+    
+  
+</div>
+
+
+          
+          
+          <div class="bd-content col-12 col-md-9 col-xl-7">
+              
+              <article class="bd-article" role="main">
+                
+  <section id="cansig-package">
+<h1>cansig package<a class="headerlink" href="#cansig-package" title="Permalink to this heading">#</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cansig.cluster.html">cansig.cluster package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cansig.cluster.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.cluster.html#module-cansig.cluster.api">cansig.cluster.api module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.cluster.html#module-cansig.cluster.leiden">cansig.cluster.leiden module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.cluster.html#module-cansig.cluster">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cansig.cnvanalysis.html">cansig.cnvanalysis package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cansig.cnvanalysis.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.cnvanalysis.html#module-cansig.cnvanalysis.differentialcnvs">cansig.cnvanalysis.differentialcnvs module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cansig.integration.html">cansig.integration package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cansig.integration.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cansig.integration.base.html">cansig.integration.base package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.base.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.base.html#module-cansig.integration.base.model">cansig.integration.base.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.base.html#module-cansig.integration.base.module">cansig.integration.base.module module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.base.html#module-cansig.integration.base">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.integration.data.html">cansig.integration.data package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.data.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.data.html#module-cansig.integration.data.datasplitter">cansig.integration.data.datasplitter module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.data.html#module-cansig.integration.data.fields">cansig.integration.data.fields module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.data.html#module-cansig.integration.data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.integration.module.html">cansig.integration.module package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.module.html#module-cansig.integration.module">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.integration.training.html">cansig.integration.training package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.training.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.training.html#module-cansig.integration.training.runner">cansig.integration.training.runner module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.training.html#module-cansig.integration.training.trainer">cansig.integration.training.trainer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.training.html#module-cansig.integration.training">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.integration.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.integration.html#module-cansig.integration.model">cansig.integration.model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.integration.html#module-cansig.integration.utils">cansig.integration.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.integration.html#module-cansig.integration">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cansig.interface.html">cansig.interface package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cansig.interface.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.interface.html#module-cansig.interface.cluster">cansig.interface.cluster module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.interface.html#module-cansig.interface">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cansig.metaanalysis.html">cansig.metaanalysis package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cansig.metaanalysis.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.metaanalysis.html#module-cansig.metaanalysis.heatmap">cansig.metaanalysis.heatmap module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.metaanalysis.html#module-cansig.metaanalysis.repr_directory">cansig.metaanalysis.repr_directory module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.metaanalysis.html#module-cansig.metaanalysis">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cansig.models.html">cansig.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cansig.models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.models.html#module-cansig.models.api">cansig.models.api module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.models.html#module-cansig.models.scvi">cansig.models.scvi module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.models.html#module-cansig.models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cansig.plotting.html">cansig.plotting package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cansig.plotting.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.plotting.html#module-cansig.plotting.plotting">cansig.plotting.plotting module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cansig.run.html">cansig.run package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run.download">cansig.run.download module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run.integration">cansig.run.integration module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run.pipeline">cansig.run.pipeline module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run.postprocessing">cansig.run.postprocessing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="module-cansig.api">
+<span id="cansig-api-module"></span><h2>cansig.api module<a class="headerlink" href="#module-cansig.api" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="module-cansig.filesys">
+<span id="cansig-filesys-module"></span><h2>cansig.filesys module<a class="headerlink" href="#module-cansig.filesys" title="Permalink to this heading">#</a></h2>
+<p>This module controls the directory structure used to save the results.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.filesys.IntegrationDir">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.filesys.</span></span><span class="sig-name descname"><span class="pre">IntegrationDir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.filesys.IntegrationDir" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="cansig.filesys.html#cansig.filesys.StructuredDir" title="cansig.filesys.StructuredDir"><code class="xref py py-class docutils literal notranslate"><span class="pre">StructuredDir</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.filesys.IntegrationDir.MODEL">
+<span class="sig-name descname"><span class="pre">MODEL</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'integration-settings.json'</span></em><a class="headerlink" href="#cansig.filesys.IntegrationDir.MODEL" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.filesys.IntegrationDir.REPRESENTATIONS">
+<span class="sig-name descname"><span class="pre">REPRESENTATIONS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'latent-representations.csv'</span></em><a class="headerlink" href="#cansig.filesys.IntegrationDir.REPRESENTATIONS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.IntegrationDir.integration_settings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">integration_settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.IntegrationDir.integration_settings" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.IntegrationDir.latent_representations">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">latent_representations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.IntegrationDir.latent_representations" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.filesys.IntegrationDir.valid">
+<span class="sig-name descname"><span class="pre">valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cansig.filesys.IntegrationDir.valid" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.filesys.</span></span><span class="sig-name descname"><span class="pre">PostprocessingDir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.filesys.PostprocessingDir" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="cansig.filesys.html#cansig.filesys.StructuredDir" title="cansig.filesys.StructuredDir"><code class="xref py py-class docutils literal notranslate"><span class="pre">StructuredDir</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.CELL_SCORE_FILE">
+<span class="sig-name descname"><span class="pre">CELL_SCORE_FILE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cells-score-denovo-signature.csv'</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.CELL_SCORE_FILE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.CLUSTER_SETTINGS">
+<span class="sig-name descname"><span class="pre">CLUSTER_SETTINGS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cluster-settings.json'</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.CLUSTER_SETTINGS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.DCNV_FILE">
+<span class="sig-name descname"><span class="pre">DCNV_FILE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'differential-cnvs.csv'</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.DCNV_FILE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.GSEA_SETTINGS">
+<span class="sig-name descname"><span class="pre">GSEA_SETTINGS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gsea-settings.json'</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.GSEA_SETTINGS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.INTEGRATION_SETTINGS">
+<span class="sig-name descname"><span class="pre">INTEGRATION_SETTINGS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'integration-settings.json'</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.INTEGRATION_SETTINGS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.LABELS">
+<span class="sig-name descname"><span class="pre">LABELS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cluster-labels.csv'</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.LABELS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.SIGNATURE_SETTINGS">
+<span class="sig-name descname"><span class="pre">SIGNATURE_SETTINGS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'signatures'</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.SIGNATURE_SETTINGS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.SIG_CORRELATION_FILE">
+<span class="sig-name descname"><span class="pre">SIG_CORRELATION_FILE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'denovo-signature-correlation.csv'</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.SIG_CORRELATION_FILE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.cell_score_output">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cell_score_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.cell_score_output" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.cluster_labels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cluster_labels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.cluster_labels" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.cluster_settings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cluster_settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.cluster_settings" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.dcnv_output">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dcnv_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.dcnv_output" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.gsea_output">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gsea_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.gsea_output" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.gsea_settings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gsea_settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.gsea_settings" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.integration_settings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">integration_settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.integration_settings" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.make_sig_dir">
+<span class="sig-name descname"><span class="pre">make_sig_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cansig.filesys.PostprocessingDir.make_sig_dir" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.scatter_output">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scatter_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.scatter_output" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.sig_correlation_output">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sig_correlation_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.sig_correlation_output" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.signature_output">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">signature_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.filesys.PostprocessingDir.signature_output" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.filesys.PostprocessingDir.valid">
+<span class="sig-name descname"><span class="pre">valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cansig.filesys.PostprocessingDir.valid" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.filesys.StructuredDir">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.filesys.</span></span><span class="sig-name descname"><span class="pre">StructuredDir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.filesys.StructuredDir" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.filesys.StructuredDir.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.filesys.StructuredDir.create" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.filesys.StructuredDir.valid">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">valid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cansig.filesys.StructuredDir.valid" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.filesys.get_directory_name">
+<span class="sig-prename descclassname"><span class="pre">cansig.filesys.</span></span><span class="sig-name descname"><span class="pre">get_directory_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#cansig.filesys.get_directory_name" title="Permalink to this definition">#</a></dt>
+<dd><p>A string representing a unique name for the run.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.filesys.get_file">
+<span class="sig-prename descclassname"><span class="pre">cansig.filesys.</span></span><span class="sig-name descname"><span class="pre">get_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_or_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="headerlink" href="#cansig.filesys.get_file" title="Permalink to this definition">#</a></dt>
+<dd><p>If the specified file is a directory, checks if there is a unique
+file ending with <cite>ext</cite> inside it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>file_or_dir</cite> if it is a regular file, otherwise the unique file
+with extension <cite>ext</cite> inside
+<cite>ext</cite>: suffix, e.g. “.csv”, or “.txt”</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong><strong>, </strong><strong>if the file doesn't exist</strong> – </p></li>
+<li><p><strong>FileExistsError</strong><strong>, </strong><strong>if multiple files inside file_or_dir have</strong> – matching extension <cite>ext</cite></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.filesys.read_cluster_labels">
+<span class="sig-prename descclassname"><span class="pre">cansig.filesys.</span></span><span class="sig-name descname"><span class="pre">read_cluster_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.filesys.read_cluster_labels" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.filesys.read_latent_representations">
+<span class="sig-prename descclassname"><span class="pre">cansig.filesys.</span></span><span class="sig-name descname"><span class="pre">read_latent_representations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.filesys.read_latent_representations" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.filesys.read_settings">
+<span class="sig-prename descclassname"><span class="pre">cansig.filesys.</span></span><span class="sig-name descname"><span class="pre">read_settings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_Settings</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Settings</span></span></span><a class="headerlink" href="#cansig.filesys.read_settings" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.filesys.save_cluster_labels">
+<span class="sig-prename descclassname"><span class="pre">cansig.filesys.</span></span><span class="sig-name descname"><span class="pre">save_cluster_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.filesys.save_cluster_labels" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.filesys.save_latent_representations">
+<span class="sig-prename descclassname"><span class="pre">cansig.filesys.</span></span><span class="sig-name descname"><span class="pre">save_latent_representations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">representations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.filesys.save_latent_representations" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.filesys.save_settings">
+<span class="sig-prename descclassname"><span class="pre">cansig.filesys.</span></span><span class="sig-name descname"><span class="pre">save_settings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BaseModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.filesys.save_settings" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-cansig.gsea">
+<span id="cansig-gsea-module"></span><h2>cansig.gsea module<a class="headerlink" href="#module-cansig.gsea" title="Permalink to this heading">#</a></h2>
+<p>Gene expression analysis utilities.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.gsea.DefaultFormatter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">DefaultFormatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.gsea.DefaultFormatter" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cansig.gsea.IPathwayFormatter" title="cansig.gsea.IPathwayFormatter"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPathwayFormatter</span></code></a></p>
+<p>The default formatter, used to remove underscores
+and split long pathway names into multiple lines.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.gsea.DefaultFormatter.format">
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathway</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#cansig.gsea.DefaultFormatter.format" title="Permalink to this definition">#</a></dt>
+<dd><p>Formats pathway name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pathway</strong> – pathway name</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>formatted pathway name</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">GeneExpressionAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cluster'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'all'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'logreg'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t-test'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wilcoxon'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t-test_overestim_var'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'wilcoxon'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_diff_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_sets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'MSigDB_Hallmark_2020'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permutation_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.gsea.GeneExpressionAnalysis" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Interface to perform the gene expression analysis for Step 2 of the pipeline.</p>
+<p>Performs first differential gene expression analysis and then GSEA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_name</strong> – name of the column in which to find the cluster labels
+in the AnnData object</p></li>
+<li><p><strong>group_names</strong> – clusters to perform the analysis for, default is all,
+else iterable of valid names of the clusters</p></li>
+<li><p><strong>method</strong> – name of the method to use for differential analysis,
+see “Bias, robustness and scalability in single-cell differential expression
+analysis” Soneson &amp; Robinson for more info on the choice</p></li>
+<li><p><strong>n_diff_genes</strong> – number of differentially expressed genes for every cluster
+to keep for further analysis</p></li>
+<li><p><strong>gene_sets</strong> – gene set to perform the GSEA on. Can be a string if valid
+in the ENRICHR API.
+Otherwise, it can be a path to the .gmt file downloaded from the MSigDB site</p></li>
+<li><p><strong>permutation_num</strong> – number of permutations computed in GSEA.
+Lower reduces the computational complexity,
+higher leads to more robust results.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Note: if using default settings for gene_sets, you need to have internet connection to run GSEA!</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionAnalysis.diff_gex">
+<span class="sig-name descname"><span class="pre">diff_gex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.gsea.GeneExpressionAnalysis.diff_gex" title="Permalink to this definition">#</a></dt>
+<dd><p>Computes the differential gene expression between cluster groups</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>adata</strong> – AnnData object containing the clustering labels and gene counts in X</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>dictionary with cluster label as key and</dt><dd><p>differential gene expression results as value, with genes
+ordered according to their z scores, and the p values and
+FDR corrected p values</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>gene_order</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionAnalysis.perform_gsea">
+<span class="sig-name descname"><span class="pre">perform_gsea</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diff_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.gsea.GeneExpressionAnalysis.perform_gsea" title="Permalink to this definition">#</a></dt>
+<dd><p>Performs the gene set enrichment analysis for every cluster group using pre-ranked
+differentially expressed genes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the clustering labels and</p></li>
+<li><p><strong>gene counts in X</strong></p></li>
+<li><p><strong>diff_genes</strong> – dictionary with cluster label as key and a</p></li>
+<li><p><strong>pd.DataFrame containing the</strong></p></li>
+<li><p><strong>n_diff_genes most overexpressed genes ranked by z score</strong></p></li>
+<li><p><strong>in the corresponding cluster</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>pd.DataFrame containing the result of GSEA</dt><dd><p>on all clusters</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>gsea_df</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>the columns of gsea_df are the classical GSEA
+columns ie</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>‘es’ (enrichment score),</p></li>
+<li><p>‘nes’ (normalized_layer enrichemnt score)</p></li>
+<li><p>‘pval’ (p value)</p></li>
+<li><p>‘fdr’ (FDR Benjamini Hochberg corrected p value)</p></li>
+<li><p>‘geneset_size’ (size of the geneset of the term)</p></li>
+<li><p>‘matched_size’ (size of the genes of the geneset</p></li>
+</ul>
+<p>found in those studied)
+- ‘genes’ (list of genes matched)
+- ‘ledge_genes’ (leading edge genes - see GSEA doc)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Additionally we add the column</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>‘genes_for_scoring’ (list of the genes that are</dt><dd><p>positively ranked in our
+dataset and matched to the term that we will
+use for scoring)</p>
+</dd>
+</dl>
+</li>
+<li><p>‘cluster’ (the cluster for which these results were found)</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<p>Note: if using default settings for gene_sets, you need to have internet connection!</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">GeneExpressionConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'logreg'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t-test'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wilcoxon'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t-test_overestim_var'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'t-test'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_sets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'MSigDB_Hallmark_2020'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_diff_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permutation_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.gsea.GeneExpressionConfig" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionConfig.gene_sets">
+<span class="sig-name descname"><span class="pre">gene_sets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#cansig.gsea.GeneExpressionConfig.gene_sets" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionConfig.looks_as_valid_gmt">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">looks_as_valid_gmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.gsea.GeneExpressionConfig.looks_as_valid_gmt" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionConfig.method">
+<span class="sig-name descname"><span class="pre">method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'logreg'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t-test'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wilcoxon'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t-test_overestim_var'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.gsea.GeneExpressionConfig.method" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionConfig.n_diff_genes">
+<span class="sig-name descname"><span class="pre">n_diff_genes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.gsea.GeneExpressionConfig.n_diff_genes" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionConfig.permutation_num">
+<span class="sig-name descname"><span class="pre">permutation_num</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.gsea.GeneExpressionConfig.permutation_num" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.gsea.IGSEADataFrameSummarizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">IGSEADataFrameSummarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.gsea.IGSEADataFrameSummarizer" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
+<p>Interface for dataframe summarizers:
+we run GSEA in the “one cluster against the rest”
+fashion.
+Hence, for every cluster we have a lot of pathways and every
+pathway may appear in different clusterings.
+We have something like multiple comparisons problem, so we need
+to summarize it, probably in a somewhat conservative manner.
+A summary is a list of pathways together with some “goodness” score to be visualised in the heatmap.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.gsea.IGSEADataFrameSummarizer.summarize">
+<span class="sig-name descname"><span class="pre">summarize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.gsea.IGSEADataFrameSummarizer.summarize" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> – our outputted GSEA dataframe</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of tuples (pathway name, some numeric score)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.gsea.IPathwayFormatter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">IPathwayFormatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.gsea.IPathwayFormatter" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
+<p>Interface for formatters used to adjust pathway names.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.gsea.IPathwayFormatter.format">
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathway</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#cansig.gsea.IPathwayFormatter.format" title="Permalink to this definition">#</a></dt>
+<dd><p>Formats pathway name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pathway</strong> – pathway name</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>formatted pathway name</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.gsea.MaxNESFDRSummarizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">MaxNESFDRSummarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q_value_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.gsea.MaxNESFDRSummarizer" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cansig.gsea.IGSEADataFrameSummarizer" title="cansig.gsea.IGSEADataFrameSummarizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">IGSEADataFrameSummarizer</span></code></a></p>
+<p>This summarizer calculates the maximum NES and maximum FDR (q-value) across
+all clusterings.
+Then returns only the pathways with maximum FDR across all clusterings smaller than
+a given threshold and positive NES.
+The returned score is (maximum among all clusterings) NES.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.gsea.MaxNESFDRSummarizer.summarize">
+<span class="sig-name descname"><span class="pre">summarize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.gsea.MaxNESFDRSummarizer.summarize" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> – our outputted GSEA dataframe</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of tuples (pathway name, some numeric score)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.gsea.diff_genes_to_sig">
+<span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">diff_genes_to_sig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diff_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_genes_sig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.gsea.diff_genes_to_sig" title="Permalink to this definition">#</a></dt>
+<dd><p>Transforms results from the differential gene expression analysis into a signature dictionnary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>diff_genes</strong> – a dict containing the results of the differential gene expression as computed
+in <cite>diff_gex</cite></p></li>
+<li><p><strong>n_genes_sig</strong> – the signature is defined as the top n_genes_sig most differentially expressed genes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a dictionary with signature name as key and a list of genes belonging to the signature as value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.gsea.genes_to_string">
+<span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">genes_to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">';'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#cansig.gsea.genes_to_string" title="Permalink to this definition">#</a></dt>
+<dd><p>Joins a list of strings</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.gsea.gex_factory">
+<span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">gex_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.gsea.GeneExpressionConfig" title="cansig.gsea.GeneExpressionConfig"><span class="pre">GeneExpressionConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cansig.gsea.GeneExpressionAnalysis" title="cansig.gsea.GeneExpressionAnalysis"><span class="pre">GeneExpressionAnalysis</span></a></span></span><a class="headerlink" href="#cansig.gsea.gex_factory" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.gsea.save_signatures">
+<span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">save_signatures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diff_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.gsea.save_signatures" title="Permalink to this definition">#</a></dt>
+<dd><p>Saves the signatures associated with each cluster as the differential expression
+analysis</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>diff_genes</strong> – a dict containing the results of the differential gene expression as computed
+in <cite>diff_gex</cite></p></li>
+<li><p><strong>res_dir</strong> – path to the directory in which to save the signatures</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>diff_gex</cite>, function used to perform the differential gene expression</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.gsea.score_signature">
+<span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">score_signature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dict_signatures</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_score_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig_correlation_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corr_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pearson'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'spearman'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pearson'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.gsea.score_signature" title="Permalink to this definition">#</a></dt>
+<dd><p>Scores all cells present in the Anndata object using the uncovered de novo signatures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – Anndata object inputted at the beginning of the pipeline</p></li>
+<li><p><strong>dict_signatures</strong> – a dictionnary containing the signature name as key and a list of genes</p></li>
+<li><p><strong>belonging to the signature as value</strong></p></li>
+<li><p><strong>cell_score_file</strong> – path to the file to save the cell scores</p></li>
+<li><p><strong>sig_correlation_file</strong> – path to the file to save the correlation between signatures</p></li>
+<li><p><strong>corr_method</strong> – can be either pearson or spearman, the method used to compute the correlation between</p></li>
+<li><p><strong>the found signatures</strong></p></li>
+<li><p><strong>save_score</strong> – whether to save the cell scores and the correlation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a dataframe containing the cells scored according to the signatures in dict_signatures</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>diff_gex</cite>, function used to perform the differential gene expression</p>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-cansig.logger">
+<span id="cansig-logger-module"></span><h2>cansig.logger module<a class="headerlink" href="#module-cansig.logger" title="Permalink to this heading">#</a></h2>
+<p>Setting up logger. Based on Hydra configuration.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.logger.configure_logging">
+<span class="sig-prename descclassname"><span class="pre">cansig.logger.</span></span><span class="sig-name descname"><span class="pre">configure_logging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.logger.configure_logging" title="Permalink to this definition">#</a></dt>
+<dd><p>Configures logging. Logs will be streamed to the standard output and saved to <cite>filename</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.logger.default_config">
+<span class="sig-prename descclassname"><span class="pre">cansig.logger.</span></span><span class="sig-name descname"><span class="pre">default_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#cansig.logger.default_config" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates a dictionary config for <cite>logging.config.dictConfig</cite>.</p>
+<p>The logs will be streamed to the standard output and saved to <cite>filename</cite>.</p>
+</dd></dl>
+
+</section>
+<section id="module-cansig.multirun">
+<span id="cansig-multirun-module"></span><h2>cansig.multirun module<a class="headerlink" href="#module-cansig.multirun" title="Permalink to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.multirun.MultirunDirectory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.multirun.</span></span><span class="sig-name descname"><span class="pre">MultirunDirectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.multirun.MultirunDirectory" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="cansig.filesys.html#cansig.filesys.StructuredDir" title="cansig.filesys.StructuredDir"><code class="xref py py-class docutils literal notranslate"><span class="pre">StructuredDir</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.multirun.MultirunDirectory.analysis_directory">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">analysis_directory</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.multirun.MultirunDirectory.analysis_directory" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.multirun.MultirunDirectory.integration_directories">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">integration_directories</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.multirun.MultirunDirectory.integration_directories" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.multirun.MultirunDirectory.postprocessing_directories">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">postprocessing_directories</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.multirun.MultirunDirectory.postprocessing_directories" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.multirun.MultirunDirectory.valid">
+<span class="sig-name descname"><span class="pre">valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cansig.multirun.MultirunDirectory.valid" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.multirun.get_valid_dirs">
+<span class="sig-prename descclassname"><span class="pre">cansig.multirun.</span></span><span class="sig-name descname"><span class="pre">get_valid_dirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">multirun_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.multirun.MultirunDirectory" title="cansig.multirun.MultirunDirectory"><span class="pre">MultirunDirectory</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.multirun.get_valid_dirs" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-cansig.tutorial">
+<span id="cansig-tutorial-module"></span><h2>cansig.tutorial module<a class="headerlink" href="#module-cansig.tutorial" title="Permalink to this heading">#</a></h2>
+<p>Everything needed for the tutorial.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.tutorial.Dataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.tutorial.</span></span><span class="sig-name descname"><span class="pre">Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md5sum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.tutorial.Dataset" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.tutorial.Dataset.filepath">
+<span class="sig-name descname"><span class="pre">filepath</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#cansig.tutorial.Dataset.filepath" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.tutorial.Dataset.md5sum">
+<span class="sig-name descname"><span class="pre">md5sum</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#cansig.tutorial.Dataset.md5sum" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.tutorial.Dataset.url">
+<span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#cansig.tutorial.Dataset.url" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.tutorial.download_file_to_path">
+<span class="sig-prename descclassname"><span class="pre">cansig.tutorial.</span></span><span class="sig-name descname"><span class="pre">download_file_to_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md5sum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8192</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.tutorial.download_file_to_path" title="Permalink to this definition">#</a></dt>
+<dd><p>This function downloads data from <cite>source_url</cite>
+and saves them to <cite>path</cite>. Compares the MD5 checksum
+with the provided one, to make sure that the file has
+been downloaded properly</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_url</strong> – the URL with the file to be downloaded</p></li>
+<li><p><strong>path</strong> – where the file should be downloaded to. If the file
+already exists there, it will just be read</p></li>
+<li><p><strong>md5sum</strong> – desired MD5 checksum</p></li>
+<li><p><strong>verbose</strong> – whether to print our progress</p></li>
+<li><p><strong>_chunk_size</strong> – controls the size of each data chunk during download</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.tutorial.load_data">
+<span class="sig-prename descclassname"><span class="pre">cansig.tutorial.</span></span><span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preprocessed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">AnnData</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.tutorial.load_data" title="Permalink to this definition">#</a></dt>
+<dd><p>load_data returns the data needed for the tutorial. See the preprocessing tutorial
+for details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>preprocessed</strong> (<em>bool</em>) – set to True to download the already preprocessed data</p></li>
+<li><p><strong>(default</strong> – False).</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns: Tuple containing a list of AnnData objects for the raw data, gene
+annotations and scoring list.</p>
+</dd></dl>
+
+</section>
+<section id="module-cansig.types">
+<span id="cansig-types-module"></span><h2>cansig.types module<a class="headerlink" href="#module-cansig.types" title="Permalink to this heading">#</a></h2>
+<p>Convenient generic type definitions (used in multiple places).</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.types.create_latents">
+<span class="sig-prename descclassname"><span class="pre">cansig.types.</span></span><span class="sig-name descname"><span class="pre">create_latents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latent_codes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Latents</span></span></span><a class="headerlink" href="#cansig.types.create_latents" title="Permalink to this definition">#</a></dt>
+<dd><p>A factory method for <cite>Latents</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>latent_codes</strong> – numpy array, shape (n_cells, k),
+where k is the latent space dimension</p></li>
+<li><p><strong>index</strong> – cell identifiers</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Latents</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.types.read_latents">
+<span class="sig-prename descclassname"><span class="pre">cansig.types.</span></span><span class="sig-name descname"><span class="pre">read_latents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Latents</span></span></span><a class="headerlink" href="#cansig.types.read_latents" title="Permalink to this definition">#</a></dt>
+<dd><p>Reads latent codes from the disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> – path where</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>latent codes</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>write_latents, function used to dump the latent codes to the disk</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.types.write_latents">
+<span class="sig-prename descclassname"><span class="pre">cansig.types.</span></span><span class="sig-name descname"><span class="pre">write_latents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latent_codes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Latents</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.types.write_latents" title="Permalink to this definition">#</a></dt>
+<dd><p>Writes latent codes to the disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>latent_codes</strong> – latent codes</p></li>
+<li><p><strong>path</strong> – path where the latent codes should be dumped</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>read_latents, used to read latent codes from the disk</p>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-cansig">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cansig" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.preprocessing">
+<span class="sig-prename descclassname"><span class="pre">cansig.</span></span><span class="sig-name descname"><span class="pre">preprocessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_adatas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">AnnData</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">malignant_celltypes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_groups</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">celltype_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_id_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">undetermined_celltypes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">700</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_pct_mt_counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_reference_groups</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_reference_cells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_malignant_cells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'reference'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnv_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cnv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoring_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2m_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span></span></span><a class="headerlink" href="#cansig.preprocessing" title="Permalink to this definition">#</a></dt>
+<dd><p>This is the pre-processing module of CanSig. For every batch several preprocessing
+steps are run:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Running of standard quality control for scRNA-seq data.</p></li>
+<li><p>Calling of CNVs.</p></li>
+<li><p>Improving the split of malignant and non-malignant cells by clustering cells by
+CNVs.</p></li>
+<li><p>INference of subclones based on the CNVs.</p></li>
+</ol>
+</div></blockquote>
+<p>In the end, all high quality cells are combined. After combining, known gene
+signatures are scored only on malignant cells and the cell cycle is scored on all
+cells.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul>
+<li><p><strong>input_adatas</strong> – List of AnnDatas or paths to .h5ad files.</p></li>
+<li><p><strong>malignant_celltypes</strong> – List of celltypes that are considered malignant.</p></li>
+<li><p><strong>gene_order</strong> – Either a pandas DataFrame or a path to a .csv file containing the
+gene annotations. The Dataframe needs to contain the gene names as index and
+chromosome, start and end as columns. The chromosome needs to be stored as
+“chr&lt;number of the chromsome that the gene belongs to&gt;”. In the .csv file
+the gene names are expected as the first column. Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">gene_order</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span>            <span class="n">chromosome</span>   <span class="n">start</span>     <span class="n">end</span>
+<span class="go">&gt;&gt;&gt;MIR1302-9.3        chr1   29554   31109</span>
+<span class="go">&gt;&gt;&gt;FAM87B             chr1  752751  755214</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>reference_groups</strong> – List of reference groups. A reference group is a tuple of
+celltypes that will be used together as one reference for infercnv. Cells in
+a reference group should have similar gene expression. Example:
+<cite>[(“T.cells.CD8”, “T.cell.CD8.exhausted”), (“Macrophages”,), …]</cite></p></li>
+<li><p><strong>celltype_column</strong> – column name in <cite>adata.obs</cite> that stores the celltype annotation.</p></li>
+<li><p><strong>batch_id_column</strong> – column name in <cite>adata.obs</cite> that stores the batch id.</p></li>
+<li><p><strong>undetermined_celltypes</strong> – Optional list of celltypes that are considered
+malignant. Cells of undertermined celltype will be separated into malignant
+and non-malignant based on CNVs.</p></li>
+<li><p><strong>min_counts</strong> – Cells with a total count lower than <cite>min_counts</cite> are removed.</p></li>
+<li><p><strong>max_counts</strong> – Cells with a total count higher than <cite>max_counts</cite> are removed.</p></li>
+<li><p><strong>min_genes</strong> – Cells with fewer genes expressed than <cite>min_genes</cite> are removed.</p></li>
+<li><p><strong>threshold_mt</strong> – Cells with a higher percentage of counts in mitochondrial
+genes than the <cite>threshold_mt</cite> are being removed.</p></li>
+<li><p><strong>min_reference_groups</strong></p></li>
+<li><p><strong>min_reference_cells</strong> – If the number of cells in a reference group is less than
+<cite>min_reference_cells</cite> that reference group will not be used for CNV
+inference. If the total number of reference cells (any cell belonging to a
+reference group) in a sample is lower than <cite>min_reference_groups *
+min_reference_cells</cite> the sample will not be added to the finale AnnData.
+Setting this to a lower number will reduce the quality of inferred CNVs but
+might allow to use more samples.</p></li>
+<li><p><strong>min_malignant_cells</strong> – If a sample has less than <cite>min_malignant_cells</cite> it won’t
+be added to the final dataset. Notice: running infercnv requires at least
+one malignant cell. Therefore, this has to be a positive integer.</p></li>
+<li><p><strong>reference_key</strong> – column name in <cite>adata.obs</cite> to store to which reference group
+a cell belongs.</p></li>
+<li><p><strong>window_size</strong> – size of the running window used in infercnv.</p></li>
+<li><p><strong>step</strong> – In infercnv only every <cite>step</cite>-th running window is computed. This saves
+memory and computation time. Set to 1 to compute all windows.</p></li>
+<li><p><strong>cnv_key</strong> – Key under which the cnv matrix will be store. Notice: Infercnv has the
+convention to store the matrix in <cite>adata.obsm[“X_{key_added}”]</cite> and
+additional information in <cite>adata.uns[key_added]</cite>.</p></li>
+<li><p><strong>scoring_dict</strong> – Dictionary containing the name of a signature as key and a list of
+its associated genes as value.</p></li>
+<li><p><strong>g2m_genes</strong> – Optional list of genes to score the G2M phase of the cell cycle. If
+None a default gene list is used.</p></li>
+<li><p><strong>s_genes</strong> – Optional list of genes to score the S phase of the cell cycle. If
+None a default gene list is used.</p></li>
+<li><p><strong>figure_dir</strong> – Path to directory to store figures.</p></li>
+<li><p><strong>copy</strong> – If True, <cite>input_adatas</cite> remains unchanged. (This is only advised for small
+datasets.)</p></li>
+<li><p><strong>threshold</strong></p></li>
+<li><p><strong>depth</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>combined and preprocessed AnnData.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>See further usage examples in the following tutorials:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="../preprocessing.html"><span class="doc">Preprocessing</span></a></p></li>
+<li><p>TODO: add link to colab</p></li>
+</ol>
+</dd></dl>
+
+</section>
+</section>
+
+
+              </article>
+              
+
+              
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              </footer>
+              
+          </div>
+          
+      </div>
+    </div>
+
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
+    &copy; Copyright 2022 CanSig team.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
+</p>
+  </div>
+  
+</div>
+</footer>
+  </body>
+</html>
