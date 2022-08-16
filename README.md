@@ -26,7 +26,7 @@ $ pip install cansig
 More information can be found in the [Getting started](https://boevalab.github.io/CanSig/index.html#getting-started) section of our documentation.
 
 ## Code contributors
-_To open-source the code, Git history was truncated. Hence, GitHub's statistics do not faithfully summarize the contributions. All persons listed below made major contributions to the code._
+To open-source the code, Git history was truncated. Hence, GitHub's statistics do not faithfully summarize the contributions. All persons listed below made major contributions to the code.
 
 - [Josephine Yates](https://github.com/josephineyates)
 - [Florian Barkmann](https://github.com/FlorianBarkmann)
