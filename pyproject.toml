@@ -1,7 +1,7 @@
 [tool.black]
 include = '''
 /(
-     cansig
+     src
    | scripts
    | tests
 )/
@@ -23,7 +23,7 @@ exclude = '''
 '''
 
 [tool.pytest.ini_options]
-addopts = "--cov=cansig"
+addopts = "--cov=src/cansig"
 testpaths = [
     "tests",
 ]
