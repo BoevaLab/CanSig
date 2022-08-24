@@ -14,14 +14,14 @@ from scvi.data.fields import (  # pytype: disable=import-error
 )
 from scvi.model.base import BaseModelClass  # pytype: disable=import-error
 
-from src.cansig._preprocessing.utils import Normalized
-from src.cansig.integration._CONSTANTS import REGISTRY_KEYS
-from src.cansig.integration.base.model import RepresentationModel
-from src.cansig.integration.data.fields import CellTypeField
-from src.cansig.integration.module._batcheffectvae import VAEBatchEffect
-from src.cansig.integration.module._cnvvae import VAECNV
-from src.cansig.integration.module._vae import VAECanSig
-from src.cansig.integration.training.trainer import UnsupervisedTrainingCanSig
+from cansig._preprocessing.utils import Normalized  # pytype: disable=import-error
+from cansig.integration._CONSTANTS import REGISTRY_KEYS  # pytype: disable=import-error
+from cansig.integration.base.model import RepresentationModel  # pytype: disable=import-error
+from cansig.integration.data.fields import CellTypeField  # pytype: disable=import-error
+from cansig.integration.module.batcheffectvae import VAEBatchEffect  # pytype: disable=import-error
+from cansig.integration.module.cnvvae import VAECNV  # pytype: disable=import-error
+from cansig.integration.module.vae import VAECanSig  # pytype: disable=import-error
+from cansig.integration.training.trainer import UnsupervisedTrainingCanSig  # pytype: disable=import-error
 
 
 class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):

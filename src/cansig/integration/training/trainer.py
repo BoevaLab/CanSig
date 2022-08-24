@@ -2,6 +2,7 @@ import warnings
 from typing import Optional, Union, Callable
 
 import numpy as np
+from scvi.model.base import BaseModelClass  # pytype: disable=import-error
 
 from src.cansig.integration._CONSTANTS import REGISTRY_KEYS  # pytype: disable=import-error
 from src.cansig.integration.base.module import CanSigBaseModule  # pytype: disable=import-error
@@ -25,7 +26,7 @@ class UnsupervisedTrainingCanSig:
     def train(
         self,
         max_epochs: int = 400,
-        cnv_max_epochs=400,
+        cnv_max_epochs: int = 400,
         batch_effect_max_epochs=400,
         use_gpu: Optional[Union[str, int, bool]] = None,
         train_size: float = 1.0,
@@ -119,7 +120,7 @@ class UnsupervisedTrainingCanSig:
         )
 
     def _train(
-        self,
+        self: BaseModelClass,
         module: CanSigBaseModule,
         load_malignant_cells: bool,
         data_and_attributes: dict,
@@ -153,9 +154,9 @@ class UnsupervisedTrainingCanSig:
         training_plan = CanSigTrainingPlan(module, **plan_kwargs)
 
         es = "early_stopping"
-        # pytype: disable=key-error
-        trainer_kwargs[es] = early_stopping if es not in trainer_kwargs.keys() else trainer_kwargs[es]
-        # pytype: enable=key-error
+        trainer_kwargs[es] = (
+            early_stopping if es not in trainer_kwargs.keys() else trainer_kwargs[es]  # pytype: disable=key-error
+        )
         runner = TrainRunner(
             self,
             module,
