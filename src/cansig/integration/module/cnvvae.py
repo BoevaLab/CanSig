@@ -1,15 +1,16 @@
-from typing import Iterable, Optional
+from typing import Iterable, Optional, Dict
 
 import torch  # pytype: disable=import-error
 import torch.nn as nn  # pytype: disable=import-error
-from cansig.integration._CONSTANTS import REGISTRY_KEYS  # pytype: disable=import-error
-from cansig.integration.base.module import CanSigBaseModule  # pytype: disable=import-error
 from scvi._compat import Literal  # pytype: disable=import-error
 from scvi.module.base import LossRecorder, auto_move_data  # pytype: disable=import-error
 from scvi.nn import Encoder  # pytype: disable=import-error
 from scvi.nn import FCLayers  # pytype: disable=import-error
 from torch.distributions import Normal  # pytype: disable=import-error
 from torch.distributions import kl_divergence as kl  # pytype: disable=import-error
+
+from cansig.integration._CONSTANTS import REGISTRY_KEYS  # pytype: disable=import-error
+from cansig.integration.base.module import CanSigBaseModule  # pytype: disable=import-error
 
 
 class CNVDecoder(nn.Module):
@@ -129,12 +130,14 @@ class VAECNV(CanSigBaseModule):
 
         self.reconstruction_loss = nn.MSELoss(reduction="none")
 
-    def _get_inference_input(self, tensors):
+    def _get_inference_input(self, tensors: Dict[str, torch.Tensor], **kwargs):
         x = tensors[REGISTRY_KEYS.CNV_KEY]
         input_dict = dict(x=x)
         return input_dict
 
-    def _get_generative_input(self, tensors, inference_outputs):
+    def _get_generative_input(
+        self, tensors: Dict[str, torch.Tensor], inference_outputs: Dict[str, torch.Tensor], **kwargs
+    ):
         z = inference_outputs["z"]
 
         input_dict = dict(z=z)
