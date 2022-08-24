@@ -96,7 +96,12 @@ class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
             library_log_vars=library_log_vars,
             **model_kwargs,
         )
-        self._model_summary_string = ""
+        self._model_summary_string = (
+            f"CanSig model using {n_latent} latent dimension."
+            f"{n_latent_cnv} dimension to represent the CNV "
+            f"profiles and {n_latent_batch_effect} dimension"
+            f" to represent the batch effect."
+        )
         self.init_params_ = self._get_init_params(locals())
 
     @classmethod
