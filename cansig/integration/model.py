@@ -1,19 +1,18 @@
 from typing import List, Optional
 
-# pytype: disable=import-error
-import anndata
-import scanpy as sc
-from anndata import AnnData
-from scvi._compat import Literal
-from scvi.data import AnnDataManager
-from scvi.data.fields import (
+import anndata  # pytype: disable=import-error
+import scanpy as sc  # pytype: disable=import-error
+from anndata import AnnData  # pytype: disable=import-error
+from scvi._compat import Literal  # pytype: disable=import-error
+from scvi.data import AnnDataManager  # pytype: disable=import-error
+from scvi.data.fields import (  # pytype: disable=import-error
     CategoricalJointObsField,
     LayerField,
     NumericalJointObsField,
     NumericalObsField,
     ObsmField,
 )
-from scvi.model.base import BaseModelClass
+from scvi.model.base import BaseModelClass  # pytype: disable=import-error
 
 from cansig._preprocessing.utils import Normalized
 from cansig.integration._CONSTANTS import REGISTRY_KEYS
@@ -23,9 +22,6 @@ from cansig.integration.module._batcheffectvae import VAEBatchEffect
 from cansig.integration.module._cnvvae import VAECNV
 from cansig.integration.module._vae import VAECanSig
 from cansig.integration.training.trainer import UnsupervisedTrainingCanSig
-
-
-# pytype: enable=import-error
 
 
 class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
