@@ -8,7 +8,7 @@ from scvi.train._metrics import ElboMetric  # pytype: disable=import-error
 from torch.optim.lr_scheduler import ReduceLROnPlateau  # pytype: disable=import-error
 
 
-from src.cansig.integration.base.module import CanSigBaseModule
+from cansig.integration.base.module import CanSigBaseModule  # pytype: disable=import-error
 
 
 def _linear_annealing(
@@ -189,9 +189,9 @@ class CanSigTrainingPlan(pl.LightningModule):
     def configure_optimizers(self):
         params = filter(lambda p: p.requires_grad, self.module.parameters())
         if self.optimizer_name == "Adam":
-            optim_cls = torch.optim.Adam  # pytype: disable=attr-error
+            optim_cls = torch.optim.Adam  # pytype: disable=module-attr
         elif self.optimizer_name == "AdamW":
-            optim_cls = torch.optim.AdamW  # pytype: disable=attr-error
+            optim_cls = torch.optim.AdamW  # pytype: disable=module-attr
         else:
             raise ValueError("Optimizer not understood.")
         optimizer = optim_cls(params, lr=self.lr, eps=self.eps, weight_decay=self.weight_decay)

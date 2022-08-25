@@ -6,7 +6,7 @@ import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 import scvi as scvibase  # pytype: disable=import-error
-from cansig.integration.model import CanSig
+from cansig.integration.model import CanSig  # pytype: disable=import-error
 
 
 class PreprocessingConfig(pydantic.BaseModel):

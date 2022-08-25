@@ -5,7 +5,7 @@ import shutil
 import tempfile
 from typing import Optional
 
-import cansig.tutorial as tutorial
+import cansig.tutorial as tutorial  # pytype: disable=import-error
 
 # Download choices
 PIPELINE = "PIPELINE"

@@ -5,8 +5,8 @@ import anndata as ad  # pytype: disable=import-error
 import numpy as np
 import scanpy as sc  # pytype: disable=import-error
 
-from cansig._preprocessing.plotting import qc_plots, save_fig
-from cansig.types import Pathlike
+from cansig._preprocessing.plotting import qc_plots, save_fig  # pytype: disable=import-error
+from cansig.types import Pathlike  # pytype: disable=import-error
 
 _LOGGER = logging.Logger(__name__)
 

@@ -6,9 +6,9 @@ from typing import cast, Protocol, Union
 import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 
-import cansig.filesys as fs
-import cansig.logger as clogger
-import cansig.models.api as models
+import cansig.filesys as fs  # pytype: disable=import-error
+import cansig.logger as clogger  # pytype: disable=import-error
+import cansig.models.api as models  # pytype: disable=import-error
 
 LOGGER = logging.getLogger(__name__)
 DEFAULT_OUTPUT_BASE_PATH = pathlib.Path("./outputs/batch-integration")
