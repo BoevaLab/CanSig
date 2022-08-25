@@ -189,9 +189,9 @@ class CanSigTrainingPlan(pl.LightningModule):
     def configure_optimizers(self):
         params = filter(lambda p: p.requires_grad, self.module.parameters())
         if self.optimizer_name == "Adam":
-            optim_cls = torch.optim.Adam
+            optim_cls = torch.optim.Adam  # pytype: disable=attr-error
         elif self.optimizer_name == "AdamW":
-            optim_cls = torch.optim.AdamW
+            optim_cls = torch.optim.AdamW  # pytype: disable=attr-error
         else:
             raise ValueError("Optimizer not understood.")
         optimizer = optim_cls(params, lr=self.lr, eps=self.eps, weight_decay=self.weight_decay)
