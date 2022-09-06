@@ -2,15 +2,14 @@ import warnings
 from typing import Optional, Union, Callable
 
 import numpy as np
+from scvi.data._manager import AnnDataManager  # pytype: disable=import-error
 from scvi.model.base import BaseModelClass  # pytype: disable=import-error
 
-from src.cansig.integration._CONSTANTS import REGISTRY_KEYS  # pytype: disable=import-error
-from src.cansig.integration.base.module import CanSigBaseModule  # pytype: disable=import-error
-from src.cansig.integration.data.datasplitter import DataSplitter  # pytype: disable=import-error
-from src.cansig.integration.training.runner import TrainRunner  # pytype: disable=import-error
-
-from src.cansig.integration.training.training_plan import CanSigTrainingPlan
-from scvi.data._manager import AnnDataManager  # pytype: disable=import-error
+from cansig.integration._CONSTANTS import REGISTRY_KEYS  # pytype: disable=import-error
+from cansig.integration.base.module import CanSigBaseModule  # pytype: disable=import-error
+from cansig.integration.data.datasplitter import DataSplitter  # pytype: disable=import-error
+from cansig.integration.training.runner import TrainRunner  # pytype: disable=import-error
+from cansig.integration.training.training_plan import CanSigTrainingPlan  # pytype: disable=import-error
 
 
 class UnsupervisedTrainingCanSig:
@@ -67,10 +66,14 @@ class UnsupervisedTrainingCanSig:
         """
         # TODO currently training parameters are shared across training runs.
 
+        data_and_attributes = {REGISTRY_KEYS.X_KEY: np.float32, REGISTRY_KEYS.CELLTYPE_KEY: np.float32}
+        if REGISTRY_KEYS.CONT_COVS_KEY in self.adata_manager.data_registry.keys():
+            data_and_attributes[REGISTRY_KEYS.CONT_COVS_KEY] = np.float32
+
         self._train(
             self.module_batch_effect,
             load_malignant_cells=False,
-            data_and_attributes={REGISTRY_KEYS.X_KEY: np.float32, REGISTRY_KEYS.CELLTYPE_KEY: np.float32},
+            data_and_attributes=data_and_attributes,
             max_epochs=batch_effect_max_epochs,
             use_gpu=use_gpu,
             train_size=train_size,
@@ -152,11 +155,12 @@ class UnsupervisedTrainingCanSig:
             data_and_attributes=data_and_attributes,
         )
         training_plan = CanSigTrainingPlan(module, **plan_kwargs)
+        # pytype: disable=key-error
 
         es = "early_stopping"
-        trainer_kwargs[es] = (
-            early_stopping if es not in trainer_kwargs.keys() else trainer_kwargs[es]  # pytype: disable=key-error
-        )
+        trainer_kwargs[es] = early_stopping if es not in trainer_kwargs.keys() else trainer_kwargs[es]
+        # pytype: enable=key-error
+
         runner = TrainRunner(
             self,
             module,

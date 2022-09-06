@@ -107,6 +107,7 @@ class VAECanSig(CanSigBaseModule):
         use_batch_norm: Literal["encoder", "decoder", "none", "both"] = "both",
         use_layer_norm: Literal["encoder", "decoder", "none", "both"] = "none",
         use_size_factor_key: bool = False,
+        normalize: bool = True,
         library_log_means: Optional[np.ndarray] = None,
         library_log_vars: Optional[np.ndarray] = None,
         var_activation: Optional[Callable] = None,
@@ -120,6 +121,7 @@ class VAECanSig(CanSigBaseModule):
         # Automatically deactivate if useless
         self.latent_distribution = latent_distribution
         self.encode_covariates = encode_covariates
+        self.normalize = normalize
 
         self.use_size_factor_key = use_size_factor_key
 
@@ -243,6 +245,10 @@ class VAECanSig(CanSigBaseModule):
         """
         x_ = x
         library = torch.log(x.sum(1)).unsqueeze(1)
+
+        if self.normalize:
+            x_ = x_ / library
+
         if self.log_variational:
             x_ = torch.log(1 + x_)
 
