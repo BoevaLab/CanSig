@@ -45,6 +45,7 @@ class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
         latent_distribution: Literal["normal", "ln"] = "normal",
         cnv_model_kwargs=None,
         batch_effect_model_kwargs=None,
+        normalize: bool = False,
         **model_kwargs,
     ):
         super(CanSig, self).__init__(adata)
@@ -91,6 +92,7 @@ class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
             use_size_factor_key=use_size_factor_key,
             library_log_means=library_log_means,
             library_log_vars=library_log_vars,
+            normalize=normalize,
             **model_kwargs,
         )
         self._model_summary_string = (
