@@ -71,6 +71,7 @@ class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
         self.module_batch_effect = VAEBatchEffect(
             self.summary_stats.n_vars,
             n_latent=n_latent_batch_effect,
+            n_continuous_cov=self.summary_stats.get("n_extra_continuous_covs_batch_effect", 0),
             n_celltype=self.summary_stats.n_celltype,
             **batch_effect_model_kwargs,
         )
@@ -114,6 +115,7 @@ class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
         size_factor_key: Optional[str] = None,
         categorical_covariate_keys: Optional[List[str]] = None,
         continuous_covariate_keys: Optional[List[str]] = None,
+        batch_effect_categorical_covariate_keys: Optional[List[str]] = None,
         **kwargs,
     ):
 
@@ -130,6 +132,7 @@ class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
             NumericalObsField(REGISTRY_KEYS.SIZE_FACTOR_KEY, size_factor_key, required=False),
             CategoricalJointObsField(REGISTRY_KEYS.CAT_COVS_KEY, categorical_covariate_keys),
             NumericalJointObsField(REGISTRY_KEYS.CONT_COVS_KEY, continuous_covariate_keys),
+            NumericalJointObsField(REGISTRY_KEYS.BATCH_CONT_COVS_KEY, batch_effect_categorical_covariate_keys),
             ObsmField(REGISTRY_KEYS.CNV_KEY, f"X_{cnv_key}"),
             ObsmField(REGISTRY_KEYS.CNV_BUFFER, REGISTRY_KEYS.CNV_BUFFER),
             ObsmField(REGISTRY_KEYS.BATCH_EFFECT_BUFFER, REGISTRY_KEYS.BATCH_EFFECT_BUFFER),

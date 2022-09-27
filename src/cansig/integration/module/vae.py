@@ -244,10 +244,12 @@ class VAECanSig(CanSigBaseModule):
         Runs the inference (encoder) model.
         """
         x_ = x
-        library = torch.log(x.sum(1)).unsqueeze(1)
+        library = x.sum(1).unsqueeze(1)
 
         if self.normalize:
-            x_ = x_ / library
+            x_ = 10_000 * x_ / library
+
+        library = torch.log(library)
 
         if self.log_variational:
             x_ = torch.log(1 + x_)

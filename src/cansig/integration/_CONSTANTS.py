@@ -14,6 +14,7 @@ class _REGISTRY_KEYS_NT(NamedTuple):
     CELLTYPE_KEY: str = "celltype"
     CNV_BUFFER: str = "_cansig_cnv_rep"
     BATCH_EFFECT_BUFFER: str = "_cansig_batch_effect"
+    BATCH_CONT_COVS_KEY: str = "extra_continuous_covs_batch_effect"
     MALIGNANT_KEY: str = "_cansig_maligant_key"
     MALIGNANT_CAT: str = "_cansig_malignant_status"
     UNDECIDED_CAT: str = "_cansig_undecided_status"

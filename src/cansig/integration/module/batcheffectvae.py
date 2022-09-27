@@ -215,11 +215,8 @@ class VAEBatchEffect(CanSigBaseModule):
         library = inference_outputs["library"]
         celltype = tensors[REGISTRY_KEYS.CELLTYPE_KEY]
 
-        cont_key = REGISTRY_KEYS.CONT_COVS_KEY
+        cont_key = REGISTRY_KEYS.BATCH_CONT_COVS_KEY
         cont_covs = tensors[cont_key] if cont_key in tensors.keys() else None
-
-        cat_key = REGISTRY_KEYS.CAT_COVS_KEY
-        cat_covs = tensors[cat_key] if cat_key in tensors.keys() else None
 
         size_factor_key = REGISTRY_KEYS.SIZE_FACTOR_KEY
         size_factor = torch.log(tensors[size_factor_key]) if size_factor_key in tensors.keys() else None
@@ -229,7 +226,7 @@ class VAEBatchEffect(CanSigBaseModule):
             library=library,
             batch_index=celltype,
             cont_covs=cont_covs,
-            cat_covs=cat_covs,
+            cat_covs=None,
             size_factor=size_factor,
         )
         return input_dict

@@ -67,8 +67,8 @@ class UnsupervisedTrainingCanSig:
         # TODO currently training parameters are shared across training runs.
 
         data_and_attributes = {REGISTRY_KEYS.X_KEY: np.float32, REGISTRY_KEYS.CELLTYPE_KEY: np.float32}
-        if REGISTRY_KEYS.CONT_COVS_KEY in self.adata_manager.data_registry.keys():
-            data_and_attributes[REGISTRY_KEYS.CONT_COVS_KEY] = np.float32
+        if REGISTRY_KEYS.BATCH_CONT_COVS_KEY in self.adata_manager.data_registry.keys():
+            data_and_attributes[REGISTRY_KEYS.BATCH_CONT_COVS_KEY] = np.float32
 
         self._train(
             self.module_batch_effect,
