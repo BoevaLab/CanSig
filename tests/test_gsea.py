@@ -3,7 +3,7 @@ from typing import Tuple
 import pydantic  # pytype: disable=import-error
 import pytest  # pytype: disable=import-error
 
-import cansig.gsea as cgsea
+import cansig.gsea as cgsea  # pytype: disable=import-error
 
 
 @pytest.mark.parametrize("input_output", [("SOME_PATHWAY", "SOME\nPATHWAY"), ("SOME PATHWAY", "SOME\nPATHWAY")])

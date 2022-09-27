@@ -1,6 +1,6 @@
 import numpy as np
 
-from cansig import preprocessing
+from cansig import preprocessing  # pytype: disable=import-error
 from .utils import generate_adata, gene_annotation
 
 _EXPECTED_OBS = [

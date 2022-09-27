@@ -155,11 +155,10 @@ class UnsupervisedTrainingCanSig:
             data_and_attributes=data_and_attributes,
         )
         training_plan = CanSigTrainingPlan(module, **plan_kwargs)
-        # pytype: disable=key-error
-
         es = "early_stopping"
-        trainer_kwargs[es] = early_stopping if es not in trainer_kwargs.keys() else trainer_kwargs[es]
-        # pytype: enable=key-error
+        trainer_kwargs[es] = (
+            early_stopping if es not in trainer_kwargs.keys() else trainer_kwargs[es]  # pytype: disable=key-error
+        )
 
         runner = TrainRunner(
             self,
