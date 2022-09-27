@@ -7,13 +7,13 @@ from typing import get_args  # pytype: disable=import-error
 import matplotlib.pyplot as plt  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 
-import cansig.cluster.api as cluster
-import cansig.filesys as fs
-import cansig.gsea as gsea
-import cansig.logger as clogger
-import cansig.metaanalysis.heatmap as hm
-import cansig.models.api as models
-import cansig.multirun as mr
+import cansig.cluster.api as cluster  # pytype: disable=import-error
+import cansig.filesys as fs  # pytype: disable=import-error
+import cansig.gsea as gsea  # pytype: disable=import-error
+import cansig.logger as clogger  # pytype: disable=import-error
+import cansig.metaanalysis.heatmap as hm  # pytype: disable=import-error
+import cansig.models.api as models  # pytype: disable=import-error
+import cansig.multirun as mr  # pytype: disable=import-error
 
 
 LOGGER = logging.getLogger(__name__)

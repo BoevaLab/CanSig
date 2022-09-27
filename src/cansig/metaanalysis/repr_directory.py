@@ -1,16 +1,15 @@
-from collections import defaultdict
 import collections
-from typing import Iterable, List, Tuple, Union, Dict
-
 import pathlib
+from collections import defaultdict
+from typing import Iterable, List, Tuple, Union, Dict
 
 import numpy as np  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 
-import cansig.metaanalysis.heatmap as heatmap
-import cansig.filesys as fs
-import cansig.models.api as models
-import cansig.cluster.api as cluster
+import cansig.cluster.api as cluster  # pytype: disable=import-error
+import cansig.filesys as fs  # pytype: disable=import-error
+import cansig.metaanalysis.heatmap as heatmap  # pytype: disable=import-error
+import cansig.models.api as models  # pytype: disable=import-error
 
 _FactorType = Union[int, float, str]
 _PanelType = str

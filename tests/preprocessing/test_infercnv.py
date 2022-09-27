@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd  # pytype: disable=import-error
 import pytest  # pytype: disable=import-error
 
-from cansig._preprocessing.infercnv import InferCNV, InferCNVConfig
-from tests.preprocessing.utils import generate_adata, is_normalized
+from cansig._preprocessing.infercnv import InferCNV, InferCNVConfig  # pytype: disable=import-error
+from tests.preprocessing.utils import generate_adata, is_normalized  # pytype: disable=import-error
 
 
 def _normalized(*args, **kwargs):

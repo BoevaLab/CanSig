@@ -5,8 +5,8 @@ from typing import Callable, Iterable, Optional
 import numpy as np  # pytype: disable=import-error
 import torch  # pytype: disable=import-error
 import torch.nn.functional as F  # pytype: disable=import-error
-from cansig.integration._CONSTANTS import REGISTRY_KEYS
-from cansig.integration.base.module import CanSigBaseModule
+from cansig.integration._CONSTANTS import REGISTRY_KEYS  # pytype: disable=import-error
+from cansig.integration.base.module import CanSigBaseModule  # pytype: disable=import-error
 from scvi._compat import Literal  # pytype: disable=import-error
 from scvi.distributions import NegativeBinomial, ZeroInflatedNegativeBinomial  # pytype: disable=import-error
 from scvi.module.base import LossRecorder, auto_move_data  # pytype: disable=import-error

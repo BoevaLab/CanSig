@@ -5,9 +5,9 @@ import numpy as np  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import torch  # pytype: disable=import-error
 from anndata import AnnData  # pytype: disable=import-error
-from cansig.integration._CONSTANTS import REGISTRY_KEYS
-from cansig.integration.base.module import CanSigBaseModule
-from cansig.integration.utils import _get_index
+from cansig.integration._CONSTANTS import REGISTRY_KEYS  # pytype: disable=import-error
+from cansig.integration.base.module import CanSigBaseModule  # pytype: disable=import-error
+from cansig.integration.utils import _get_index  # pytype: disable=import-error
 from scvi.utils._attrdict import attrdict  # pytype: disable=import-error
 from torch.distributions import Normal  # pytype: disable=import-error
 
