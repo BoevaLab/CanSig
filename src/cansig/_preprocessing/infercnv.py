@@ -17,6 +17,7 @@ class InferCNVConfig(pydantic.BaseModel):
 
     window_size: int = pydantic.Field(default=200)
     step: int = pydantic.Field(default=5)
+    threshold: float = pydantic.Field(default=0.1)
     reference_key: str = "reference"
     cnv_key: str = "cnv"
     cnv_called: str = "cnv_called"
@@ -31,9 +32,12 @@ class InferCNVConfig(pydantic.BaseModel):
 class InferCNV:
     """Class handling calling of CNVs."""
 
-    def __init__(self, config: InferCNVConfig, gene_order: Union[Pathlike, pd.DataFrame], gene_list: List[str]) -> None:
+    def __init__(
+        self, config: InferCNVConfig, gene_order: Union[Pathlike, pd.DataFrame], mean_counts_per_gene: pd.DataFrame
+    ) -> None:
         self._config = config
-        self.gene_order = self.get_gene_order(gene_order=gene_order, gene_list=gene_list)
+        self.mean_counts_per_gene = mean_counts_per_gene
+        self.gene_order = self.get_gene_order(gene_order=gene_order, gene_list=mean_counts_per_gene.index.to_list())
 
     def infer(self, adata: anndata.AnnData, reference_cat: List[str]):
         """
@@ -71,8 +75,11 @@ class InferCNV:
 
         Args:
             adata (AnnData):  annotated data matrix"""
-        cnv_called = adata.var[self._config.chromosome].notnull() & ~adata.var[self._config.chromosome].isin(
-            self._config.exclude_chromosome
+        cnv_called = (
+            adata.var[self._config.chromosome].notnull()
+            & ~adata.var[self._config.chromosome].isin(self._config.exclude_chromosome)
+            & self.mean_counts_per_gene.values.ravel()
+            >= self._config.threshold
         )
         return cnv_called
 
