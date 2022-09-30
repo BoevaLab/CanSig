@@ -71,6 +71,7 @@ class CanSig(UnsupervisedTrainingCanSig, BaseModelClass, RepresentationModel):
         self.module_batch_effect = VAEBatchEffect(
             self.summary_stats.n_vars,
             n_latent=n_latent_batch_effect,
+            n_continuous_cov=self.summary_stats.get("n_extra_continuous_covs", 0),
             n_celltype=self.summary_stats.n_celltype,
             **batch_effect_model_kwargs,
         )
