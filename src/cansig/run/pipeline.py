@@ -7,13 +7,12 @@ In the end, produces summary.
 import argparse
 import logging
 import pathlib
-from typing import Iterable, List, Optional, Literal, Union  # pytype: disable=not-supported-yet
+from typing import Iterable, List, Literal, Union  # pytype: disable=not-supported-yet
 
 import cansig.cluster.api as cluster
 import cansig.filesys as fs
 import cansig.gsea as gsea
 import cansig.logger as clogger
-import cansig.metaanalysis.repr_directory as repdir
 import cansig.plotting.plotting as plotting
 import cansig.models.api as models
 import cansig.models.scvi as _scvi
@@ -21,7 +20,7 @@ import cansig.multirun as mr
 
 import cansig.run.integration as integration
 import cansig.run.postprocessing as postprocessing
-import cansig.run.heatmap as run_heatmap
+import cansig.run.metasignatures as run_metasig
 
 _TESTTYPE = Literal["mwu", "ttest"]
 _CORRTYPE = Literal["pearson", "spearman"]
@@ -125,18 +124,10 @@ def create_parser() -> argparse.ArgumentParser:
         help="a flag used when the user does not want the signatures to be saved",
     )
     parser.add_argument(
-        "--n-genessig",
-        type=int,
-        help="number of genes to take into consideration as a signature to rescore \
-             the cells according to de novo found signatures",
-        default=200,
-    )
-    parser.add_argument(
-        "--corrmethod",
-        type=str,
-        help="the correlation method used to correlated the de novo found signatures",
-        choices=["pearson", "spearman"],
-        default="pearson",
+        "--threshold",
+        type=float,
+        help="the threshold above which a metasignature is considered too correlated with another",
+        default=0.3,
     )
     parser.add_argument(
         "--diffcnv",
@@ -169,21 +160,6 @@ def create_parser() -> argparse.ArgumentParser:
         "IMPORTANT: using this flag will automatically disable "
         "running the differential CNV on the anndata object",
         default=None,
-    )
-    parser.add_argument(
-        "--n-pathways",
-        type=int,
-        default=5,
-        help="The number of most consistently found pathways to be plotted in the heatmap. Default: 5.",
-    )
-    parser.add_argument("--value-min", type=float, default=1.0, help="Lower value to plot on the heatmap. Default: 1.0")
-    parser.add_argument("--value-max", type=float, default=3.0, help="Upper value to plot on the heatmap. Default: 3.0")
-    parser.add_argument(
-        "--pathway-sort-method",
-        type=str,
-        default="mean",
-        choices=["median", "mean", "max", "count"],
-        help="How the panels (pathways) should be sorted. Default: by highest mean NES across the runs.",
     )
 
     # CanSig Args
@@ -268,16 +244,8 @@ def single_integration_run(
     gsea_config: gsea.GeneExpressionConfig,
     multirun_dir: mr.MultirunDirectory,
     plotting_config: plotting.ScatterPlotConfig,
-    batch: str,
     plot: bool,
     savesig: bool,
-    n_genes_sig: int,
-    corr_method: _CORRTYPE,
-    diffcnv: bool,
-    subclonalcnv: bool,
-    diffcnv_method: _TESTTYPE,
-    diffcnv_correction: bool,
-    cnvarray_path: Optional[pathlib.Path],
 ) -> None:
     # First, we run the integration step
     integration_dir = multirun_dir.integration_directories / fs.get_directory_name()
@@ -297,17 +265,9 @@ def single_integration_run(
                 gsea_config=gsea_config,
                 latents_dir=integration_dir,
                 output_dir=multirun_dir.postprocessing_directories / fs.get_directory_name(),
-                batch=batch,
                 plotting_config=plotting_config,
                 plot=plot,
                 savesig=savesig,
-                n_genes_sig=n_genes_sig,
-                corr_method=corr_method,
-                diffcnv=diffcnv,
-                subclonalcnv=subclonalcnv,
-                diffcnv_method=diffcnv_method,
-                diffcnv_correction=diffcnv_correction,
-                cnvarray_path=cnvarray_path,
             )
         except Exception as e:
             print(f"Caught exception {type(e)}: {e}.")
@@ -338,45 +298,31 @@ def main() -> None:
                 gsea_config=generate_gsea_config(args),
                 multirun_dir=multirun_dir,
                 plotting_config=generate_plotting_config(args),
-                batch=args.batch,
                 plot=(not args.disable_plots),
                 savesig=(not args.disable_signatures),
-                n_genes_sig=args.n_genessig,
-                corr_method=args.corrmethod,
-                diffcnv=args.diffcnv,
-                subclonalcnv=args.subclonalcnv,
-                diffcnv_method=args.diffcnv_method,
-                diffcnv_correction=args.diffcnv_correction,
-                cnvarray_path=args.cnvarray,
             )
         except Exception as e:
             LOGGER.warning(f"Caught exception {type(e)}: {e}.")
 
-    # We have all the data generated, but perhaps some of these are corrupted.
-    # Let's filter out these which look valid.
-    directories = mr.get_valid_dirs(multirun_dir)
+    # Now we compute the metasignatures and perform GSEA and differential CNV analysis on them
 
-    # Now we run the metaanalysis (first generate the heatmap).
+    LOGGER.info("Finding metasignatures...")
+    run_metasig.run_metasignatures(
+        rundir=multirun_dir.postprocessing_directories,
+        resdir=multirun_dir.metasig_directories,
+        integ_dir=multirun_dir.integration_directories,
+        batch=args.batch,
+        gsea_config=generate_gsea_config(args),
+        diffcnv=args.diffcnv,
+        subclonalcnv=args.subclonalcnv,
+        diffcnv_method=args.diffcnv_method,
+        diffcnv_correction=args.diffcnv_correction,
+        cnvarray_path=args.cnvarray,
+        data_path=args.data,
+        threshold=args.threshold,
+        plots=(not args.disable_plots),
+    )
 
-    LOGGER.info("Generating heatmap...")
-    fig = run_heatmap.generate_heatmap(
-        directories,
-        n_pathways=args.n_pathways,
-        method=args.pathway_sort_method,
-        value_min=args.value_min,
-        value_max=args.value_max,
-    )
-    fig.savefig(multirun_dir.path / "heatmap.pdf")
-
-    # To find a representative directory, we first generate a list of HeatmapItems
-    LOGGER.info("Finding a representative directory...")
-    items = run_heatmap.generate_items(directories)
-    chosen_directory = repdir.find_representative_run(
-        items=items, directories=directories, settings=repdir.ReprDirectoryConfig()
-    )
-    repdir.save_chosen_directory(
-        chosen_directory=chosen_directory, filepath=multirun_dir.path / "representative-directory.txt"
-    )
     LOGGER.info(f"Pipeline run finished. The generated data is in {args.output}.")
 
 

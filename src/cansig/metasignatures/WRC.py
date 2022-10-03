@@ -1,4 +1,4 @@
-from typing import Callable, List
+from typing import Callable, List, Union
 
 import pandas as pd  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
@@ -22,7 +22,7 @@ class WRC:
         # normalization constant to get correlation between -1 and 1
         self.norm_constant_ = np.sum([self.weights_[i - 1] * i * (length - i) for i in range(1, length + 1)])
 
-    def _get_ranks(self, x: List[str], y: List[str]) -> pd.DataFrame:
+    def _get_ranks(self, x: Union[np.ndarray, List[str]], y: Union[np.ndarray, List[str]]) -> pd.DataFrame:
         """
         Get the ranks of y using x as reference
         """
@@ -40,7 +40,7 @@ class WRC:
 
         return df
 
-    def _assym_correlation(self, x: List[str], y: List[str]) -> float:
+    def _assym_correlation(self, x: Union[np.ndarray, List[str]], y: Union[np.ndarray, List[str]]) -> float:
         """
         Compute the assymetric correlation
         """
@@ -52,7 +52,7 @@ class WRC:
 
         return 1 - frac
 
-    def correlation(self, x: List[str], y: List[str]) -> float:
+    def correlation(self, x: Union[np.ndarray, List[str]], y: Union[np.ndarray, List[str]]) -> float:
         """
         Symmetrize the correlation
         """
