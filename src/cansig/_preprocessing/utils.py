@@ -1,10 +1,13 @@
 import logging
 import os
+from typing import List
 
 import anndata  # pytype: disable=import-error
 import anndata as ad  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
+import pandas as pd  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
+from anndata import AnnData  # pytype: disable=import-error
 
 _LOGGER = logging.Logger(__name__)
 
@@ -80,30 +83,33 @@ def load_adata_from_file(path, batch_id_column):
 def load_adatas(adatas, batch_id_column: str):
     if not all(isinstance(adata, ad.AnnData) for adata in adatas):
         adatas = [load_adata_from_file(path, batch_id_column) for path in adatas]
-    gene_list = validate_adatas(adatas)
-    if len(gene_list) == 0:
+    mean_counts_per_gene = validate_adatas(adatas)
+    if mean_counts_per_gene.shape[0] == 0:
         raise ValueError("Empty intersection of gene names.")
-    return adatas, gene_list
+    return adatas, mean_counts_per_gene
 
 
-def pop_adatas(adatas, gene_list):
+def pop_adatas(adatas, gene_list) -> AnnData:
     for _ in range(len(adatas)):
         yield adatas.pop(0)[:, gene_list].copy()
 
 
-def validate_adatas(adatas):
-    gene_set = None
-    for adata in adatas:
-        var_names = _validate_adata(adata)
-        if gene_set is None:
-            gene_set = set(var_names)
-        else:
-            gene_set = gene_set & set(adata.var_names)
+def validate_adatas(adatas: List[AnnData]) -> pd.DataFrame:
+    counts = []
+    n_cells = 0
+    for n_adata, adata in enumerate(adatas):
+        n_cells += adata.n_obs
+        counts.append(_validate_adata(adata, n_adata))
 
-    return list(gene_set)
+    counts = pd.concat(counts, join="inner", axis=0)
+    return counts.sum(0) / n_cells
 
 
-def _validate_adata(adata):
+def _validate_adata(adata: AnnData, n_adata: int):
     # TODO: check for raw counts
     # TODO: check for celltype column
-    return adata.var_names
+
+    count = adata.X.sum(0)
+    count = pd.DataFrame(np.atleast_2d(count), index=[n_adata], columns=adata.var_names)
+
+    return count
