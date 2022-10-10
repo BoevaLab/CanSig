@@ -79,8 +79,7 @@ class InferCNV:
         cnv_called = (
             adata.var[self._config.chromosome].notnull()
             & ~adata.var[self._config.chromosome].isin(self._config.exclude_chromosome)
-            & self.mean_counts_per_gene.values.ravel()
-            >= self._config.threshold
+            & (self.mean_counts_per_gene.values.ravel() >= self._config.threshold)
         )
         return cnv_called
 

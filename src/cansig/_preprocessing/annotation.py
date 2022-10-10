@@ -8,7 +8,7 @@ from scipy.cluster.hierarchy import to_tree, linkage, ClusterNode  # pytype: dis
 from scipy.sparse import issparse  # pytype: disable=import-error
 
 
-class CellStatusConfig(pydantic.BaseModel):
+class CellStatus(pydantic.BaseModel):
     """This namespace holds all statuses (malignant, non-malignant and undecided) a
     cell can have during preprocessing."""
 
@@ -20,7 +20,7 @@ class CellStatusConfig(pydantic.BaseModel):
 class AnnotationConfig(pydantic.BaseModel):
     """Config for cell annotation."""
 
-    cell_status: CellStatusConfig
+    cell_status: CellStatus
     threshold: float
     depth: int
     malignant_cnv: str = "malignant_cnv"

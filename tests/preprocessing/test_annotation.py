@@ -1,7 +1,7 @@
 import pytest  # pytype: disable=import-error
 
 from cansig._preprocessing.annotation import (  # pytype: disable=import-error
-    CellStatusConfig,
+    CellStatus,
     CellAnnotation,
     AnnotationConfig,
 )  # pytype: disable=import-error
@@ -10,7 +10,7 @@ from tests.preprocessing.utils import generate_adata, tuples_to_list
 
 @pytest.fixture
 def cell_annotater():
-    cell_status_config = CellStatusConfig()
+    cell_status_config = CellStatus()
     annotation_config = AnnotationConfig(cell_status=cell_status_config, threshold=0.6, depth=6)
     cell_annotater = CellAnnotation(
         annotation_config=annotation_config,
@@ -30,7 +30,7 @@ def adata():
 
 @pytest.fixture
 def cell_status():
-    return CellStatusConfig()
+    return CellStatus()
 
 
 class TestCellAnnotation:
@@ -46,12 +46,12 @@ class TestCellAnnotation:
     @pytest.mark.parametrize(
         "cnv,annotation,expected",
         [
-            (CellStatusConfig().malignant, CellStatusConfig().malignant, CellStatusConfig().malignant),
-            (CellStatusConfig().malignant, CellStatusConfig().undecided, CellStatusConfig().malignant),
-            (CellStatusConfig().malignant, CellStatusConfig().non_malignant, CellStatusConfig().undecided),
-            (CellStatusConfig().non_malignant, CellStatusConfig().malignant, CellStatusConfig().undecided),
-            (CellStatusConfig().non_malignant, CellStatusConfig().non_malignant, CellStatusConfig().non_malignant),
-            (CellStatusConfig().non_malignant, CellStatusConfig().undecided, CellStatusConfig().undecided),
+            (CellStatus().malignant, CellStatus().malignant, CellStatus().malignant),
+            (CellStatus().malignant, CellStatus().undecided, CellStatus().malignant),
+            (CellStatus().malignant, CellStatus().non_malignant, CellStatus().undecided),
+            (CellStatus().non_malignant, CellStatus().malignant, CellStatus().undecided),
+            (CellStatus().non_malignant, CellStatus().non_malignant, CellStatus().non_malignant),
+            (CellStatus().non_malignant, CellStatus().undecided, CellStatus().undecided),
         ],
     )
     def test_get_malignant(self, cnv, annotation, expected, cell_annotater):
@@ -60,9 +60,9 @@ class TestCellAnnotation:
     @pytest.mark.parametrize(
         "celltype,expected",
         [
-            ("evil", CellStatusConfig().malignant),
-            ("unknown", CellStatusConfig().undecided),
-            ("good", CellStatusConfig().non_malignant),
+            ("evil", CellStatus().malignant),
+            ("unknown", CellStatus().undecided),
+            ("good", CellStatus().non_malignant),
         ],
     )
     def test_annotate_malignant_using_celltype(self, cell_annotater, celltype, expected):
