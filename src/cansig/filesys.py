@@ -86,7 +86,6 @@ class PostprocessingDir(StructuredDir):
     SIGNATURE_SETTINGS: str = "signatures"
     DCNV_FILE: str = "differential-cnvs.csv"
     CELL_SCORE_FILE: str = "cells-score-denovo-signature.csv"
-    SIG_CORRELATION_FILE: str = "denovo-signature-correlation.csv"
 
     def valid(self) -> bool:
         return (
@@ -133,12 +132,45 @@ class PostprocessingDir(StructuredDir):
     def cell_score_output(self) -> pathlib.Path:
         return self.path / self.CELL_SCORE_FILE
 
-    @property
-    def sig_correlation_output(self) -> pathlib.Path:
-        return self.path / self.SIG_CORRELATION_FILE
-
     def make_sig_dir(self):
         self.signature_output.mkdir(parents=True, exist_ok=False)
+
+
+class MetasigDir(StructuredDir):
+    FIGURES: str = "figures"
+    META: str = "signatures"
+    CNVFILE: str = "diff-cnvs.csv"
+    GSEAFILE: str = "gsea-dataframe.csv"
+    SIMFILE: str = "similarity-matrix.csv"
+
+    def valid(self) -> bool:
+        return self.path.is_dir()
+
+    @property
+    def figures_output(self) -> pathlib.Path:
+        return self.path / self.FIGURES
+
+    @property
+    def sig_output(self) -> pathlib.Path:
+        return self.path / self.META
+
+    @property
+    def sim_output(self) -> pathlib.Path:
+        return self.path / self.SIMFILE
+
+    @property
+    def dcnv_output(self) -> pathlib.Path:
+        return self.path / self.CNVFILE
+
+    @property
+    def gsea_output(self) -> pathlib.Path:
+        return self.path / self.GSEAFILE
+
+    def make_sig_dir(self):
+        self.sig_output.mkdir(parents=True, exist_ok=False)
+
+    def make_fig_dir(self):
+        self.figures_output.mkdir(parents=True, exist_ok=False)
 
 
 def get_directory_name() -> str:
