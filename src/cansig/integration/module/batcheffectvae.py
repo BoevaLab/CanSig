@@ -257,6 +257,7 @@ class VAEBatchEffect(CanSigBaseModule):
         x_ = x
         if self.use_observed_lib_size:
             library = torch.log(x.sum(1)).unsqueeze(1)
+
         if self.log_variational:
             x_ = torch.log(1 + x_)
 
