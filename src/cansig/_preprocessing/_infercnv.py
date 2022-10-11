@@ -157,6 +157,7 @@ def _running_mean(x: Union[np.ndarray, scipy.sparse.spmatrix], n: int = 50, step
         only compute running windows ever `step` columns, e.g. if step is 10
         0:100, 10:110, 20:120 etc. Saves memory.
     """
+
     r = np.arange(1, n + 1)
 
     pyramid = np.minimum(r, r[::-1])
@@ -166,7 +167,7 @@ def _running_mean(x: Union[np.ndarray, scipy.sparse.spmatrix], n: int = 50, step
 
     if n > x.shape[1]:
         start_idx = (n // 2) - (x.shape[1] // 2)
-        end_idx = (n // 2) - (x.shape[1] // 2)
+        end_idx = (n // 2) + (x.shape[1] // 2) + (x.shape[1] % 2)
         smoothed_x = smoothed_x[:, start_idx:end_idx]
 
     return smoothed_x[:, np.arange(0, smoothed_x.shape[1], step)]
