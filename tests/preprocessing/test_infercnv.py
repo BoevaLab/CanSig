@@ -55,7 +55,7 @@ class TestInferCNV:
     def test_infercnv_normalized(self, adata, gene_annotation, cnv, monkeypatch):
         """This test makes sure that we pass log1p-normalized counts to infercnv and
         that the raw counts are restored after."""
-        monkeypatch.setattr("infercnvpy.tl.infercnv", _normalized)
+        monkeypatch.setattr("infercnv", _normalized)
         cnv.infer(adata, ["reference"])
         assert np.allclose(adata.X, 1.0)
 
