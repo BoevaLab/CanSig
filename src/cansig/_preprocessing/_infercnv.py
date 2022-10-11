@@ -8,11 +8,10 @@ import numpy as np
 import scipy.ndimage  # pytype: disable=import-error
 import scipy.sparse  # pytype: disable=import-error
 from anndata import AnnData  # pytype: disable=import-error
+from infercnvpy._util import _ensure_array  # pytype: disable=import-error
 from scanpy import logging  # pytype: disable=import-error
 from tqdm.auto import tqdm  # pytype: disable=import-error
 from tqdm.contrib.concurrent import process_map  # pytype: disable=import-error
-
-from infercnvpy._util import _ensure_array  # pytype: disable=import-error
 
 
 def infercnv(
@@ -166,7 +165,9 @@ def _running_mean(x: Union[np.ndarray, scipy.sparse.spmatrix], n: int = 50, step
     )
 
     if n > x.shape[1]:
-        smoothed_x = smoothed_x[1:10]
+        start_idx = (n // 2) - (x.shape[1] // 2)
+        end_idx = (n // 2) - (x.shape[1] // 2)
+        smoothed_x = smoothed_x[:, start_idx:end_idx]
 
     return smoothed_x[:, np.arange(0, smoothed_x.shape[1], step)]
 
