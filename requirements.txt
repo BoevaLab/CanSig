@@ -3,7 +3,6 @@
 anndata
 gseapy
 infercnvpy
-json
 leidenalg
 matplotlib
 numpy<=1.21
@@ -18,7 +17,6 @@ scvi-tools
 sphinx
 statsmodels
 protobuf~=3.19.0
-warnings
 # requirements-dev.txt
 black
 flake8
