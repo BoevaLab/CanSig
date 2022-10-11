@@ -18,6 +18,10 @@ class MultirunDirectory(fs.StructuredDir):
         return self.path / "postprocessing"
 
     @property
+    def metasig_directories(self) -> pathlib.Path:
+        return self.path / "metasignatures"
+
+    @property
     def analysis_directory(self) -> pathlib.Path:
         return self.path / "final_analysis"
 

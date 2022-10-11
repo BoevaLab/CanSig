@@ -87,7 +87,7 @@ def get_subclonal_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv", subclonal_k
     # finally, create a cell-level CNV array where the CNV call for a cell is equal
     # to the call of the subclone that it belongs to
     subclonal_cnv_array = []
-    for subclone in data.obs.subclonal.unique():
+    for subclone in data.obs[subclonal_key].unique():
         subclonal_cells = data.obs[data.obs[subclonal_key] == subclone].index
 
         subclonal_df = pd.concat([mean_sub.loc[subclone] for i in range(len(subclonal_cells))], axis=1)
@@ -101,7 +101,7 @@ def get_subclonal_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv", subclonal_k
 
 
 def get_cluster_labels(
-    data: anndata.AnnData, cluster_key: str = "new-cluster-column", batch_key: str = "batch"
+    data: anndata.AnnData, cluster_key: str = "metamembership", batch_key: str = "batch"
 ) -> pd.DataFrame:
     """Gets the cluster labels precomputed in the anndata object and batch key
 
@@ -120,7 +120,7 @@ def get_diff_cnv(
     cl_labels: pd.DataFrame,
     diff_method: _TESTTYPE,
     correction: bool = False,
-    cluster_key: str = "new-cluster-column",
+    cluster_key: str = "metamembership",
     batch_key: str = "batch",
 ) -> pd.DataFrame:
     """Computes the differential CNVs between a cluster and the rest, for all clusters
@@ -164,12 +164,12 @@ def get_diff_cnv(
         diff_function = ttest_ind
 
     all_results = defaultdict(list)
-    for cluster in sorted(cl_labels[cluster_key].unique()):
+    for cluster in sorted(cl_labels[cluster_key].astype(str).unique()):
         _LOGGER.info(f"Starting differential CNV analysis for cluster {cluster}")
 
         # separate the array into the CNVs associated with a cluster and the rest
-        cl_cnv = cnv_array[cl_labels[cluster_key] == cluster]
-        rest_cnv = cnv_array[cl_labels[cluster_key] != cluster]
+        cl_cnv = cnv_array[cl_labels[cluster_key].astype(str) == cluster]
+        rest_cnv = cnv_array[cl_labels[cluster_key].astype(str) != cluster]
 
         for col in cl_cnv:
             # check at least one value is different to input into the test to avoid ValueError, if not
@@ -329,7 +329,7 @@ def find_differential_cnv(
         data: anndata object as preprocessed using our preprocessing module. Must contain
 
             - "X_cnv" in data.obsm: the CNV called using our preprocessin module
-            - "new-cluster-column" in data.obs: the column with the precomputed cluster labels
+            - "metamembership" in data.obs: the column with the precomputed metamembership labels
             - "chromosome" in data.var.columns: the chromosome to which the gene belongs
             - "cnv_called" in data.var.columns: if this gene was used for the infercnv call (see
               `cansig._preprocessing` for more details on the CNV calling procedure)
@@ -373,14 +373,14 @@ def find_differential_cnv(
     else:
         cnv_array = discretize_cnv(data=data, cnv_key="X_cnv")
 
-    cl_labels = get_cluster_labels(data=data, cluster_key="new-cluster-column", batch_key=batch_key)
+    cl_labels = get_cluster_labels(data=data, cluster_key="metamembership", batch_key=batch_key)
 
     diffCNVs = get_diff_cnv(
         cnv_array=cnv_array,
         cl_labels=cl_labels,
         diff_method=diff_method,
         correction=correction,
-        cluster_key="new-cluster-column",
+        cluster_key="metamembership",
         batch_key=batch_key,
     )
 
@@ -436,7 +436,7 @@ def find_differential_cnv_precomputed(
         cl_labels=cl_labels,
         diff_method=diff_method,
         correction=correction,
-        cluster_key="new-cluster-column",
+        cluster_key="metamembership",
         batch_key=batch_key,
     )
 
