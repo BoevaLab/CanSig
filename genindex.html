@@ -12,8 +12,8 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+  <link href="_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
 
   
   <link rel="stylesheet"
@@ -22,11 +22,13 @@
     href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b">
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -58,7 +60,7 @@
     <div class="search-button__search-container">
       
 <form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
+  <i class="fa-solid fa-magnifying-glass"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form>
@@ -68,7 +70,7 @@
   
   <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
   <label class="sidebar-toggle primary-toggle" for="__primary">
-      <span class="fas fa-bars"></span>
+      <span class="fa-solid fa-bars"></span>
   </label>
   <div id="navbar-start">
     
@@ -170,16 +172,16 @@
     <div id="navbar-end">
       <div class="navbar-end-item navbar-end__search-button-container">
         
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
-  <i class="fas fa-search"></i>
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
 </button>
       </div>
       
       <div class="navbar-end-item">
-        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle">
-    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
-    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
-    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
 </span>
       </div>
       
@@ -192,7 +194,8 @@
           
           
           
-          <a href="https://github.com/BoevaLab/CanSig" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+          
+          <a href="https://github.com/BoevaLab/CanSig" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
@@ -204,14 +207,14 @@
 
   
   <div class="search-button-container--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
-  <i class="fas fa-search"></i>
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
 </button>
   </div>
 
   
   <label class="sidebar-toggle secondary-toggle" for="__secondary">
-      <span class="fas fa-outdent"></span>
+      <span class="fa-solid fa-outdent"></span>
   </label>
   
 
@@ -305,10 +308,10 @@
     <div class="sidebar-header-items__end">
       
       <div class="navbar-end-item">
-        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle">
-    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
-    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
-    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
 </span>
       </div>
       
@@ -321,7 +324,8 @@
           
           
           
-          <a href="https://github.com/BoevaLab/CanSig" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+          
+          <a href="https://github.com/BoevaLab/CanSig" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
@@ -736,6 +740,8 @@
         <li><a href="source/cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig.clusters">(cansig.cluster.leiden.LeidenNClusterConfig attribute)</a>
 </li>
       </ul></li>
+      <li><a href="source/cansig.filesys.html#cansig.filesys.MetasigDir.CNVFILE">CNVFILE (cansig.filesys.MetasigDir attribute)</a>, <a href="source/cansig.html#cansig.filesys.MetasigDir.CNVFILE">[1]</a>
+</li>
       <li><a href="source/cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.color_map">color_map (cansig.plotting.plotting.ScatterPlotConfig attribute)</a>
 </li>
       <li><a href="source/cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.ReprDirectoryConfig.COMPLEXITYPEN">COMPLEXITYPEN (cansig.metaanalysis.repr_directory.ReprDirectoryConfig attribute)</a>
@@ -784,13 +790,15 @@
 </li>
       <li><a href="source/cansig.filesys.html#cansig.filesys.PostprocessingDir.DCNV_FILE">DCNV_FILE (cansig.filesys.PostprocessingDir attribute)</a>, <a href="source/cansig.html#cansig.filesys.PostprocessingDir.DCNV_FILE">[1]</a>
 </li>
-      <li><a href="source/cansig.filesys.html#cansig.filesys.PostprocessingDir.dcnv_output">dcnv_output (cansig.filesys.PostprocessingDir property)</a>, <a href="source/cansig.html#cansig.filesys.PostprocessingDir.dcnv_output">[1]</a>
+      <li><a href="source/cansig.filesys.html#cansig.filesys.MetasigDir.dcnv_output">dcnv_output (cansig.filesys.MetasigDir property)</a>, <a href="source/cansig.html#cansig.filesys.MetasigDir.dcnv_output">[1]</a>
+
+      <ul>
+        <li><a href="source/cansig.filesys.html#cansig.filesys.PostprocessingDir.dcnv_output">(cansig.filesys.PostprocessingDir property)</a>, <a href="source/cansig.html#cansig.filesys.PostprocessingDir.dcnv_output">[1]</a>
 </li>
+      </ul></li>
       <li><a href="source/cansig.html#cansig.logger.default_config">default_config() (in module cansig.logger)</a>
 </li>
       <li><a href="source/cansig.html#cansig.gsea.DefaultFormatter">DefaultFormatter (class in cansig.gsea)</a>
-</li>
-      <li><a href="source/cansig.html#cansig.gsea.diff_genes_to_sig">diff_genes_to_sig() (in module cansig.gsea)</a>
 </li>
       <li><a href="source/cansig.html#cansig.gsea.GeneExpressionAnalysis.diff_gex">diff_gex() (cansig.gsea.GeneExpressionAnalysis method)</a>
 </li>
@@ -868,6 +876,10 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/cansig.filesys.html#cansig.filesys.MetasigDir.FIGURES">FIGURES (cansig.filesys.MetasigDir attribute)</a>, <a href="source/cansig.html#cansig.filesys.MetasigDir.FIGURES">[1]</a>
+</li>
+      <li><a href="source/cansig.filesys.html#cansig.filesys.MetasigDir.figures_output">figures_output (cansig.filesys.MetasigDir property)</a>, <a href="source/cansig.html#cansig.filesys.MetasigDir.figures_output">[1]</a>
+</li>
       <li><a href="source/cansig.html#cansig.tutorial.Dataset.filepath">filepath (cansig.tutorial.Dataset attribute)</a>
 </li>
       <li><a href="source/cansig.integration.training.html#cansig.integration.training.trainer.UnsupervisedTrainingCanSig.fill_batch_effect_buffer">fill_batch_effect_buffer (cansig.integration.training.trainer.UnsupervisedTrainingCanSig attribute)</a>
@@ -886,10 +898,10 @@
       </ul></li>
       <li><a href="source/cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.find_all_config_directories">find_all_config_directories() (in module cansig.metaanalysis.repr_directory)</a>
 </li>
-      <li><a href="source/cansig.cnvanalysis.html#cansig.cnvanalysis.differentialcnvs.find_differential_cnv">find_differential_cnv() (in module cansig.cnvanalysis.differentialcnvs)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/cansig.cnvanalysis.html#cansig.cnvanalysis.differentialcnvs.find_differential_cnv">find_differential_cnv() (in module cansig.cnvanalysis.differentialcnvs)</a>
+</li>
       <li><a href="source/cansig.cnvanalysis.html#cansig.cnvanalysis.differentialcnvs.find_differential_cnv_precomputed">find_differential_cnv_precomputed() (in module cansig.cnvanalysis.differentialcnvs)</a>
 </li>
       <li><a href="source/cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.find_representative_run">find_representative_run() (in module cansig.metaanalysis.repr_directory)</a>
@@ -956,14 +968,14 @@
 </li>
       <li><a href="source/cansig.metaanalysis.html#cansig.metaanalysis.heatmap.get_heatmap_items">get_heatmap_items() (in module cansig.metaanalysis.heatmap)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/cansig.integration.base.html#cansig.integration.base.model.RepresentationModel.get_index">get_index() (cansig.integration.base.model.RepresentationModel method)</a>
 
       <ul>
         <li><a href="source/cansig.integration.data.html#cansig.integration.data.datasplitter.DataSplitter.get_index">(cansig.integration.data.datasplitter.DataSplitter method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/cansig.models.html#cansig.models.api.CanSigWrapper.get_latent_codes">get_latent_codes() (cansig.models.api.CanSigWrapper method)</a>
 
       <ul>
@@ -994,11 +1006,17 @@
 </li>
       <li><a href="source/cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.groups">groups (cansig.plotting.plotting.ScatterPlotConfig attribute)</a>
 </li>
-      <li><a href="source/cansig.filesys.html#cansig.filesys.PostprocessingDir.gsea_output">gsea_output (cansig.filesys.PostprocessingDir property)</a>, <a href="source/cansig.html#cansig.filesys.PostprocessingDir.gsea_output">[1]</a>
+      <li><a href="source/cansig.filesys.html#cansig.filesys.MetasigDir.gsea_output">gsea_output (cansig.filesys.MetasigDir property)</a>, <a href="source/cansig.html#cansig.filesys.MetasigDir.gsea_output">[1]</a>
+
+      <ul>
+        <li><a href="source/cansig.filesys.html#cansig.filesys.PostprocessingDir.gsea_output">(cansig.filesys.PostprocessingDir property)</a>, <a href="source/cansig.html#cansig.filesys.PostprocessingDir.gsea_output">[1]</a>
 </li>
+      </ul></li>
       <li><a href="source/cansig.filesys.html#cansig.filesys.PostprocessingDir.GSEA_SETTINGS">GSEA_SETTINGS (cansig.filesys.PostprocessingDir attribute)</a>, <a href="source/cansig.html#cansig.filesys.PostprocessingDir.GSEA_SETTINGS">[1]</a>
 </li>
       <li><a href="source/cansig.filesys.html#cansig.filesys.PostprocessingDir.gsea_settings">gsea_settings (cansig.filesys.PostprocessingDir property)</a>, <a href="source/cansig.html#cansig.filesys.PostprocessingDir.gsea_settings">[1]</a>
+</li>
+      <li><a href="source/cansig.filesys.html#cansig.filesys.MetasigDir.GSEAFILE">GSEAFILE (cansig.filesys.MetasigDir attribute)</a>, <a href="source/cansig.html#cansig.filesys.MetasigDir.GSEAFILE">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1140,8 +1158,14 @@
         <li><a href="source/cansig.run.html#cansig.run.postprocessing.main">(in module cansig.run.postprocessing)</a>
 </li>
       </ul></li>
-      <li><a href="source/cansig.filesys.html#cansig.filesys.PostprocessingDir.make_sig_dir">make_sig_dir() (cansig.filesys.PostprocessingDir method)</a>, <a href="source/cansig.html#cansig.filesys.PostprocessingDir.make_sig_dir">[1]</a>
+      <li><a href="source/cansig.filesys.html#cansig.filesys.MetasigDir.make_fig_dir">make_fig_dir() (cansig.filesys.MetasigDir method)</a>, <a href="source/cansig.html#cansig.filesys.MetasigDir.make_fig_dir">[1]</a>
 </li>
+      <li><a href="source/cansig.filesys.html#cansig.filesys.MetasigDir.make_sig_dir">make_sig_dir() (cansig.filesys.MetasigDir method)</a>, <a href="source/cansig.html#cansig.filesys.MetasigDir.make_sig_dir">[1]</a>
+
+      <ul>
+        <li><a href="source/cansig.filesys.html#cansig.filesys.PostprocessingDir.make_sig_dir">(cansig.filesys.PostprocessingDir method)</a>, <a href="source/cansig.html#cansig.filesys.PostprocessingDir.make_sig_dir">[1]</a>
+</li>
+      </ul></li>
       <li><a href="source/cansig.models.html#cansig.models.scvi.EvaluationResults.marginal_ll">marginal_ll (cansig.models.scvi.EvaluationResults attribute)</a>
 </li>
       <li><a href="source/cansig.models.html#cansig.models.scvi.TrainConfig.max_epochs">max_epochs (cansig.models.scvi.TrainConfig attribute)</a>
@@ -1153,6 +1177,12 @@
       <li><a href="source/cansig.html#cansig.gsea.MaxNESFDRSummarizer">MaxNESFDRSummarizer (class in cansig.gsea)</a>
 </li>
       <li><a href="source/cansig.html#cansig.tutorial.Dataset.md5sum">md5sum (cansig.tutorial.Dataset attribute)</a>
+</li>
+      <li><a href="source/cansig.filesys.html#cansig.filesys.MetasigDir.META">META (cansig.filesys.MetasigDir attribute)</a>, <a href="source/cansig.html#cansig.filesys.MetasigDir.META">[1]</a>
+</li>
+      <li><a href="source/cansig.html#cansig.multirun.MultirunDirectory.metasig_directories">metasig_directories (cansig.multirun.MultirunDirectory property)</a>
+</li>
+      <li><a href="source/cansig.filesys.html#cansig.filesys.MetasigDir">MetasigDir (class in cansig.filesys)</a>, <a href="source/cansig.html#cansig.filesys.MetasigDir">[1]</a>
 </li>
       <li><a href="source/cansig.cluster.html#cansig.cluster.leiden.NeighborsGraphConfig.method">method (cansig.cluster.leiden.NeighborsGraphConfig attribute)</a>
 
@@ -1463,35 +1493,35 @@
 </li>
       <li><a href="source/cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapSettings.score_name">score_name (cansig.metaanalysis.heatmap.HeatmapSettings attribute)</a>
 </li>
-      <li><a href="source/cansig.html#cansig.gsea.score_signature">score_signature() (in module cansig.gsea)</a>
-</li>
       <li><a href="source/cansig.models.html#cansig.models.api.SCVI">SCVI (class in cansig.models.api)</a>
 
       <ul>
         <li><a href="source/cansig.models.html#cansig.models.scvi.SCVI">(class in cansig.models.scvi)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/cansig.models.html#cansig.models.api.SCVIConfig">SCVIConfig (class in cansig.models.api)</a>
 
       <ul>
         <li><a href="source/cansig.models.html#cansig.models.scvi.SCVIConfig">(class in cansig.models.scvi)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/cansig.integration.data.html#cansig.integration.data.datasplitter.DataSplitter.setup">setup() (cansig.integration.data.datasplitter.DataSplitter method)</a>
 </li>
       <li><a href="source/cansig.integration.html#cansig.integration.model.CanSig.setup_anndata">setup_anndata() (cansig.integration.model.CanSig class method)</a>
 </li>
-      <li><a href="source/cansig.filesys.html#cansig.filesys.PostprocessingDir.SIG_CORRELATION_FILE">SIG_CORRELATION_FILE (cansig.filesys.PostprocessingDir attribute)</a>, <a href="source/cansig.html#cansig.filesys.PostprocessingDir.SIG_CORRELATION_FILE">[1]</a>
-</li>
-      <li><a href="source/cansig.filesys.html#cansig.filesys.PostprocessingDir.sig_correlation_output">sig_correlation_output (cansig.filesys.PostprocessingDir property)</a>, <a href="source/cansig.html#cansig.filesys.PostprocessingDir.sig_correlation_output">[1]</a>
+      <li><a href="source/cansig.filesys.html#cansig.filesys.MetasigDir.sig_output">sig_output (cansig.filesys.MetasigDir property)</a>, <a href="source/cansig.html#cansig.filesys.MetasigDir.sig_output">[1]</a>
 </li>
       <li><a href="source/cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.signature_columns">signature_columns (cansig.plotting.plotting.ScatterPlotConfig attribute)</a>
 </li>
       <li><a href="source/cansig.filesys.html#cansig.filesys.PostprocessingDir.signature_output">signature_output (cansig.filesys.PostprocessingDir property)</a>, <a href="source/cansig.html#cansig.filesys.PostprocessingDir.signature_output">[1]</a>
 </li>
       <li><a href="source/cansig.filesys.html#cansig.filesys.PostprocessingDir.SIGNATURE_SETTINGS">SIGNATURE_SETTINGS (cansig.filesys.PostprocessingDir attribute)</a>, <a href="source/cansig.html#cansig.filesys.PostprocessingDir.SIGNATURE_SETTINGS">[1]</a>
+</li>
+      <li><a href="source/cansig.filesys.html#cansig.filesys.MetasigDir.sim_output">sim_output (cansig.filesys.MetasigDir property)</a>, <a href="source/cansig.html#cansig.filesys.MetasigDir.sim_output">[1]</a>
+</li>
+      <li><a href="source/cansig.filesys.html#cansig.filesys.MetasigDir.SIMFILE">SIMFILE (cansig.filesys.MetasigDir attribute)</a>, <a href="source/cansig.html#cansig.filesys.MetasigDir.SIMFILE">[1]</a>
 </li>
       <li><a href="source/cansig.run.html#cansig.run.pipeline.single_integration_run">single_integration_run() (in module cansig.run.pipeline)</a>
 </li>
@@ -1564,6 +1594,8 @@
       <li><a href="source/cansig.filesys.html#cansig.filesys.IntegrationDir.valid">valid() (cansig.filesys.IntegrationDir method)</a>, <a href="source/cansig.html#cansig.filesys.IntegrationDir.valid">[1]</a>
 
       <ul>
+        <li><a href="source/cansig.filesys.html#cansig.filesys.MetasigDir.valid">(cansig.filesys.MetasigDir method)</a>, <a href="source/cansig.html#cansig.filesys.MetasigDir.valid">[1]</a>
+</li>
         <li><a href="source/cansig.filesys.html#cansig.filesys.PostprocessingDir.valid">(cansig.filesys.PostprocessingDir method)</a>, <a href="source/cansig.html#cansig.filesys.PostprocessingDir.valid">[1]</a>
 </li>
         <li><a href="source/cansig.html#cansig.multirun.MultirunDirectory.valid">(cansig.multirun.MultirunDirectory method)</a>
@@ -1573,10 +1605,10 @@
 </li>
       <li><a href="source/cansig.integration.data.html#cansig.integration.data.datasplitter.validate_data_split">validate_data_split() (in module cansig.integration.data.datasplitter)</a>
 </li>
-      <li><a href="source/cansig.cluster.html#cansig.cluster.leiden.BinSearchSettings.validate_end_greater_than_start">validate_end_greater_than_start() (cansig.cluster.leiden.BinSearchSettings class method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/cansig.cluster.html#cansig.cluster.leiden.BinSearchSettings.validate_end_greater_than_start">validate_end_greater_than_start() (cansig.cluster.leiden.BinSearchSettings class method)</a>
+</li>
       <li><a href="source/cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapItem.value">value (cansig.metaanalysis.heatmap.HeatmapItem attribute)</a>
 </li>
       <li><a href="source/cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapSettings.value_max">value_max (cansig.metaanalysis.heatmap.HeatmapSettings attribute)</a>
@@ -1628,6 +1660,11 @@
               
 <div class="toc-item">
   
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
 </div>
 
 <div class="toc-item">
@@ -1651,7 +1688,7 @@
   
     
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b"></script>
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
 
   <footer class="bd-footer"><div class="bd-footer__inner container">
   
@@ -1668,7 +1705,7 @@
   <div class="footer-item">
     
 <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.2.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.3.<br>
 </p>
 
   </div>

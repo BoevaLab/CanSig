@@ -13,8 +13,8 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
 
   
   <link rel="stylesheet"
@@ -23,11 +23,13 @@
     href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b">
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -59,7 +61,7 @@
     <div class="search-button__search-container">
       
 <form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
+  <i class="fa-solid fa-magnifying-glass"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form>
@@ -69,7 +71,7 @@
   
   <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
   <label class="sidebar-toggle primary-toggle" for="__primary">
-      <span class="fas fa-bars"></span>
+      <span class="fa-solid fa-bars"></span>
   </label>
   <div id="navbar-start">
     
@@ -171,16 +173,16 @@
     <div id="navbar-end">
       <div class="navbar-end-item navbar-end__search-button-container">
         
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
-  <i class="fas fa-search"></i>
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
 </button>
       </div>
       
       <div class="navbar-end-item">
-        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle">
-    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
-    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
-    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
 </span>
       </div>
       
@@ -193,7 +195,8 @@
           
           
           
-          <a href="https://github.com/BoevaLab/CanSig" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+          
+          <a href="https://github.com/BoevaLab/CanSig" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
@@ -205,14 +208,14 @@
 
   
   <div class="search-button-container--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
-  <i class="fas fa-search"></i>
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
 </button>
   </div>
 
   
   <label class="sidebar-toggle secondary-toggle" for="__secondary">
-      <span class="fas fa-outdent"></span>
+      <span class="fa-solid fa-outdent"></span>
   </label>
   
 
@@ -306,10 +309,10 @@
     <div class="sidebar-header-items__end">
       
       <div class="navbar-end-item">
-        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle">
-    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
-    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
-    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
 </span>
       </div>
       
@@ -322,7 +325,8 @@
           
           
           
-          <a href="https://github.com/BoevaLab/CanSig" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+          
+          <a href="https://github.com/BoevaLab/CanSig" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
@@ -524,7 +528,7 @@ In the end, produces summary.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.pipeline.single_integration_run">
-<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">single_integration_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integration_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig" title="cansig.models.scvi.SCVIConfig"><span class="pre">SCVIConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">clustering_configs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig" title="cansig.cluster.leiden.LeidenNClusterConfig"><span class="pre">LeidenNClusterConfig</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gsea_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionConfig" title="cansig.gsea.GeneExpressionConfig"><span class="pre">GeneExpressionConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">multirun_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.multirun.MultirunDirectory" title="cansig.multirun.MultirunDirectory"><span class="pre">MultirunDirectory</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotting_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig" title="cansig.plotting.plotting.ScatterPlotConfig"><span class="pre">ScatterPlotConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savesig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_genes_sig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corr_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pearson'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'spearman'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subclonalcnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'mwu'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ttest'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv_correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnvarray_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.run.pipeline.single_integration_run" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">single_integration_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integration_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig" title="cansig.models.scvi.SCVIConfig"><span class="pre">SCVIConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">clustering_configs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig" title="cansig.cluster.leiden.LeidenNClusterConfig"><span class="pre">LeidenNClusterConfig</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gsea_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionConfig" title="cansig.gsea.GeneExpressionConfig"><span class="pre">GeneExpressionConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">multirun_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.multirun.MultirunDirectory" title="cansig.multirun.MultirunDirectory"><span class="pre">MultirunDirectory</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotting_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig" title="cansig.plotting.plotting.ScatterPlotConfig"><span class="pre">ScatterPlotConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savesig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.run.pipeline.single_integration_run" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -547,27 +551,16 @@ In the end, produces summary.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.postprocessing.postprocess">
-<span class="sig-prename descclassname"><span class="pre">cansig.run.postprocessing.</span></span><span class="sig-name descname"><span class="pre">postprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latents_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig" title="cansig.cluster.leiden.LeidenNClusterConfig"><span class="pre">LeidenNClusterConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">gsea_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionConfig" title="cansig.gsea.GeneExpressionConfig"><span class="pre">GeneExpressionConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotting_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig" title="cansig.plotting.plotting.ScatterPlotConfig"><span class="pre">ScatterPlotConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savesig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_genes_sig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corr_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pearson'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'spearman'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subclonalcnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'mwu'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ttest'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv_correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnvarray_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cansig.run.postprocessing.postprocess" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cansig.run.postprocessing.</span></span><span class="sig-name descname"><span class="pre">postprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latents_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig" title="cansig.cluster.leiden.LeidenNClusterConfig"><span class="pre">LeidenNClusterConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">gsea_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionConfig" title="cansig.gsea.GeneExpressionConfig"><span class="pre">GeneExpressionConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotting_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig" title="cansig.plotting.plotting.ScatterPlotConfig"><span class="pre">ScatterPlotConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savesig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cansig.run.postprocessing.postprocess" title="Permalink to this definition">#</a></dt>
 <dd><dl class="simple">
 <dt>Main function of the postprocessing module. Will perform all steps of postprocessing ie:</dt><dd><ul class="simple">
 <li><p>perform clustering with a specific amount of clusters</p></li>
-<li><p>perform GSEA with a user-chosen gene set</p></li>
 <li><dl class="simple">
 <dt>by default (optional) plot the latent representations colored according to batch ID, cluster</dt><dd><p>label and optionally known precomputed signatures</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>by default (optional) save the results of the differential gene expression analysis,</dt><dd><p>score all cells according to the de novo found signatures and compute correlation
-between de novo found signatures</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>optional step (skipped by default) compute the differential CNVs between the clusters</dt><dd><p>and save the results</p>
-</dd>
-</dl>
-</li>
+<li><p>by default (optional) save the results of the differential gene expression analysis</p></li>
 </ul>
 </dd>
 </dl>
@@ -584,18 +577,7 @@ integration module (see cansig.run.integration for more details)</p></li>
 <li><p><strong>gsea_config</strong> – configuration to run GSEA (see cansig.gsea for more details)</p></li>
 <li><p><strong>plotting_config</strong> – configuration for plotting (see cansig.plotting for more details)</p></li>
 <li><p><strong>plot</strong> – whether to produce &amp; save the plots or not</p></li>
-<li><p><strong>savesig</strong> – whether to save the de novo signatures and score the cells according to these</p></li>
-<li><p><strong>n_genes_sig</strong> – number of genes used to define a signature to score the cells</p></li>
-<li><p><strong>corr_method</strong> – correlation (spearman or pearson) to compute the correlation between
-de novo signatures</p></li>
-<li><p><strong>diffcnv</strong> – whether to perform differential CNV analysis</p></li>
-<li><p><strong>diffcnv_method</strong> – either mwu or ttest, the statistical test used to perform the differential
-CNV analysis</p></li>
-<li><p><strong>diffcnv_correction</strong> – whether to compute the FDR corrected results for the differential
-CNV analysis</p></li>
-<li><p><strong>cnvarray_path</strong> – optional, if computing the differential CNV analysis on an anndata object
-not preprocessed using our preprocessing module, the path to the CNV calling for each
-cell</p></li>
+<li><p><strong>savesig</strong> – whether to save the results of the differential gene expression analysis</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -611,10 +593,6 @@ cell</p></li>
 <li><p>settings for GSEA</p></li>
 <li><p>(by default) scatter plot of the latent space</p></li>
 <li><p>(by default) differential gene expression results</p></li>
-<li><p>(by default) cell score for each of the de novo found signatures</p></li>
-<li><p>(by default) correlation between de novo found signatures</p></li>
-<li><p>GSEA results for each cluster</p></li>
-<li><p>(optionally) results for the differential CNV analysis</p></li>
 </ul>
 </dd>
 </dl>
@@ -647,7 +625,7 @@ cell</p></li>
 <div class="toc-item">
   
 <div class="tocsection onthispage">
-    <i class="fas fa-list"></i> On this page
+    <i class="fa-solid fa-list"></i> On this page
 </div>
 <nav id="bd-toc-nav" class="page-toc">
     <ul class="visible nav section-nav flex-column">
@@ -959,13 +937,18 @@ cell</p></li>
 
 <div class="toc-item">
   
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
 </div>
 
 <div class="toc-item">
   
 <div class="tocsection sourcelink">
     <a href="../_sources/source/cansig.run.rst.txt">
-        <i class="fas fa-file-alt"></i> Show Source
+        <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
 </div>
 
@@ -988,7 +971,7 @@ cell</p></li>
   
     
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b"></script>
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
 
   <footer class="bd-footer"><div class="bd-footer__inner container">
   
@@ -1005,7 +988,7 @@ cell</p></li>
   <div class="footer-item">
     
 <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.2.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.3.<br>
 </p>
 
   </div>

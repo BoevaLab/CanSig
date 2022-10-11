@@ -13,8 +13,8 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
 
   
   <link rel="stylesheet"
@@ -23,11 +23,13 @@
     href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b">
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -59,7 +61,7 @@
     <div class="search-button__search-container">
       
 <form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
+  <i class="fa-solid fa-magnifying-glass"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form>
@@ -69,7 +71,7 @@
   
   <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
   <label class="sidebar-toggle primary-toggle" for="__primary">
-      <span class="fas fa-bars"></span>
+      <span class="fa-solid fa-bars"></span>
   </label>
   <div id="navbar-start">
     
@@ -171,16 +173,16 @@
     <div id="navbar-end">
       <div class="navbar-end-item navbar-end__search-button-container">
         
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
-  <i class="fas fa-search"></i>
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
 </button>
       </div>
       
       <div class="navbar-end-item">
-        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle">
-    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
-    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
-    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
 </span>
       </div>
       
@@ -193,7 +195,8 @@
           
           
           
-          <a href="https://github.com/BoevaLab/CanSig" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+          
+          <a href="https://github.com/BoevaLab/CanSig" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
@@ -205,14 +208,14 @@
 
   
   <div class="search-button-container--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
-  <i class="fas fa-search"></i>
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
 </button>
   </div>
 
   
   <label class="sidebar-toggle secondary-toggle" for="__secondary">
-      <span class="fas fa-outdent"></span>
+      <span class="fa-solid fa-outdent"></span>
   </label>
   
 
@@ -306,10 +309,10 @@
     <div class="sidebar-header-items__end">
       
       <div class="navbar-end-item">
-        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle">
-    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
-    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
-    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
 </span>
       </div>
       
@@ -322,7 +325,8 @@
           
           
           
-          <a href="https://github.com/BoevaLab/CanSig" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+          
+          <a href="https://github.com/BoevaLab/CanSig" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
@@ -721,6 +725,22 @@
 <li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.IntegrationDir.valid"><code class="docutils literal notranslate"><span class="pre">IntegrationDir.valid()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir"><code class="docutils literal notranslate"><span class="pre">MetasigDir</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.CNVFILE"><code class="docutils literal notranslate"><span class="pre">MetasigDir.CNVFILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.FIGURES"><code class="docutils literal notranslate"><span class="pre">MetasigDir.FIGURES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.GSEAFILE"><code class="docutils literal notranslate"><span class="pre">MetasigDir.GSEAFILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.META"><code class="docutils literal notranslate"><span class="pre">MetasigDir.META</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.SIMFILE"><code class="docutils literal notranslate"><span class="pre">MetasigDir.SIMFILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.dcnv_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.dcnv_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.figures_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.figures_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.gsea_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.gsea_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.make_fig_dir"><code class="docutils literal notranslate"><span class="pre">MetasigDir.make_fig_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.make_sig_dir"><code class="docutils literal notranslate"><span class="pre">MetasigDir.make_sig_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.sig_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.sig_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.sim_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.sim_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.valid"><code class="docutils literal notranslate"><span class="pre">MetasigDir.valid()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.CELL_SCORE_FILE"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.CELL_SCORE_FILE</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.CLUSTER_SETTINGS"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.CLUSTER_SETTINGS</span></code></a></li>
@@ -729,7 +749,6 @@
 <li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.INTEGRATION_SETTINGS"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.INTEGRATION_SETTINGS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.LABELS"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.LABELS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.SIGNATURE_SETTINGS"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.SIGNATURE_SETTINGS</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.SIG_CORRELATION_FILE"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.SIG_CORRELATION_FILE</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.cell_score_output"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.cell_score_output</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.cluster_labels"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.cluster_labels</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.cluster_settings"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.cluster_settings</span></code></a></li>
@@ -739,7 +758,6 @@
 <li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.integration_settings"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.integration_settings</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.make_sig_dir"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.make_sig_dir()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.scatter_output"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.scatter_output</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.sig_correlation_output"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.sig_correlation_output</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.signature_output"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.signature_output</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.valid"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.valid()</span></code></a></li>
 </ul>
@@ -784,13 +802,18 @@
               
 <div class="toc-item">
   
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
 </div>
 
 <div class="toc-item">
   
 <div class="tocsection sourcelink">
     <a href="../_sources/source/modules.rst.txt">
-        <i class="fas fa-file-alt"></i> Show Source
+        <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
 </div>
 
@@ -813,7 +836,7 @@
   
     
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b"></script>
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
 
   <footer class="bd-footer"><div class="bd-footer__inner container">
   
@@ -830,7 +853,7 @@
   <div class="footer-item">
     
 <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.2.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.2.3.<br>
 </p>
 
   </div>
