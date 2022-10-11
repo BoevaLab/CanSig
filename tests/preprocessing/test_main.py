@@ -1,7 +1,9 @@
 import numpy as np
 import pytest  # pytype: disable=import-error
 
+
 from cansig import preprocessing  # pytype: disable=import-error
+
 from .utils import generate_adata, gene_annotation
 
 _EXPECTED_OBS = [
@@ -27,14 +29,15 @@ _EXPECTED_VAR = ["mt", "chromosome", "start", "end", "cnv_called"]
 
 def infercnv_(*args, **kwargs):
     adata = args[0]
-    X_cnv = np.zeros(adata.shape)
+    X_cnv = np.zeros((100, 100))
     X_cnv[adata.obs["celltype"] == "evil", :] = 1.0
     return {"chr_pos": {"chr1": 0, "chr2": 100}}, X_cnv
 
 
 @pytest.mark.parametrize("xtype", [None, "csc", "csr"])
 def test_integation(monkeypatch, xtype):
-    monkeypatch.setattr("infercnvpy.tl.infercnv", infercnv_)
+    monkeypatch.setattr("cansig._preprocessing.infercnv.infercnv", infercnv_)
+
     adatas = []
     for i in range(2):
         adata = generate_adata(
