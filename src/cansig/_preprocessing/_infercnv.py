@@ -166,7 +166,7 @@ def _running_mean(x: Union[np.ndarray, scipy.sparse.spmatrix], n: int = 50, step
     )
 
     if n > x.shape[1]:
-        smoothed_x
+        smoothed_x = smoothed_x[1:10]
 
     return smoothed_x[:, np.arange(0, smoothed_x.shape[1], step)]
 
