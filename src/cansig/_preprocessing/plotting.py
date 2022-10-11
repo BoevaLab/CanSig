@@ -88,19 +88,18 @@ def plot_chromosomal_heatmap(
     )
 
 
-def _total_counts_plot(ax: plt.Axes, total_counts: np.ndarray, min_counts: int, max_counts: int):
+def _total_counts_plot(ax: plt.Axes, total_counts: np.ndarray, min_counts: int, max_counts: int = 4000):
     sns.histplot(total_counts, kde=False, ax=ax)
     ax.axvline(x=min_counts, color="red")
     ax.set_xlabel("Count depth")
     ax.set_ylabel("Frequency")
 
-    axin = inset_axes(ax, width="50%", height="50%")
-    sns.histplot(total_counts[total_counts <= 4_000], kde=False, ax=axin, binwidth=100)
-    axin.axvline(x=min_counts, color="red")
-    axin.set_xlabel("Count depth", **FONT_DICT)
-    axin.set_ylabel("")
-
-    # TODO: Add inset zoomed in on min_counts.
+    if np.sum(total_counts <= max_counts) > 200:
+        axin = inset_axes(ax, width="50%", height="50%")
+        sns.histplot(total_counts[total_counts <= max_counts], kde=False, ax=axin, binwidth=50)
+        axin.axvline(x=min_counts, color="red")
+        axin.set_xlabel("Count depth", **FONT_DICT)
+        axin.set_ylabel("")
 
 
 def _n_genes_plot(ax: plt.Axes, n_genes: np.ndarray, min_genes: int):
