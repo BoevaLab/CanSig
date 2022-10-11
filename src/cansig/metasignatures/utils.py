@@ -191,8 +191,10 @@ def plot_metamembership(
 
     latent_representations = pd.read_csv(integration_path / "latent-representations.csv", index_col=0, header=None)
 
-    adata.obs = pd.concat([adata.obs, prob_metamembership], axis=1, join="inner")
-    adata.obs = pd.concat([adata.obs, metamembership.astype("category")], axis=1, join="inner")
+    adata_copy = adata.copy()
+    adata_copy = adata_copy[prob_metamembership.index, :].copy()
+    adata_copy.obs = pd.concat([adata_copy.obs, prob_metamembership], axis=1, join="inner")
+    adata_copy.obs = pd.concat([adata_copy.obs, metamembership.astype("category")], axis=1, join="inner")
 
     plotting_config = plotting.ScatterPlotConfig(
         dim_reduction="both",
@@ -202,12 +204,10 @@ def plot_metamembership(
     )
 
     scatter = plotting.ScatterPlot(plotting_config)
-    fig = scatter.plot_scatter(adata=adata, representations=latent_representations)
+    fig = scatter.plot_scatter(adata=adata_copy, representations=latent_representations)
     fig.savefig(resdir / "umap-metamembership.png", bbox_inches="tight")
 
-    adata.obs.drop(
-        ["metamembership"] + [f"metasig{cl+1}" for cl in range(prob_metamembership.shape[1])], axis=1, inplace=True
-    )
+    del adata_copy
 
 
 def plot_score_UMAP(

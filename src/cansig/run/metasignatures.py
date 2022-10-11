@@ -249,12 +249,14 @@ def run_metasignatures(
         # the user wants to perform the CNV analysis
         _LOGGER.info("Performing differential CNV analysis.")
 
-        adata.obs = pd.concat([adata.obs, cell_metamembership], axis=1)
+        adata_copy = adata.copy()
+        adata_copy = adata_copy[cell_metamembership.index, :].copy()
+        adata_copy.obs = pd.concat([adata_copy.obs, cell_metamembership], axis=1, join="inner")
 
         if cnvarray_path is None:
             print("Computing the differential CNVs using the provided AnnData object")
             diffCNVs = cnv.find_differential_cnv(
-                data=adata,
+                data=adata_copy,
                 diff_method=diffcnv_method,
                 correction=diffcnv_correction,
                 subclonal=subclonalcnv,

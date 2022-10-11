@@ -164,12 +164,12 @@ def get_diff_cnv(
         diff_function = ttest_ind
 
     all_results = defaultdict(list)
-    for cluster in sorted(cl_labels[cluster_key].unique()):
+    for cluster in sorted(cl_labels[cluster_key].astype(str).unique()):
         _LOGGER.info(f"Starting differential CNV analysis for cluster {cluster}")
 
         # separate the array into the CNVs associated with a cluster and the rest
-        cl_cnv = cnv_array[cl_labels[cluster_key] == cluster]
-        rest_cnv = cnv_array[cl_labels[cluster_key] != cluster]
+        cl_cnv = cnv_array[cl_labels[cluster_key].astype(str) == cluster]
+        rest_cnv = cnv_array[cl_labels[cluster_key].astype(str) != cluster]
 
         for col in cl_cnv:
             # check at least one value is different to input into the test to avoid ValueError, if not
