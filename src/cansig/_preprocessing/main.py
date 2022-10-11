@@ -1,17 +1,20 @@
 from typing import List, Union, Tuple, Optional
 
-import anndata as ad  # pytype: disable=import-error
-import pandas as pd  # pytype: disable=import-error
+# pytype: disable=import-error
+import anndata as ad
+import pandas as pd
 
 from cansig._preprocessing.annotation import AnnotationConfig, CellStatusConfig, CellAnnotation
 from cansig._preprocessing.data import DataRecorder
 from cansig._preprocessing.infercnv import InferCNVConfig, InferCNV, get_reference_groups, ReferenceConfig
+from cansig._preprocessing.plotting import plot_chromosomal_heatmap
 from cansig._preprocessing.quality_control import quality_control
 from cansig._preprocessing.scoring import SignatureScorer
 from cansig._preprocessing.subclonal import Subclonal, SubclonalConfig
 from cansig._preprocessing.utils import check_min_malignant_cells, check_min_reference_cells, load_adatas, pop_adatas
-from cansig._preprocessing.plotting import plot_chromosomal_heatmap
 from cansig.types import Pathlike, ScoringDict, GeneList
+
+# pytype: enable=import-error
 
 
 def preprocessing(
@@ -32,14 +35,15 @@ def preprocessing(
     reference_key: str = "reference",
     window_size: int = 200,
     step: int = 5,
+    threshold: float = 0.1,
     cnv_key: str = "cnv",
     scoring_dict: Optional[ScoringDict] = None,
     g2m_genes: Optional[GeneList] = None,
     s_genes: Optional[GeneList] = None,
     figure_dir: Optional[Pathlike] = None,
     copy: bool = False,
-    threshold: float = 0.6,
-    depth: int = 6,
+    threshold_annotation: float = 0.6,
+    depth_annotation: int = 6,
 ) -> ad.AnnData:
     """
     This is the pre-processing module of CanSig. For every batch several preprocessing
@@ -107,8 +111,8 @@ def preprocessing(
         figure_dir: Path to directory to store figures.
         copy: If True, `input_adatas` remains unchanged. (This is only advised for small
             datasets.)
-        threshold:
-        depth:
+        threshold_annotation:
+        depth_annotation:
 
     Returns:
         combined and preprocessed AnnData.
@@ -131,10 +135,13 @@ def preprocessing(
     infercnv_config = InferCNVConfig(
         step=step,
         window_size=window_size,
+        threshold=threshold,
         cnv_key=cnv_key,
         reference_key=reference_key,
     )
-    annotation_config = AnnotationConfig(cell_status=cell_status_config, depth=depth, threshold=threshold)
+    annotation_config = AnnotationConfig(
+        cell_status=cell_status_config, depth=depth_annotation, threshold=threshold_annotation
+    )
     subclonal_config = SubclonalConfig(
         batch_id_column=batch_id_column,
         cnv_key=cnv_key,
@@ -151,8 +158,9 @@ def preprocessing(
     )
     subclonal = Subclonal(subclonal_config)
 
-    input_adatas, gene_list = load_adatas(input_adatas, batch_id_column)
-    cnv = InferCNV(infercnv_config, gene_order=gene_order, gene_list=gene_list)
+    input_adatas, mean_counts_per_gene = load_adatas(input_adatas, batch_id_column)
+    gene_list = mean_counts_per_gene.index.to_list()
+    cnv = InferCNV(infercnv_config, gene_order=gene_order, mean_counts_per_gene=mean_counts_per_gene)
     signature_scorer = SignatureScorer(
         scoring_dict,
         gene_list,
@@ -222,6 +230,7 @@ def preprocessing(
                 sample_id=adata.obs[batch_id_column][0],
                 subclonal_key=subclonal_config.subclonal_key,
                 malignant_key=annotation_config.malignant_combined,
+                malignant_cat=cell_status_config.malignant,
                 cnv_key=infercnv_config.cnv_key,
             )
 

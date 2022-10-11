@@ -1,6 +1,10 @@
 import pytest  # pytype: disable=import-error
 
-from cansig._preprocessing.annotation import CellStatusConfig, CellAnnotation, AnnotationConfig
+from cansig._preprocessing.annotation import (  # pytype: disable=import-error
+    CellStatusConfig,
+    CellAnnotation,
+    AnnotationConfig,
+)  # pytype: disable=import-error
 from tests.preprocessing.utils import generate_adata, tuples_to_list
 
 

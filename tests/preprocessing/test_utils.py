@@ -4,6 +4,7 @@ import anndata  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
 import pytest  # pytype: disable=import-error
 
+# pytype: disable=import-error
 from cansig._preprocessing.utils import (
     check_min_malignant_cells,
     check_min_reference_cells,
@@ -13,6 +14,8 @@ from cansig._preprocessing.utils import (
 )
 from .utils import generate_adata
 
+# pytype: enable=import-error
+
 
 @pytest.fixture
 def adatas() -> List[anndata.AnnData]:
@@ -20,7 +23,7 @@ def adatas() -> List[anndata.AnnData]:
     gene_names = [[f"gene_{i}" for i in genes] for genes in [range(4, 10), range(3, 8), range(5, 8)]]
     for i, gene_name in enumerate(gene_names):
         adata = generate_adata(10, len(gene_name), var_names=gene_name, sample_id=f"sample_{i}")
-        adata.X = np.random.normal(size=(10, len(gene_name)))
+        adata.X = np.ones((10, len(gene_name)))
         adatas.append(adata)
     return adatas
 
@@ -98,6 +101,6 @@ class TestLoadAdata:
 
 class TestValidateAdatas:
     def test_validate_adatas_gene_list(self, adatas):
-        gene_list = validate_adatas(adatas)
-        assert isinstance(gene_list, list)
-        assert set(gene_list) == {f"gene_{i}" for i in range(5, 8)}
+        mean_counts_per_gene = validate_adatas(adatas)
+        assert set(mean_counts_per_gene.index) == {f"gene_{i}" for i in range(5, 8)}
+        assert np.allclose(mean_counts_per_gene.values, 1.0)

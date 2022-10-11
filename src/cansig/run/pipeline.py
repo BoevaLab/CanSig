@@ -9,18 +9,22 @@ import logging
 import pathlib
 from typing import Iterable, List, Literal, Union  # pytype: disable=not-supported-yet
 
-import cansig.cluster.api as cluster
-import cansig.filesys as fs
-import cansig.gsea as gsea
-import cansig.logger as clogger
-import cansig.plotting.plotting as plotting
-import cansig.models.api as models
-import cansig.models.scvi as _scvi
-import cansig.multirun as mr
 
-import cansig.run.integration as integration
-import cansig.run.postprocessing as postprocessing
-import cansig.run.metasignatures as run_metasig
+import cansig.cluster.api as cluster # pytype: disable=import-error
+import cansig.filesys as fs # pytype: disable=import-error
+import cansig.gsea as gsea # pytype: disable=import-error
+import cansig.logger as clogger # pytype: disable=import-error
+import cansig.plotting.plotting as plotting # pytype: disable=import-error
+import cansig.models.api as models # pytype: disable=import-error
+import cansig.models.scvi as _scvi # pytype: disable=import-error
+import cansig.multirun as mr # pytype: disable=import-error
+
+import cansig.run.integration as integration # pytype: disable=import-error
+import cansig.run.postprocessing as postprocessing # pytype: disable=import-error
+import cansig.run.metasignatures as run_metasig # pytype: disable=import-error
+
+import cansig.run.heatmap as run_heatmap  # pytype: disable=import-error
+
 
 _TESTTYPE = Literal["mwu", "ttest"]
 _CORRTYPE = Literal["pearson", "spearman"]

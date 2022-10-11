@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd  # pytype: disable=import-error
 import pytest  # pytype: disable=import-error
 
-from cansig._preprocessing.infercnv import InferCNV, InferCNVConfig
-from tests.preprocessing.utils import generate_adata, is_normalized
+from cansig._preprocessing.infercnv import InferCNV, InferCNVConfig  # pytype: disable=import-error
+from tests.preprocessing.utils import generate_adata, is_normalized  # pytype: disable=import-error
 
 
 def _normalized(*args, **kwargs):
@@ -33,9 +33,15 @@ def gene_list():
 
 
 @pytest.fixture()
-def cnv(gene_annotation):
+def mean_counts_per_gene(gene_list):
+    columns = gene_list
+    return pd.DataFrame(np.ones((400, 1)), index=columns)
+
+
+@pytest.fixture()
+def cnv(gene_annotation, mean_counts_per_gene):
     infercnv_config = InferCNVConfig()
-    cnv = InferCNV(infercnv_config, gene_order=gene_annotation, gene_list=gene_annotation.index.tolist())
+    cnv = InferCNV(infercnv_config, gene_order=gene_annotation, mean_counts_per_gene=mean_counts_per_gene)
     return cnv
 
 

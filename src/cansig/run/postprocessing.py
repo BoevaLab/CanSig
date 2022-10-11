@@ -1,16 +1,18 @@
-import logging
 
 import argparse
+import logging
 import pathlib
+from typing import Optional, Literal  # pytype: disable=not-supported-yet
 
 import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 
-import cansig.cluster.api as cluster
-import cansig.filesys as fs
-import cansig.gsea as gsea
-import cansig.logger as clogger
-import cansig.plotting.plotting as plotting
+import cansig.cluster.api as cluster # pytype: disable=import-error
+import cansig.filesys as fs # pytype: disable=import-error
+import cansig.gsea as gsea # pytype: disable=import-error
+import cansig.logger as clogger # pytype: disable=import-error
+import cansig.plotting.plotting as plotting # pytype: disable=import-error
+
 
 LOGGER = logging.getLogger(__name__)
 
