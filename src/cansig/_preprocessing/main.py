@@ -4,7 +4,7 @@ from typing import List, Union, Tuple, Optional
 import anndata as ad
 import pandas as pd
 
-from cansig._preprocessing.annotation import AnnotationConfig, CellStatusConfig, CellAnnotation
+from cansig._preprocessing.annotation import AnnotationConfig, CellStatus, CellAnnotation
 from cansig._preprocessing.data import DataRecorder
 from cansig._preprocessing.infercnv import InferCNVConfig, InferCNV, get_reference_groups, ReferenceConfig
 from cansig._preprocessing.plotting import plot_chromosomal_heatmap
@@ -130,7 +130,7 @@ def preprocessing(
     if copy:
         input_adatas = input_adatas.copy()
 
-    cell_status_config = CellStatusConfig()
+    cell_status = CellStatus()
     reference_config = ReferenceConfig()
     infercnv_config = InferCNVConfig(
         step=step,
@@ -140,13 +140,13 @@ def preprocessing(
         reference_key=reference_key,
     )
     annotation_config = AnnotationConfig(
-        cell_status=cell_status_config, depth=depth_annotation, threshold=threshold_annotation
+        cell_status=cell_status, depth=depth_annotation, threshold=threshold_annotation
     )
     subclonal_config = SubclonalConfig(
         batch_id_column=batch_id_column,
         cnv_key=cnv_key,
         malignant_key=annotation_config.malignant_combined,
-        malignant_status=cell_status_config.malignant,
+        malignant_status=cell_status.malignant,
     )
     recorder = DataRecorder(batch_id_column=batch_id_column)
     cell_annotation = CellAnnotation(
@@ -167,7 +167,7 @@ def preprocessing(
         g2m_genes,
         s_genes,
         malignant_key=annotation_config.malignant_combined,
-        malignant_status=cell_status_config.malignant,
+        malignant_status=cell_status.malignant,
     )
 
     for adata in pop_adatas(input_adatas, gene_list):
@@ -187,7 +187,7 @@ def preprocessing(
             adata,
             malignant_key=annotation_config.malignant_annotation,
             min_malignant_cells=min_malignant_cells,
-            malignant_celltype=cell_status_config.malignant,
+            malignant_celltype=cell_status.malignant,
         ):
             continue
 
@@ -217,7 +217,7 @@ def preprocessing(
             adata,
             malignant_key=annotation_config.malignant_combined,
             min_malignant_cells=min_malignant_cells,
-            malignant_celltype=cell_status_config.malignant,
+            malignant_celltype=cell_status.malignant,
         ):
             continue
 
@@ -230,7 +230,7 @@ def preprocessing(
                 sample_id=adata.obs[batch_id_column][0],
                 subclonal_key=subclonal_config.subclonal_key,
                 malignant_key=annotation_config.malignant_combined,
-                malignant_cat=cell_status_config.malignant,
+                malignant_cat=cell_status.malignant,
                 cnv_key=infercnv_config.cnv_key,
             )
 

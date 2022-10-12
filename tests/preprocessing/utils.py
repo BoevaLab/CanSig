@@ -1,10 +1,22 @@
+from typing import Optional
+
 import anndata  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
+import scipy.sparse as sparse  # pytype: disable=import-error
 
 
-def generate_adata(n_cells, n_genes, obs_dict=None, obs_names=None, var_names=None, sample_id=None):
-    adata = anndata.AnnData(X=np.ones((n_cells, n_genes)))
+def generate_adata(
+    n_cells, n_genes, obs_dict=None, obs_names=None, var_names=None, sample_id=None, xtype: Optional[str] = None
+):
+
+    X = np.ones((n_cells, n_genes))
+    if xtype == "csc":
+        X = sparse.csc_matrix(X)
+    if xtype == "csr":
+        X = sparse.csr_matrix(X)
+
+    adata = anndata.AnnData(X=X)
 
     if obs_names is None:
         adata.obs_names = [f"cell_{i}" for i in range(n_cells)]

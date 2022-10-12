@@ -2,13 +2,12 @@ import logging
 from typing import Union, List, Set, Dict, Tuple, Iterable
 
 import anndata  # pytype: disable=import-error
-import infercnvpy as cnv_base  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 
 from cansig._preprocessing.utils import Normalized  # pytype: disable=import-error
 from cansig.types import Pathlike  # pytype: disable=import-error
-
+from cansig._preprocessing._infercnv import infercnv  # pytype: disable=import-error
 
 _LOGGER = logging.Logger(__name__)
 
@@ -58,7 +57,7 @@ class InferCNV:
         bdata = adata[:, adata.var[self._config.cnv_called]].copy()
 
         with Normalized(bdata):
-            chr_position, X_cnv = cnv_base.tl.infercnv(
+            chr_position, X_cnv = infercnv(
                 bdata,
                 reference_key=self._config.reference_key,
                 reference_cat=reference_cat,
@@ -79,8 +78,7 @@ class InferCNV:
         cnv_called = (
             adata.var[self._config.chromosome].notnull()
             & ~adata.var[self._config.chromosome].isin(self._config.exclude_chromosome)
-            & self.mean_counts_per_gene.values.ravel()
-            >= self._config.threshold
+            & (self.mean_counts_per_gene.values.ravel() >= self._config.threshold)
         )
         return cnv_called
 
