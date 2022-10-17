@@ -127,12 +127,15 @@ def get_cell_metamembership(cluster_memb: List, sig_index: List[List], clusters:
 
     cell_metamembership = cell_metamembership.idxmax(axis=1).to_frame()
 
-    prob_cellmetamembership.columns = "metasig" + (prob_cellmetamembership.columns.astype(int) + 1).astype(str)
-    cell_metamembership.columns = ["metamembership"]
+    renaming = {-1: "outlier"}
+    for cl in prob_cellmetamembership.columns:
+        if cl >= 0:
+            renaming[cl] = "metasig" + str(int(cl) + 1)
 
-    cell_metamembership = cell_metamembership.replace(
-        {cl: f"metasig{cl+1}" for cl in cell_metamembership.metamembership.unique()}
-    )
+    prob_cellmetamembership = prob_cellmetamembership.rename(columns=renaming)
+
+    cell_metamembership.columns = ["metamembership"]
+    cell_metamembership = cell_metamembership.replace(renaming)
 
     return cell_metamembership, prob_cellmetamembership
 
@@ -185,6 +188,8 @@ def run_metasignatures(
         sim=sim,
         signatures=resdict["signatures"],
         original_clustering=np.ones(len(resdict["signatures"])),
+        runs=resdict["runs"],
+        outliers=np.ones(len(resdict["signatures"])),
         n_clusters=2,
         threshold=threshold,
     )

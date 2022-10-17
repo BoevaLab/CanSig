@@ -10,7 +10,7 @@ import json  # pytype: disable=import-error
 import umap  # pytype: disable=import-error
 from sklearn.manifold import MDS  # pytype: disable=import-error
 
-import cansig.plotting.plotting as plotting
+import cansig.plotting.plotting as plotting  # pytype: disable=import-error
 
 # Retrieve signatures from directory
 
@@ -100,7 +100,10 @@ def score_sig(adata: ad.AnnData, signature: Union[np.ndarray, List[str]], score_
 def rename_metasig(meta_signatures):
     nmeta = {}
     for k, v in meta_signatures.items():
-        nmeta[f"metasig{k+1}"] = np.array(v)
+        if k >= 0:
+            nmeta[f"metasig{int(k+1)}"] = np.array(v)
+        else:
+            nmeta["outlier"] = np.array(v)
     return nmeta
 
 
@@ -198,7 +201,7 @@ def plot_metamembership(
 
     plotting_config = plotting.ScatterPlotConfig(
         dim_reduction="both",
-        signature_columns=["metamembership"] + [f"metasig{cl+1}" for cl in range(prob_metamembership.shape[1])],
+        signature_columns=metamembership.columns + prob_metamembership.columns,
         batch_column="sample_id",
         ncols=2,
     )
