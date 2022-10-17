@@ -11,13 +11,13 @@ import pandas as pd  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
 import pathlib as pl  # pytype: disable=import-error
 
-import cansig.cnvanalysis.differentialcnvs as cnv
-import cansig.logger as clogger
-import cansig.metasignatures.utils as utils
-import cansig.metasignatures.WRC as WRC
-import cansig.metasignatures.clustering as clustering
-import cansig.gsea as gsea
-import cansig.filesys as fs
+import cansig.cnvanalysis.differentialcnvs as cnv  # pytype: disable=import-error
+import cansig.logger as clogger  # pytype: disable=import-error
+import cansig.metasignatures.utils as utils  # pytype: disable=import-error
+import cansig.metasignatures.WRC as WRC  # pytype: disable=import-error
+import cansig.metasignatures.clustering as clustering  # pytype: disable=import-error
+import cansig.gsea as gsea  # pytype: disable=import-error
+import cansig.filesys as fs  # pytype: disable=import-error
 
 _LOGGER = logging.getLogger(__name__)
 _TESTTYPE = Literal["mwu", "ttest"]
@@ -219,6 +219,8 @@ def run_metasignatures(
     # TODO(Josephine, Florian): select the best integration run for viz
     if plots:
         adata = sc.read_h5ad(data_path)
+        # make sure that even in the CanSig case, we don't use the healthy cells
+        adata = adata[cell_metamembership.index].copy()
 
         utils.plot_score_UMAP(adata=adata, meta_signatures=meta_signatures, resdir=resdir.figures_output)
 

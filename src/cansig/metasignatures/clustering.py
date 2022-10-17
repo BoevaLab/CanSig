@@ -6,7 +6,7 @@ import pandas as pd  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
 from sklearn.cluster import AgglomerativeClustering  # pytype: disable=import-error
 
-from cansig.metasignatures.WRC import WRC, WeightProgram
+from cansig.metasignatures.WRC import WRC, WeightProgram  # pytype: disable=import-error
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -105,6 +105,7 @@ def get_final_clustering(
         original_clustering=clusters,
         n_clusters=n_clusters + 1,
         corr_previous=correlation_iteration,
+        threshold=threshold,
     )
 
 
