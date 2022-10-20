@@ -64,6 +64,8 @@ def save_metasignatures(meta_signatures: Dict[str, np.ndarray], res_dir: pl.Path
         `get_metasignatures`, function used to compute metasignatures
     """
     for cluster in meta_signatures:
+        if cluster == "outlier":
+            continue
         name = f"{cluster}.csv"
         pd.DataFrame(meta_signatures[cluster]).to_csv(res_dir / name)
 

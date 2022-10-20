@@ -73,7 +73,13 @@ class WeightProgram:
         return (self.length + 1 - i) ** self.p - (self.length - i) ** self.p
 
 
-def get_similarity_matrix(signatures: List[List[str]]) -> np.ndarray:
+def _jaccard(list1, list2):
+    intersection = len(list(set(list1).intersection(list2)))
+    union = (len(list1) + len(list2)) - intersection
+    return float(intersection) / union
+
+
+def get_similarity_matrix_WRC(signatures: Union[List[List[str]], np.ndarray]) -> np.ndarray:
     """Returns the similarity matrix between signatures"""
     weighted_spearman = WRC(length=len(signatures[0]), weigher=WeightProgram(length=len(signatures[0]), p=6).wprogram)
     results = np.zeros((len(signatures), len(signatures)))
@@ -84,3 +90,14 @@ def get_similarity_matrix(signatures: List[List[str]]) -> np.ndarray:
                 results[i, j] = corr
                 results[j, i] = corr
     return results
+
+
+def get_similarity_matrix_jaccard(signatures: np.ndarray) -> np.ndarray:
+    n_sigs = signatures.shape[0]
+    pairwise = np.identity(n_sigs)
+    for i in tqdm(range(len(signatures))):
+        for j in range(i + 1, len(signatures)):
+            similarity = _jaccard(signatures[i], signatures[j])
+            pairwise[i, j] = similarity
+            pairwise[j, i] = similarity
+    return pairwise

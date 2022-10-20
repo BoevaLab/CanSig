@@ -194,10 +194,11 @@ def _sort_cluster_by_strength(orig_clusters: np.ndarray, sim: np.ndarray, idx: n
         out_average = np.append(sorted_sim[0:mini, mini:maxi].ravel(), sorted_sim[maxi:n_max, mini:maxi].ravel()).mean()
         diff_avg_sim.append(in_average - out_average)
     cluster_order = np.argsort(diff_avg_sim)[::-1]
+    strength_sorted = sorted_clusters[sorted_clusters >= 0][cluster_order]
 
     cluster_strength = {-1: -1}
-    for cl in sorted_clusters[sorted_clusters >= 0].astype(int):
-        cluster_strength[cluster_order[cl]] = cl
+    for i, cl in enumerate(strength_sorted):
+        cluster_strength[cl] = i
     return cluster_strength
 
 
