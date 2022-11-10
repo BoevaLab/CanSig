@@ -101,6 +101,7 @@ class GeneExpressionAnalysis:
 
         sc.tl.rank_genes_groups(
             adata_copy,
+            use_raw=False,
             groupby=self.cluster_name,
             groups=self.group_names,
             method=self.method,
