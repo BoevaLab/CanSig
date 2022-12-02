@@ -304,6 +304,7 @@ def run_metasignatures(
 
     # TODO(Josephine, Florian): select the best integration run for viz
     if plots:
+
         _LOGGER.info("Plotting metasignature level figures.")
         resdir.make_fig_dir()
         os.makedirs(resdir.figures_output, exist_ok=True)
