@@ -50,6 +50,21 @@ def parse_args():
         help="the metric used to compute similarity",
         default="jaccard",
     )
+
+    parser.add_argument(
+        "--linkage",
+        type=str,
+        choice=["ward", "average", "single", "complete", "weighted", "centroid", "median"],
+        help="the linkage used for the agglomerative clustering for metasignatures",
+        default="jaccard",
+    )
+    parser.add_argument(
+        "--n_genes_sig",
+        type=int,
+        help="the number of top genes used for the jaccard similarity computation",
+        default=200,
+    )
+
     parser.add_argument(
         "--threshold",
         type=float,
@@ -112,63 +127,36 @@ def parse_args():
     return args
 
 
-def get_cell_metamembership(
-    cluster_memb: List, sig_index: List[List], clusters: np.ndarray
-) -> Tuple[pd.DataFrame, pd.DataFrame]:
-
-    cluster_memb = pd.concat(cluster_memb, axis=1)
-    cluster_memb.columns = [f"iter{i}" for i in range(cluster_memb.shape[1])]
-    cluster_memb = cluster_memb.astype(str)
-
-    cell_metamembership = []
-
-    for clust in np.sort(np.unique(clusters)):
-        selsigs = np.array(sig_index)[clusters == clust]
-        sigcells = []
-        for sig in selsigs:
-            sigcells += list(cluster_memb.index[np.where(cluster_memb[sig[0]] == sig[1])[0]])
-        metasig_memb = (pd.Series(sigcells).value_counts() / selsigs.shape[0]).to_frame()
-        metasig_memb.columns = [clust]
-        cell_metamembership.append(metasig_memb)
-
-    cell_metamembership = pd.concat(cell_metamembership, axis=1).fillna(0)
-
-    prob_cellmetamembership = (cell_metamembership.T / cell_metamembership.sum(axis=1)).T
-
-    cell_metamembership = cell_metamembership.idxmax(axis=1).to_frame()
-
-    renaming = {-1: "outlier"}
-    for cl in prob_cellmetamembership.columns:
-        if cl >= 0:
-            renaming[cl] = "metasig" + str(int(cl) + 1)
-
-    prob_cellmetamembership = prob_cellmetamembership.rename(columns=renaming)
-
-    cell_metamembership.columns = ["metamembership"]
-    cell_metamembership = cell_metamembership.replace(renaming)
-
-    return cell_metamembership, prob_cellmetamembership
-
-
 def get_final_metasignatures(
-    sim: np.ndarray, resdict: Dict, threshold: float, resdir: fs.MetasigDir
+    sim: np.ndarray,
+    adata: ad.AnnData,
+    resdict: Dict,
+    threshold: float,
+    resdir: fs.MetasigDir,
+    linkage: str,
+    threshold_n_rep: float,
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, Dict[str, List[str]]]:
     _LOGGER.info("Get the clustering for signatures.")
-    clusters = clustering.get_final_clustering(
+
+    clusters = clustering.get_final_clustering_jaccard(
         sim=sim,
         signatures=resdict["signatures"],
         original_clustering=np.ones(len(resdict["signatures"])),
         runs=resdict["runs"],
         outliers=np.ones(len(resdict["signatures"])),
+        adata=adata,
         n_clusters=2,
         threshold=threshold,
+        threshold_n_rep=threshold_n_rep,
+        linkage=linkage,
     )
     clusters, idx = clustering.update_clusters_strength(clusters=clusters, sim=sim)
 
     _LOGGER.info("Get the metasignatures")
+
     meta_signatures = clustering.get_metasignatures(clusters, np.array(resdict["signatures"]))
     meta_signatures = utils.rename_metasig(meta_signatures)
-    meta_results = clustering.get_corr_metasignatures(meta_signatures)
+    meta_results = clustering.get_corr_metasignatures(meta_signatures, adata)
 
     resdir.make_sig_dir()
 
@@ -217,21 +205,6 @@ def plot_latent_score(
     )
 
 
-def metasignature_gsea(
-    gsea_config: gsea.GeneExpressionConfig,
-    resdir: fs.MetasigDir,
-    meta_signatures: Dict[str, Union[List, np.ndarray]],
-) -> None:
-    _LOGGER.info("Performing GSEA.")
-    gex_object = gsea.gex_factory(cluster_name="metamembership", config=gsea_config)
-    gsea_metasig = {
-        cl: pd.DataFrame(np.arange(len(meta_signatures[cl]))[::-1], index=meta_signatures[cl], columns=["avg_rank"])
-        for cl in meta_signatures
-    }
-    results = gex_object.perform_gsea(diff_genes=gsea_metasig)
-    results.to_csv(resdir.gsea_output)
-
-
 def run_metasignatures(
     rundir: Union[str, pl.Path],
     resdir: Union[str, pl.Path],
@@ -242,12 +215,15 @@ def run_metasignatures(
     subclonalcnv: bool,
     diffcnv_method: _TESTTYPE,
     diffcnv_correction: bool,
+    data_path: Union[str, pl.Path],
     cnvarray_path: Optional[pl.Path],
     sim_method: str = "jaccard",
-    data_path: Optional[Union[str, pl.Path]] = None,
     threshold: float = 0.3,
     plots: bool = True,
     sim: Optional[np.ndarray] = None,
+    threshold_n_rep: float = 0.01,
+    linkage: str = "average",
+    n_genes_sig: int = 200,
 ) -> None:
 
     resdir = fs.MetasigDir(resdir, create=True)
@@ -269,22 +245,36 @@ def run_metasignatures(
     _LOGGER.info("Get the information about the signatures in the postprocessing folder.")
     resdict = utils.get_runs_sig(rundir)
 
+    adata = sc.read_h5ad(data_path)
+    # make sure that even in the CanSig case, we don't use the healthy cells
+    obs_names = list(pd.concat(resdict["cluster_memb"], axis=1).index)
+    adata = adata[obs_names, :].copy()
+
     if sim is None:
         _LOGGER.info(f"Computing the similarity between signatures using {sim_method}.")
         if sim_method == "jaccard":
-            sim = WRC.get_similarity_matrix_jaccard(signatures=np.array(resdict["signatures"])[:, :200])
+            sim = WRC.get_similarity_matrix_jaccard(signatures=np.array(resdict["signatures"])[:, :n_genes_sig])
         else:
             sim = WRC.get_similarity_matrix_WRC(signatures=np.array(resdict["signatures"]))
         pd.DataFrame(sim).to_csv(resdir.sim_output)
     else:
         _LOGGER.info("Precomputed similarity was provided.")
 
+    threshold_n_rep = resdict["threshold"][0]
+    _LOGGER.info(f"Using threshold {threshold_n_rep} for outlier detection in metasignatures")
+
     clusters, idx, meta_results, meta_signatures = get_final_metasignatures(
-        sim=sim, resdict=resdict, threshold=threshold, resdir=resdir
+        sim=sim,
+        resdict=resdict,
+        threshold=threshold,
+        resdir=resdir,
+        adata=adata,
+        linkage=linkage,
+        threshold_n_rep=threshold_n_rep,
     )
 
     _LOGGER.info("Finding cell metamembership.")
-    cell_metamembership, prob_cellmetamembership = get_cell_metamembership(
+    cell_metamembership, prob_cellmetamembership = clustering.get_cell_metamembership(
         cluster_memb=resdict["cluster_memb"], sig_index=resdict["sig_index"], clusters=clusters
     )
 
@@ -307,9 +297,6 @@ def run_metasignatures(
             resdict=resdict,
         )
 
-        adata = sc.read_h5ad(data_path)
-        # make sure that even in the CanSig case, we don't use the healthy cells
-        adata = adata[cell_metamembership.index].copy()
         plot_latent_score(
             adata=adata,
             resdir=resdir,
@@ -319,7 +306,14 @@ def run_metasignatures(
             prob_cellmetamembership=prob_cellmetamembership,
         )
 
-    metasignature_gsea(gsea_config=gsea_config, resdir=resdir, meta_signatures=meta_signatures)
+    _LOGGER.info("Performing GSEA.")
+    gex_object = gsea.gex_factory(cluster_name="metamembership", config=gsea_config)
+    gsea_metasig = {
+        cl: pd.DataFrame(np.arange(len(meta_signatures[cl]))[::-1], index=meta_signatures[cl], columns=["avg_rank"])
+        for cl in meta_signatures
+    }
+    results = gex_object.perform_gsea(diff_genes=gsea_metasig)
+    results.to_csv(resdir.gsea_output)
     # *** Differential CNV analysis ***
     if diffcnv:
         # the user wants to perform the CNV analysis
@@ -373,6 +367,8 @@ def main(args):
         data_path=args.data,
         threshold=args.threshold,
         plots=(not args.disable_plots),
+        linkage=args.linkage,
+        n_genes_sig=args.n_genes_sig,
     )
     _LOGGER.info(f"Metasignature run finished. The generated output is in {args.output}.")
 

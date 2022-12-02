@@ -1,8 +1,11 @@
-from typing import Callable, List, Union
+from typing import Callable, List, Union  # pytype: disable=import-error
 
+import anndata as ad  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
 from tqdm import tqdm  # pytype: disable=import-error
+
+import cansig.metasignatures.utils as utils  # pytype: disable=import-error
 
 
 class WRC:
@@ -101,3 +104,15 @@ def get_similarity_matrix_jaccard(signatures: np.ndarray) -> np.ndarray:
             pairwise[i, j] = similarity
             pairwise[j, i] = similarity
     return pairwise
+
+
+def get_similarity_matrix_scoring(signatures: np.ndarray, adata: ad.AnnData, corrmethod: str = "pearson") -> np.ndarray:
+
+    assert corrmethod in ["pearson", "kendall", "spearman"], "corrmethod must be pearson, kendall or spearman"
+    for i, sig in tqdm(enumerate(signatures)):
+        signame = f"sig{i+1}"
+        adata = utils.score_sig(adata, signature=sig, score_name=signame)
+
+    corrdf = adata.obs[[f"sig{i+1}" for i in range(len(signatures))]]
+    sim = corrdf.corr(method=corrmethod).values
+    return sim

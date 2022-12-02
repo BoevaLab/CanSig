@@ -21,6 +21,8 @@ def get_runs_sig(basedir: pl.Path) -> Dict[str, List]:
     runs = []
     sig_index = []
     cluster_memb = []
+    n_clusters = set()
+    cluster_rs = set()
     for i, path in enumerate(basedir.iterdir()):
         path = pl.Path(path)
         with open(path.joinpath("integration-settings.json"), "r") as f:
@@ -28,6 +30,11 @@ def get_runs_sig(basedir: pl.Path) -> Dict[str, List]:
 
         if data not in integration_runs:
             integration_runs.append(data)
+
+        with open(path.joinpath("cluster-settings.json"), "r") as f:
+            cset = json.load(f)
+            n_clusters.add(cset["clusters"])
+            cluster_rs.add(cset["random_state"])
 
         n_run = integration_runs.index(data)
 
@@ -40,12 +47,19 @@ def get_runs_sig(basedir: pl.Path) -> Dict[str, List]:
             sig_index.append([f"iter{i}", n_cluster])
             runs.append(n_run)
 
+        unique_runs = np.unique(runs)
+        threshold = (
+            1 / (len(unique_runs)) * (len(n_clusters) * len(cluster_rs)) / (len(cluster_rs) * np.sum(list(n_clusters)))
+        )
+        threshold = max(0.01, threshold)
+
     resdict = {
         "signatures": signatures,
         "integration_runs": integration_runs,
         "runs": runs,
         "sig_index": sig_index,
         "cluster_memb": cluster_memb,
+        "threshold": [threshold],
     }
     return resdict
 
