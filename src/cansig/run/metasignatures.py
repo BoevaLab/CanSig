@@ -3,7 +3,6 @@
 from typing import Union, List, Optional, Literal, Dict, Tuple  # pytype: disable=not-supported-yet
 import argparse
 import os
-import warnings
 import logging
 
 import anndata as ad  # pytype: disable=import-error
@@ -58,18 +57,19 @@ def parse_args():
         help="the linkage used for the agglomerative clustering for metasignatures",
         default="jaccard",
     )
-    parser.add_argument(
-        "--n_genes_sig",
-        type=int,
-        help="the number of top genes used for the jaccard similarity computation",
-        default=200,
-    )
 
     parser.add_argument(
         "--threshold",
         type=float,
         help="the threshold above which a metasignature is considered too correlated with another",
         default=0.3,
+    )
+
+    parser.add_argument(
+        "--pat-specific-threshold",
+        type=float,
+        help="the threshold above which a metasignature is considered patient-specific",
+        default=0.75,
     )
     parser.add_argument(
         "--gene-sets",
@@ -130,31 +130,40 @@ def parse_args():
 def get_final_metasignatures(
     sim: np.ndarray,
     adata: ad.AnnData,
-    resdict: Dict,
+    signatures: Union[np.ndarray, List[str]],
+    runs: Union[np.ndarray, List[int]],
+    sig_index: Union[np.ndarray, List[int]],
+    cluster_memb: pd.DataFrame,
     threshold: float,
+    batch_key: str,
     resdir: fs.MetasigDir,
     linkage: str,
     threshold_n_rep: float,
+    pat_specific_threshold: float,
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, Dict[str, List[str]]]:
     _LOGGER.info("Get the clustering for signatures.")
 
     clusters = clustering.get_final_clustering_jaccard(
         sim=sim,
-        signatures=resdict["signatures"],
-        original_clustering=np.ones(len(resdict["signatures"])),
-        runs=resdict["runs"],
-        outliers=np.ones(len(resdict["signatures"])),
-        adata=adata,
+        signatures=signatures,
+        original_clustering=np.ones(len(signatures)),
+        runs=runs,
+        cluster_memb=cluster_memb,
+        sig_index=sig_index,
+        outliers=np.ones(len(signatures)),
         n_clusters=2,
         threshold=threshold,
+        batch_key=batch_key,
         threshold_n_rep=threshold_n_rep,
+        pat_specific_threshold=pat_specific_threshold,
+        adata=adata,
         linkage=linkage,
     )
     clusters, idx = clustering.update_clusters_strength(clusters=clusters, sim=sim)
 
     _LOGGER.info("Get the metasignatures")
 
-    meta_signatures = clustering.get_metasignatures(clusters, np.array(resdict["signatures"]))
+    meta_signatures = clustering.get_metasignatures(clusters, signatures)
     meta_signatures = utils.rename_metasig(meta_signatures)
     meta_results = clustering.get_corr_metasignatures(meta_signatures, adata)
 
@@ -205,6 +214,22 @@ def plot_latent_score(
     )
 
 
+def select_signatures(
+    resdict: Dict[str, List],
+) -> Tuple[Union[np.ndarray, List[str]], int, Union[np.ndarray, List[int]], Union[np.ndarray, List[int]], pd.DataFrame]:
+    signatures = np.array(resdict["signatures"]).copy()[np.array(resdict["passed"]), :]
+    n_genes = resdict["n_genes"][0]
+    runs = np.array(resdict["runs"]).copy()[np.array(resdict["passed"])]
+    sig_index = np.array(resdict["sig_index"]).copy()[np.array(resdict["passed"])]
+    cluster_memb = resdict["cluster_memb"].copy()
+    todrop = np.array(resdict["sig_index"]).copy()[~np.array(resdict["passed"])]
+
+    for sig in todrop:
+        it = int(sig[0].split("iter")[-1])
+        cluster_memb[it] = cluster_memb[it].replace({int(sig[1]): -1})
+    return signatures, n_genes, runs, sig_index, cluster_memb
+
+
 def run_metasignatures(
     rundir: Union[str, pl.Path],
     resdir: Union[str, pl.Path],
@@ -222,24 +247,11 @@ def run_metasignatures(
     plots: bool = True,
     sim: Optional[np.ndarray] = None,
     threshold_n_rep: float = 0.01,
+    pat_specific_threshold: float = 0.75,
     linkage: str = "average",
-    n_genes_sig: int = 200,
 ) -> None:
 
     resdir = fs.MetasigDir(resdir, create=True)
-    if plots and data_path is None:
-        warnings.warn(
-            "To use the plotting module in metasignatures, \
-                need to provide the original adata object. Will not save plots"
-        )
-        plots = False
-    if diffcnv and data_path is None:
-        warnings.warn(
-            "To perform differential CNV analysis, need to provide \
-                the original adata object. Will not perform diff CNV analysis."
-        )
-        diffcnv = False
-
     rundir = pl.Path(rundir)
 
     _LOGGER.info("Get the information about the signatures in the postprocessing folder.")
@@ -250,32 +262,40 @@ def run_metasignatures(
     obs_names = list(pd.concat(resdict["cluster_memb"], axis=1).index)
     adata = adata[obs_names, :].copy()
 
+    signatures, n_genes, runs, sig_index, cluster_memb = select_signatures(resdict=resdict)
+
     if sim is None:
         _LOGGER.info(f"Computing the similarity between signatures using {sim_method}.")
         if sim_method == "jaccard":
-            sim = WRC.get_similarity_matrix_jaccard(signatures=np.array(resdict["signatures"])[:, :n_genes_sig])
+            sim = WRC.get_similarity_matrix_jaccard(signatures=signatures[:, :n_genes])
         else:
-            sim = WRC.get_similarity_matrix_WRC(signatures=np.array(resdict["signatures"]))
+            sim = WRC.get_similarity_matrix_WRC(signatures=signatures[:, :n_genes])
         pd.DataFrame(sim).to_csv(resdir.sim_output)
     else:
         _LOGGER.info("Precomputed similarity was provided.")
 
-    threshold_n_rep = resdict["threshold"][0]
+    # threshold_n_rep = resdict["threshold"][0]
+    threshold_n_rep = 0.05
     _LOGGER.info(f"Using threshold {threshold_n_rep} for outlier detection in metasignatures")
 
     clusters, idx, meta_results, meta_signatures = get_final_metasignatures(
         sim=sim,
-        resdict=resdict,
-        threshold=threshold,
-        resdir=resdir,
         adata=adata,
+        signatures=signatures,
+        runs=runs,
+        sig_index=sig_index,
+        cluster_memb=cluster_memb,
+        threshold=threshold,
+        batch_key=batch,
+        resdir=resdir,
         linkage=linkage,
         threshold_n_rep=threshold_n_rep,
+        pat_specific_threshold=pat_specific_threshold,
     )
 
     _LOGGER.info("Finding cell metamembership.")
     cell_metamembership, prob_cellmetamembership = clustering.get_cell_metamembership(
-        cluster_memb=resdict["cluster_memb"], sig_index=resdict["sig_index"], clusters=clusters
+        cluster_memb=cluster_memb, sig_index=sig_index, clusters=clusters
     )
 
     utils.save_cell_metamembership(
@@ -366,9 +386,9 @@ def main(args):
         cnvarray_path=args.cnvarray,
         data_path=args.data,
         threshold=args.threshold,
+        pat_specific_threshold=args.pat_specific_threshold,
         plots=(not args.disable_plots),
         linkage=args.linkage,
-        n_genes_sig=args.n_genes_sig,
     )
     _LOGGER.info(f"Metasignature run finished. The generated output is in {args.output}.")
 

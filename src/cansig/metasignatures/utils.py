@@ -15,12 +15,13 @@ import cansig.plotting.plotting as plotting  # pytype: disable=import-error
 # Retrieve signatures from directory
 
 
-def get_runs_sig(basedir: pl.Path) -> Dict[str, List]:
+def get_runs_sig(basedir: pl.Path, n_genes: int = 50, q_thresh: float = 0.005) -> Dict[str, List]:
     signatures = []
     integration_runs = []
     runs = []
     sig_index = []
     cluster_memb = []
+    passed = []
     n_clusters = set()
     cluster_rs = set()
     for i, path in enumerate(basedir.iterdir()):
@@ -42,7 +43,10 @@ def get_runs_sig(basedir: pl.Path) -> Dict[str, List]:
 
         for run_path in sorted(basedir.joinpath(path.joinpath("signatures")).iterdir()):
             n_cluster = run_path.name.split("cl")[1].split(".")[0]
-            signature = pd.read_csv(run_path, index_col=0).index.tolist()
+            signature = pd.read_csv(run_path, index_col=0)
+            sig = signature[(signature.qvals < q_thresh) & (signature.zscores > 0)]
+            passed.append((True if sig.shape[0] > n_genes else False))
+            signature = signature.index.tolist()
             signatures.append(signature)
             sig_index.append([f"iter{i}", n_cluster])
             runs.append(n_run)
@@ -60,6 +64,9 @@ def get_runs_sig(basedir: pl.Path) -> Dict[str, List]:
         "sig_index": sig_index,
         "cluster_memb": cluster_memb,
         "threshold": [threshold],
+        "passed": passed,
+        "n_genes": [n_genes],
+        "q_thresh": [q_thresh],
     }
     return resdict
 
