@@ -1,8 +1,11 @@
-from typing import Callable, List, Union
+from typing import Callable, List, Union  # pytype: disable=import-error
 
+import anndata as ad  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
 from tqdm import tqdm  # pytype: disable=import-error
+
+import cansig.metasignatures.utils as utils  # pytype: disable=import-error
 
 
 class WRC:
@@ -73,7 +76,13 @@ class WeightProgram:
         return (self.length + 1 - i) ** self.p - (self.length - i) ** self.p
 
 
-def get_similarity_matrix(signatures: List[List[str]]) -> np.ndarray:
+def _jaccard(list1, list2):
+    intersection = len(list(set(list1).intersection(list2)))
+    union = (len(list1) + len(list2)) - intersection
+    return float(intersection) / union
+
+
+def get_similarity_matrix_WRC(signatures: Union[List[List[str]], np.ndarray]) -> np.ndarray:
     """Returns the similarity matrix between signatures"""
     weighted_spearman = WRC(length=len(signatures[0]), weigher=WeightProgram(length=len(signatures[0]), p=6).wprogram)
     results = np.zeros((len(signatures), len(signatures)))
@@ -84,3 +93,26 @@ def get_similarity_matrix(signatures: List[List[str]]) -> np.ndarray:
                 results[i, j] = corr
                 results[j, i] = corr
     return results
+
+
+def get_similarity_matrix_jaccard(signatures: np.ndarray) -> np.ndarray:
+    n_sigs = signatures.shape[0]
+    pairwise = np.identity(n_sigs)
+    for i in tqdm(range(len(signatures))):
+        for j in range(i + 1, len(signatures)):
+            similarity = _jaccard(signatures[i], signatures[j])
+            pairwise[i, j] = similarity
+            pairwise[j, i] = similarity
+    return pairwise
+
+
+def get_similarity_matrix_scoring(signatures: np.ndarray, adata: ad.AnnData, corrmethod: str = "pearson") -> np.ndarray:
+
+    assert corrmethod in ["pearson", "kendall", "spearman"], "corrmethod must be pearson, kendall or spearman"
+    for i, sig in tqdm(enumerate(signatures)):
+        signame = f"sig{i+1}"
+        adata = utils.score_sig(adata, signature=sig, score_name=signame)
+
+    corrdf = adata.obs[[f"sig{i+1}" for i in range(len(signatures))]]
+    sim = corrdf.corr(method=corrmethod).values
+    return sim

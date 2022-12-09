@@ -10,17 +10,20 @@ import json  # pytype: disable=import-error
 import umap  # pytype: disable=import-error
 from sklearn.manifold import MDS  # pytype: disable=import-error
 
-import cansig.plotting.plotting as plotting
+import cansig.plotting.plotting as plotting  # pytype: disable=import-error
 
 # Retrieve signatures from directory
 
 
-def get_runs_sig(basedir: pl.Path) -> Dict[str, List]:
+def get_runs_sig(basedir: pl.Path, n_genes: int = 50, q_thresh: float = 0.005) -> Dict[str, List]:
     signatures = []
     integration_runs = []
     runs = []
     sig_index = []
     cluster_memb = []
+    passed = []
+    n_clusters = set()
+    cluster_rs = set()
     for i, path in enumerate(basedir.iterdir()):
         path = pl.Path(path)
         with open(path.joinpath("integration-settings.json"), "r") as f:
@@ -29,16 +32,30 @@ def get_runs_sig(basedir: pl.Path) -> Dict[str, List]:
         if data not in integration_runs:
             integration_runs.append(data)
 
+        with open(path.joinpath("cluster-settings.json"), "r") as f:
+            cset = json.load(f)
+            n_clusters.add(cset["clusters"])
+            cluster_rs.add(cset["random_state"])
+
         n_run = integration_runs.index(data)
 
         cluster_memb.append(pd.read_csv(path.joinpath("cluster-labels.csv"), index_col=0, header=None))
 
         for run_path in sorted(basedir.joinpath(path.joinpath("signatures")).iterdir()):
             n_cluster = run_path.name.split("cl")[1].split(".")[0]
-            signature = pd.read_csv(run_path, index_col=0).index.tolist()
+            signature = pd.read_csv(run_path, index_col=0)
+            sig = signature[(signature.qvals < q_thresh) & (signature.zscores > 0)]
+            passed.append((True if sig.shape[0] > n_genes else False))
+            signature = signature.index.tolist()
             signatures.append(signature)
             sig_index.append([f"iter{i}", n_cluster])
             runs.append(n_run)
+
+        unique_runs = np.unique(runs)
+        threshold = (
+            1 / (len(unique_runs)) * (len(n_clusters) * len(cluster_rs)) / (len(cluster_rs) * np.sum(list(n_clusters)))
+        )
+        threshold = max(0.01, threshold)
 
     resdict = {
         "signatures": signatures,
@@ -46,6 +63,10 @@ def get_runs_sig(basedir: pl.Path) -> Dict[str, List]:
         "runs": runs,
         "sig_index": sig_index,
         "cluster_memb": cluster_memb,
+        "threshold": [threshold],
+        "passed": passed,
+        "n_genes": [n_genes],
+        "q_thresh": [q_thresh],
     }
     return resdict
 
@@ -64,6 +85,8 @@ def save_metasignatures(meta_signatures: Dict[str, np.ndarray], res_dir: pl.Path
         `get_metasignatures`, function used to compute metasignatures
     """
     for cluster in meta_signatures:
+        if cluster == "outlier":
+            continue
         name = f"{cluster}.csv"
         pd.DataFrame(meta_signatures[cluster]).to_csv(res_dir / name)
 
@@ -100,7 +123,10 @@ def score_sig(adata: ad.AnnData, signature: Union[np.ndarray, List[str]], score_
 def rename_metasig(meta_signatures):
     nmeta = {}
     for k, v in meta_signatures.items():
-        nmeta[f"metasig{k+1}"] = np.array(v)
+        if k >= 0:
+            nmeta[f"metasig{int(k+1)}"] = np.array(v)
+        else:
+            nmeta["outlier"] = np.array(v)
     return nmeta
 
 
@@ -198,7 +224,7 @@ def plot_metamembership(
 
     plotting_config = plotting.ScatterPlotConfig(
         dim_reduction="both",
-        signature_columns=["metamembership"] + [f"metasig{cl+1}" for cl in range(prob_metamembership.shape[1])],
+        signature_columns=metamembership.columns + prob_metamembership.columns,
         batch_column="sample_id",
         ncols=2,
     )

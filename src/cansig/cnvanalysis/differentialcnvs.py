@@ -297,16 +297,18 @@ def get_cnv_mapping(data: anndata.AnnData):
         # the chromosome size is not necessarily a multiple of
         # the step, this adds the last genes belonging to the last
         # inferred region of infercnv
-        if mapping[-1] != chrom_df.shape[0]:
-            mapping = np.append(mapping, chrom_df.shape[0])
+        if mapping[-1] != (chrom_df.shape[0] - 1):
+            mapping = np.append(mapping, chrom_df.shape[0] - 1)
 
         # now that we have the mapping, for each region belonging to
         # the cnvarray object, we know which genes were used to infer this region
-        # which we add as index preceded by the chromosome
+        # we can infer the region called using the start position
+        # of the first gene and the end position of the last
         list_genes = []
         for i in range(len(mapping) - 1):
-            genes = list(chrom_df.iloc[mapping[i] : mapping[i + 1]].index)
-            genes = chrom + ":" + ";".join(genes)
+            region_start = int(chrom_df.iloc[mapping[i]].start)
+            region_end = int(chrom_df.iloc[mapping[i + 1] - 1].end)
+            genes = chrom + ":" + str(region_start) + "-" + str(region_end)
             list_genes.append(genes)
         columns += list_genes
 
