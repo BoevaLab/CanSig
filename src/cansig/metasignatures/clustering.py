@@ -313,6 +313,7 @@ def get_final_clustering_jaccard(
         )
         return cleaned_clusters
 
+    # TODO(Josephine, Pawel): This recursion potentially never finishes.
     _LOGGER.info(f"Increasing number of clusters to {n_clusters+1}")
     return get_final_clustering_jaccard(
         sim=sim,
