@@ -7,7 +7,7 @@ import scanpy as sc  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 from numpy.typing import ArrayLike  # pytype: disable=import-error
 
-from cansig.interface.cluster import ICluster
+from cansig.interface.cluster import ICluster  # pytype: disable=import-error
 
 _SupportedMetric = Literal[
     "cityblock",
@@ -144,7 +144,7 @@ class LeidenNCluster(ICluster):
         # In case that for multiple random seeds we didn't find a resolution that matches
         # the number of clusters, we raise a ValueError.
         else:
-            raise ValueError(f"No resolution for the number of clusters {self._settings.clusters}found.")
+            raise ValueError(f"No resolution for the number of clusters {self._settings.clusters} found.")
 
         return points.obs[key_added].astype(int).values
 

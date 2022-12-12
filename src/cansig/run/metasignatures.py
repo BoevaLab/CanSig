@@ -55,7 +55,9 @@ def parse_args():
         type=str,
         choices=["ward", "average", "single", "complete", "weighted", "centroid", "median"],
         help="the linkage used for the agglomerative clustering for metasignatures",
-        default="jaccard",
+        # TODO(Josephine, Pawel): Is "jaccard" allowed? Should it be the default?
+        #  If so, then it needs to be added to choices as well.
+        default="ward",
     )
 
     parser.add_argument(

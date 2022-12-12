@@ -48,7 +48,7 @@ def get_runs_sig(basedir: pl.Path, n_genes: int = 50, q_thresh: float = 0.005) -
 
         cluster_memb.append(pd.read_csv(path.joinpath("cluster-labels.csv"), index_col=0, header=None))
 
-        for run_path in sorted(basedir.joinpath(path.joinpath("signatures")).iterdir()):
+        for run_path in sorted(path.joinpath("signatures").iterdir()):
             n_cluster = run_path.name.split("cl")[1].split(".")[0]
             signature = pd.read_csv(run_path, index_col=0)
             sig = signature[(signature.qvals < q_thresh) & (signature.zscores > 0)]
