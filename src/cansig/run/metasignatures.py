@@ -45,7 +45,7 @@ def parse_args():
     parser.add_argument(
         "--sim-method",
         type=str,
-        choice=["wrc", "jaccard"],
+        choices=["wrc", "jaccard"],
         help="the metric used to compute similarity",
         default="jaccard",
     )
@@ -53,9 +53,9 @@ def parse_args():
     parser.add_argument(
         "--linkage",
         type=str,
-        choice=["ward", "average", "single", "complete", "weighted", "centroid", "median"],
+        choices=["ward", "average", "single", "complete", "weighted", "centroid", "median"],
         help="the linkage used for the agglomerative clustering for metasignatures",
-        default="jaccard",
+        default="average",
     )
 
     parser.add_argument(

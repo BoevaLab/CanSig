@@ -1,6 +1,7 @@
-from typing import Tuple, Dict, List, Union  # pytype: disable=import-error
-
 import logging
+import warnings
+
+from typing import Tuple, Dict, List, Union  # pytype: disable=import-error
 
 import anndata as ad  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
@@ -235,6 +236,7 @@ def get_final_clustering_jaccard(
     threshold: float = 0.4,
     threshold_n_rep: float = 0.01,
     pat_specific_threshold: float = 0.75,
+    max_n_clusters: int = 20,
     linkage: str = "ward",
 ) -> Union[List, np.ndarray]:
     """
@@ -253,6 +255,7 @@ def get_final_clustering_jaccard(
         outliers: the list containing the outliers as -1 (from the previous iteration)
         n_clusters: the number of clusters for the partition (starts at 2, called recursively)
         threshold: the correlation threshold over which we consider 2 signatures are correlated
+        max_n_clusters: maximal number of clusters allowed
         linkage: a string
 
     Returns:
@@ -297,8 +300,19 @@ def get_final_clustering_jaccard(
 
     correlation_iteration = _sigs_correlated(corrmeta, threshold)
 
-    if correlation_iteration:
-        _LOGGER.info(f"Signatures correlated over threshold, using {n_clusters-1} clusters")
+    # There is a maximal number of clusters allowed, to make sure that
+    # we don't have infinite recursion.
+    if correlation_iteration or n_clusters >= max_n_clusters:
+        if correlation_iteration:
+            _LOGGER.info(f"Signatures correlated over threshold, using {n_clusters-1} clusters")
+        else:
+            msg = (
+                f"Maximal number of clusters {max_n_clusters} reached, but the desired "
+                f"signature correlation threshold {threshold} has not been reached."
+            )
+            _LOGGER.warning(msg)
+            warnings.warn(msg)
+
         final_clusters = outliers.copy()
         final_clusters[final_clusters >= 0] = original_clustering
 

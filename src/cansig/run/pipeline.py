@@ -49,7 +49,7 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--model",
         type=str,
-        default="cansig",
+        default="scvi",
         choices=["scvi", "cansig"],
         help="Which models is used for dataset integration.",
     )

@@ -1,3 +1,4 @@
+import warnings
 from typing import List, Dict, Union
 import anndata as ad  # pytype: disable=import-error
 import pathlib as pl  # pytype: disable=import-error
@@ -26,6 +27,12 @@ def get_runs_sig(basedir: pl.Path, n_genes: int = 50, q_thresh: float = 0.005) -
     cluster_rs = set()
     for i, path in enumerate(basedir.iterdir()):
         path = pl.Path(path)
+
+        # It is possible that the clustering run has failed. We skip such directories.
+        if not path.joinpath("cluster-labels.csv").is_file():
+            warnings.warn(f"For path {path} there are no cluster labels. Skipping...")
+            continue
+
         with open(path.joinpath("integration-settings.json"), "r") as f:
             data = json.load(f)
 
@@ -41,7 +48,7 @@ def get_runs_sig(basedir: pl.Path, n_genes: int = 50, q_thresh: float = 0.005) -
 
         cluster_memb.append(pd.read_csv(path.joinpath("cluster-labels.csv"), index_col=0, header=None))
 
-        for run_path in sorted(basedir.joinpath(path.joinpath("signatures")).iterdir()):
+        for run_path in sorted(path.joinpath("signatures").iterdir()):
             n_cluster = run_path.name.split("cl")[1].split(".")[0]
             signature = pd.read_csv(run_path, index_col=0)
             sig = signature[(signature.qvals < q_thresh) & (signature.zscores > 0)]
