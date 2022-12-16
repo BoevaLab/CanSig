@@ -1,7 +1,7 @@
 import pathlib
 import logging
 from collections import defaultdict
-from typing import Literal, List  # pytype: disable=not-supported-yet
+from typing import DefaultDict, Literal, List  # pytype: disable=not-supported-yet
 
 import anndata  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
@@ -122,7 +122,7 @@ def get_cnv_results_pc(
     cluster_key: str = "metamembership",
     batch_key: str = "batch",
     clusters_to_exclude: List[str] = ["-2.0", "outlier"],
-) -> defaultdict[str, List]:
+) -> DefaultDict[str, List]:
 
     all_results = defaultdict(list)
     for cluster in sorted(cl_labels[cluster_key].astype(str).unique()):
