@@ -80,7 +80,6 @@ class ScatterPlot:
         """
 
         _LOGGER.info(f"Plotting {self._settings.dim_reduction.upper()}...")
-        adata.raw = adata
         adata = self._put_latent_in_adata(z=representations, adata=adata)
 
         if "new-cluster-column" in adata.obs:
@@ -148,7 +147,6 @@ class ScatterPlot:
             raise NotImplementedError(
                 f"Dimensionality reduction method: {self._settings.dim_reduction} is not implemented."
             )
-        adata = adata.raw.to_adata()
         return fig
 
     @staticmethod

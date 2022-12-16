@@ -18,6 +18,7 @@ import cansig.metasignatures.WRC as WRC  # pytype: disable=import-error
 import cansig.metasignatures.clustering as clustering  # pytype: disable=import-error
 import cansig.gsea as gsea  # pytype: disable=import-error
 import cansig.filesys as fs  # pytype: disable=import-error
+import cansig.multirun as mr  # pytype: disable=import-error
 
 _LOGGER = logging.getLogger(__name__)
 _TESTTYPE = Literal["mwu", "ttest"]
@@ -295,7 +296,10 @@ def run_metasignatures(
 
     _LOGGER.info("Finding cell metamembership.")
     cell_metamembership, prob_cellmetamembership = clustering.get_cell_metamembership(
-        cluster_memb=cluster_memb, sig_index=sig_index, clusters=clusters
+        cluster_memb=cluster_memb,
+        sig_index=sig_index,
+        clusters=clusters,
+        rename=True,
     )
 
     utils.save_cell_metamembership(
@@ -333,6 +337,7 @@ def run_metasignatures(
         cl: pd.DataFrame(np.arange(len(meta_signatures[cl]))[::-1], index=meta_signatures[cl], columns=["avg_rank"])
         for cl in meta_signatures
     }
+
     results = gex_object.perform_gsea(diff_genes=gsea_metasig)
     results.to_csv(resdir.gsea_output)
     # *** Differential CNV analysis ***
@@ -373,9 +378,11 @@ def main(args):
     clogger.configure_logging(args.log)
     _LOGGER.info("Starting to find metasignatures...")
 
+    multirun_dir = mr.MultirunDirectory(path=args.output, create=False)
+
     run_metasignatures(
         rundir=args.postdir,
-        resdir=args.output,
+        resdir=multirun_dir.metasig_directories,
         integ_dir=args.integdir,
         batch=args.batch,
         sim_method=args.sim_method,

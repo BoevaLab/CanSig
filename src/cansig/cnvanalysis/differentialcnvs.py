@@ -1,7 +1,7 @@
 import pathlib
 import logging
 from collections import defaultdict
-from typing import Literal  # pytype: disable=not-supported-yet
+from typing import DefaultDict, Literal, List  # pytype: disable=not-supported-yet
 
 import anndata  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
@@ -115,56 +115,19 @@ def get_cluster_labels(
     return data.obs[[cluster_key, batch_key]]
 
 
-def get_diff_cnv(
-    cnv_array: pd.DataFrame,
+def get_cnv_results_pc(
     cl_labels: pd.DataFrame,
-    diff_method: _TESTTYPE,
-    correction: bool = False,
+    cnv_array: pd.DataFrame,
+    diff_function,
     cluster_key: str = "metamembership",
     batch_key: str = "batch",
-) -> pd.DataFrame:
-    """Computes the differential CNVs between a cluster and the rest, for all clusters
-
-    Args:
-        cnv_array: pd.Df containing the discretized CNV calls, either through `discretize_cnv`,
-            `get_subclonal_cnv` or precomputed if the CNVs were not called using our preprocessing module
-            shape (n_cells, n_regions_called)
-        cl_labels: cluster labels and batch id associated with the cnv_array, either computed using `get_cluster_labels`
-            or precomputed if the CNVs were not called using our preprocessing module
-            shape (n_cells, 2)
-        diff_method: can be mann-whitney U (mwu) or t-test (ttest), method used to compute the differential
-            CNV between a cluster and the rest
-        correction: whether to output FDR corrected q values in addition to p values
-        cluster_key: key for the cluster labels
-        batch_key: key for the batch ID
-
-    Returns:
-        a pd.Df containing for the differential CNV results. For each cluster cl
-
-            - "{cl}_pvalues" contains the p values of the test cl vs rest
-            - "{cl}_perc_{gains/losses}" contains the percentage of cells in the cluster showing a
-              gain/loss at this region
-            - "{cl}_rest_{gains/losses}" contains the percentage of cells in all but the cluster showing a
-              gain/loss at this region
-            - (optional) "{cl}_qvalues" contains the q values of the test cl vs rest
-              (only if correction is True)
-    """
-    if len(cnv_array.index.intersection(cl_labels.index)) != len(cnv_array.index):
-        raise ValueError(
-            "The index of the provided CNV array is different from the index of the cluster label assignments"
-        )
-
-    # make sure the cnv array and cluster labels are in the same order ie correspond to each other
-    cnv_array = cnv_array.loc[cl_labels.index]
-
-    # pick the statistical method used
-    if diff_method == "mwu":
-        diff_function = mannwhitneyu
-    elif diff_method == "ttest":
-        diff_function = ttest_ind
+    clusters_to_exclude: List[str] = ["-2.0", "outlier"],
+) -> DefaultDict[str, List]:
 
     all_results = defaultdict(list)
     for cluster in sorted(cl_labels[cluster_key].astype(str).unique()):
+        if cluster in clusters_to_exclude:
+            continue
         _LOGGER.info(f"Starting differential CNV analysis for cluster {cluster}")
 
         # separate the array into the CNVs associated with a cluster and the rest
@@ -210,6 +173,67 @@ def get_diff_cnv(
 
         all_results[str(cluster) + "_patients_gain"] = gain_pp
         all_results[str(cluster) + "_patients_loss"] = loss_pp
+
+    return all_results
+
+
+def get_diff_cnv(
+    cnv_array: pd.DataFrame,
+    cl_labels: pd.DataFrame,
+    diff_method: _TESTTYPE,
+    correction: bool = False,
+    cluster_key: str = "metamembership",
+    batch_key: str = "batch",
+    clusters_to_exclude: List[str] = ["-2.0", "outlier"],
+) -> pd.DataFrame:
+    """Computes the differential CNVs between a cluster and the rest, for all clusters
+
+    Args:
+        cnv_array: pd.Df containing the discretized CNV calls, either through `discretize_cnv`,
+            `get_subclonal_cnv` or precomputed if the CNVs were not called using our preprocessing module
+            shape (n_cells, n_regions_called)
+        cl_labels: cluster labels and batch id associated with the cnv_array, either computed using `get_cluster_labels`
+            or precomputed if the CNVs were not called using our preprocessing module
+            shape (n_cells, 2)
+        diff_method: can be mann-whitney U (mwu) or t-test (ttest), method used to compute the differential
+            CNV between a cluster and the rest
+        correction: whether to output FDR corrected q values in addition to p values
+        cluster_key: key for the cluster labels
+        batch_key: key for the batch ID
+
+    Returns:
+        a pd.Df containing for the differential CNV results. For each cluster cl
+
+            - "{cl}_pvalues" contains the p values of the test cl vs rest
+            - "{cl}_perc_{gains/losses}" contains the percentage of cells in the cluster showing a
+              gain/loss at this region
+            - "{cl}_rest_{gains/losses}" contains the percentage of cells in all but the cluster showing a
+              gain/loss at this region
+            - (optional) "{cl}_qvalues" contains the q values of the test cl vs rest
+              (only if correction is True)
+    """
+    if len(cnv_array.index.intersection(cl_labels.index)) != len(cnv_array.index):
+        raise ValueError(
+            "The index of the provided CNV array is different from the index of the cluster label assignments"
+        )
+
+    # make sure the cnv array and cluster labels are in the same order ie correspond to each other
+    cnv_array = cnv_array.loc[cl_labels.index]
+
+    # pick the statistical method used
+    if diff_method == "mwu":
+        diff_function = mannwhitneyu
+    elif diff_method == "ttest":
+        diff_function = ttest_ind
+
+    all_results = get_cnv_results_pc(
+        cl_labels=cl_labels,
+        cluster_key=cluster_key,
+        clusters_to_exclude=clusters_to_exclude,
+        cnv_array=cnv_array,
+        diff_function=diff_function,
+        batch_key=batch_key,
+    )
 
     diffCNVs = pd.DataFrame(all_results)
 
@@ -292,13 +316,13 @@ def get_cnv_mapping(data: anndata.AnnData):
         # ie mapping[n] will contain the start position on the chromosome
         # of the region n in the cnvarray object, and mapping[n+1]
         # will contain the end position on the chromosome of the
-        # region n in the cnvarray object
+        # r egion n in the cnvarray object
         mapping = np.arange(0, chrom_df.shape[0], step)
         # the chromosome size is not necessarily a multiple of
         # the step, this adds the last genes belonging to the last
         # inferred region of infercnv
-        if mapping[-1] != (chrom_df.shape[0] - 1):
-            mapping = np.append(mapping, chrom_df.shape[0] - 1)
+        if mapping[-1] != (chrom_df.shape[0]):
+            mapping = np.append(mapping, chrom_df.shape[0])
 
         # now that we have the mapping, for each region belonging to
         # the cnvarray object, we know which genes were used to infer this region
