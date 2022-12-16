@@ -93,9 +93,9 @@ def get_corr_metasignatures(
     """Get the correlation between metasignatures using the scored cells of the original adata"""
     adata_copy = adata.copy()
     for sig in meta_signatures:
-        score_sig(adata=adata_copy, signature=meta_signatures[sig][:n_genes_score], score_name=f"meta{sig}")
+        score_sig(adata=adata_copy, signature=meta_signatures[sig][:n_genes_score], score_name=f"{sig}")
 
-    meta_results = adata_copy.obs[[f"meta{sig}" for sig in meta_signatures]].corr()
+    meta_results = adata_copy.obs[[f"{sig}" for sig in meta_signatures]].corr()
     return meta_results
 
 
