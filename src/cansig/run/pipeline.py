@@ -126,10 +126,33 @@ def create_parser() -> argparse.ArgumentParser:
         help="a flag used when the user does not want the signatures to be saved",
     )
     parser.add_argument(
+        "--sim-method",
+        type=str,
+        choices=["wrc", "jaccard"],
+        help="the metric used to compute similarity",
+        default="jaccard",
+    )
+
+    parser.add_argument(
+        "--linkage",
+        type=str,
+        choices=["ward", "average", "single", "complete", "weighted", "centroid", "median"],
+        help="the linkage used for the agglomerative clustering for metasignatures",
+        default="average",
+    )
+
+    parser.add_argument(
         "--threshold",
         type=float,
         help="the threshold above which a metasignature is considered too correlated with another",
         default=0.3,
+    )
+
+    parser.add_argument(
+        "--pat-specific-threshold",
+        type=float,
+        help="the threshold above which a metasignature is considered patient-specific",
+        default=0.75,
     )
     parser.add_argument(
         "--diffcnv",
@@ -313,6 +336,8 @@ def main() -> None:
         rundir=multirun_dir.postprocessing_directories,
         resdir=multirun_dir.metasig_directories,
         integ_dir=multirun_dir.integration_directories,
+        data_path=args.data,
+        sim_method=args.sim_method,
         batch=args.batch,
         gsea_config=generate_gsea_config(args),
         diffcnv=args.diffcnv,
@@ -320,8 +345,9 @@ def main() -> None:
         diffcnv_method=args.diffcnv_method,
         diffcnv_correction=args.diffcnv_correction,
         cnvarray_path=args.cnvarray,
-        data_path=args.data,
         threshold=args.threshold,
+        pat_specific_threshold=args.pat_specific_threshold,
+        linkage=args.linkage,
         plots=(not args.disable_plots),
     )
 

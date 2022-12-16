@@ -172,8 +172,7 @@ class GeneExpressionAnalysis:
                 format="png",
                 seed=6,
             )
-
-            gsea_df = gs_res.res2d.sort_values(by="nes", ascending=False)
+            gsea_df = gs_res.res2d.sort_values(by="NES", ascending=False)
             # select only genes that are positively enriched
             pos_genes = gs_res.ranking[gs_res.ranking.sort_values() >= 0].index
 
@@ -182,7 +181,7 @@ class GeneExpressionAnalysis:
             for i in range(gsea_df.shape[0]):
                 # the genes selected for scoring are genes that are positively enriched
                 # in the cluster and belong to the pathway
-                genes = np.intersect1d(gsea_df.iloc[i].genes.split(";"), pos_genes)
+                genes = np.intersect1d(gsea_df.iloc[i].Lead_genes.split(";"), pos_genes)
                 genes_scoring = genes_to_string(genes)
                 genes_for_scoring.append(genes_scoring)
 

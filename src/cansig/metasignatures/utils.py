@@ -231,7 +231,7 @@ def plot_metamembership(
 
     plotting_config = plotting.ScatterPlotConfig(
         dim_reduction="both",
-        signature_columns=metamembership.columns + prob_metamembership.columns,
+        signature_columns=list(metamembership.columns) + list(prob_metamembership.columns),
         batch_column="sample_id",
         ncols=2,
     )
