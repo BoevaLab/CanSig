@@ -5,7 +5,7 @@ gseapy
 infercnvpy
 leidenalg
 matplotlib
-numpy<=1.21
+numpy
 pandas    
 petname
 pydantic
