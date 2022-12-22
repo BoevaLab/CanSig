@@ -105,7 +105,7 @@ class CellAnnotation:
         Args:
             adata: annotated data matrix
         """
-        if adata.n_obs <= 10_000:
+        if adata.n_obs <= 5_000:
             cluster = self._get_cluster_ward(
                 adata, cnv_key=self.cnv_key, threshold=self._config.threshold, depth=self._config.depth
             )
