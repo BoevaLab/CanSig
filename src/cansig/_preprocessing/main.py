@@ -1,3 +1,4 @@
+import logging
 from typing import List, Union, Tuple, Optional
 
 # pytype: disable=import-error
@@ -14,6 +15,9 @@ from cansig._preprocessing.utils import check_min_malignant_cells, check_min_ref
 from cansig.types import Pathlike, ScoringDict, GeneList
 
 # pytype: enable=import-error
+
+
+_LOGGER = logging.getLogger(__name__)
 
 
 def preprocessing(
@@ -125,6 +129,7 @@ def preprocessing(
     if copy:
         input_adatas = input_adatas.copy()
 
+    _LOGGER.info("Setting up preprocessing.")
     cell_status = CellStatus()
     reference_config = ReferenceConfig()
     infercnv_config = InferCNVConfig(
@@ -152,8 +157,9 @@ def preprocessing(
         cnv_key=cnv_key,
     )
     subclonal = Subclonal(subclonal_config)
-
+    _LOGGER.info("Loading anndata objects.")
     input_adatas, mean_counts_per_gene = load_adatas(input_adatas, batch_id_column)
+
     gene_list = mean_counts_per_gene.index.to_list()
     cnv = InferCNV(infercnv_config, gene_order=gene_order, mean_counts_per_gene=mean_counts_per_gene)
     signature_scorer = SignatureScorer(
@@ -166,6 +172,7 @@ def preprocessing(
     )
 
     for adata in pop_adatas(input_adatas, gene_list):
+        _LOGGER.info(f"Processing {adata.obs[batch_id_column][0]}.")
         cell_annotation.annotate_using_celltype(adata)
 
         if not check_min_malignant_cells(
@@ -174,6 +181,7 @@ def preprocessing(
             min_malignant_cells=min_malignant_cells,
             malignant_celltype=cell_status.malignant,
         ):
+            _LOGGER.info("The sample contains too few malignant cells and is not processed.")
             continue
 
         reference_cat = get_reference_groups(
@@ -193,6 +201,7 @@ def preprocessing(
             min_reference_cells=min_reference_cells,
             min_reference_groups=min_reference_groups,
         ):
+            _LOGGER.info("The sample contains too few reference cells and is not processed.")
             continue
         cnv.infer(adata, reference_cat)
         cell_annotation.annotate_using_cnv(adata)
@@ -204,6 +213,9 @@ def preprocessing(
             min_malignant_cells=min_malignant_cells,
             malignant_celltype=cell_status.malignant,
         ):
+            _LOGGER.info(
+                "After improved annotation, the sample contains too few malignant " "cells and is not processed."
+            )
             continue
 
         subclonal.cluster(adata)

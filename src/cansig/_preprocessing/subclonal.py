@@ -41,12 +41,15 @@ class Subclonal:
         Args:
             adata (AnnData): Annotated data matrix.
         """
+        _LOGGER.info("Start inferring sublonces.")
         malignant_idx = adata.obs[self._config.malignant_key] == self._config.malignant_status
         bdata = adata[malignant_idx, :].copy()
         cnv.tl.pca(bdata, use_rep=self._config.cnv_key)
         silscore = self._config.silhouette_score_lower_bound
         cluster_labels = pd.Series("1", index=bdata.obs_names)
         for n_cluster in range(2, self._config.max_subclones + 1):
+            _LOGGER.info(f"Trying {n_cluster} clusters.")
+
             config = LeidenNClusterConfig(clusters=n_cluster)
             cluster_algo = LeidenNCluster(config)
             try:
@@ -56,6 +59,7 @@ class Subclonal:
             else:
                 s = silhouette_score(bdata.obsm[f"X_{self._config.cnv_key}"], cluster_labels_tmp)
                 if s > silscore:
+                    _LOGGER.info(f"Found better silhouette score {s}.")
                     silscore = s
                     cluster_labels = pd.Series(cluster_labels_tmp + 1, index=bdata.obs_names)
 

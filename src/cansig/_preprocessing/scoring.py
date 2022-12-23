@@ -139,6 +139,7 @@ class SignatureScorer:
 
             if self.scoring_dict is None:
                 return
+            _LOGGER.info("Start scoring provided signatures.")
             self.score_malignant_cells(adata)
 
     def score_cell_cycle(self, adata: anndata.AnnData) -> None:
@@ -149,6 +150,8 @@ class SignatureScorer:
         """
         if self.s_genes and self.g2m_genes:
             # Pandas throws a FutureWarning here.
+            _LOGGER.info("Scoring cell cycle.")
+
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore", FutureWarning)
                 sc.tl.score_genes_cell_cycle(adata, s_genes=self.s_genes, g2m_genes=self.g2m_genes)

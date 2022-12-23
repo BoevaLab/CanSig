@@ -1,3 +1,4 @@
+import logging
 from typing import List, Iterable
 
 import infercnvpy as cnv  # pytype: disable=import-error
@@ -6,6 +7,8 @@ import pydantic  # pytype: disable=import-error
 from anndata import AnnData  # pytype: disable=import-error
 from scipy.cluster.hierarchy import to_tree, linkage, ClusterNode  # pytype: disable=import-error
 from scipy.sparse import issparse  # pytype: disable=import-error
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class CellStatus(pydantic.BaseModel):
@@ -52,6 +55,7 @@ class CellAnnotation:
         Args:
             adata (AnnData): annotated data matrix
         """
+        _LOGGER.info("Annotating malignancy status using the provided celltypes.")
         adata.obs[self._config.malignant_annotation] = adata.obs[self.celltype_column].apply(
             lambda cell_type: self._annotate_malignant_using_celltype(cell_type)
         )
@@ -74,7 +78,7 @@ class CellAnnotation:
 
     def annotate_using_cnv(self, adata: AnnData):
         """Infers non-malignant cells using CNVs."""
-
+        _LOGGER.info("Annotating malignancy status based on CNVs profiles.")
         cluster = self._get_cluster(adata)
 
         adata.obs[self._config.malignant_cnv] = self._config.cell_status.malignant
@@ -91,6 +95,9 @@ class CellAnnotation:
 
         Args:
             adata: annotated data matrix."""
+
+        _LOGGER.info("Combining malignancy status.")
+
         adata.obs[self._config.malignant_combined] = adata.obs[
             [self._config.malignant_cnv, self._config.malignant_annotation]
         ].apply(lambda x: self._combine_annotations(*x), axis=1)

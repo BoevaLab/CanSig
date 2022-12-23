@@ -51,6 +51,7 @@ class InferCNV:
         `adata.obs[self.reference_key]` that annotate groups of normal cells with
         similar gene expression.
         """
+        _LOGGER.info("Inferring CNVs.")
         adata.var = self.merge_gene_order(adata.var)
         adata.var[self._config.cnv_called] = self.get_cnv_called(adata)
         # Here we subset to just the genes that will be used for InferCNV.
