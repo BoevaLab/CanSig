@@ -11,7 +11,13 @@ from cansig._preprocessing.infercnv import InferCNVConfig, InferCNV, get_referen
 from cansig._preprocessing.plotting import plot_chromosomal_heatmap
 from cansig._preprocessing.scoring import SignatureScorer
 from cansig._preprocessing.subclonal import Subclonal, SubclonalConfig
-from cansig._preprocessing.utils import check_min_malignant_cells, check_min_reference_cells, load_adatas, pop_adatas
+from cansig._preprocessing.utils import (
+    check_min_malignant_cells,
+    check_min_reference_cells,
+    load_adatas,
+    pop_adatas,
+    discretize_cnvs,
+)
 from cansig.types import Pathlike, ScoringDict, GeneList
 
 # pytype: enable=import-error
@@ -234,5 +240,6 @@ def preprocessing(
         recorder.append(adata)
 
     adata = recorder.concatenate()
+    discretize_cnvs(adata, cnv_key=cnv_key)
     signature_scorer.score(adata)
     return adata

@@ -68,9 +68,6 @@ class InferCNV:
                 exclude_chromosomes=self._config.exclude_chromosome,
             )
 
-        X_cnv[X_cnv < 0.0] = -1.0
-        X_cnv[X_cnv > 0.0] = 1.0
-
         cnv_dict = {"chr_pos": chr_position, "window_size": self._config.window_size, "step": self._config.step}
         adata.uns[self._config.cnv_key], adata.obsm[f"X_{self._config.cnv_key}"] = cnv_dict, X_cnv
 

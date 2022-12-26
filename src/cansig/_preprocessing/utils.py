@@ -9,7 +9,7 @@ import pandas as pd  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
 from anndata import AnnData  # pytype: disable=import-error
 
-_LOGGER = logging.Logger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 
 def toarray(x):
@@ -78,6 +78,12 @@ def load_adata_from_file(path, batch_id_column):
     if batch_id_column not in adata.obs.columns:
         adata.obs[batch_id_column] = os.path.basename(path)
     return adata
+
+
+def discretize_cnvs(adata: AnnData, cnv_key: str):
+    _LOGGER.info("Discretizing CNVs.")
+    adata.obsm[f"X_{cnv_key}"][adata.obsm[f"X_{cnv_key}"] < 0.0] = -1.0
+    adata.obsm[f"X_{cnv_key}"][adata.obsm[f"X_{cnv_key}"] > 0.0] = 1.0
 
 
 def load_adatas(adatas, batch_id_column: str):
