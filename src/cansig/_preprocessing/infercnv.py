@@ -9,7 +9,7 @@ from cansig._preprocessing._infercnv import infercnv  # pytype: disable=import-e
 from cansig._preprocessing.utils import Normalized  # pytype: disable=import-error
 from cansig.types import Pathlike  # pytype: disable=import-error
 
-_LOGGER = logging.Logger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 
 class InferCNVConfig(pydantic.BaseModel):
@@ -177,6 +177,8 @@ def get_reference_groups(
     valid_ref_groups = get_valid_reference_groups(adata, reference_key, min_reference_cells, config)
 
     valid_ref_groups = reduce_reference_groups(adata, valid_ref_groups, min_reference_groups, reference_key, config)
+
+    _LOGGER.info(f"Infercnv is run with {len(valid_ref_groups)} reference groups.")
     return valid_ref_groups
 
 

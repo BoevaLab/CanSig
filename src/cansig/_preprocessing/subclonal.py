@@ -8,7 +8,7 @@ from sklearn.metrics import silhouette_score  # pytype: disable=import-error
 
 from cansig.cluster.leiden import LeidenNClusterConfig, LeidenNCluster  # pytype: disable=import-error
 
-_LOGGER = logging.Logger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 
 class SubclonalConfig(pydantic.BaseModel):

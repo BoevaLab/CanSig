@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 import infercnvpy as cnv  # pytype: disable=import-error
@@ -11,6 +12,7 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes  # pytype: disable=
 from cansig.types import Pathlike  # pytype: disable=import-error
 
 FONT_DICT = {"fontweight": "bold"}
+_LOGGER = logging.getLogger(__name__)
 
 
 def embeddings_counts(adata: AnnData) -> None:
@@ -77,6 +79,7 @@ def plot_chromosomal_heatmap(
     malignant_cat: str,
     cnv_key=None,
 ):
+    _LOGGER.info("Plotting chromosomal heatmaps.")
     sc.settings.figdir = Path(figure_dir).joinpath(sample_id)
     cnv.pl.chromosome_heatmap(adata, groupby=malignant_key, use_rep=cnv_key, show=False, save="_malignant.png")
     cnv.pl.chromosome_heatmap(
