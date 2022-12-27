@@ -178,7 +178,7 @@ def preprocessing(
     )
 
     for adata in pop_adatas(input_adatas, gene_list):
-        _LOGGER.info(f"Processing {adata.obs[batch_id_column][0]}.")
+        _LOGGER.info(f"Processing {adata.obs[batch_id_column][0]} with {adata.n_obs} cells.")
         cell_annotation.annotate_using_celltype(adata)
 
         if not check_min_malignant_cells(
