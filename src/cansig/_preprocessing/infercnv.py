@@ -4,7 +4,6 @@ from typing import Union, List, Set, Dict, Tuple, Iterable
 import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
-
 from cansig._preprocessing._infercnv import infercnv  # pytype: disable=import-error
 from cansig._preprocessing.utils import Normalized  # pytype: disable=import-error
 from cansig.types import Pathlike  # pytype: disable=import-error
@@ -225,7 +224,7 @@ def reduce_reference_groups(
     if len(valid_ref_groups) < min_reference_groups:
         adata.obs[reference_key] = adata.obs[reference_key].astype("category")
         if config.reference_group(0) not in adata.obs[reference_key].cat.categories:
-            adata.obs[reference_key].cat.add_categories([config.reference_group(0)])
+            adata.obs[reference_key].cat = adata.obs[reference_key].cat.add_categories([config.reference_group(0)])
         adata.obs.loc[
             adata.obs[reference_key].str.startswith(config.reference_prefix), reference_key
         ] = config.reference_group(0)
