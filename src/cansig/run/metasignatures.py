@@ -198,6 +198,7 @@ def plot_latent_score(
     integ_dir: Optional[Union[str, pl.Path]],
     cell_metamembership: pd.DataFrame,
     prob_cellmetamembership: pd.DataFrame,
+    batch_column: str,
 ) -> None:
     utils.plot_score_UMAP(adata=adata, meta_signatures=meta_signatures, resdir=resdir.figures_output)
 
@@ -212,6 +213,7 @@ def plot_latent_score(
         prob_metamembership=prob_cellmetamembership,
         integration_path=integ_path,
         resdir=resdir.figures_output,
+        batch_column=batch_column,
     )
 
 
@@ -329,6 +331,7 @@ def run_metasignatures(
             integ_dir=integ_dir,
             cell_metamembership=cell_metamembership,
             prob_cellmetamembership=prob_cellmetamembership,
+            batch_column=batch,
         )
 
     _LOGGER.info("Performing GSEA.")

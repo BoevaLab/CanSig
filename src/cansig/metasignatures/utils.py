@@ -220,6 +220,7 @@ def plot_metamembership(
     prob_metamembership: pd.DataFrame,
     integration_path: pl.Path,
     resdir: pl.Path,
+    batch_column: str,
 ) -> None:
 
     latent_representations = pd.read_csv(integration_path / "latent-representations.csv", index_col=0, header=None)
@@ -232,7 +233,7 @@ def plot_metamembership(
     plotting_config = plotting.ScatterPlotConfig(
         dim_reduction="both",
         signature_columns=list(metamembership.columns) + list(prob_metamembership.columns),
-        batch_column="sample_id",
+        batch_column=batch_column,
         ncols=2,
     )
 
