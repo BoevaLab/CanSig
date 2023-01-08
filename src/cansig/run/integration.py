@@ -51,6 +51,10 @@ class Arguments(Protocol):
     def log(self) -> pathlib.Path:
         raise NotImplementedError
 
+    @property
+    def n_top_genes(self) -> int:
+        raise NotImplementedError
+
 
 def parse_args() -> Arguments:
     parser = argparse.ArgumentParser()
@@ -63,6 +67,9 @@ def parse_args() -> Arguments:
     parser.add_argument("--output", type=pathlib.Path, help="Output directory.", default=default_output)
     parser.add_argument(
         "--log", type=pathlib.Path, help="Where the log file should be saved.", default=pathlib.Path("integration.log")
+    )
+    parser.add_argument(
+        "--n-top-genes", type=int, default=2000, help="The number of most highly variable genes to use."
     )
 
     args = parser.parse_args()
@@ -112,11 +119,13 @@ def main(args: Arguments) -> None:
         config = models.SCVIConfig(
             batch=args.batch,
             n_latent=args.latent,
+            preprocessing=models.module_scvi.PreprocessingConfig(n_top_genes=args.n_top_genes),
         )
     elif args.model == "cansig":
         config = models.CanSigConfig(
             batch=args.batch,
             n_latent=args.latent,
+            preprocessing=models.module_cansig.PreprocessingConfig(n_top_genes=args.n_top_genes),
         )
     else:
         raise NotImplementedError(f"Model {args.model} is not implemented.")
