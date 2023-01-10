@@ -14,7 +14,7 @@ seaborn
 scikit-learn
 scipy
 scvi-tools
-sphinx
+sphinx<6
 statsmodels
 protobuf~=3.19.0
 # requirements-dev.txt

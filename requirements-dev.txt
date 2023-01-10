@@ -6,4 +6,4 @@ pytest
 pytest-cov
 pytest-xdist
 pytype
-sphinx
+sphinx<6
