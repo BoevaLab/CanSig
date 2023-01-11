@@ -410,24 +410,24 @@
 <section id="getting-started-with-the-code">
 <h3>Getting started with the code<a class="headerlink" href="#getting-started-with-the-code" title="Permalink to this heading">#</a></h3>
 <p>Clone the repository:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone git@github.com:BoevaLab/CanSig.git
-$ <span class="nb">cd</span> CanSig
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:BoevaLab/CanSig.git
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>CanSig
 </pre></div>
 </div>
 <p>Install the module in editable mode with the dependencies needed to run the test suite:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install -e <span class="s2">&quot;.[test]&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[test]&quot;</span>
 </pre></div>
 </div>
 <p>At this point you should be able to run the unit test suite:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pytest
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pytest
 </pre></div>
 </div>
 </section>
 <section id="tooling">
 <h3>Tooling<a class="headerlink" href="#tooling" title="Permalink to this heading">#</a></h3>
 <p>As a developer, you will use some tools increasing code quality as well as packages used to build the documentation. You can install them by running</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install -r requirements-dev.txt
-$ pre-commit install
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-dev.txt
+$<span class="w"> </span>pre-commit<span class="w"> </span>install
 </pre></div>
 </div>
 <p>We use <a class="reference external" href="https://github.com/psf/black">black</a> and <a class="reference external" href="https://flake8.pycqa.org/en/latest/">flake8</a> to lint the code, <a class="reference external" href="https://github.com/google/pytype">pytype</a> to check whether the types agree, and <a class="reference external" href="https://docs.pytest.org">pytest</a> to unit test the code.
@@ -441,9 +441,9 @@ These code quality checks are applied to every Pull Request via a workflow in th
 Whenever a Pull Request is merged into the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch, a new version of the documentation is automatically built and deployed. Both workflows are in <code class="docutils literal notranslate"><span class="pre">.github/workflows</span></code>.
 (Note that if you want to change the Sphinx theme you will need to modify both workflows as well as the requirements files).</p>
 <p>We store the source code of the documentation in the <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory. To build it locally, use</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> docs
-$ sphinx-apidoc -o source/ ../src/cansig
-$ make html
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>docs
+$<span class="w"> </span>sphinx-apidoc<span class="w"> </span>-o<span class="w"> </span>source/<span class="w"> </span>../src/cansig
+$<span class="w"> </span>make<span class="w"> </span>html
 </pre></div>
 </div>
 <p>In the <code class="docutils literal notranslate"><span class="pre">_build</span></code> directory, you should see <code class="docutils literal notranslate"><span class="pre">index.html</span></code> file. Open it with a web-browser of your choice.</p>

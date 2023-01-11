@@ -439,7 +439,7 @@
 <section id="installation">
 <h3>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h3>
 <p>Install the package:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install cansig
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>cansig
 </pre></div>
 </div>
 </section>
@@ -447,7 +447,7 @@
 <h3>Example dataset<a class="headerlink" href="#example-dataset" title="Permalink to this heading">#</a></h3>
 <p>To demonstrate the pipeline usage, we will analyse a small esophageal dataset, which has been already preprocessed (for more information about the dataset and the data curation, see <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing</span></a>).</p>
 <p>We will download it using an auxiliary script:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.download PIPELINE
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.download<span class="w"> </span>PIPELINE
 </pre></div>
 </div>
 <p>You should see a new directory <code class="docutils literal notranslate"><span class="pre">data</span></code> with a file <code class="docutils literal notranslate"><span class="pre">pipeline-tutorial.h5ad</span></code>.</p>
@@ -463,12 +463,12 @@
 <p>If you are familiar with Python, you may prefer running the analysis in a custom manner. See the <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a> and <a class="reference internal" href="cansig-for-python-coders.html#coders"><span class="std std-ref">Cansig for python coders</span></a>.</p>
 </div>
 <p>We will run the analysis pipeline with a single command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
-                                --batch batch
-                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
-                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
-                                --output tutorial-output
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
+<span class="w">                                </span>--batch<span class="w"> </span>batch
+<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--output<span class="w"> </span>tutorial-output
 </pre></div>
 </div>
 <p>This command launched the training of several models, used for data integration (batch correction and dimension reduction).
@@ -490,12 +490,12 @@ This is one of many databases available online. Alternatively, one can provide a
 <div><p>Running the pipeline in this way requires internet connectivity.
 If not connected to the internet, to run the same analysis, you need to download the file <code class="docutils literal notranslate"><span class="pre">h.all.v{current_version}.symbols.gmt</span></code>, go to the directory where this file is saved, and update the command line as follows</p>
 </div></blockquote>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
-                                --batch batch
-                                --gene-sets h.all.v<span class="o">{</span>current_version<span class="o">}</span>.symbols.gmt <span class="se">\</span>
-                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
-                                --output tutorial-output
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
+<span class="w">                                </span>--batch<span class="w"> </span>batch
+<span class="w">                                </span>--gene-sets<span class="w"> </span>h.all.v<span class="o">{</span>current_version<span class="o">}</span>.symbols.gmt<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--output<span class="w"> </span>tutorial-output
 </pre></div>
 </div>
 </div>
@@ -539,7 +539,7 @@ If not connected to the internet, to run the same analysis, you need to download
 <li><p><code class="docutils literal notranslate"><span class="pre">representative-directory.txt</span></code>: simple text file with the name of the post processing directory that can be used as a “representative directory”</p></li>
 </ul>
 <p>While we covered the most basic usage of the pipeline, more information can be obtained by running</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline --help
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>--help
 </pre></div>
 </div>
 <p>or by consulting the <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a>.

@@ -391,35 +391,35 @@ You can add plotting according to pre-scored signatures (i.e. present in the ada
 <p>The signature column names inputted with <code class="docutils literal notranslate"><span class="pre">--sigcols</span></code> must be in the adata.obs.columns.</p>
 </div>
 <p>Example usage to plot UMAP with additional scored signatures named <code class="docutils literal notranslate"><span class="pre">signature1</span></code> and <code class="docutils literal notranslate"><span class="pre">signature2</span></code>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
-                                --batch batch
-                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
-                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
-                                --output tutorial-output <span class="se">\</span>
-                                --dim-reduction umap <span class="se">\</span>
-                                --sigcols signature1 signature2
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
+<span class="w">                                </span>--batch<span class="w"> </span>batch
+<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--output<span class="w"> </span>tutorial-output<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--dim-reduction<span class="w"> </span>umap<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--sigcols<span class="w"> </span>signature1<span class="w"> </span>signature2
 </pre></div>
 </div>
 <p>Example usage to plot the UMAP with PCA inset with additional scored signatures named <code class="docutils literal notranslate"><span class="pre">signature1</span></code> and <code class="docutils literal notranslate"><span class="pre">signature2</span></code>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
-                                --batch batch
-                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
-                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
-                                --output tutorial-output <span class="se">\</span>
-                                --dim-reduction both <span class="se">\</span>
-                                --sigcols signature1 signature2
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
+<span class="w">                                </span>--batch<span class="w"> </span>batch
+<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--output<span class="w"> </span>tutorial-output<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--dim-reduction<span class="w"> </span>both<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--sigcols<span class="w"> </span>signature1<span class="w"> </span>signature2
 </pre></div>
 </div>
 <p>Example usage to disable plotting utilities</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
-                                --batch batch
-                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
-                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
-                                --output tutorial-output <span class="se">\</span>
-                                --disable-plots
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
+<span class="w">                                </span>--batch<span class="w"> </span>batch
+<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--output<span class="w"> </span>tutorial-output<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--disable-plots
 </pre></div>
 </div>
 </section>
@@ -434,24 +434,24 @@ By default, running the pipeline will result the results of the differential gen
 <li><p><code class="docutils literal notranslate"><span class="pre">--corrmethod</span></code>: the method used to compute the correlation between the signatures; can be spearman or pearson. Defaults to pearson.</p></li>
 </ul>
 <p>Example usage to compute scores on cells using the 100 top most differentially expressed genes as a signature and using spearman to compute the correlation between signatures.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
-                                --batch batch
-                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
-                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
-                                --output tutorial-output <span class="se">\</span>
-                                --ngenessig <span class="m">100</span> <span class="se">\</span>
-                                --corrmethod spearman
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
+<span class="w">                                </span>--batch<span class="w"> </span>batch
+<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--output<span class="w"> </span>tutorial-output<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--ngenessig<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--corrmethod<span class="w"> </span>spearman
 </pre></div>
 </div>
 <p>Example usage to disable saving any results linked to signatures</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
-                                --batch batch
-                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
-                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
-                                --output tutorial-output <span class="se">\</span>
-                                --disable-signatures
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
+<span class="w">                                </span>--batch<span class="w"> </span>batch
+<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--output<span class="w"> </span>tutorial-output<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--disable-signatures
 </pre></div>
 </div>
 </section>
@@ -485,13 +485,13 @@ This means that the data object you provide will contain the following:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv-correction</span></code>: if you want to obtain False Discovery Rate (FDR) corrected results, add this flag. It is recommended to use these results rather than uncorrected p-values, as these can result in numerous false discoveries when blindly testing for differential expression (for more information, read <a class="reference external" href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1716-1">https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1716-1</a>)</p></li>
 </ul>
 <p>Example usage to compute the differential CNV analysis with default values (Mann Whitney U test, no FDR correction)</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
-                                --batch batch
-                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
-                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
-                                --output tutorial-output <span class="se">\</span>
-                                --diffcnv
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
+<span class="w">                                </span>--batch<span class="w"> </span>batch
+<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--output<span class="w"> </span>tutorial-output<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--diffcnv
 </pre></div>
 </div>
 <p>This will result in the following file being added to the <code class="docutils literal notranslate"><span class="pre">tutorial-output/</span></code> directory, in addition to all the files/directories described on the homepage.</p>
@@ -518,16 +518,16 @@ This means that the data object you provide will contain the following:</p>
 <p>We use the batch ID as a proxy for the patient in the computation of the number of patients showing a gain/loss. If there are several patients in one batch or several batches per patient, this will count the number of batches showing a gain/loss, not the number of patients.</p>
 </div>
 <p>Example usage to compute the differential CNV analysis with a t-test, smoothing on a subclonal level, and with FDR corrected values (ie q-values)</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
-                                --batch batch
-                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
-                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
-                                --output tutorial-output <span class="se">\</span>
-                                --diffcnv <span class="se">\</span>
-                                --subclonalcnv <span class="se">\</span>
-                                --diffcnv-method ttest <span class="se">\</span>
-                                --diffcnv-correction
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
+<span class="w">                                </span>--batch<span class="w"> </span>batch
+<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--output<span class="w"> </span>tutorial-output<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--diffcnv<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--subclonalcnv<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--diffcnv-method<span class="w"> </span>ttest<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--diffcnv-correction
 </pre></div>
 </div>
 <dl class="simple">
@@ -564,14 +564,14 @@ This array must have the following structure:
 <p>Forgetting to add the <code class="docutils literal notranslate"><span class="pre">--cnvarray</span></code> flag will result in the differential CNV analysis being run on the data object provided, and thus will likely throw an error if this data has not been obtained using our preprocessing module.</p>
 </div>
 <p>Example usage to compute the differential CNV analysis with default values (Mann Whitney U test, no FDR correction)</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
-                                --batch batch
-                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
-                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
-                                --output tutorial-output <span class="se">\</span>
-                                --diffcnv <span class="se">\</span>
-                                --cnvarray data/pipeline-tutorial/cnv_array.csv
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
+<span class="w">                                </span>--batch<span class="w"> </span>batch
+<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--output<span class="w"> </span>tutorial-output<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--diffcnv<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--cnvarray<span class="w"> </span>data/pipeline-tutorial/cnv_array.csv
 </pre></div>
 </div>
 <p>This will result in the following file being added to the <code class="docutils literal notranslate"><span class="pre">tutorial-output/</span></code> directory, in addition to all the files/directories described on the homepage.</p>
@@ -593,16 +593,16 @@ This array must have the following structure:
 </li>
 </ul>
 <p>Example usage to compute the differential CNV analysis with a t-test and with FDR corrected values (ie q-values)</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5
-                                --batch batch
-                                --gene-sets MSigDB_Hallmark_2020 <span class="se">\</span>
-                                --dimensions <span class="m">4</span> <span class="m">6</span> --model-runs <span class="m">1</span> <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">1</span> <span class="se">\</span>
-                                --output tutorial-output <span class="se">\</span>
-                                --diffcnv <span class="se">\</span>
-                                --diffcnv-method ttest <span class="se">\</span>
-                                --diffcnv-correction <span class="se">\</span>
-                                --cnvarray data/pipeline-tutorial/cnv_array.csv
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
+<span class="w">                                </span>--batch<span class="w"> </span>batch
+<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--output<span class="w"> </span>tutorial-output<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--diffcnv<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--diffcnv-method<span class="w"> </span>ttest<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--diffcnv-correction<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--cnvarray<span class="w"> </span>data/pipeline-tutorial/cnv_array.csv
 </pre></div>
 </div>
 <p>This will result in the same file as in the previous example with the addition of the columns</p>
@@ -636,11 +636,11 @@ For every model you consider, create a directory:</p>
 <p>Put a template for the wrapping script at GitHub (in a new <code class="docutils literal notranslate"><span class="pre">templates/</span></code> directory).</p>
 </div>
 <p>When the directory with different latent codes is ready, run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.postprocessing my-models <span class="se">\</span>
-                                --expression-data original-data.hdf5
-                                --gene-sets data/pipeline-tutorial/pathways.gmt <span class="se">\</span>
-                                --clusters <span class="m">2</span> <span class="m">3</span> <span class="m">5</span>  --cluster-runs <span class="m">2</span> <span class="se">\</span>
-                                --output output-dir
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.postprocessing<span class="w"> </span>my-models<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--expression-data<span class="w"> </span>original-data.hdf5
+<span class="w">                                </span>--gene-sets<span class="w"> </span>data/pipeline-tutorial/pathways.gmt<span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                </span>--output<span class="w"> </span>output-dir
 </pre></div>
 </div>
 <div class="admonition note">
