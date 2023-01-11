@@ -186,6 +186,9 @@ def create_parser() -> argparse.ArgumentParser:
         "running the differential CNV on the anndata object",
         default=None,
     )
+    parser.add_argument(
+        "--n-top-genes", type=int, default=2_000, help="Number of the most highly variable genes to use. Default: 2000."
+    )
 
     # CanSig Args
     parser.add_argument("--n-latent-batch-effect", type=int, default=5)
@@ -222,6 +225,7 @@ def generate_model_configs(args) -> List[Union[models.SCVIConfig, models.CanSigC
                     train=_scvi.TrainConfig(max_epochs=args.max_epochs),
                     continuous_covariates=args.continuous_covariates,
                     discrete_covariates=args.discrete_covariates,
+                    preprocessing=models.module_scvi.PreprocessingConfig(n_top_genes=args.n_top_genes),
                 )
             elif args.model == "cansig":
                 config = models.CanSigConfig(
@@ -233,6 +237,7 @@ def generate_model_configs(args) -> List[Union[models.SCVIConfig, models.CanSigC
                     train=_scvi.TrainConfig(max_epochs=args.max_epochs),
                     continuous_covariates=args.continuous_covariates,
                     discrete_covariates=args.discrete_covariates,
+                    preprocessing=models.module_cansig.PreprocessingConfig(n_top_genes=args.n_top_genes),
                 )
             else:
                 raise NotImplementedError(f"Model {args.model} not implemented.")

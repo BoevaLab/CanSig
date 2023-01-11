@@ -184,7 +184,7 @@ def _remove_patient_unique_ms(
         if ms == -1:
             continue
         ms_df = df[df.metamembership == ms]
-        pct_df = ms_df["sample_id"].value_counts() / ms_df.shape[0]
+        pct_df = ms_df[batch_key].value_counts() / ms_df.shape[0]
         if (pct_df > pat_specific_threshold).sum() > 0:
             _LOGGER.info(f"Removing ms {ms} because patient-specific")
             ms_to_remove.append(ms)
