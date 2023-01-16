@@ -137,7 +137,7 @@
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="cansig-for-python-coders.html">
-                        CanSig for Pythonists
+                        CanSig as a package
                       </a>
                     </li>
                 
@@ -157,6 +157,13 @@
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="contributing.html">
                         Contributing
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="api.html">
+                        API
                       </a>
                     </li>
                 
@@ -267,7 +274,7 @@
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="cansig-for-python-coders.html">
-                        CanSig for Pythonists
+                        CanSig as a package
                       </a>
                     </li>
                 
@@ -287,6 +294,13 @@
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="contributing.html">
                         Contributing
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="api.html">
+                        API
                       </a>
                     </li>
                 
@@ -360,7 +374,7 @@
   <section id="cansig-discovering-cancer-signatures">
 <h1>CanSig: discovering cancer signatures<a class="headerlink" href="#cansig-discovering-cancer-signatures" title="Permalink to this heading">#</a></h1>
 <p>Human tumors are highly heterogeneous in their cell composition; specifically, they exhibit heterogeneity in transcriptional states of malignant cells, as has been recently discovered through single-cell RNA sequencing (scRNA-seq). Distinct states of malignant cells have been linked to variability in tumorigenic properties and resistance to anti-cancer treatment. Despite the fact that scRNA-seq data contain all necessary information to uncover shared transcriptional states of malignant cells in tumors, jointly analyzing cells from multiple cancer patients comes with its set of challenges including batch correction and accounting for patient-specific genetic background driving differences between gene expression vectors. We propose CanSig, an easy-to-use approach designed to discover known and de novo shared signatures in cancer single cells. CanSig preprocesses, integrates and analyzes scRNA-seq data to provide new signatures of shared transcriptional states and links these states to known pathways.</p>
-<a class="reference internal image-reference" href="_images/pipeline.png"><img alt="The diagram representing CanSig pipeline." src="_images/pipeline.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/pipeline.png"><img alt="The diagram representing CanSig pipeline." class="align-center" src="_images/pipeline.png" style="width: 600px;" /></a>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>A preprint describing the pipeline and case studies is <a class="reference external" href="https://doi.org/10.1101/2022.04.14.488324">now available</a>.</p>
@@ -386,7 +400,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="formatting-data.html">Input data format</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cansig-for-python-coders.html">CanSig for Pythonists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cansig-for-python-coders.html">CanSig as a package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#gsea-does-not-run">GSEA does not run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#differential-cnv-analysis-does-not-work">Differential CNV analysis does not work</a></li>
@@ -398,11 +412,10 @@
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#for-new-developers">For new developers</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 </ul>
 </div>
 <ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
 </section>
@@ -447,7 +460,7 @@ malignant.h5ad<span class="w">  </span>msigdb74.gmt<span class="w">  </span>READ
 <span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sample_id&quot;</span><span class="p">,</span> <span class="s2">&quot;celltype&quot;</span><span class="p">,</span> <span class="s2">&quot;subclonal&quot;</span><span class="p">],</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/tutorial-simulated-umap.png"><img alt="UMAP visualisation of simulated cells." src="_images/tutorial-simulated-umap.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/tutorial-simulated-umap.png"><img alt="UMAP visualisation of simulated cells." class="align-center" src="_images/tutorial-simulated-umap.png" style="width: 400px;" /></a>
 <p>We simulated samples coming from different patients, with different subclonal composition and different malignant cell types.
 Different patients may be missing some of the cell types. Let’s visualise how many cells with particular cell type are within each sample:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_joint</span><span class="p">(</span><span class="n">col1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">col2</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -464,7 +477,7 @@ Different patients may be missing some of the cell types. Let’s visualise how 
 <span class="n">plot_joint</span><span class="p">(</span><span class="s2">&quot;sample_id&quot;</span><span class="p">,</span> <span class="s2">&quot;celltype&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/tutorial-simulated-joint.png"><img alt="Joint (empirical) distribution of cell types and patients." src="_images/tutorial-simulated-joint.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/tutorial-simulated-joint.png"><img alt="Joint (empirical) distribution of cell types and patients." class="align-center" src="_images/tutorial-simulated-joint.png" style="width: 400px;" /></a>
 </section>
 <section id="running-the-analysis">
 <h3>Running the analysis<a class="headerlink" href="#running-the-analysis" title="Permalink to this heading">#</a></h3>
@@ -540,9 +553,9 @@ Different patients may be missing some of the cell types. Let’s visualise how 
 </li>
 </ul>
 <p>For example, the similarity between used to create metasignatures in our case looks in the following manner:</p>
-<a class="reference internal image-reference" href="_images/tutorial-heatmap-metasignatures.png"><img alt="Similarity heatmap." src="_images/tutorial-heatmap-metasignatures.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/tutorial-heatmap-metasignatures.png"><img alt="Similarity heatmap." class="align-center" src="_images/tutorial-heatmap-metasignatures.png" style="width: 400px;" /></a>
 <p>so one can hope that there are three different meta-signatures. When the cells are scored according to them the following correlation matrix is obtained:</p>
-<a class="reference internal image-reference" href="_images/tutorial-clustermap-metasignatures-correlation.png"><img alt="Meta-signatures scores correlation matrix." src="_images/tutorial-clustermap-metasignatures-correlation.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/tutorial-clustermap-metasignatures-correlation.png"><img alt="Meta-signatures scores correlation matrix." class="align-center" src="_images/tutorial-clustermap-metasignatures-correlation.png" style="width: 400px;" /></a>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Each directory in <code class="docutils literal notranslate"><span class="pre">postprocessing/</span></code> is a result of running integration method, clustering, and gene set enrichment analysis. We ablate the hyperparameters and  in <code class="docutils literal notranslate"><span class="pre">metasignatures/</span></code> we assemble this information to hope that the aggregated results will be more robust to changes in hyperparameters. Note that there are many possible ways of doing it and perfectly one would apply resampling techniques, such as bootstrap, to understand whether the final output is robust enough.
@@ -583,27 +596,23 @@ We can however see how well the found metasignatures correspond to the cell type
 <span class="n">plot_joint</span><span class="p">(</span><span class="s2">&quot;sample_id&quot;</span><span class="p">,</span> <span class="s2">&quot;metamembership&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/tutorial-joint-metasignature-patient.png"><img alt="Joint (empirical) distribution of meta-signature assignment and patient." src="_images/tutorial-joint-metasignature-patient.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/tutorial-joint-metasignature-patient.png"><img alt="Joint (empirical) distribution of meta-signature assignment and patient." class="align-center" src="_images/tutorial-joint-metasignature-patient.png" style="width: 400px;" /></a>
 <p>As we can see, the cells have been decomposed into three meta-signatures as well as undetermined cells.</p>
 <p>We can also visualise the (empirical) joint distribution of ground truth cell types and assigned memberships to meta-signatures:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_joint</span><span class="p">(</span><span class="s2">&quot;celltype&quot;</span><span class="p">,</span> <span class="s2">&quot;metamembership&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/tutorial-joint-metasignature-celltype.png"><img alt="Joint (empirical) distribution of meta-signature assignment and ground truth." src="_images/tutorial-joint-metasignature-celltype.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/tutorial-joint-metasignature-celltype.png"><img alt="Joint (empirical) distribution of meta-signature assignment and ground truth." class="align-center" src="_images/tutorial-joint-metasignature-celltype.png" style="width: 400px;" /></a>
 <p>It seems that <code class="docutils literal notranslate"><span class="pre">metasig1</span></code> is considerably smaller than the other meta-signatures as well as the set of undetermined cells. We see that for both types <code class="docutils literal notranslate"><span class="pre">metasig2</span></code> or <code class="docutils literal notranslate"><span class="pre">metasig3</span></code> seem to be mostly capturing <code class="docutils literal notranslate"><span class="pre">program2</span></code> and <code class="docutils literal notranslate"><span class="pre">program3</span></code>.</p>
 </section>
 </section>
 <section id="tutorials">
 <h2>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this heading">#</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you are familiar with Python, you may prefer running the analysis in a custom manner. See the <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a> and <a class="reference internal" href="cansig-for-python-coders.html#coders"><span class="std std-ref">Cansig for python coders</span></a>.</p>
-</div>
 <ul class="simple">
-<li><p>To learn more about the pipeline (parallelization, using custom models, plotting), see <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a>.</p></li>
+<li><p>To learn more about the command line pipeline, see <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a>.</p></li>
+<li><p>To learn how to run CanSig elements in a Python script or a Jupyter notebook, see <a class="reference internal" href="cansig-for-python-coders.html#coders"><span class="std std-ref">CanSig as a package</span></a>.</p></li>
 <li><p>To learn about the preprocessing module (used to prepare the raw data into the .h5ad format), see the <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing</span></a>.</p></li>
 <li><p>To learn how to format already preprocessed .csv files into .h5ad files, see <a class="reference internal" href="formatting-data.html#formatting"><span class="std std-ref">Input data format</span></a>.</p></li>
-<li><p>To learn how to run CanSig in a python script/jupyter notebook, see <a class="reference internal" href="cansig-for-python-coders.html#coders"><span class="std std-ref">Cansig for python coders</span></a>.</p></li>
 <li><p>To ensure smooth running of CanSig, check out <a class="reference internal" href="troubleshooting.html#troubleshooting"><span class="std std-ref">the troubleshooting page</span></a>.</p></li>
 </ul>
 </section>

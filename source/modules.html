@@ -136,7 +136,7 @@
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../cansig-for-python-coders.html">
-                        CanSig for Pythonists
+                        CanSig as a package
                       </a>
                     </li>
                 
@@ -156,6 +156,13 @@
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../contributing.html">
                         Contributing
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
                       </a>
                     </li>
                 
@@ -266,7 +273,7 @@
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../cansig-for-python-coders.html">
-                        CanSig for Pythonists
+                        CanSig as a package
                       </a>
                     </li>
                 
@@ -286,6 +293,13 @@
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../contributing.html">
                         Contributing
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
                       </a>
                     </li>
                 
@@ -359,422 +373,214 @@
   <section id="cansig">
 <h1>cansig<a class="headerlink" href="#cansig" title="Permalink to this heading">#</a></h1>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="cansig.cluster.html">cansig.cluster package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.cluster.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.cluster.html#module-cansig.cluster.api">cansig.cluster.api module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.api.LeidenNCluster"><code class="docutils literal notranslate"><span class="pre">LeidenNCluster</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.api.LeidenNCluster.fit_predict"><code class="docutils literal notranslate"><span class="pre">LeidenNCluster.fit_predict()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="cansig.html">cansig package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cansig.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cansig.cluster.html">cansig.cluster package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#module-cansig.cluster.api">cansig.cluster.api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#module-cansig.cluster.leiden">cansig.cluster.leiden module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#module-cansig.cluster">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.api.LeidenNClusterConfig"><code class="docutils literal notranslate"><span class="pre">LeidenNClusterConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.api.LeidenNClusterConfig.binsearch"><code class="docutils literal notranslate"><span class="pre">LeidenNClusterConfig.binsearch</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.api.LeidenNClusterConfig.clusters"><code class="docutils literal notranslate"><span class="pre">LeidenNClusterConfig.clusters</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.cnvanalysis.html">cansig.cnvanalysis package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.cnvanalysis.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.cnvanalysis.html#module-cansig.cnvanalysis.differentialcnvs">cansig.cnvanalysis.differentialcnvs module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.cnvanalysis.html#module-cansig.cnvanalysis">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.integration.html">cansig.integration package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.html#module-cansig.integration.model">cansig.integration.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.html#module-cansig.integration.utils">cansig.integration.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.integration.html#module-cansig.integration">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.cluster.html#module-cansig.cluster.leiden">cansig.cluster.leiden module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.BinSearchSettings"><code class="docutils literal notranslate"><span class="pre">BinSearchSettings</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.BinSearchSettings.end"><code class="docutils literal notranslate"><span class="pre">BinSearchSettings.end</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.BinSearchSettings.epsilon"><code class="docutils literal notranslate"><span class="pre">BinSearchSettings.epsilon</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.BinSearchSettings.start"><code class="docutils literal notranslate"><span class="pre">BinSearchSettings.start</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.BinSearchSettings.validate_end_greater_than_start"><code class="docutils literal notranslate"><span class="pre">BinSearchSettings.validate_end_greater_than_start()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.interface.html">cansig.interface package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.interface.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.interface.html#module-cansig.interface.cluster">cansig.interface.cluster module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.interface.html#module-cansig.interface">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNCluster"><code class="docutils literal notranslate"><span class="pre">LeidenNCluster</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNCluster.fit_predict"><code class="docutils literal notranslate"><span class="pre">LeidenNCluster.fit_predict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html">cansig.metaanalysis package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#module-cansig.metaanalysis.heatmap">cansig.metaanalysis.heatmap module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#module-cansig.metaanalysis.repr_directory">cansig.metaanalysis.repr_directory module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#module-cansig.metaanalysis">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig"><code class="docutils literal notranslate"><span class="pre">LeidenNClusterConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig.binsearch"><code class="docutils literal notranslate"><span class="pre">LeidenNClusterConfig.binsearch</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig.clusters"><code class="docutils literal notranslate"><span class="pre">LeidenNClusterConfig.clusters</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig.directed"><code class="docutils literal notranslate"><span class="pre">LeidenNClusterConfig.directed</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig.n_iterations"><code class="docutils literal notranslate"><span class="pre">LeidenNClusterConfig.n_iterations</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig.nngraph"><code class="docutils literal notranslate"><span class="pre">LeidenNClusterConfig.nngraph</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig.random_state"><code class="docutils literal notranslate"><span class="pre">LeidenNClusterConfig.random_state</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig.use_weights"><code class="docutils literal notranslate"><span class="pre">LeidenNClusterConfig.use_weights</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.metasignatures.html">cansig.metasignatures package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.metasignatures.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.metasignatures.html#module-cansig.metasignatures.WRC">cansig.metasignatures.WRC module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.metasignatures.html#module-cansig.metasignatures.api">cansig.metasignatures.api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.metasignatures.html#module-cansig.metasignatures.clustering">cansig.metasignatures.clustering module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.metasignatures.html#module-cansig.metasignatures.utils">cansig.metasignatures.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.metasignatures.html#module-cansig.metasignatures">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenResolution"><code class="docutils literal notranslate"><span class="pre">LeidenResolution</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenResolution.fit_predict"><code class="docutils literal notranslate"><span class="pre">LeidenResolution.fit_predict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.models.html">cansig.models package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#module-cansig.models.api">cansig.models.api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#module-cansig.models.cansig">cansig.models.cansig module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#module-cansig.models.scvi">cansig.models.scvi module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#module-cansig.models">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenResolutionConfig"><code class="docutils literal notranslate"><span class="pre">LeidenResolutionConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenResolutionConfig.resolution"><code class="docutils literal notranslate"><span class="pre">LeidenResolutionConfig.resolution</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.plotting.html">cansig.plotting package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#module-cansig.plotting.plotting">cansig.plotting.plotting module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#module-cansig.plotting">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.NeighborsGraphConfig"><code class="docutils literal notranslate"><span class="pre">NeighborsGraphConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.NeighborsGraphConfig.knn"><code class="docutils literal notranslate"><span class="pre">NeighborsGraphConfig.knn</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.NeighborsGraphConfig.method"><code class="docutils literal notranslate"><span class="pre">NeighborsGraphConfig.method</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.NeighborsGraphConfig.metric"><code class="docutils literal notranslate"><span class="pre">NeighborsGraphConfig.metric</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.NeighborsGraphConfig.n_neighbors"><code class="docutils literal notranslate"><span class="pre">NeighborsGraphConfig.n_neighbors</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.NeighborsGraphConfig.n_pcs"><code class="docutils literal notranslate"><span class="pre">NeighborsGraphConfig.n_pcs</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.cluster.html#module-cansig.cluster">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.cnvanalysis.html">cansig.cnvanalysis package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.cnvanalysis.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.cnvanalysis.html#module-cansig.cnvanalysis.differentialcnvs">cansig.cnvanalysis.differentialcnvs module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cnvanalysis.html#cansig.cnvanalysis.differentialcnvs.discretize_cnv"><code class="docutils literal notranslate"><span class="pre">discretize_cnv()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cnvanalysis.html#cansig.cnvanalysis.differentialcnvs.find_differential_cnv"><code class="docutils literal notranslate"><span class="pre">find_differential_cnv()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cnvanalysis.html#cansig.cnvanalysis.differentialcnvs.find_differential_cnv_precomputed"><code class="docutils literal notranslate"><span class="pre">find_differential_cnv_precomputed()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cnvanalysis.html#cansig.cnvanalysis.differentialcnvs.get_cluster_labels"><code class="docutils literal notranslate"><span class="pre">get_cluster_labels()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cnvanalysis.html#cansig.cnvanalysis.differentialcnvs.get_cnv_mapping"><code class="docutils literal notranslate"><span class="pre">get_cnv_mapping()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cnvanalysis.html#cansig.cnvanalysis.differentialcnvs.get_cnv_results_pc"><code class="docutils literal notranslate"><span class="pre">get_cnv_results_pc()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cnvanalysis.html#cansig.cnvanalysis.differentialcnvs.get_diff_cnv"><code class="docutils literal notranslate"><span class="pre">get_diff_cnv()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cnvanalysis.html#cansig.cnvanalysis.differentialcnvs.get_subclonal_cnv"><code class="docutils literal notranslate"><span class="pre">get_subclonal_cnv()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.cnvanalysis.html#cansig.cnvanalysis.differentialcnvs.save_diffcnv"><code class="docutils literal notranslate"><span class="pre">save_diffcnv()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.interface.html">cansig.interface package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.interface.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.interface.html#module-cansig.interface.cluster">cansig.interface.cluster module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.interface.html#cansig.interface.cluster.ICluster"><code class="docutils literal notranslate"><span class="pre">ICluster</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.interface.html#cansig.interface.cluster.ICluster.fit_predict"><code class="docutils literal notranslate"><span class="pre">ICluster.fit_predict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.run.html">cansig.run package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#module-cansig.run.download">cansig.run.download module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#module-cansig.run.format">cansig.run.format module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#module-cansig.run.heatmap">cansig.run.heatmap module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#module-cansig.run.integration">cansig.run.integration module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#module-cansig.run.metasignatures">cansig.run.metasignatures module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#module-cansig.run.pipeline">cansig.run.pipeline module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#module-cansig.run.postprocessing">cansig.run.postprocessing module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#module-cansig.run.split">cansig.run.split module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#module-cansig.run">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.interface.html#module-cansig.interface">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.html#module-cansig.filesys">cansig.filesys module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.filesys.IntegrationDir"><code class="docutils literal notranslate"><span class="pre">IntegrationDir</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.IntegrationDir.MODEL"><code class="docutils literal notranslate"><span class="pre">IntegrationDir.MODEL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.IntegrationDir.REPRESENTATIONS"><code class="docutils literal notranslate"><span class="pre">IntegrationDir.REPRESENTATIONS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.IntegrationDir.integration_settings"><code class="docutils literal notranslate"><span class="pre">IntegrationDir.integration_settings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.IntegrationDir.latent_representations"><code class="docutils literal notranslate"><span class="pre">IntegrationDir.latent_representations</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.IntegrationDir.valid"><code class="docutils literal notranslate"><span class="pre">IntegrationDir.valid()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.metaanalysis.html">cansig.metaanalysis package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.metaanalysis.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.metaanalysis.html#module-cansig.metaanalysis.heatmap">cansig.metaanalysis.heatmap module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapItem"><code class="docutils literal notranslate"><span class="pre">HeatmapItem</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapItem.horizontal"><code class="docutils literal notranslate"><span class="pre">HeatmapItem.horizontal</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapItem.panel"><code class="docutils literal notranslate"><span class="pre">HeatmapItem.panel</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapItem.value"><code class="docutils literal notranslate"><span class="pre">HeatmapItem.value</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapItem.vertical"><code class="docutils literal notranslate"><span class="pre">HeatmapItem.vertical</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir"><code class="docutils literal notranslate"><span class="pre">MetasigDir</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir.CNVFILE"><code class="docutils literal notranslate"><span class="pre">MetasigDir.CNVFILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir.FIGURES"><code class="docutils literal notranslate"><span class="pre">MetasigDir.FIGURES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir.GSEAFILE"><code class="docutils literal notranslate"><span class="pre">MetasigDir.GSEAFILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir.META"><code class="docutils literal notranslate"><span class="pre">MetasigDir.META</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir.SIMFILE"><code class="docutils literal notranslate"><span class="pre">MetasigDir.SIMFILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir.dcnv_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.dcnv_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir.figures_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.figures_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir.gsea_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.gsea_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir.make_fig_dir"><code class="docutils literal notranslate"><span class="pre">MetasigDir.make_fig_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir.make_sig_dir"><code class="docutils literal notranslate"><span class="pre">MetasigDir.make_sig_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir.sig_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.sig_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir.sim_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.sim_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir.valid"><code class="docutils literal notranslate"><span class="pre">MetasigDir.valid()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapSettings"><code class="docutils literal notranslate"><span class="pre">HeatmapSettings</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapSettings.font_size"><code class="docutils literal notranslate"><span class="pre">HeatmapSettings.font_size</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapSettings.horizontal_name"><code class="docutils literal notranslate"><span class="pre">HeatmapSettings.horizontal_name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapSettings.score_name"><code class="docutils literal notranslate"><span class="pre">HeatmapSettings.score_name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapSettings.spines_linewidth"><code class="docutils literal notranslate"><span class="pre">HeatmapSettings.spines_linewidth</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapSettings.tile_size"><code class="docutils literal notranslate"><span class="pre">HeatmapSettings.tile_size</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapSettings.value_max"><code class="docutils literal notranslate"><span class="pre">HeatmapSettings.value_max</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapSettings.value_min"><code class="docutils literal notranslate"><span class="pre">HeatmapSettings.value_min</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HeatmapSettings.vertical_name"><code class="docutils literal notranslate"><span class="pre">HeatmapSettings.vertical_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.CELL_SCORE_FILE"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.CELL_SCORE_FILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.CLUSTER_SETTINGS"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.CLUSTER_SETTINGS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.DCNV_FILE"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.DCNV_FILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.GSEA_SETTINGS"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.GSEA_SETTINGS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.INTEGRATION_SETTINGS"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.INTEGRATION_SETTINGS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.LABELS"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.LABELS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.SIGNATURE_SETTINGS"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.SIGNATURE_SETTINGS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.cell_score_output"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.cell_score_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.cluster_labels"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.cluster_labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.cluster_settings"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.cluster_settings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.dcnv_output"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.dcnv_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.gsea_output"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.gsea_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.gsea_settings"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.gsea_settings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.integration_settings"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.integration_settings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.make_sig_dir"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.make_sig_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.scatter_output"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.scatter_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.signature_output"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.signature_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir.valid"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.valid()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HighestScoreFilter"><code class="docutils literal notranslate"><span class="pre">HighestScoreFilter</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.HighestScoreFilter.allowed_panels"><code class="docutils literal notranslate"><span class="pre">HighestScoreFilter.allowed_panels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.filesys.StructuredDir"><code class="docutils literal notranslate"><span class="pre">StructuredDir</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.StructuredDir.create"><code class="docutils literal notranslate"><span class="pre">StructuredDir.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.filesys.StructuredDir.valid"><code class="docutils literal notranslate"><span class="pre">StructuredDir.valid</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.IFilterItems"><code class="docutils literal notranslate"><span class="pre">IFilterItems</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.IFilterItems.filter"><code class="docutils literal notranslate"><span class="pre">IFilterItems.filter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.filesys.get_directory_name"><code class="docutils literal notranslate"><span class="pre">get_directory_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.filesys.get_file"><code class="docutils literal notranslate"><span class="pre">get_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.filesys.read_cluster_labels"><code class="docutils literal notranslate"><span class="pre">read_cluster_labels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.filesys.read_latent_representations"><code class="docutils literal notranslate"><span class="pre">read_latent_representations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.filesys.read_settings"><code class="docutils literal notranslate"><span class="pre">read_settings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.filesys.save_cluster_labels"><code class="docutils literal notranslate"><span class="pre">save_cluster_labels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.filesys.save_latent_representations"><code class="docutils literal notranslate"><span class="pre">save_latent_representations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.filesys.save_settings"><code class="docutils literal notranslate"><span class="pre">save_settings()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.IFilterPanels"><code class="docutils literal notranslate"><span class="pre">IFilterPanels</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.IFilterPanels.allowed_panels"><code class="docutils literal notranslate"><span class="pre">IFilterPanels.allowed_panels()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.IFilterPanels.filter"><code class="docutils literal notranslate"><span class="pre">IFilterPanels.filter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.html#module-cansig.gsea">cansig.gsea module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.gsea.DefaultFormatter"><code class="docutils literal notranslate"><span class="pre">DefaultFormatter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.gsea.DefaultFormatter.format"><code class="docutils literal notranslate"><span class="pre">DefaultFormatter.format()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.MostFoundItemsFilter"><code class="docutils literal notranslate"><span class="pre">MostFoundItemsFilter</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.MostFoundItemsFilter.allowed_panels"><code class="docutils literal notranslate"><span class="pre">MostFoundItemsFilter.allowed_panels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionAnalysis"><code class="docutils literal notranslate"><span class="pre">GeneExpressionAnalysis</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionAnalysis.diff_gex"><code class="docutils literal notranslate"><span class="pre">GeneExpressionAnalysis.diff_gex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionAnalysis.perform_gsea"><code class="docutils literal notranslate"><span class="pre">GeneExpressionAnalysis.perform_gsea()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.get_heatmap_items"><code class="docutils literal notranslate"><span class="pre">get_heatmap_items()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.panel_filter_factory"><code class="docutils literal notranslate"><span class="pre">panel_filter_factory()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.heatmap.plot_heatmap"><code class="docutils literal notranslate"><span class="pre">plot_heatmap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionConfig"><code class="docutils literal notranslate"><span class="pre">GeneExpressionConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionConfig.gene_sets"><code class="docutils literal notranslate"><span class="pre">GeneExpressionConfig.gene_sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionConfig.looks_as_valid_gmt"><code class="docutils literal notranslate"><span class="pre">GeneExpressionConfig.looks_as_valid_gmt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionConfig.method"><code class="docutils literal notranslate"><span class="pre">GeneExpressionConfig.method</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionConfig.n_diff_genes"><code class="docutils literal notranslate"><span class="pre">GeneExpressionConfig.n_diff_genes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionConfig.permutation_num"><code class="docutils literal notranslate"><span class="pre">GeneExpressionConfig.permutation_num</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.metaanalysis.html#module-cansig.metaanalysis.repr_directory">cansig.metaanalysis.repr_directory module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.ReprDirectoryConfig"><code class="docutils literal notranslate"><span class="pre">ReprDirectoryConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.ReprDirectoryConfig.COMPLEXITYPEN"><code class="docutils literal notranslate"><span class="pre">ReprDirectoryConfig.COMPLEXITYPEN</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.ReprDirectoryConfig.COMPLEXITYSTAB"><code class="docutils literal notranslate"><span class="pre">ReprDirectoryConfig.COMPLEXITYSTAB</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.ReprDirectoryConfig.NANSTABILITY"><code class="docutils literal notranslate"><span class="pre">ReprDirectoryConfig.NANSTABILITY</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.ReprDirectoryConfig.NANVALUES"><code class="docutils literal notranslate"><span class="pre">ReprDirectoryConfig.NANVALUES</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.gsea.IGSEADataFrameSummarizer"><code class="docutils literal notranslate"><span class="pre">IGSEADataFrameSummarizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.gsea.IGSEADataFrameSummarizer.summarize"><code class="docutils literal notranslate"><span class="pre">IGSEADataFrameSummarizer.summarize()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.find_all_config_directories"><code class="docutils literal notranslate"><span class="pre">find_all_config_directories()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.find_representative_run"><code class="docutils literal notranslate"><span class="pre">find_representative_run()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.get_all_objective_function"><code class="docutils literal notranslate"><span class="pre">get_all_objective_function()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.get_complexity"><code class="docutils literal notranslate"><span class="pre">get_complexity()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.get_objective_function"><code class="docutils literal notranslate"><span class="pre">get_objective_function()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.get_objective_function_elements"><code class="docutils literal notranslate"><span class="pre">get_objective_function_elements()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.get_representative_run"><code class="docutils literal notranslate"><span class="pre">get_representative_run()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.get_stability_panel"><code class="docutils literal notranslate"><span class="pre">get_stability_panel()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.get_values_panel"><code class="docutils literal notranslate"><span class="pre">get_values_panel()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.representative_directory"><code class="docutils literal notranslate"><span class="pre">representative_directory()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.metaanalysis.html#cansig.metaanalysis.repr_directory.save_chosen_directory"><code class="docutils literal notranslate"><span class="pre">save_chosen_directory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.gsea.IPathwayFormatter"><code class="docutils literal notranslate"><span class="pre">IPathwayFormatter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.gsea.IPathwayFormatter.format"><code class="docutils literal notranslate"><span class="pre">IPathwayFormatter.format()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.metaanalysis.html#module-cansig.metaanalysis">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.gsea.MaxNESFDRSummarizer"><code class="docutils literal notranslate"><span class="pre">MaxNESFDRSummarizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.gsea.MaxNESFDRSummarizer.summarize"><code class="docutils literal notranslate"><span class="pre">MaxNESFDRSummarizer.summarize()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.models.html">cansig.models package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.models.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.models.html#module-cansig.models.api">cansig.models.api module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigConfig"><code class="docutils literal notranslate"><span class="pre">CanSigConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigConfig.batch"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.batch</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigConfig.continuous_covariates"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.continuous_covariates</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigConfig.continuous_covariates_validator"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.continuous_covariates_validator()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigConfig.discrete_covariates"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.discrete_covariates</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigConfig.discrete_covariates_validator"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.discrete_covariates_validator()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigConfig.inplace"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.inplace</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigConfig.model"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.model</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigConfig.n_latent"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.n_latent</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigConfig.n_latent_batch_effect"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.n_latent_batch_effect</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigConfig.n_latent_cnv"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.n_latent_cnv</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigConfig.preprocessing"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.preprocessing</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigConfig.random_seed"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.random_seed</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigConfig.train"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.train</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.gsea.genes_to_string"><code class="docutils literal notranslate"><span class="pre">genes_to_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.gsea.gex_factory"><code class="docutils literal notranslate"><span class="pre">gex_factory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.gsea.save_signatures"><code class="docutils literal notranslate"><span class="pre">save_signatures()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigWrapper"><code class="docutils literal notranslate"><span class="pre">CanSigWrapper</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigWrapper.evaluate"><code class="docutils literal notranslate"><span class="pre">CanSigWrapper.evaluate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.CanSigWrapper.get_latent_codes"><code class="docutils literal notranslate"><span class="pre">CanSigWrapper.get_latent_codes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.html#module-cansig.logger">cansig.logger module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.logger.configure_logging"><code class="docutils literal notranslate"><span class="pre">configure_logging()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.logger.default_config"><code class="docutils literal notranslate"><span class="pre">default_config()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVI"><code class="docutils literal notranslate"><span class="pre">SCVI</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVI.evaluate"><code class="docutils literal notranslate"><span class="pre">SCVI.evaluate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVI.get_latent_codes"><code class="docutils literal notranslate"><span class="pre">SCVI.get_latent_codes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.html#module-cansig.multirun">cansig.multirun module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.multirun.MultirunDirectory"><code class="docutils literal notranslate"><span class="pre">MultirunDirectory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.multirun.MultirunDirectory.analysis_directory"><code class="docutils literal notranslate"><span class="pre">MultirunDirectory.analysis_directory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.multirun.MultirunDirectory.integration_directories"><code class="docutils literal notranslate"><span class="pre">MultirunDirectory.integration_directories</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.multirun.MultirunDirectory.metasig_directories"><code class="docutils literal notranslate"><span class="pre">MultirunDirectory.metasig_directories</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.multirun.MultirunDirectory.postprocessing_directories"><code class="docutils literal notranslate"><span class="pre">MultirunDirectory.postprocessing_directories</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.multirun.MultirunDirectory.valid"><code class="docutils literal notranslate"><span class="pre">MultirunDirectory.valid()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVIConfig"><code class="docutils literal notranslate"><span class="pre">SCVIConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVIConfig.batch"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.batch</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVIConfig.continuous_covariates"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.continuous_covariates</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVIConfig.continuous_covariates_validator"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.continuous_covariates_validator()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVIConfig.discrete_covariates"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.discrete_covariates</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVIConfig.discrete_covariates_validator"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.discrete_covariates_validator()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVIConfig.evaluation"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.evaluation</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVIConfig.model"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.model</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVIConfig.n_latent"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.n_latent</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVIConfig.preprocessing"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.preprocessing</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVIConfig.random_seed"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.random_seed</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.api.SCVIConfig.train"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.train</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.multirun.get_valid_dirs"><code class="docutils literal notranslate"><span class="pre">get_valid_dirs()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.html#module-cansig.tutorial">cansig.tutorial module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.tutorial.Dataset"><code class="docutils literal notranslate"><span class="pre">Dataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.tutorial.Dataset.filepath"><code class="docutils literal notranslate"><span class="pre">Dataset.filepath</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.tutorial.Dataset.md5sum"><code class="docutils literal notranslate"><span class="pre">Dataset.md5sum</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cansig.html#cansig.tutorial.Dataset.url"><code class="docutils literal notranslate"><span class="pre">Dataset.url</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.models.html#module-cansig.models.scvi">cansig.models.scvi module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.EvaluationConfig"><code class="docutils literal notranslate"><span class="pre">EvaluationConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.EvaluationConfig.n_samples_ll"><code class="docutils literal notranslate"><span class="pre">EvaluationConfig.n_samples_ll</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.tutorial.download_file_to_path"><code class="docutils literal notranslate"><span class="pre">download_file_to_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.tutorial.load_data"><code class="docutils literal notranslate"><span class="pre">load_data()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.EvaluationResults"><code class="docutils literal notranslate"><span class="pre">EvaluationResults</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.EvaluationResults.history"><code class="docutils literal notranslate"><span class="pre">EvaluationResults.history</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.EvaluationResults.marginal_ll"><code class="docutils literal notranslate"><span class="pre">EvaluationResults.marginal_ll</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.EvaluationResults.n_samples_marginal_ll"><code class="docutils literal notranslate"><span class="pre">EvaluationResults.n_samples_marginal_ll</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.html#module-cansig.types">cansig.types module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.types.create_latents"><code class="docutils literal notranslate"><span class="pre">create_latents()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.types.read_latents"><code class="docutils literal notranslate"><span class="pre">read_latents()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.types.write_latents"><code class="docutils literal notranslate"><span class="pre">write_latents()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.ModelConfig"><code class="docutils literal notranslate"><span class="pre">ModelConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.ModelConfig.dispersion"><code class="docutils literal notranslate"><span class="pre">ModelConfig.dispersion</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.ModelConfig.dropout_rate"><code class="docutils literal notranslate"><span class="pre">ModelConfig.dropout_rate</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.ModelConfig.gene_likelihood"><code class="docutils literal notranslate"><span class="pre">ModelConfig.gene_likelihood</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.ModelConfig.latent_distribution"><code class="docutils literal notranslate"><span class="pre">ModelConfig.latent_distribution</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.ModelConfig.n_hidden"><code class="docutils literal notranslate"><span class="pre">ModelConfig.n_hidden</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.ModelConfig.n_layers"><code class="docutils literal notranslate"><span class="pre">ModelConfig.n_layers</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.PreprocessingConfig"><code class="docutils literal notranslate"><span class="pre">PreprocessingConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.PreprocessingConfig.n_top_genes"><code class="docutils literal notranslate"><span class="pre">PreprocessingConfig.n_top_genes</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVI"><code class="docutils literal notranslate"><span class="pre">SCVI</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVI.evaluate"><code class="docutils literal notranslate"><span class="pre">SCVI.evaluate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVI.get_latent_codes"><code class="docutils literal notranslate"><span class="pre">SCVI.get_latent_codes()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig"><code class="docutils literal notranslate"><span class="pre">SCVIConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig.batch"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.batch</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig.continuous_covariates"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.continuous_covariates</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig.continuous_covariates_validator"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.continuous_covariates_validator()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig.discrete_covariates"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.discrete_covariates</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig.discrete_covariates_validator"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.discrete_covariates_validator()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig.evaluation"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.evaluation</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig.model"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.model</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig.n_latent"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.n_latent</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig.preprocessing"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.preprocessing</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig.random_seed"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.random_seed</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig.train"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.train</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig"><code class="docutils literal notranslate"><span class="pre">TrainConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.batch_size"><code class="docutils literal notranslate"><span class="pre">TrainConfig.batch_size</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.early_stopping"><code class="docutils literal notranslate"><span class="pre">TrainConfig.early_stopping</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.eps"><code class="docutils literal notranslate"><span class="pre">TrainConfig.eps</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.learning_rate"><code class="docutils literal notranslate"><span class="pre">TrainConfig.learning_rate</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.lr_factor"><code class="docutils literal notranslate"><span class="pre">TrainConfig.lr_factor</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.lr_min"><code class="docutils literal notranslate"><span class="pre">TrainConfig.lr_min</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.lr_patience"><code class="docutils literal notranslate"><span class="pre">TrainConfig.lr_patience</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.lr_scheduler_metric"><code class="docutils literal notranslate"><span class="pre">TrainConfig.lr_scheduler_metric</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.lr_threshold"><code class="docutils literal notranslate"><span class="pre">TrainConfig.lr_threshold</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.max_epochs"><code class="docutils literal notranslate"><span class="pre">TrainConfig.max_epochs</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.n_epochs_kl_warmup"><code class="docutils literal notranslate"><span class="pre">TrainConfig.n_epochs_kl_warmup</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.n_steps_kl_warmup"><code class="docutils literal notranslate"><span class="pre">TrainConfig.n_steps_kl_warmup</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.optimizer"><code class="docutils literal notranslate"><span class="pre">TrainConfig.optimizer</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.reduce_lr_on_plateau"><code class="docutils literal notranslate"><span class="pre">TrainConfig.reduce_lr_on_plateau</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.train_size"><code class="docutils literal notranslate"><span class="pre">TrainConfig.train_size</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.TrainConfig.weight_decay"><code class="docutils literal notranslate"><span class="pre">TrainConfig.weight_decay</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.models.html#module-cansig.models">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.plotting.html">cansig.plotting package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.plotting.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.plotting.html#module-cansig.plotting.plotting">cansig.plotting.plotting module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlot"><code class="docutils literal notranslate"><span class="pre">ScatterPlot</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlot.plot_scatter"><code class="docutils literal notranslate"><span class="pre">ScatterPlot.plot_scatter()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlot.save_fig"><code class="docutils literal notranslate"><span class="pre">ScatterPlot.save_fig()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig"><code class="docutils literal notranslate"><span class="pre">ScatterPlotConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.batch_column"><code class="docutils literal notranslate"><span class="pre">ScatterPlotConfig.batch_column</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.color_map"><code class="docutils literal notranslate"><span class="pre">ScatterPlotConfig.color_map</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.dim_reduction"><code class="docutils literal notranslate"><span class="pre">ScatterPlotConfig.dim_reduction</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.groups"><code class="docutils literal notranslate"><span class="pre">ScatterPlotConfig.groups</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.latent_key"><code class="docutils literal notranslate"><span class="pre">ScatterPlotConfig.latent_key</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.legend_fontsize"><code class="docutils literal notranslate"><span class="pre">ScatterPlotConfig.legend_fontsize</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.legend_loc"><code class="docutils literal notranslate"><span class="pre">ScatterPlotConfig.legend_loc</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.ncols"><code class="docutils literal notranslate"><span class="pre">ScatterPlotConfig.ncols</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.signature_columns"><code class="docutils literal notranslate"><span class="pre">ScatterPlotConfig.signature_columns</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.vcenter"><code class="docutils literal notranslate"><span class="pre">ScatterPlotConfig.vcenter</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.vmax"><code class="docutils literal notranslate"><span class="pre">ScatterPlotConfig.vmax</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig.vmin"><code class="docutils literal notranslate"><span class="pre">ScatterPlotConfig.vmin</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.plot_inset"><code class="docutils literal notranslate"><span class="pre">plot_inset()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.plot_insets"><code class="docutils literal notranslate"><span class="pre">plot_insets()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.prettify_axis"><code class="docutils literal notranslate"><span class="pre">prettify_axis()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.run.html">cansig.run package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run.download">cansig.run.download module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.download.create_parser"><code class="docutils literal notranslate"><span class="pre">create_parser()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.download.download_hdf5"><code class="docutils literal notranslate"><span class="pre">download_hdf5()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.download.download_preprocessing"><code class="docutils literal notranslate"><span class="pre">download_preprocessing()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.download.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run.integration">cansig.run.integration module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.integration.Arguments"><code class="docutils literal notranslate"><span class="pre">Arguments</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#cansig.run.integration.Arguments.batch"><code class="docutils literal notranslate"><span class="pre">Arguments.batch</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#cansig.run.integration.Arguments.data"><code class="docutils literal notranslate"><span class="pre">Arguments.data</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#cansig.run.integration.Arguments.latent"><code class="docutils literal notranslate"><span class="pre">Arguments.latent</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#cansig.run.integration.Arguments.log"><code class="docutils literal notranslate"><span class="pre">Arguments.log</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#cansig.run.integration.Arguments.max_epochs"><code class="docutils literal notranslate"><span class="pre">Arguments.max_epochs</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#cansig.run.integration.Arguments.model"><code class="docutils literal notranslate"><span class="pre">Arguments.model</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#cansig.run.integration.Arguments.n_latent"><code class="docutils literal notranslate"><span class="pre">Arguments.n_latent</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#cansig.run.integration.Arguments.n_top_genes"><code class="docutils literal notranslate"><span class="pre">Arguments.n_top_genes</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#cansig.run.integration.Arguments.output"><code class="docutils literal notranslate"><span class="pre">Arguments.output</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.run.html#cansig.run.integration.Arguments.path"><code class="docutils literal notranslate"><span class="pre">Arguments.path</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.integration.integrate"><code class="docutils literal notranslate"><span class="pre">integrate()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.integration.integrate_adata"><code class="docutils literal notranslate"><span class="pre">integrate_adata()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.integration.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.integration.parse_args"><code class="docutils literal notranslate"><span class="pre">parse_args()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run.pipeline">cansig.run.pipeline module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.create_parser"><code class="docutils literal notranslate"><span class="pre">create_parser()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.generate_clustering_configs"><code class="docutils literal notranslate"><span class="pre">generate_clustering_configs()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.generate_gsea_config"><code class="docutils literal notranslate"><span class="pre">generate_gsea_config()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.generate_model_configs"><code class="docutils literal notranslate"><span class="pre">generate_model_configs()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.generate_plotting_config"><code class="docutils literal notranslate"><span class="pre">generate_plotting_config()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.single_integration_run"><code class="docutils literal notranslate"><span class="pre">single_integration_run()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.validate_args"><code class="docutils literal notranslate"><span class="pre">validate_args()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run.postprocessing">cansig.run.postprocessing module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.postprocessing.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.postprocessing.parse_args"><code class="docutils literal notranslate"><span class="pre">parse_args()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.postprocessing.postprocess"><code class="docutils literal notranslate"><span class="pre">postprocess()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.types.html">cansig.types package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.types.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.types.html#module-cansig.types">cansig.types module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.types.html#cansig.types.create_latents"><code class="docutils literal notranslate"><span class="pre">create_latents()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.types.html#cansig.types.read_latents"><code class="docutils literal notranslate"><span class="pre">read_latents()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.types.html#cansig.types.write_latents"><code class="docutils literal notranslate"><span class="pre">write_latents()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cansig.filesys.html">cansig.filesys package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cansig.filesys.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cansig.filesys.html#module-cansig.filesys">cansig.filesys module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.IntegrationDir"><code class="docutils literal notranslate"><span class="pre">IntegrationDir</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.IntegrationDir.MODEL"><code class="docutils literal notranslate"><span class="pre">IntegrationDir.MODEL</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.IntegrationDir.REPRESENTATIONS"><code class="docutils literal notranslate"><span class="pre">IntegrationDir.REPRESENTATIONS</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.IntegrationDir.integration_settings"><code class="docutils literal notranslate"><span class="pre">IntegrationDir.integration_settings</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.IntegrationDir.latent_representations"><code class="docutils literal notranslate"><span class="pre">IntegrationDir.latent_representations</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.IntegrationDir.valid"><code class="docutils literal notranslate"><span class="pre">IntegrationDir.valid()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir"><code class="docutils literal notranslate"><span class="pre">MetasigDir</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.CNVFILE"><code class="docutils literal notranslate"><span class="pre">MetasigDir.CNVFILE</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.FIGURES"><code class="docutils literal notranslate"><span class="pre">MetasigDir.FIGURES</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.GSEAFILE"><code class="docutils literal notranslate"><span class="pre">MetasigDir.GSEAFILE</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.META"><code class="docutils literal notranslate"><span class="pre">MetasigDir.META</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.SIMFILE"><code class="docutils literal notranslate"><span class="pre">MetasigDir.SIMFILE</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.dcnv_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.dcnv_output</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.figures_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.figures_output</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.gsea_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.gsea_output</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.make_fig_dir"><code class="docutils literal notranslate"><span class="pre">MetasigDir.make_fig_dir()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.make_sig_dir"><code class="docutils literal notranslate"><span class="pre">MetasigDir.make_sig_dir()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.sig_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.sig_output</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.sim_output"><code class="docutils literal notranslate"><span class="pre">MetasigDir.sim_output</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.MetasigDir.valid"><code class="docutils literal notranslate"><span class="pre">MetasigDir.valid()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.CELL_SCORE_FILE"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.CELL_SCORE_FILE</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.CLUSTER_SETTINGS"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.CLUSTER_SETTINGS</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.DCNV_FILE"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.DCNV_FILE</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.GSEA_SETTINGS"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.GSEA_SETTINGS</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.INTEGRATION_SETTINGS"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.INTEGRATION_SETTINGS</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.LABELS"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.LABELS</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.SIGNATURE_SETTINGS"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.SIGNATURE_SETTINGS</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.cell_score_output"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.cell_score_output</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.cluster_labels"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.cluster_labels</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.cluster_settings"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.cluster_settings</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.dcnv_output"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.dcnv_output</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.gsea_output"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.gsea_output</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.gsea_settings"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.gsea_settings</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.integration_settings"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.integration_settings</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.make_sig_dir"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.make_sig_dir()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.scatter_output"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.scatter_output</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.signature_output"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.signature_output</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir.valid"><code class="docutils literal notranslate"><span class="pre">PostprocessingDir.valid()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.StructuredDir"><code class="docutils literal notranslate"><span class="pre">StructuredDir</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.StructuredDir.create"><code class="docutils literal notranslate"><span class="pre">StructuredDir.create()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.StructuredDir.valid"><code class="docutils literal notranslate"><span class="pre">StructuredDir.valid</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.get_directory_name"><code class="docutils literal notranslate"><span class="pre">get_directory_name()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.get_file"><code class="docutils literal notranslate"><span class="pre">get_file()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.read_cluster_labels"><code class="docutils literal notranslate"><span class="pre">read_cluster_labels()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.read_latent_representations"><code class="docutils literal notranslate"><span class="pre">read_latent_representations()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.read_settings"><code class="docutils literal notranslate"><span class="pre">read_settings()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.save_cluster_labels"><code class="docutils literal notranslate"><span class="pre">save_cluster_labels()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.save_latent_representations"><code class="docutils literal notranslate"><span class="pre">save_latent_representations()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.save_settings"><code class="docutils literal notranslate"><span class="pre">save_settings()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.html#module-cansig">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cansig.html#cansig.preprocessing"><code class="docutils literal notranslate"><span class="pre">preprocessing()</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -138,7 +138,7 @@
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="cansig-for-python-coders.html">
-                        CanSig for Pythonists
+                        CanSig as a package
                       </a>
                     </li>
                 
@@ -158,6 +158,13 @@
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="contributing.html">
                         Contributing
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="api.html">
+                        API
                       </a>
                     </li>
                 
@@ -268,7 +275,7 @@
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="cansig-for-python-coders.html">
-                        CanSig for Pythonists
+                        CanSig as a package
                       </a>
                     </li>
                 
@@ -288,6 +295,13 @@
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="contributing.html">
                         Contributing
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="api.html">
+                        API
                       </a>
                     </li>
                 
@@ -412,7 +426,7 @@ You can add plotting according to pre-scored signatures (i.e. present in the ada
 <section id="saving-signatures-and-scoring-cells">
 <h2>Saving signatures and scoring cells<a class="headerlink" href="#saving-signatures-and-scoring-cells" title="Permalink to this heading">#</a></h2>
 <p>CanSig finds signatures in cancer data: these signatures are defined as the most overexpressed genes in a biologically meaningful part of the subspace (approximated by a cluster).
-By default, running the pipeline will result the results of the differential gene expression analysis to be saved for each cluster (for more information on interpretation, see <span class="xref std std-ref">interpretation</span>), as wells as the score for each cell for each of the signatures (defined as the 200 most positively differentially expressed genes in the cluster) and the correlation between the signatures.</p>
+By default, running the pipeline will result the results of the differential gene expression analysis to be saved for each cluster, as well as the score for each cell for each of the signatures (defined as the 200 most positively differentially expressed genes in the cluster) and the correlation between the signatures.</p>
 <p>The results associated with signatures and scoring can be controlled through the three following command line arguments:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--disable-signatures</span></code>: if you do not want any of the results linked to signatures to be saved (ie differential gene expression analysis for each cluster, scores of each signature for each cell and correlation between signatures), then input this flag.</p></li>

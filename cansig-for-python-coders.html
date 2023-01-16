@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>CanSig for Pythonists &#8212; CanSig  documentation</title>
+    <title>CanSig as a package &#8212; CanSig  documentation</title>
   
   
   
@@ -138,7 +138,7 @@
 
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="#">
-                        CanSig for Pythonists
+                        CanSig as a package
                       </a>
                     </li>
                 
@@ -158,6 +158,13 @@
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="contributing.html">
                         Contributing
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="api.html">
+                        API
                       </a>
                     </li>
                 
@@ -268,7 +275,7 @@
 
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="#">
-                        CanSig for Pythonists
+                        CanSig as a package
                       </a>
                     </li>
                 
@@ -288,6 +295,13 @@
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="contributing.html">
                         Contributing
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="api.html">
+                        API
                       </a>
                     </li>
                 
@@ -358,11 +372,90 @@
             
             <article class="bd-article" role="main">
               
-  <section id="cansig-for-pythonists">
-<span id="coders"></span><h1>CanSig for Pythonists<a class="headerlink" href="#cansig-for-pythonists" title="Permalink to this heading">#</a></h1>
-<p>For custom applications, one may use CanSig as a Python package in a script or a <a class="reference external" href="https://jupyter.org/">Jupyter notebook</a>.</p>
-<p>Here is a <a class="reference external" href="https://colab.research.google.com/drive/1GSGIqvp_kkG05n0qTY_aYxaDJqllRDWb?usp=sharing">tutorial in Google Colab</a> for a quick start.</p>
-<p>You can take a look at the API for more details.</p>
+  <section id="cansig-as-a-package">
+<span id="coders"></span><h1>CanSig as a package<a class="headerlink" href="#cansig-as-a-package" title="Permalink to this heading">#</a></h1>
+<p>Although CanSig can be used a standalone pipeline, it can also be used as a Python package in a customary script or a <a class="reference external" href="https://jupyter.org/">Jupyter notebook</a>.</p>
+<p>We assume that the CanSig package has been installed and the example data set has been downloaded. Generally, CanSig can be applied to integrate the <em>malignant</em> cells and cluster them into subtypes.
+For example, one can use a data set from <a class="reference external" href="https://www.weizmann.ac.il/sites/3CA/">Curated Cancer Cell Atlas</a></p>
+<p>CanSig uses <a class="reference external" href="https://scvi-tools.org/">scVI</a> to integrate the cells into a shared representation space.
+Let’s do it, adding <code class="docutils literal notranslate"><span class="pre">S_score</span></code> and <code class="docutils literal notranslate"><span class="pre">G2M_score</span></code> columns as covariates:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">import</span> <span class="nn">cansig</span>
+<span class="kn">from</span> <span class="nn">cansig.run.integration</span> <span class="kn">import</span> <span class="n">integrate_adata</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s2">&quot;data/tutorial/simulated/malignant.h5ad&quot;</span><span class="p">)</span>
+
+<span class="n">integration_config</span> <span class="o">=</span> <span class="n">cansig</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">scvi</span><span class="o">.</span><span class="n">SCVIConfig</span><span class="p">(</span>
+    <span class="n">batch</span><span class="o">=</span><span class="s2">&quot;sample_id&quot;</span><span class="p">,</span>
+    <span class="n">n_latent</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">random_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">train</span><span class="o">=</span><span class="n">cansig</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">scvi</span><span class="o">.</span><span class="n">TrainConfig</span><span class="p">(</span><span class="n">max_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span>
+    <span class="n">continuous_covariates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S_score&quot;</span><span class="p">,</span> <span class="s2">&quot;G2M_score&quot;</span><span class="p">],</span>
+    <span class="n">discrete_covariates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">representations</span> <span class="o">=</span> <span class="n">integrate_adata</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">integration_config</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># A pandas DataFrame</span>
+<span class="n">representations</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+<span class="c1"># The order corresponds to the original data set:</span>
+<span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">representations</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">data</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In a similar manner one can train several different models (corresponding to random seeds or different hyperparameters).</p>
+<p>Having the representations, we can cluster them:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cluster_config</span> <span class="o">=</span> <span class="n">cansig</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">LeidenNClusterConfig</span><span class="p">(</span><span class="n">clusters</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">cluster_algorithm</span> <span class="o">=</span> <span class="n">cansig</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">LeidenNCluster</span><span class="p">(</span><span class="n">cluster_config</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">cluster_algorithm</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">representations</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can also visualise the data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_config</span> <span class="o">=</span> <span class="n">cansig</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">ScatterPlotConfig</span><span class="p">(</span>
+    <span class="n">dim_reduction</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span>
+    <span class="n">signature_columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S_score&quot;</span><span class="p">,</span><span class="s2">&quot;G2M_score&quot;</span><span class="p">],</span>
+    <span class="n">batch_column</span><span class="o">=</span><span class="s2">&quot;sample_id&quot;</span><span class="p">,</span>
+    <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">scatter</span> <span class="o">=</span> <span class="n">cansig</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">ScatterPlot</span><span class="p">(</span><span class="n">plotting_config</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">scatter</span><span class="o">.</span><span class="n">plot_scatter</span><span class="p">(</span><span class="n">adata</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">representations</span><span class="o">=</span><span class="n">representations</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/package-scatterplot.png"><img alt="Scatter plot visualising the representations." class="align-center" src="_images/package-scatterplot.png" style="width: 400px;" /></a>
+<p>Alternatively, one could also use <a class="reference external" href="https://scanpy.readthedocs.io/en/stable/">ScanPy</a>.</p>
+<p>We can also run gene set enrichment analysis in the “one vs. rest” fashion for each cluster:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While it is a popular step in scRNA-seq workflows, it increases false positives. See <a class="reference external" href="https://arxiv.org/abs/2207.00554">A. Neufeld et al.</a> for more discussion and remedies.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gsea_config</span> <span class="o">=</span> <span class="n">cansig</span><span class="o">.</span><span class="n">gsea</span><span class="o">.</span><span class="n">GeneExpressionConfig</span><span class="p">(</span>
+    <span class="n">gene_sets</span><span class="o">=</span><span class="s2">&quot;data/tutorial/simulated/msigdb74.gmt&quot;</span><span class="p">,</span>
+    <span class="n">cluster_name</span><span class="o">=</span><span class="n">cluster_col</span><span class="p">,</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;wilcoxon&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">gex_object</span> <span class="o">=</span> <span class="n">cansig</span><span class="o">.</span><span class="n">gsea</span><span class="o">.</span><span class="n">gex_factory</span><span class="p">(</span><span class="n">cluster_name</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">gsea_config</span><span class="p">)</span>
+<span class="n">gene_ranks</span> <span class="o">=</span> <span class="n">gex_object</span><span class="o">.</span><span class="n">diff_gex</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For example, to see the genes which differentiate cluster <code class="docutils literal notranslate"><span class="pre">1</span></code> from the other clusters, run</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gene_ranks</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This should result in a data frame:</p>
+<table border="1" class="dataframe">  <thead>    <tr style="text-align: right;">      <th></th>      <th>zscores</th>      <th>pvals</th>      <th>qvals</th>    </tr>  </thead>  <tbody>    <tr>      <th>CLEC2D</th>      <td>12.669895</td>      <td>8.683042e-37</td>      <td>1.113210e-34</td>    </tr>    <tr>      <th>RAB5B</th>      <td>12.077424</td>      <td>1.390073e-33</td>      <td>1.579629e-31</td>    </tr>    <tr>      <th>SMARCC2</th>      <td>11.907646</td>      <td>1.079822e-32</td>      <td>1.173720e-30</td>    </tr>    <tr>      <th>RELB</th>      <td>11.658476</td>      <td>2.077275e-31</td>      <td>1.997380e-29</td>    </tr>    <tr>      <th>BABAM1</th>      <td>11.224934</td>      <td>3.076161e-29</td>      <td>2.698386e-27</td>    </tr>    <tr>      <th>RPL18A</th>      <td>11.038743</td>      <td>2.484851e-28</td>      <td>2.036763e-26</td>    </tr>    <tr>      <th>CAPNS1</th>      <td>10.806361</td>      <td>3.211589e-27</td>      <td>2.509054e-25</td>    </tr>    <tr>      <th>CLPP</th>      <td>10.635210</td>      <td>2.043678e-26</td>      <td>1.572060e-24</td>    </tr>    <tr>      <th>MRPS35</th>      <td>10.195406</td>      <td>2.078744e-24</td>      <td>1.443572e-22</td>    </tr>    <tr>      <th>APOC1</th>      <td>9.872516</td>      <td>5.477356e-23</td>      <td>3.423347e-21</td>    </tr>  </tbody></table><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The q-values here are not adjusted for multiple comparisons on the cluster level (we run GSEA for different clusters, so there is a multiple comparison problem) and they may be too small.</p>
+</div>
+<p>This ends up the overview of the utilities in CanSig. For more information we recommend taking a look at the <a class="reference internal" href="api.html#api"><span class="std std-ref">API</span></a>.</p>
 </section>
 
 

@@ -136,7 +136,7 @@
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../cansig-for-python-coders.html">
-                        CanSig for Pythonists
+                        CanSig as a package
                       </a>
                     </li>
                 
@@ -156,6 +156,13 @@
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../contributing.html">
                         Contributing
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
                       </a>
                     </li>
                 
@@ -228,7 +235,7 @@
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      <div class="bd-sidebar-primary bd-sidebar">
         
   
   <div class="sidebar-header-items sidebar-primary__section">
@@ -266,7 +273,7 @@
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../cansig-for-python-coders.html">
-                        CanSig for Pythonists
+                        CanSig as a package
                       </a>
                     </li>
                 
@@ -286,6 +293,13 @@
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../contributing.html">
                         Contributing
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
                       </a>
                     </li>
                 
@@ -332,6 +346,35 @@
   </div>
 
   
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="cansig.cluster.html">cansig.cluster package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cansig.cnvanalysis.html">cansig.cnvanalysis package</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="cansig.integration.html">cansig.integration package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="cansig.integration.base.html">cansig.integration.base package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.integration.data.html">cansig.integration.data package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.integration.module.html">cansig.integration.module package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cansig.integration.training.html">cansig.integration.training package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cansig.interface.html">cansig.interface package</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">cansig.metaanalysis package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cansig.metasignatures.html">cansig.metasignatures package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cansig.models.html">cansig.models package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cansig.plotting.html">cansig.plotting package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cansig.run.html">cansig.run package</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
 
   
   <div class="sidebar-end-items sidebar-primary__section">
@@ -363,10 +406,19 @@
 </section>
 <section id="module-cansig.metaanalysis.heatmap">
 <span id="cansig-metaanalysis-heatmap-module"></span><h2>cansig.metaanalysis.heatmap module<a class="headerlink" href="#module-cansig.metaanalysis.heatmap" title="Permalink to this heading">#</a></h2>
+<p>Submodule for plotting the heatmap summarizing multiple runs.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.HeatmapItem">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.heatmap.</span></span><span class="sig-name descname"><span class="pre">HeatmapItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">panel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Item to be plotted.</p>
+<dl class="simple">
+<dt>Attrs:</dt><dd><p>panel: on which panel it should be plotted
+vertical: vertical coordinate (categorical)
+horizontal: horizontal coordinate (categorical)
+value: value to be plotted</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.metaanalysis.heatmap.HeatmapItem.horizontal">
 <span class="sig-name descname"><span class="pre">horizontal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.metaanalysis.heatmap.HeatmapItem.horizontal" title="Permalink to this definition">#</a></dt>
@@ -611,7 +663,7 @@ n_runs: number of runs (ie using different random seeds, either for the model or
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.find_all_config_directories">
-<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">find_all_config_directories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clusters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directories</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.find_all_config_directories" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">find_all_config_directories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clusters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directories</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.find_all_config_directories" title="Permalink to this definition">#</a></dt>
 <dd><dl class="simple">
 <dt>Returns the list of all postprocessing directories that have the number of clusters</dt><dd><p>and number of latent dimensions of the representative run. We will use these to
 find the one with the correct run number, as we indexed the run number by iterating through the
@@ -639,7 +691,7 @@ and number of latent dimensions</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.find_representative_run">
-<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">find_representative_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directories</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.metaanalysis.repr_directory.ReprDirectoryConfig" title="cansig.metaanalysis.repr_directory.ReprDirectoryConfig"><span class="pre">ReprDirectoryConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.find_representative_run" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">find_representative_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.metaanalysis.heatmap.HeatmapItem" title="cansig.metaanalysis.heatmap.HeatmapItem"><span class="pre">HeatmapItem</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directories</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.metaanalysis.repr_directory.ReprDirectoryConfig" title="cansig.metaanalysis.repr_directory.ReprDirectoryConfig"><span class="pre">ReprDirectoryConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.find_representative_run" title="Permalink to this definition">#</a></dt>
 <dd><dl class="simple">
 <dt>Main function of the module. Takes a list of HeatmapItems, each representing a single run of</dt><dd><p>the meta analysis, the list of all directories associated with all runs, and the
 optimization settings, and returns a representative directory that can be used
@@ -906,20 +958,21 @@ ie a specific pathway found</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.representative_directory">
-<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">representative_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">representative_run</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directories</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.representative_directory" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">representative_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">representative_run</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directories</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.representative_directory" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the run that minimizes the objective function in a user understandable way
 ie as the name of the postprocessing directory</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.metaanalysis.repr_directory.save_chosen_directory">
-<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">save_chosen_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chosen_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.filesys.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.save_chosen_directory" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cansig.metaanalysis.repr_directory.</span></span><span class="sig-name descname"><span class="pre">save_chosen_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chosen_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.filesys.PostprocessingDir" title="cansig.filesys.PostprocessingDir"><span class="pre">PostprocessingDir</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.metaanalysis.repr_directory.save_chosen_directory" title="Permalink to this definition">#</a></dt>
 <dd><p>Helper function to save the name of the representative directory</p>
 </dd></dl>
 
 </section>
 <section id="module-cansig.metaanalysis">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cansig.metaanalysis" title="Permalink to this heading">#</a></h2>
+<p>Subpackage with analysis of multiple runs.</p>
 </section>
 </section>
 
