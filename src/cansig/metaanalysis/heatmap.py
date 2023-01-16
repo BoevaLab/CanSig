@@ -1,3 +1,4 @@
+"""Submodule for plotting the heatmap summarizing multiple runs."""
 import abc
 from collections import defaultdict
 from typing import Callable, Dict, Iterable, List, Optional, Sequence, Tuple, Union
@@ -14,6 +15,15 @@ _PanelType = str
 
 
 class HeatmapItem(pydantic.BaseModel):
+    """Item to be plotted.
+
+    Attrs:
+        panel: on which panel it should be plotted
+        vertical: vertical coordinate (categorical)
+        horizontal: horizontal coordinate (categorical)
+        value: value to be plotted
+    """
+
     panel: _PanelType
     vertical: _FactorType
     horizontal: _FactorType
@@ -34,18 +44,22 @@ class HeatmapSettings(pydantic.BaseModel):
 
 
 def _get_vertical(items: Iterable[HeatmapItem]) -> List[_FactorType]:
+    """Returns the sorted list of vertical coordinates represented in given items."""
     return sorted(set(item.vertical for item in items))
 
 
 def _get_horizontal(items: Iterable[HeatmapItem]) -> List[_FactorType]:
+    """Returns the sorted list of horizontal coordinates represented in given items."""
     return sorted(set(item.horizontal for item in items))
 
 
 def _get_panels(items: Iterable[HeatmapItem]) -> List[_PanelType]:
+    """Returns the sorted list of panels represented in given items."""
     return sorted(set(item.panel for item in items))
 
 
 def _get_n_runs(items: Iterable[HeatmapItem]) -> int:
+    """Read the maximal number of runs in the given panel at given position."""
     counter = defaultdict(lambda: 0)
     for item in items:
         counter[(item.panel, item.vertical, item.horizontal)] += 1
@@ -60,6 +74,7 @@ def _calculate_figsize(
     n_panel: int,
     offset_width: Optional[float] = None,
 ) -> Tuple[float, float]:
+    """Calculates the figure size."""
     # The tiles need the rectangle like base_width x height
     base_width = settings.tile_size * n_runs * n_vertical
     height = settings.tile_size * n_panel * n_horizontal
