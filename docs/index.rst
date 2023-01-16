@@ -191,9 +191,60 @@ so one can hope that there are three different meta-signatures. When the cells a
 Comparing with the ground truth
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Although 
+As we mentioned above, unsupervised learning and scientific discovery are hard problems and although CanSig can be used for exploratory data analysis, it is *not* a replacement for additional validation (by means of putting the findings in the wider biological context, using appropriate bootstrapping technique, and designing wet-lab interventional studies).
+We can however see how well the found metasignatures correspond to the cell types in the simulated data.
+
+Let's open Jupyter and run the following code:
+
+.. code-block:: python
+
+   import pandas as pd
+   import scanpy as sc
+   import seaborn as sns
 
 
+   def plot_joint(col1: str, col2: str):
+       return sns.heatmap(data
+                          .obs
+                          .groupby([col1, col2])
+                          .size()
+                          .reset_index()
+                          .pivot(index=col1, columns=col2, values=0),
+                          annot=True,
+                          fmt="g",
+                         )
+
+   # Load the simulated cells
+   data = sc.read_h5ad("data/tutorial/simulated/malignant.h5ad")
+   
+   # Load the meta-signatures
+   metamembership = pd.read_csv("tutorial-output/metasignatures/cell-metamembership.csv", index_col=0)
+
+   # Add the meta-signatures membership to the data
+   data.obs["metamembership"] = metamembership.loc[data.obs.index]
+
+
+   plot_joint("sample_id", "metamembership")
+
+
+.. image::  assets/tutorial-joint-metasignature-patient.png
+   :width: 400
+   :alt: Joint (empirical) distribution of meta-signature assignment and patient.
+
+As we can see, the cells have been decomposed into three meta-signatures as well as undetermined cells.
+
+We can also visualise the (empirical) joint distribution of ground truth cell types and assigned memberships to meta-signatures:
+
+.. code-block:: python
+
+   plot_joint("celltype", "metamembership")
+
+
+.. image:: assets/tutorial-joint-metasignature-celltype.png
+   :width: 400
+   :alt: Joint (empirical) distribution of meta-signature assignment and ground truth.
+
+It seems that ``metasig1`` is considerably smaller than the other meta-signatures as well as the set of undetermined cells. We see that for both types ``metasig2`` or ``metasig3`` seem to be mostly capturing ``program2`` and ``program3``.
 
 Tutorials
 ---------
