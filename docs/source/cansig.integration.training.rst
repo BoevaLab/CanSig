@@ -20,6 +20,14 @@ cansig.integration.training.trainer module
    :undoc-members:
    :show-inheritance:
 
+cansig.integration.training.training\_plan module
+-------------------------------------------------
+
+.. automodule:: cansig.integration.training.training_plan
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

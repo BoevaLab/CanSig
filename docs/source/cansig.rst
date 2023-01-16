@@ -12,6 +12,7 @@ Subpackages
    cansig.integration
    cansig.interface
    cansig.metaanalysis
+   cansig.metasignatures
    cansig.models
    cansig.plotting
    cansig.run
