@@ -64,7 +64,7 @@ Saving signatures and scoring cells
 -----------------------------------
 
 CanSig finds signatures in cancer data: these signatures are defined as the most overexpressed genes in a biologically meaningful part of the subspace (approximated by a cluster).
-By default, running the pipeline will result the results of the differential gene expression analysis to be saved for each cluster (for more information on interpretation, see :ref:`interpretation`), as wells as the score for each cell for each of the signatures (defined as the 200 most positively differentially expressed genes in the cluster) and the correlation between the signatures.
+By default, running the pipeline will result the results of the differential gene expression analysis to be saved for each cluster, as well as the score for each cell for each of the signatures (defined as the 200 most positively differentially expressed genes in the cluster) and the correlation between the signatures.
 
 The results associated with signatures and scoring can be controlled through the three following command line arguments:
 

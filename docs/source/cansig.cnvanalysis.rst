@@ -12,3 +12,10 @@ cansig.cnvanalysis.differentialcnvs module
    :undoc-members:
    :show-inheritance:
 
+Module contents
+---------------
+
+.. automodule:: cansig.cnvanalysis
+   :members:
+   :undoc-members:
+   :show-inheritance:

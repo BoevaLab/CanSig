@@ -13,6 +13,7 @@ PREPROCESSING = "PREPROCESSING"
 
 
 def create_parser() -> argparse.ArgumentParser:
+    """Creates the CLI parser."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--dataset",
@@ -86,6 +87,7 @@ def download_preprocessing(destination: Optional[str]) -> str:
 
 
 def main() -> None:
+    """Parses the argument and downloads the data set."""
     parser = create_parser()
     args = parser.parse_args()
 

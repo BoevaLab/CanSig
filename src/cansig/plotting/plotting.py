@@ -1,3 +1,4 @@
+"""The plotting utilities."""
 import logging
 import pathlib
 from itertools import zip_longest
@@ -45,16 +46,27 @@ class ScatterPlotConfig(pydantic.BaseModel):
 
 
 class ScatterPlot:
+    """An object used to create plots. Parametrised by settings.
+
+    See the ``plot_scatter`` method.
+    """
+
     def __init__(self, settings: ScatterPlotConfig) -> None:
+        """
+
+        Args:
+            settings: settings used to initialize the object
+        """
         self._settings = settings
 
     def _put_latent_in_adata(self, z: pd.DataFrame, adata: anndata.AnnData) -> anndata.AnnData:
-        """takes a latent representation coordinate dataframe and inputs it into
+        """Takes a latent representation coordinate dataframe and inputs it into
             an anndata object
 
         Args:
             z: pd.Dataframe containing the latent representation coordinates for each cell
             adata: Anndata object to put the latent representation into (in the .obsm df)
+
         Returns:
             adata: Anndata object with latent representations in .obsm
         """
@@ -68,12 +80,13 @@ class ScatterPlot:
         return adata
 
     def plot_scatter(self, adata: anndata.AnnData, representations: pd.DataFrame) -> plt.figure:
-        """main function of the class; plots a scatterplot according to a specific
+        """Main function of the class; plots a scatterplot according to a specific
             dimensionality reduction method
 
         Args:
             adata: Anndata object to plot
             representations: pd.Df containing the latent representation coordinates
+
         Returns:
             fig: matplotlib.plt figure containing the scatterplots for all
             columns
@@ -151,7 +164,14 @@ class ScatterPlot:
 
     @staticmethod
     def save_fig(fig: plt.figure, output_file: pathlib.Path) -> None:
+        """Saves figure `fig` to the `output_file` location.
+
+        Equivalent to ``fig.savefig(output_file)``.
+        """
         fig.savefig(fname=output_file)
+
+
+_FontSize = Literal["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"]
 
 
 def plot_insets(
@@ -164,19 +184,23 @@ def plot_insets(
     vmax: Union[str, float, List[float], None],
     vcenter: Union[str, float, List[float], None],
     legend_loc: str,
-    legend_fontsize: Union[
-        int, float, Literal["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"], None
-    ],
-):
-    """plots umap with pca inset
+    legend_fontsize: Union[int, float, _FontSize, None],
+) -> plt.Figure:
+    """Plots UMAP with PCA inset.
 
     Args:
         adata: Anndata object to plot
         color: str or list of str describing the observations/variables to plot
         ncols: number of columns to plot on
         color_map: color map used
+        vmin: minimum value to be plotted in the legend
+        vmax: maximum value to be plotted in the legend
+        vcenter: used to center the legend
+        legend_loc: location of the legend
+        legend_fontsize: font size
+
     Returns:
-        fig: matplotlib.plt figure with insets plotted
+        fig: matplotlib figure with insets plotted
 
     See Also:
         scanpy.pl.pca function for more details on args
@@ -189,7 +213,6 @@ def plot_insets(
 
     for ax, col in zip_longest(axs.flatten(), color):
         if col:
-
             plot_inset(
                 adata,
                 color=col,
@@ -218,16 +241,20 @@ def plot_inset(
     vmax: Union[str, float, List[float], None],
     vcenter: Union[str, float, List[float], None],
     legend_loc: str,
-    legend_fontsize: Union[
-        int, float, Literal["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"], None
-    ],
+    legend_fontsize: Union[int, float, _FontSize, None],
 ):
-    """inplace function to plot a single inset
+    """In-place function to plot a single inset
 
     Args:
         adata: Anndata object to plot
         color: str or list of str describing the observations/variables to plot
+        ax: axes to be modified
         color_map: color map used
+        vmin: minimum value to be plotted in the legend
+        vmax: maximum value to be plotted in the legend
+        vcenter: used to center the legend
+        legend_loc: location of the legend
+        legend_fontsize: font size
 
     See Also:
         scanpy.pl.pca function for more details on args
@@ -267,7 +294,7 @@ def plot_inset(
 
 
 def prettify_axis(ax: plt.Axes) -> None:
-    """Helper function to make axes more beautiful"""
+    """Helper function to make axes more beautiful."""
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
     ax.tick_params(axis="both", which="both", bottom=False, top=False, left=False, labelbottom=False, labelleft=False)

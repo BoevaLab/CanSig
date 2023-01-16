@@ -1,3 +1,4 @@
+"""The submodule implementing utilities for running differential CNV analysis."""
 import pathlib
 import logging
 from collections import defaultdict
@@ -423,7 +424,6 @@ def find_differential_cnv_precomputed(
     correction: bool = True,
     batch_key: str = "batch",
 ) -> pd.DataFrame:
-
     """Equivalent of the `find_differential_cnv` function if no anndata object used for the rest of the
         analysis was not precomputed using our preprocessing module
 

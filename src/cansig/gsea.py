@@ -203,8 +203,13 @@ def _try_to_read_gmt_file(gmt: str):
 
 
 class GeneExpressionConfig(pydantic.BaseModel):
-    method: _Method = pydantic.Field(default="t-test")
-    gene_sets: str = pydantic.Field(default="MSigDB_Hallmark_2020")
+    """Config for GSEA analysis."""
+
+    method: _Method = pydantic.Field(default="t-test", description="Statistical test to be used.")
+    gene_sets: str = pydantic.Field(
+        default="MSigDB_Hallmark_2020",
+        description="Name of data base available in the internet or a path to the GMT file.",
+    )
     n_diff_genes: Optional[int] = pydantic.Field(default=None)
     permutation_num: int = pydantic.Field(default=100)
 
@@ -226,6 +231,7 @@ class GeneExpressionConfig(pydantic.BaseModel):
 
 
 def gex_factory(cluster_name: str, config: GeneExpressionConfig) -> GeneExpressionAnalysis:
+    """Factory method used to create a GeneExpressionAnalysis object for a given cluster."""
     return GeneExpressionAnalysis(
         cluster_name=cluster_name,
         group_names="all",

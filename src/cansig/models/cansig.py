@@ -1,3 +1,9 @@
+"""An experimental integration model,
+which uses CNV profiles as well as the healthy cells to learn better embeddings of the malignant cells.
+
+Note:
+    Currently CanSig is based on scVI, which is considerably faster.
+"""
 import warnings
 from typing import Dict, List, Optional, Sequence
 from typing import Literal  # pytype: disable=not-supported-yet

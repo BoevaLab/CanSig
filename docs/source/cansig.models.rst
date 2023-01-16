@@ -12,6 +12,14 @@ cansig.models.api module
    :undoc-members:
    :show-inheritance:
 
+cansig.models.cansig module
+---------------------------
+
+.. automodule:: cansig.models.cansig
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 cansig.models.scvi module
 -------------------------
 

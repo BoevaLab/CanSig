@@ -1,3 +1,5 @@
+"""A wrapper around the main integration model, scVI, and its hyperparameters.
+"""
 from typing import Dict, List, Optional, Sequence
 from typing import Literal  # pytype: disable=not-supported-yet
 
@@ -9,6 +11,8 @@ import scanpy as sc  # pytype: disable=import-error
 
 
 class PreprocessingConfig(pydantic.BaseModel):
+    """Configuration for preprocessing hyperparameters."""
+
     n_top_genes: Optional[int] = pydantic.Field(
         default=2_000,
         description="Number of highly variable genes to be used to train the model. "
@@ -17,8 +21,10 @@ class PreprocessingConfig(pydantic.BaseModel):
 
 
 class ModelConfig(pydantic.BaseModel):
+    """Configuration for the generative model (decoder)."""
+
     n_hidden: pydantic.PositiveInt = pydantic.Field(default=128, description="Number of nodes per hidden layer.")
-    n_layers: pydantic.PositiveInt = pydantic.Field(default=1)
+    n_layers: pydantic.PositiveInt = pydantic.Field(default=1, description="Number of hidden layers.")
     dropout_rate: pydantic.confloat(ge=0, lt=1.0) = pydantic.Field(default=0.1)  # pytype: disable=invalid-annotation
     dispersion: Literal["gene", "gene-batch", "gene-label", "gene-cell"] = pydantic.Field(default="gene")
     gene_likelihood: Literal["poisson", "zinb", "nb"] = pydantic.Field(default="zinb")
@@ -26,6 +32,8 @@ class ModelConfig(pydantic.BaseModel):
 
 
 class TrainConfig(pydantic.BaseModel):
+    """The training hyperparameters."""
+
     max_epochs: pydantic.PositiveInt = pydantic.Field(default=400)
     train_size: pydantic.confloat(gt=0, lt=1.0) = pydantic.Field(default=0.9)  # pytype: disable=invalid-annotation
     batch_size: pydantic.PositiveInt = pydantic.Field(default=128)
@@ -47,6 +55,7 @@ class TrainConfig(pydantic.BaseModel):
 
 
 def _train_scvi_wrapper(model: scvibase.model.SCVI, config: TrainConfig) -> None:
+    """Trains `model` using the settings provided in `config`."""
     plan_kwargs = {
         "lr": config.learning_rate,
         "weight_decay": config.weight_decay,
@@ -71,6 +80,8 @@ def _train_scvi_wrapper(model: scvibase.model.SCVI, config: TrainConfig) -> None
 
 
 class EvaluationConfig(pydantic.BaseModel):
+    """Settings used to evaluate and validate the model."""
+
     n_samples_ll: pydantic.PositiveInt = pydantic.Field(
         default=1000,
         description="Number of Monte Carlo samples for log-likelihood estimation. "
@@ -99,7 +110,13 @@ def _cast_covariates(listlike: Sequence[str]) -> Optional[list]:
 
 
 class SCVIConfig(pydantic.BaseModel):
-    batch: str
+    """The configuration of the scVI integration model and its training.
+
+    Note that this config is split into several smaller subconfigs,
+    as the hyperparameters are hierarchical.
+    """
+
+    batch: str = pydantic.Field(description="The batch column name.")
     n_latent: pydantic.PositiveInt = pydantic.Field(default=10, description="The dimensionality of the latent space.")
     random_seed: int = 0
     preprocessing: PreprocessingConfig = pydantic.Field(default_factory=PreprocessingConfig)
@@ -121,6 +138,7 @@ class SCVIConfig(pydantic.BaseModel):
 
 
 def _preprocessing(data: anndata.AnnData, config: PreprocessingConfig) -> anndata.AnnData:
+    """Preprocessing which finds highly-variable genes."""
     if config.n_top_genes is None:
         return data
     else:
@@ -155,6 +173,7 @@ def _data_setup_wrapper(
 
 
 def _scvi_factory_wrapper(data: anndata.AnnData, n_latent: int, config: ModelConfig) -> scvibase.model.SCVI:
+    """A factory method creating a new SCVI model instance from the configuration."""
     return scvibase.model.SCVI(
         data,
         n_hidden=config.n_hidden,
@@ -193,7 +212,18 @@ def _evaluate_model(model: scvibase.model.SCVI, config: EvaluationConfig) -> Eva
 
 
 class SCVI:
+    """The wrapper around the scVI model.
+
+    Use the ``model`` property to access the scVI's SCVI instance.
+    """
+
     def __init__(self, config: SCVIConfig, data: anndata.AnnData) -> None:
+        """
+
+        Args:
+            config: hyperparameters
+            data: the AnnData object with the malignant cells
+        """
         self._config = config
 
         scvibase.settings.seed = config.random_seed
@@ -213,8 +243,10 @@ class SCVI:
         data = data.raw.to_adata()
 
     def evaluate(self) -> EvaluationResults:
+        """Returns the results of model validation."""
         return _evaluate_model(model=self.model, config=self._config.evaluation)
 
     def get_latent_codes(self) -> pd.DataFrame:
+        """Returns the latent representations as a data frame."""
         latent_codes = self.model.get_latent_representation()
         return pd.DataFrame(latent_codes, index=self._index)

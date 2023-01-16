@@ -12,3 +12,10 @@ cansig.plotting.plotting module
    :undoc-members:
    :show-inheritance:
 
+Module contents
+---------------
+
+.. automodule:: cansig.plotting
+   :members:
+   :undoc-members:
+   :show-inheritance:

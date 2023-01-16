@@ -6,6 +6,7 @@ Human tumors are highly heterogeneous in their cell composition; specifically, t
 .. image:: img/pipeline.png
   :width: 600
   :alt: The diagram representing CanSig pipeline.
+  :align: center
 
 .. note::
    A preprint describing the pipeline and case studies is `now available <https://doi.org/10.1101/2022.04.14.488324>`_.
@@ -23,9 +24,8 @@ Navigation
    cansig-for-python-coders
    troubleshooting
    contributing
+   api
 
-* :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 
 
@@ -89,6 +89,7 @@ Once the notebook is running, we can load the data:
 .. image:: img/tutorial-simulated-umap.png
   :width: 400
   :alt: UMAP visualisation of simulated cells.
+  :align: center
 
 We simulated samples coming from different patients, with different subclonal composition and different malignant cell types.
 Different patients may be missing some of the cell types. Let's visualise how many cells with particular cell type are within each sample:
@@ -111,6 +112,7 @@ Different patients may be missing some of the cell types. Let's visualise how ma
 .. image:: img/tutorial-simulated-joint.png
   :width: 400
   :alt: Joint (empirical) distribution of cell types and patients.
+  :align: center
 
 Running the analysis
 ^^^^^^^^^^^^^^^^^^^^
@@ -175,12 +177,14 @@ For example, the similarity between used to create metasignatures in our case lo
 .. image:: img/tutorial-heatmap-metasignatures.png
    :width: 400
    :alt: Similarity heatmap.
+   :align: center
 
 so one can hope that there are three different meta-signatures. When the cells are scored according to them the following correlation matrix is obtained:
 
 .. image:: img/tutorial-clustermap-metasignatures-correlation.png
    :width: 400
    :alt: Meta-signatures scores correlation matrix.
+   :align: center
 
 
 .. note::
@@ -230,6 +234,7 @@ Let's open Jupyter and run the following code:
 .. image::  img/tutorial-joint-metasignature-patient.png
    :width: 400
    :alt: Joint (empirical) distribution of meta-signature assignment and patient.
+   :align: center
 
 As we can see, the cells have been decomposed into three meta-signatures as well as undetermined cells.
 
@@ -243,18 +248,17 @@ We can also visualise the (empirical) joint distribution of ground truth cell ty
 .. image:: img/tutorial-joint-metasignature-celltype.png
    :width: 400
    :alt: Joint (empirical) distribution of meta-signature assignment and ground truth.
+   :align: center
 
 It seems that ``metasig1`` is considerably smaller than the other meta-signatures as well as the set of undetermined cells. We see that for both types ``metasig2`` or ``metasig3`` seem to be mostly capturing ``program2`` and ``program3``.
 
 Tutorials
 ---------
 
-.. note:: If you are familiar with Python, you may prefer running the analysis in a custom manner. See the :ref:`pipeline-advanced` and :ref:`Cansig for python coders <coders>`.
-
-* To learn more about the pipeline (parallelization, using custom models, plotting), see :ref:`pipeline-advanced`.
+* To learn more about the command line pipeline, see :ref:`pipeline-advanced`.
+* To learn how to run CanSig elements in a Python script or a Jupyter notebook, see :ref:`CanSig as a package <coders>`.
 * To learn about the preprocessing module (used to prepare the raw data into the .h5ad format), see the :ref:`preprocessing`.
 * To learn how to format already preprocessed .csv files into .h5ad files, see :ref:`formatting`.
-* To learn how to run CanSig in a python script/jupyter notebook, see :ref:`Cansig for python coders <coders>`.
 * To ensure smooth running of CanSig, check out :ref:`the troubleshooting page <troubleshooting>`. 
 
 

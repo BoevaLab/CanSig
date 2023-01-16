@@ -3,6 +3,7 @@
 anndata
 gseapy
 infercnvpy
+interrogate
 leidenalg
 matplotlib
 numpy<=1.21

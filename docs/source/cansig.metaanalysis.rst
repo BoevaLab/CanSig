@@ -12,8 +12,8 @@ cansig.metaanalysis.heatmap module
    :undoc-members:
    :show-inheritance:
 
-cansig.metaanalysis.repr_directory module
------------------------------------------
+cansig.metaanalysis.repr\_directory module
+------------------------------------------
 
 .. automodule:: cansig.metaanalysis.repr_directory
    :members:

@@ -40,11 +40,12 @@ ignore-private = true
 ignore-property-decorators = false
 ignore-nested-functions = true
 ignore-nested-classes = true
-exclude = ["setup.py", "docs", "build"]
+exclude = ["setup.py", "docs", "build", "tests"]
 ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
 # possible values: 0 (minimal output), 1 (-v), 2 (-vv)
-verbose = 0
+verbose = 2
 quiet = false
+fail-under = 70
 whitelist-regex = []
 color = true
 omit-covered-files = false

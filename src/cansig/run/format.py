@@ -1,3 +1,4 @@
+"""Glues expression data and observation annotations into a H5AD file."""
 import argparse
 
 import pandas as pd  # pytype: disable=import-error
@@ -5,6 +6,7 @@ import anndata as ad  # pytype: disable=import-error
 
 
 def create_parser() -> argparse.ArgumentParser:
+    """Creates the CLI parser."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--expression-file", type=str, help="Path to the file containing expression data.")
     parser.add_argument("--observation-file", type=str, help="Name of the column with batch (or sample) index.")
@@ -14,6 +16,8 @@ def create_parser() -> argparse.ArgumentParser:
 
 
 def output_path(raw: str) -> str:
+    """Makes sure that the suffix is the ``.h5ad`` file.
+    If it is not already, then adds it."""
     if raw.endswith(".h5ad"):
         return raw
     else:
@@ -21,6 +25,8 @@ def output_path(raw: str) -> str:
 
 
 def main() -> None:
+    """Parses the CLI arguments, reads the CSV files with expression data and cell annotations
+    and wraps them into an AnnData object."""
     # Read the CLI arguments
     parser = create_parser()
     args = parser.parse_args()
