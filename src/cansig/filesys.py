@@ -9,11 +9,21 @@ import pandas as pd  # pytype: disable=import-error
 import petname  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 
-import cansig.types as types
+import cansig.types as types  # pytype: disable=import-error
 
 
 class StructuredDir(abc.ABC):
+    """A convenient class for a directory.
+    It allows easy directory creation and validation.
+    """
+
     def __init__(self, path: types.Pathlike, create: bool = False) -> None:
+        """
+
+        Args:
+            path: path to the directory
+            create: whether to create it
+        """
         self.path = pathlib.Path(path)
         if create:
             self.create()
@@ -22,11 +32,13 @@ class StructuredDir(abc.ABC):
         return f"{type(self).__name__}({self.path})"
 
     def create(self) -> None:
+        """Creates the directory. Throws an error if already exists."""
         self.path.mkdir(parents=True, exist_ok=False)
 
     @property
     @abc.abstractmethod
     def valid(self) -> bool:
+        """Used to validate the directory."""
         pass
 
 
@@ -34,6 +46,16 @@ _Settings = TypeVar("_Settings", bound=pydantic.BaseModel)
 
 
 def read_settings(factory: Callable[[Any], _Settings], path: types.Pathlike) -> _Settings:
+    """Loads settings from a JSON file and creates a BaseModel.
+
+    Args:
+        factory: factory generating a BaseModel object from a dictionary.
+            For example, BaseModel class names
+        path: path to the JSON with the settings
+
+    Returns:
+        created BaseModel using the `factory`
+    """
     with open(path) as f:
         raw = json.load(f)
     # Annotating a callable which takes `**kwargs` is very tricky,
@@ -42,27 +64,34 @@ def read_settings(factory: Callable[[Any], _Settings], path: types.Pathlike) -> 
 
 
 def save_settings(settings: pydantic.BaseModel, path: types.Pathlike) -> None:
+    """Saves BaseModel to a JSON."""
     with open(path, "w") as f:
         f.write(settings.json())
 
 
 def save_latent_representations(representations: pd.DataFrame, path: types.Pathlike) -> None:
+    """Saves latent representations to a CSV."""
     representations.to_csv(path, index=True, header=False)
 
 
 def read_latent_representations(path: types.Pathlike) -> pd.DataFrame:
+    """Reads latent representations from a CSV."""
     return pd.read_csv(path, index_col=0, header=None)
 
 
 def save_cluster_labels(labels: pd.Series, path: types.Pathlike) -> None:
+    """Saves cluster labels to a CSV."""
     return labels.to_csv(path, index=True, header=False)
 
 
 def read_cluster_labels(path: types.Pathlike) -> pd.DataFrame:
+    """Reads cluster labels from a CSV."""
     return pd.read_csv(path, index_col=0, header=False)
 
 
 class IntegrationDir(StructuredDir):
+    """The directory representing a single integration run."""
+
     MODEL: str = "integration-settings.json"
     REPRESENTATIONS: str = "latent-representations.csv"
 
@@ -71,10 +100,12 @@ class IntegrationDir(StructuredDir):
 
     @property
     def latent_representations(self) -> pathlib.Path:
+        """Path to the CSV with latent representations."""
         return self.path / self.REPRESENTATIONS
 
     @property
     def integration_settings(self) -> pathlib.Path:
+        """Path to the JSON with the settings."""
         return self.path / self.MODEL
 
 
@@ -97,22 +128,27 @@ class PostprocessingDir(StructuredDir):
 
     @property
     def cluster_labels(self) -> pathlib.Path:
+        """Path to the CSV with cluster labels."""
         return self.path / self.LABELS
 
     @property
     def cluster_settings(self) -> pathlib.Path:
+        """Path to the JSON with clustering settings."""
         return self.path / self.CLUSTER_SETTINGS
 
     @property
     def integration_settings(self) -> pathlib.Path:
+        """Path to the JSON with integration settings."""
         return self.path / self.INTEGRATION_SETTINGS
 
     @property
     def gsea_settings(self) -> pathlib.Path:
+        """Path to the JSON with GSEA settings."""
         return self.path / self.GSEA_SETTINGS
 
     @property
     def gsea_output(self) -> pathlib.Path:
+        """Path to the data frame with GSEA output."""
         # TODO(Pawel): Note, the desired output is still discussed.
         return self.path / "gsea-dataframe.csv"
 
