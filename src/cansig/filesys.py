@@ -184,28 +184,35 @@ class MetasigDir(StructuredDir):
 
     @property
     def figures_output(self) -> pathlib.Path:
+        """The path to the subdirectory with figures."""
         return self.path / self.FIGURES
 
     @property
     def sig_output(self) -> pathlib.Path:
+        """The path to the subdirectory with meta-signatures."""
         return self.path / self.META
 
     @property
     def sim_output(self) -> pathlib.Path:
+        """The path to the CSV file with similarity matrix."""
         return self.path / self.SIMFILE
 
     @property
     def dcnv_output(self) -> pathlib.Path:
+        """The path to the CSV with differential CNV analysis."""
         return self.path / self.CNVFILE
 
     @property
     def gsea_output(self) -> pathlib.Path:
+        """The path to the GSEA CSV."""
         return self.path / self.GSEAFILE
 
-    def make_sig_dir(self):
+    def make_sig_dir(self) -> None:
+        """Creates the subdirectory for signatures."""
         self.sig_output.mkdir(parents=True, exist_ok=False)
 
-    def make_fig_dir(self):
+    def make_fig_dir(self) -> None:
+        """Creates the subdirectory for the figures."""
         self.figures_output.mkdir(parents=True, exist_ok=False)
 
 

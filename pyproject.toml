@@ -45,6 +45,7 @@ ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
 # possible values: 0 (minimal output), 1 (-v), 2 (-vv)
 verbose = 2
 quiet = false
+fail-under = 70
 whitelist-regex = []
 color = true
 omit-covered-files = false

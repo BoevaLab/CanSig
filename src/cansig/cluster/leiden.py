@@ -1,3 +1,8 @@
+"""Wrappers around the Leiden clustering algorithm.
+
+We allow the parametrizations both in terms of the resolution (standard one)
+and the number of clusters (a custom one, using binary search over the resolution).
+"""
 from typing import Literal  # pytype: disable=not-supported-yet
 from typing import Optional
 
