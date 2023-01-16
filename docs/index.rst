@@ -249,12 +249,10 @@ It seems that ``metasig1`` is considerably smaller than the other meta-signature
 Tutorials
 ---------
 
-.. note:: If you are familiar with Python, you may prefer running the analysis in a custom manner. See the :ref:`pipeline-advanced` and :ref:`Cansig for python coders <coders>`.
-
-* To learn more about the pipeline (parallelization, using custom models, plotting), see :ref:`pipeline-advanced`.
+* To learn more about the command line pipeline, see :ref:`pipeline-advanced`.
+* To learn how to run CanSig elements in a Python script or a Jupyter notebook, see :ref:`CanSig as a package <coders>`.
 * To learn about the preprocessing module (used to prepare the raw data into the .h5ad format), see the :ref:`preprocessing`.
 * To learn how to format already preprocessed .csv files into .h5ad files, see :ref:`formatting`.
-* To learn how to run CanSig in a python script/jupyter notebook, see :ref:`Cansig for python coders <coders>`.
 * To ensure smooth running of CanSig, check out :ref:`the troubleshooting page <troubleshooting>`. 
 
 
