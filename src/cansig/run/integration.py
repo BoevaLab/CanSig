@@ -1,3 +1,4 @@
+"""The high-level utilities for the integration step."""
 import argparse
 import pathlib
 import logging
@@ -15,12 +16,11 @@ DEFAULT_OUTPUT_BASE_PATH = pathlib.Path("./outputs/batch-integration")
 
 
 class Arguments(Protocol):
-    @property
-    def model(self) -> str:
-        raise NotImplementedError
+    """Protocol used to define CLI arguments."""
 
     @property
-    def n_latent(self) -> int:
+    def model(self) -> str:
+        """Integration model to be used."""
         raise NotImplementedError
 
     @property
@@ -29,34 +29,42 @@ class Arguments(Protocol):
 
     @property
     def batch(self) -> str:
+        """Batch column name."""
         raise NotImplementedError
 
     @property
     def data(self) -> pathlib.Path:
+        """The path to the AnnData object with malignant cells."""
         raise NotImplementedError
 
     @property
     def latent(self) -> int:
+        """The dimension of the latent space."""
         raise NotImplementedError
 
     @property
     def output(self) -> pathlib.Path:
+        """Output directory."""
         raise NotImplementedError
 
     @property
     def max_epochs(self) -> int:
+        """Maximum number of epochs to be run."""
         raise NotImplementedError
 
     @property
     def log(self) -> pathlib.Path:
+        """Location of the log file."""
         raise NotImplementedError
 
     @property
     def n_top_genes(self) -> int:
+        """Number of most highly variable genes to be used."""
         raise NotImplementedError
 
 
 def parse_args() -> Arguments:
+    """Creates the CLI parser."""
     parser = argparse.ArgumentParser()
     parser.add_argument("data", type=pathlib.Path, help="The path to the anndata object.")
     parser.add_argument("batch", type=str, help="Name of the batch column.")
