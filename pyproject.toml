@@ -43,7 +43,7 @@ ignore-nested-classes = true
 exclude = ["setup.py", "docs", "build"]
 ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
 # possible values: 0 (minimal output), 1 (-v), 2 (-vv)
-verbose = 0
+verbose = 2
 quiet = false
 whitelist-regex = []
 color = true

@@ -1,5 +1,6 @@
 black
 flake8
+interrogate
 pre-commit
 pydata-sphinx-theme
 pytest
