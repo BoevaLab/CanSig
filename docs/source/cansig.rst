@@ -20,14 +20,6 @@ Subpackages
 Submodules
 ----------
 
-cansig.api module
------------------
-
-.. automodule:: cansig.api
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 cansig.filesys module
 ---------------------
 
