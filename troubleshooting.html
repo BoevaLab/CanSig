@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Troubleshooting / Checklist &#8212; CanSig  documentation</title>
+    <title>Troubleshooting &#8212; CanSig  documentation</title>
   
   
   
@@ -130,13 +130,6 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="interpretation.html">
-                        Data interpretation
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="formatting-data.html">
                         Input data format
                       </a>
@@ -149,19 +142,19 @@
                       </a>
                     </li>
                 
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Troubleshooting
+                      </a>
+                    </li>
+                
             <div class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     More
                 </button>
                 <div class="dropdown-menu">
                     
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
-                        Troubleshooting / Checklist
-                      </a>
-                    </li>
-                
-
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="contributing.html">
                         Contributing
@@ -267,13 +260,6 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="interpretation.html">
-                        Data interpretation
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="formatting-data.html">
                         Input data format
                       </a>
@@ -286,19 +272,19 @@
                       </a>
                     </li>
                 
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Troubleshooting
+                      </a>
+                    </li>
+                
             <div class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     More
                 </button>
                 <div class="dropdown-menu">
                     
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
-                        Troubleshooting / Checklist
-                      </a>
-                    </li>
-                
-
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="contributing.html">
                         Contributing
@@ -372,49 +358,22 @@
             
             <article class="bd-article" role="main">
               
-  <section id="troubleshooting-checklist">
-<span id="troubleshooting"></span><h1>Troubleshooting / Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permalink to this heading">#</a></h1>
-<p>On this page you will find a checklist to go through before running CanSig to ensure it will run as smoothly as possible, as well as a troubleshooting section for most common encountered problems.
-If you are confident you tick all the boxes for the checklist and cannot find your issue mentioned in the troubleshooting, please open an issue so we can adress it!</p>
-<section id="checklist">
-<h2>Checklist<a class="headerlink" href="#checklist" title="Permalink to this heading">#</a></h2>
-<p>General checklist</p>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Add in the general checklist</p>
-</div>
-<p>Preprocessing checklist</p>
-<div class="admonition-todo admonition" id="id2">
-<p class="admonition-title">Todo</p>
-<p>Add in the preprocessing checklist</p>
-</div>
-<p>Differential CNV checklist</p>
-<div class="admonition-todo admonition" id="id3">
-<p class="admonition-title">Todo</p>
-<p>Add in the differential CNV checklist</p>
-</div>
+  <section id="troubleshooting">
+<span id="id1"></span><h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading">#</a></h1>
+<section id="gsea-does-not-run">
+<h2>GSEA does not run<a class="headerlink" href="#gsea-does-not-run" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Is your gene annotation consistent?</p></li>
+<li><p>If your genes are annotated using Entrez in your original expression object, then you should run GSEA using an adapted .gmt file. You can download files for official gene ID and for Entrez on the <a class="reference external" href="https://www.gsea-msigdb.org/gsea/downloads.jsp#msigdb">MSigDB website</a>.</p></li>
+<li><p>If your genes are annotated using another system, you should first translate into Official Gene ID or Entrez.</p></li>
+</ul>
 </section>
-<section id="id4">
-<h2>Troubleshooting<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
-<ol class="arabic">
-<li><p>GSEA will not run</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Is your gene annotation consistent?
-If your genes are annotated using Entrez in your original expression object, then you should run GSEA using an adapted .gmt file. You can download files for official gene ID and for Entrez on the MSigDB website (<a class="reference external" href="https://www.gsea-msigdb.org/gsea/downloads.jsp#msigdb">https://www.gsea-msigdb.org/gsea/downloads.jsp#msigdb</a>).
-If your genes are annotated using another system, you should first translate into Official Gene ID or Entrez.</p></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p>The differential CNV analysis doesn’t work</p>
-<blockquote>
-<div><ul class="simple">
+<section id="differential-cnv-analysis-does-not-work">
+<h2>Differential CNV analysis does not work<a class="headerlink" href="#differential-cnv-analysis-does-not-work" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
 <li><p>Did you run our preprocessing module? If not you need to run the differential CNV analysis in a slightly different way, see <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a>.</p></li>
-<li><p>If you get a message error saying the mapping shapes do not coincide, it is possible the window size you used for preprocessing is too big. When the window size is bigger than the number of regions for a specific chromosome, infercnvpy returns an object the size of the window, thus losing mappability to specific chromosomal regions (see <cite>Issue &lt;https://github.com/icbi-lab/infercnvpy/issues/37&gt;</cite> open on their github). Try decreasing the window size.</p></li>
+<li><p>If you get a message error saying the mapping shapes do not coincide, it is possible the window size you used for preprocessing is too big. When the window size is bigger than the number of regions for a specific chromosome, InferCNVPy returns an object the size of the window, thus losing mappability to specific chromosomal regions (see <a class="reference external" href="https://github.com/icbi-lab/infercnvpy/issues/37">Issue 37</a> open in InferCNVPy repository). Try decreasing the window size.</p></li>
 </ul>
-</div></blockquote>
-</li>
-</ol>
 </section>
 </section>
 
@@ -457,13 +416,13 @@ If your genes are annotated using another system, you should first translate int
 <nav id="bd-toc-nav" class="page-toc">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#checklist">
-   Checklist
+  <a class="reference internal nav-link" href="#gsea-does-not-run">
+   GSEA does not run
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
-   Troubleshooting
+  <a class="reference internal nav-link" href="#differential-cnv-analysis-does-not-work">
+   Differential CNV analysis does not work
   </a>
  </li>
 </ul>

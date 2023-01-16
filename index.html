@@ -129,13 +129,6 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="interpretation.html">
-                        Data interpretation
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="formatting-data.html">
                         Input data format
                       </a>
@@ -148,19 +141,19 @@
                       </a>
                     </li>
                 
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="troubleshooting.html">
+                        Troubleshooting
+                      </a>
+                    </li>
+                
             <div class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     More
                 </button>
                 <div class="dropdown-menu">
                     
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="troubleshooting.html">
-                        Troubleshooting / Checklist
-                      </a>
-                    </li>
-                
-
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="contributing.html">
                         Contributing
@@ -266,13 +259,6 @@
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="interpretation.html">
-                        Data interpretation
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="formatting-data.html">
                         Input data format
                       </a>
@@ -285,19 +271,19 @@
                       </a>
                     </li>
                 
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="troubleshooting.html">
+                        Troubleshooting
+                      </a>
+                    </li>
+                
             <div class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     More
                 </button>
                 <div class="dropdown-menu">
                     
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="troubleshooting.html">
-                        Troubleshooting / Checklist
-                      </a>
-                    </li>
-                
-
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="contributing.html">
                         Contributing
@@ -373,15 +359,8 @@
               
   <section id="cansig-discovering-cancer-signatures">
 <h1>CanSig: discovering cancer signatures<a class="headerlink" href="#cansig-discovering-cancer-signatures" title="Permalink to this heading">#</a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This package is currently in experimental stage. Changes in the API may appear.</p>
-</div>
 <p>Human tumors are highly heterogeneous in their cell composition; specifically, they exhibit heterogeneity in transcriptional states of malignant cells, as has been recently discovered through single-cell RNA sequencing (scRNA-seq). Distinct states of malignant cells have been linked to variability in tumorigenic properties and resistance to anti-cancer treatment. Despite the fact that scRNA-seq data contain all necessary information to uncover shared transcriptional states of malignant cells in tumors, jointly analyzing cells from multiple cancer patients comes with its set of challenges including batch correction and accounting for patient-specific genetic background driving differences between gene expression vectors. We propose CanSig, an easy-to-use approach designed to discover known and de novo shared signatures in cancer single cells. CanSig preprocesses, integrates and analyzes scRNA-seq data to provide new signatures of shared transcriptional states and links these states to known pathways.</p>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Add a picture of the pipeline here with the figure caption as in the preprint.</p>
-</div>
+<a class="reference internal image-reference" href="_images/pipeline.png"><img alt="The diagram representing CanSig pipeline." src="_images/pipeline.png" style="width: 600px;" /></a>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>A preprint describing the pipeline and case studies is <a class="reference external" href="https://doi.org/10.1101/2022.04.14.488324">now available</a>.</p>
@@ -406,12 +385,11 @@
 <li class="toctree-l2"><a class="reference internal" href="pipeline-advanced.html#understanding-all-the-pipeline-command-line-options">Understanding all the pipeline command line options</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="interpretation.html">Data interpretation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="formatting-data.html">Input data format</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cansig-for-python-coders.html">CanSig for Pythonists</a></li>
-<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting / Checklist</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#checklist">Checklist</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#id4">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#gsea-does-not-run">GSEA does not run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#differential-cnv-analysis-does-not-work">Differential CNV analysis does not work</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
@@ -430,102 +408,110 @@
 </section>
 <section id="getting-started">
 <h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
+<section id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h3>
 <p>This tutorial assumes you have access to a Unix terminal (e.g., Linux, BSD, MacOS). If you use Windows, install <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install">Windows Subsystem for Linux</a> first.</p>
 <p>When the Unix terminal is ready, you will need to <a class="reference external" href="https://wiki.python.org/moin/BeginnersGuide">install Python</a>. One popular solution is <a class="reference external" href="https://www.anaconda.com/">Anaconda</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>CanSig requires Python 3.8 (or a most recent version).</p>
 </div>
-<section id="installation">
-<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h3>
 <p>Install the package:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>cansig
 </pre></div>
 </div>
+<p>Alternatively, in the <a class="reference external" href="https://github.com/boevalab/cansig">repository</a> we provide an <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> file <a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file">which can be used to create a new conda environment</a>.</p>
 </section>
 <section id="example-dataset">
 <h3>Example dataset<a class="headerlink" href="#example-dataset" title="Permalink to this heading">#</a></h3>
-<p>To demonstrate the pipeline usage, we will analyse a small esophageal dataset, which has been already preprocessed (for more information about the dataset and the data curation, see <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing</span></a>).</p>
-<p>We will download it using an auxiliary script:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.download<span class="w"> </span>PIPELINE
+<p>We will download the example data set using an auxiliary script:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.download
 </pre></div>
 </div>
-<p>You should see a new directory <code class="docutils literal notranslate"><span class="pre">data</span></code> with a file <code class="docutils literal notranslate"><span class="pre">pipeline-tutorial.h5ad</span></code>.</p>
-<div class="admonition-todo admonition" id="id2">
-<p class="admonition-title">Todo</p>
-<p>Add the description of this dataset and UMAP visualisations.</p>
+<p>You should see a new directory <code class="docutils literal notranslate"><span class="pre">data</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ls<span class="w"> </span>data/tutorial/simulated
+malignant.h5ad<span class="w">  </span>msigdb74.gmt<span class="w">  </span>README.md
+</pre></div>
 </div>
+<p>This directory contains a H5AD file with <em>simulated</em> malignant cells and a GMT file with gene signatures. More information about these are in the README file.</p>
+<p>For convenience we will <a class="reference external" href="https://linuxhint.com/variables_bash/">define variables</a> storing the locations:</p>
+<p>Let’s take a look at this data set. Note that T. Chari and L. Pachter in <a class="reference external" href="https://doi.org/10.1101/2021.08.25.457696">The Specious Art of Single-Cell Genomics</a> demonstrate that single-cell data is hard to visualise and popular dimension reduction strategies may lead to spurious conclusions.</p>
+<p>We will use UMAP for demonstratory purposes to demonstrate the signals in the data we simulated. We suggest to install and run <a class="reference external" href="https://jupyter.org/">Jupyter Notebook</a> for this.</p>
+<p>Once the notebook is running, we can load the data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s2">&quot;data/tutorial/simulated/malignant.h5ad&quot;</span><span class="p">)</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sample_id&quot;</span><span class="p">,</span> <span class="s2">&quot;celltype&quot;</span><span class="p">,</span> <span class="s2">&quot;subclonal&quot;</span><span class="p">],</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/tutorial-simulated-umap.png"><img alt="UMAP visualisation of simulated cells." src="_images/tutorial-simulated-umap.png" style="width: 400px;" /></a>
+<p>We simulated samples coming from different patients, with different subclonal composition and different malignant cell types.
+Different patients may be missing some of the cell types. Let’s visualise how many cells with particular cell type are within each sample:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_joint</span><span class="p">(</span><span class="n">col1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">col2</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+   <span class="k">return</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span>
+                      <span class="o">.</span><span class="n">obs</span>
+                      <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">])</span>
+                      <span class="o">.</span><span class="n">size</span><span class="p">()</span>
+                      <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+                      <span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">col1</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">col2</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                      <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                      <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span>
+                     <span class="p">)</span>
+
+<span class="n">plot_joint</span><span class="p">(</span><span class="s2">&quot;sample_id&quot;</span><span class="p">,</span> <span class="s2">&quot;celltype&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/tutorial-simulated-joint.png"><img alt="Joint (empirical) distribution of cell types and patients." src="_images/tutorial-simulated-joint.png" style="width: 400px;" /></a>
 </section>
 <section id="running-the-analysis">
 <h3>Running the analysis<a class="headerlink" href="#running-the-analysis" title="Permalink to this heading">#</a></h3>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you are familiar with Python, you may prefer running the analysis in a custom manner. See the <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a> and <a class="reference internal" href="cansig-for-python-coders.html#coders"><span class="std std-ref">Cansig for python coders</span></a>.</p>
-</div>
-<p>We will run the analysis pipeline with a single command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
-<span class="w">                                </span>--batch<span class="w"> </span>batch
-<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<p>As we know what we can expect in this data set, we will run the analysis:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/tutorial/simulated/malignant.h5ad
+<span class="w">                                </span>--gene-sets<span class="w"> </span>data/tutorial/simulated/msigdb74.gmt
 <span class="w">                                </span>--output<span class="w"> </span>tutorial-output
+<span class="w">                                </span>--batch<span class="w"> </span>sample_id
+<span class="w">                                </span>--n-top-genes<span class="w"> </span><span class="m">2000</span>
+<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">8</span>
+<span class="w">                                </span>--model-runs<span class="w"> </span><span class="m">1</span>
+<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="m">10</span>
+<span class="w">                                </span>--cluster-runs<span class="w"> </span><span class="m">2</span>
+<span class="w">                                </span>--max-epochs<span class="w"> </span><span class="m">200</span>
 </pre></div>
 </div>
-<p>This command launched the training of several models, used for data integration (batch correction and dimension reduction).
-We marked that the batch column in the dataset is named <code class="docutils literal notranslate"><span class="pre">batch</span></code> and we will reduce the dimension either to 4 or 6 (<code class="docutils literal notranslate"><span class="pre">--dimensions</span> <span class="pre">4</span> <span class="pre">6</span></code>).
-For each of these dimensionalities, we do a single run (<code class="docutils literal notranslate"><span class="pre">--model-runs</span> <span class="pre">1</span></code>). Increasing this number will train more models, differing in random seeds.</p>
+<p>Apart from specifying the data and gene sets location we specified the output path <code class="docutils literal notranslate"><span class="pre">tutorial-output</span></code> and the column with experimental batch variable <code class="docutils literal notranslate"><span class="pre">sample_id</span></code>, as CanSig will try to remove batch effects using <a class="reference external" href="https://scvi-tools.org/">scVI</a>. We will do the data integration step for three latent space dimensionalities (<code class="docutils literal notranslate"><span class="pre">--dimensions</span> <span class="pre">4</span> <span class="pre">6</span> <span class="pre">8</span></code>). We will train each of these models once (<code class="docutils literal notranslate"><span class="pre">--model-runs</span> <span class="pre">1</span></code>), although one could also ablate the influence to random seed choice by increasing this value. Each model will be trained for maximally 200 epochs.</p>
+<p>We will also do the Leiden clustering into 4, 6, 8, and 10 clusters. For each number of clusters we will run the Leiden clustering twice (<code class="docutils literal notranslate"><span class="pre">--cluster-runs</span> <span class="pre">2</span></code>) as this is a randomised algorithm.</p>
+<p>This step should take up to thirty minutes on a computer with modern GPU. For computers with access only to CPU it is possible to run the pipeline for a smaller number of models or training them for shorter time, although this may affect the results.</p>
+<p>Additional options are visible by using the <code class="docutils literal notranslate"><span class="pre">--help</span></code> flag:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In case of additional continuous or discrete variables, which may confound the expression (e.g., the sequencing technology used), one could specify it via the <code class="docutils literal notranslate"><span class="pre">--continuous-covariates</span></code> and <code class="docutils literal notranslate"><span class="pre">--discrete-covariates</span></code> flags.</p>
 <p>For more information, run</p>
 <p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">cansig.run.pipeline</span> <span class="pre">--help</span></code></p>
 </div>
-<p>Then, for each of the four models, we apply clustering into 2, 3, or 5 communities (<code class="docutils literal notranslate"><span class="pre">--clusters</span> <span class="pre">2</span> <span class="pre">3</span> <span class="pre">5</span></code>).
-Again, one can repeat this steps, using different random seeds, by increasing <code class="docutils literal notranslate"><span class="pre">--cluster-runs</span></code>.</p>
-<p>We specified the database to be used (<code class="docutils literal notranslate"><span class="pre">--gene-sets</span> <span class="pre">MSigDB_Hallmark_2020</span></code>).
-This is one of many databases available online. Alternatively, one can provide a path to the GMT file.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<blockquote>
-<div><p>Running the pipeline in this way requires internet connectivity.
-If not connected to the internet, to run the same analysis, you need to download the file <code class="docutils literal notranslate"><span class="pre">h.all.v{current_version}.symbols.gmt</span></code>, go to the directory where this file is saved, and update the command line as follows</p>
-</div></blockquote>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
-<span class="w">                                </span>--batch<span class="w"> </span>batch
-<span class="w">                                </span>--gene-sets<span class="w"> </span>h.all.v<span class="o">{</span>current_version<span class="o">}</span>.symbols.gmt<span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--output<span class="w"> </span>tutorial-output
-</pre></div>
-</div>
-</div>
-<div class="admonition-todo admonition" id="id3">
-<p class="admonition-title">Todo</p>
-<p>Fill in the TODO items above.</p>
-</div>
-<p>The results will be available in the generated directory <code class="docutils literal notranslate"><span class="pre">tutorial-output/</span></code> in a few minutes.</p>
-<p>Let’s analyse its structure:</p>
+<p>After the command has finished running, the results will be available in the generated directory <code class="docutils literal notranslate"><span class="pre">tutorial-output/</span></code>.</p>
+<p>Let’s analyse its structure.</p>
 <ul class="simple">
 <li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">integration/</span></code>: each model has a separate directory representing the latent representations inferred by the batch correction/dimension reduction method</dt><dd><ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/integration-settings.json</span></code>: summary of the parameters used for the integration method</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/latent-representations.csv</span></code>: coordinates in the latent space inferred by the integration method</p></li>
+<dt><code class="docutils literal notranslate"><span class="pre">integration/</span></code>: each integration model has a separate directory representing the latent representations inferred by the batch correction/dimension reduction method.</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/integration-settings.json</span></code>: summary of the parameters used for the integration method.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/latent-representations.csv</span></code>: coordinates in the latent space inferred by the integration method.</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">postprocessing/</span></code>: each clustering configuration on each model has a separate directory with the postprocessing information saved</dt><dd><ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/cluster-labels.csv</span></code>: cluster assignments for this run</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/cluster-settings.json</span></code>: summary of the parameters used for the clustering step</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/gsea-dataframe.csv</span></code>: results of GSEA run in this setting (full table, including non-significant pathways and negative enrichment score pathways)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/gsea-settings.json</span></code>: summary of the parameters used for the GSEA run</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/integration-settings.json</span></code>: summary of the parameters used for the integration method</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/latent-space-dimred.png</span></code>: scatter plot of the PCA on the latent space colored according to batch and clustering (see advanced tutorial for more details)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/cells-score-denovo-signature.csv</span></code>: scores for each cell for the de novo found signatures for this run</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/denovo-signature-correlation.csv</span></code>: the pearson correlation between de novo found signatures</p></li>
+<dt><code class="docutils literal notranslate"><span class="pre">postprocessing/</span></code>: each clustering configuration on each model has a separate directory with the postprocessing information saved.</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/cluster-labels.csv</span></code>: cluster assignments for this run .</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/cluster-settings.json</span></code>: summary of the parameters used for the clustering step.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/gsea-dataframe.csv</span></code>: results of GSEA run in this setting (full table, including non-significant pathways and negative enrichment score pathways).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/gsea-settings.json</span></code>: summary of the parameters used for the GSEA run.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/integration-settings.json</span></code>: summary of the parameters used for the integration method.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rundir}/latent-space-dimred.png</span></code>: scatter plot of the PCA on the latent space colored according to batch and clustering.</p></li>
 <li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">{rundir}/signatures/</span></code>: directory containing the de novo signatures as the results of the differential gene expression analysis</dt><dd><ul>
+<dt><code class="docutils literal notranslate"><span class="pre">{rundir}/signatures/</span></code>: directory containing the de novo signatures as the results of the differential gene expression analysis.</dt><dd><ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">signature_cl{CLUSTER}.csv</span></code>: results of the differential gene expression analysis for cluster CLUSTER, ranked according to z-score.</p></li>
 </ul>
 </dd>
@@ -535,34 +521,90 @@ If not connected to the internet, to run the same analysis, you need to download
 </dd>
 </dl>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">heatmap.pdf</span></code>: heatmap summarizing Normalized Enrichment Score of the pathways which seem to be differentially expressed over all runs indicated</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">representative-directory.txt</span></code>: simple text file with the name of the post processing directory that can be used as a “representative directory”</p></li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">metasignatures/</span></code>: summary of the runs obtained by clustering the signatures from different postprocessing directories.</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">signatures/</span></code>: contains the files with the clustered signatures (“meta-signatures”).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cell-metamembership.csv</span></code>: cells assigned to their meta-signatures.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">similarity-matrix.csv</span></code>: similarity between different postprocessing runs, used to create meta-signatures.</p></li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">figures/</span></code>: generated figures</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">heatmap-metasignatures.png</span></code>: visualisation of the similarity between different postprocessing runs, used to create meta-signatures.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clustermap-metasignatures-correlation.png</span></code>: correlation between cell scores obtained via scoring with meta-signatures.</p></li>
 </ul>
-<p>While we covered the most basic usage of the pipeline, more information can be obtained by running</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>--help
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>For example, the similarity between used to create metasignatures in our case looks in the following manner:</p>
+<a class="reference internal image-reference" href="_images/tutorial-heatmap-metasignatures.png"><img alt="Similarity heatmap." src="_images/tutorial-heatmap-metasignatures.png" style="width: 400px;" /></a>
+<p>so one can hope that there are three different meta-signatures. When the cells are scored according to them the following correlation matrix is obtained:</p>
+<a class="reference internal image-reference" href="_images/tutorial-clustermap-metasignatures-correlation.png"><img alt="Meta-signatures scores correlation matrix." src="_images/tutorial-clustermap-metasignatures-correlation.png" style="width: 400px;" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each directory in <code class="docutils literal notranslate"><span class="pre">postprocessing/</span></code> is a result of running integration method, clustering, and gene set enrichment analysis. We ablate the hyperparameters and  in <code class="docutils literal notranslate"><span class="pre">metasignatures/</span></code> we assemble this information to hope that the aggregated results will be more robust to changes in hyperparameters. Note that there are many possible ways of doing it and perfectly one would apply resampling techniques, such as bootstrap, to understand whether the final output is robust enough.
+We advise to use CanSig with this limitation in mind and we recommend <a class="reference external" href="https://www.fharrell.com/post/badb/index.html">F. Harrell’s blogpost</a> for an excellent overview of robust biomarker research.</p>
+</div>
+</section>
+<section id="comparing-with-the-ground-truth">
+<h3>Comparing with the ground truth<a class="headerlink" href="#comparing-with-the-ground-truth" title="Permalink to this heading">#</a></h3>
+<p>As we mentioned above, unsupervised learning and scientific discovery are hard problems and although CanSig can be used for exploratory data analysis, it is <em>not</em> a replacement for additional validation (by means of putting the findings in the wider biological context, using appropriate bootstrapping technique, and designing wet-lab interventional studies).
+We can however see how well the found metasignatures correspond to the cell types in the simulated data.</p>
+<p>Let’s open Jupyter and run the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+
+<span class="k">def</span> <span class="nf">plot_joint</span><span class="p">(</span><span class="n">col1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">col2</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span>
+                       <span class="o">.</span><span class="n">obs</span>
+                       <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">])</span>
+                       <span class="o">.</span><span class="n">size</span><span class="p">()</span>
+                       <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+                       <span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">col1</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">col2</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                       <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                       <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span>
+                      <span class="p">)</span>
+
+<span class="c1"># Load the simulated cells</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s2">&quot;data/tutorial/simulated/malignant.h5ad&quot;</span><span class="p">)</span>
+
+<span class="c1"># Load the meta-signatures</span>
+<span class="n">metamembership</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;tutorial-output/metasignatures/cell-metamembership.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Add the meta-signatures membership to the data</span>
+<span class="n">data</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;metamembership&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metamembership</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+
+
+<span class="n">plot_joint</span><span class="p">(</span><span class="s2">&quot;sample_id&quot;</span><span class="p">,</span> <span class="s2">&quot;metamembership&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>or by consulting the <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a>.
-Options include running your own integration model, controlling the plotting utilities, performing differential CNV analysis</p>
-</section>
-<section id="interpreting-the-results">
-<h3>Interpreting the results<a class="headerlink" href="#interpreting-the-results" title="Permalink to this heading">#</a></h3>
-<div class="admonition-todo admonition" id="id4">
-<p class="admonition-title">Todo</p>
-<p>Basic discussion how to interpret the results.</p>
+<a class="reference internal image-reference" href="_images/tutorial-joint-metasignature-patient.png"><img alt="Joint (empirical) distribution of meta-signature assignment and patient." src="_images/tutorial-joint-metasignature-patient.png" style="width: 400px;" /></a>
+<p>As we can see, the cells have been decomposed into three meta-signatures as well as undetermined cells.</p>
+<p>We can also visualise the (empirical) joint distribution of ground truth cell types and assigned memberships to meta-signatures:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_joint</span><span class="p">(</span><span class="s2">&quot;celltype&quot;</span><span class="p">,</span> <span class="s2">&quot;metamembership&quot;</span><span class="p">)</span>
+</pre></div>
 </div>
-<p>For more advanced analysis, including drawing biological insights, see <a class="reference internal" href="interpretation.html#interpretation"><span class="std std-ref">Data interpretation</span></a>.</p>
+<a class="reference internal image-reference" href="_images/tutorial-joint-metasignature-celltype.png"><img alt="Joint (empirical) distribution of meta-signature assignment and ground truth." src="_images/tutorial-joint-metasignature-celltype.png" style="width: 400px;" /></a>
+<p>It seems that <code class="docutils literal notranslate"><span class="pre">metasig1</span></code> is considerably smaller than the other meta-signatures as well as the set of undetermined cells. We see that for both types <code class="docutils literal notranslate"><span class="pre">metasig2</span></code> or <code class="docutils literal notranslate"><span class="pre">metasig3</span></code> seem to be mostly capturing <code class="docutils literal notranslate"><span class="pre">program2</span></code> and <code class="docutils literal notranslate"><span class="pre">program3</span></code>.</p>
 </section>
 </section>
 <section id="tutorials">
 <h2>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this heading">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are familiar with Python, you may prefer running the analysis in a custom manner. See the <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a> and <a class="reference internal" href="cansig-for-python-coders.html#coders"><span class="std std-ref">Cansig for python coders</span></a>.</p>
+</div>
 <ul class="simple">
 <li><p>To learn more about the pipeline (parallelization, using custom models, plotting), see <a class="reference internal" href="pipeline-advanced.html#pipeline-advanced"><span class="std std-ref">Advanced pipeline usage</span></a>.</p></li>
-<li><p>For a tutorial how to interpret the results from the biological perspective, see <a class="reference internal" href="interpretation.html#interpretation"><span class="std std-ref">Data interpretation</span></a>.</p></li>
 <li><p>To learn about the preprocessing module (used to prepare the raw data into the .h5ad format), see the <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing</span></a>.</p></li>
 <li><p>To learn how to format already preprocessed .csv files into .h5ad files, see <a class="reference internal" href="formatting-data.html#formatting"><span class="std std-ref">Input data format</span></a>.</p></li>
 <li><p>To learn how to run CanSig in a python script/jupyter notebook, see <a class="reference internal" href="cansig-for-python-coders.html#coders"><span class="std std-ref">Cansig for python coders</span></a>.</p></li>
-<li><p>To ensure smooth running of CanSig, check out <a class="reference internal" href="troubleshooting.html#troubleshooting"><span class="std std-ref">the checklist and troubleshooting page.</span></a>.</p></li>
+<li><p>To ensure smooth running of CanSig, check out <a class="reference internal" href="troubleshooting.html#troubleshooting"><span class="std std-ref">the troubleshooting page</span></a>.</p></li>
 </ul>
 </section>
 <section id="contributing">
@@ -628,8 +670,8 @@ Options include running your own integration model, controlling the plotting uti
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#interpreting-the-results">
-     Interpreting the results
+    <a class="reference internal nav-link" href="#comparing-with-the-ground-truth">
+     Comparing with the ground truth
     </a>
    </li>
   </ul>
