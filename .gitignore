@@ -7,9 +7,6 @@ outputs/
 
 # Data (disable adding data files by default)
 # If really needed, use `git add --force FILENAME`
-*.png
-*.jpeg
-*.jpg
 *.zip
 *.npy
 *.array
