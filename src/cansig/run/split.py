@@ -9,6 +9,7 @@ import scanpy as sc  # pytype: disable=import-error
 
 
 def create_parser() -> argparse.ArgumentParser:
+    """Creates the CLI parser."""
     parser = argparse.ArgumentParser(description="Split a data set by patients into two data sets.")
 
     parser.add_argument("COLUMN", type=str, help="Column storing patient IDs, to be split by.")
@@ -27,6 +28,18 @@ def split_by_column(
     column: str,
     seed: int,
 ) -> Tuple[ad.AnnData, ad.AnnData]:
+    """Splits a data set into two basing on the ``column`` values.
+
+    Args:
+        data: data set to be splitted
+        column: column name storing categorical values
+        seed: random seed for reproducibility
+
+    Returns:
+        anndata, a slice (not a copy) with one random split
+        anndata, a slice (not a copy) with the other random split
+    """
+
     if column not in data.obs.columns:
         raise ValueError(f"Column {column} not in columns: {data.obs.columns}.")
 
@@ -57,6 +70,8 @@ def split_by_column(
 
 
 def main() -> None:
+    """The main function.
+    Parses the CLI arguments, generates the splits and saves them to H5AD files."""
     parser = create_parser()
     args = parser.parse_args()
     outputs = [args.OUTPUT1, args.OUTPUT2]

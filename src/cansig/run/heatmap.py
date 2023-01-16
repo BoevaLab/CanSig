@@ -66,6 +66,7 @@ def read_directory(
 
 
 def generate_items(dirs: Iterable[fs.PostprocessingDir]) -> Iterable[hm.HeatmapItem]:
+    """Generates heatmap items."""
     formatter = gsea.DefaultFormatter()
     summarizer = gsea.MaxNESFDRSummarizer()
 
@@ -80,6 +81,18 @@ def generate_heatmap(
     value_min: float = 0.0,
     value_max: float = 2.0,
 ) -> plt.Figure:
+    """Generates heatmap from the postprocessing directories.
+
+    Args:
+        dirs: iterable with postprocessing directories
+        n_pathways: number of pathways to visualise
+        method: method to filter and arrange the panels
+        value_min: minimum value for the color bar legend
+        value_max: maximum value for the color bar legend
+
+    Returns:
+        figure with the heatmap
+    """
     items = generate_items(dirs)
 
     panel_filter = hm.panel_filter_factory(k=n_pathways, method=method)
@@ -97,6 +110,7 @@ def generate_heatmap(
 
 
 def create_parser() -> argparse.ArgumentParser:
+    """Creates the CLI parser."""
     parser = argparse.ArgumentParser()
     parser.add_argument("multirun", type=str, help="Multirun directory.")
     parser.add_argument(
@@ -122,6 +136,8 @@ def create_parser() -> argparse.ArgumentParser:
 
 
 def main() -> None:
+    """The main function, parsing the CLI arguments,
+    generating the heatmap and saving it to the specified location."""
     parser = create_parser()
     args = parser.parse_args()
     clogger.configure_logging(filename=args.output_log)
