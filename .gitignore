@@ -9,7 +9,6 @@ outputs/
 # If really needed, use `git add --force FILENAME`
 *.pdf
 *.svg
-*.png
 *.jpeg
 *.jpg
 *.zip

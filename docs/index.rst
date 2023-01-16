@@ -3,7 +3,7 @@ CanSig: discovering cancer signatures
 
 Human tumors are highly heterogeneous in their cell composition; specifically, they exhibit heterogeneity in transcriptional states of malignant cells, as has been recently discovered through single-cell RNA sequencing (scRNA-seq). Distinct states of malignant cells have been linked to variability in tumorigenic properties and resistance to anti-cancer treatment. Despite the fact that scRNA-seq data contain all necessary information to uncover shared transcriptional states of malignant cells in tumors, jointly analyzing cells from multiple cancer patients comes with its set of challenges including batch correction and accounting for patient-specific genetic background driving differences between gene expression vectors. We propose CanSig, an easy-to-use approach designed to discover known and de novo shared signatures in cancer single cells. CanSig preprocesses, integrates and analyzes scRNA-seq data to provide new signatures of shared transcriptional states and links these states to known pathways.
 
-.. image:: assets/pipeline.png
+.. image:: img/pipeline.png
   :width: 600
   :alt: The diagram representing CanSig pipeline.
 
@@ -86,7 +86,7 @@ Once the notebook is running, we can load the data:
    sc.tl.umap(data)
    sc.pl.umap(data, color=["sample_id", "celltype", "subclonal"], ncols=1)
 
-.. image:: assets/tutorial-simulated-umap.png
+.. image:: img/tutorial-simulated-umap.png
   :width: 400
   :alt: UMAP visualisation of simulated cells.
 
@@ -108,7 +108,7 @@ Different patients may be missing some of the cell types. Let's visualise how ma
 
    plot_joint("sample_id", "celltype")
 
-.. image:: assets/tutorial-simulated-joint.png
+.. image:: img/tutorial-simulated-joint.png
   :width: 400
   :alt: Joint (empirical) distribution of cell types and patients.
 
@@ -172,13 +172,13 @@ Let's analyse its structure.
 
 For example, the similarity between used to create metasignatures in our case looks in the following manner:
 
-.. image:: assets/tutorial-heatmap-metasignatures.png
+.. image:: img/tutorial-heatmap-metasignatures.png
    :width: 400
    :alt: Similarity heatmap.
 
 so one can hope that there are three different meta-signatures. When the cells are scored according to them the following correlation matrix is obtained:
 
-.. image:: assets/tutorial-clustermap-metasignatures-correlation.png
+.. image:: img/tutorial-clustermap-metasignatures-correlation.png
    :width: 400
    :alt: Meta-signatures scores correlation matrix.
 
@@ -227,7 +227,7 @@ Let's open Jupyter and run the following code:
    plot_joint("sample_id", "metamembership")
 
 
-.. image::  assets/tutorial-joint-metasignature-patient.png
+.. image::  img/tutorial-joint-metasignature-patient.png
    :width: 400
    :alt: Joint (empirical) distribution of meta-signature assignment and patient.
 
@@ -240,7 +240,7 @@ We can also visualise the (empirical) joint distribution of ground truth cell ty
    plot_joint("celltype", "metamembership")
 
 
-.. image:: assets/tutorial-joint-metasignature-celltype.png
+.. image:: img/tutorial-joint-metasignature-celltype.png
    :width: 400
    :alt: Joint (empirical) distribution of meta-signature assignment and ground truth.
 
