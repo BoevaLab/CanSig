@@ -60,43 +60,6 @@ Example usage to disable plotting utilities
                                    --output tutorial-output \
                                    --disable-plots
 
-Saving signatures and scoring cells
------------------------------------
-
-CanSig finds signatures in cancer data: these signatures are defined as the most overexpressed genes in a biologically meaningful part of the subspace (approximated by a cluster).
-By default, running the pipeline will result the results of the differential gene expression analysis to be saved for each cluster, as well as the score for each cell for each of the signatures (defined as the 200 most positively differentially expressed genes in the cluster) and the correlation between the signatures.
-
-The results associated with signatures and scoring can be controlled through the three following command line arguments:
-
-* ``--disable-signatures``: if you do not want any of the results linked to signatures to be saved (ie differential gene expression analysis for each cluster, scores of each signature for each cell and correlation between signatures), then input this flag.
-* ``--ngenessig``: number of genes that define a signature associated with a cluster. The cells will be scored using the n top positively differentially expressed genes in the cluster, with n being the minimal value between the total number of differentially expressed genes and ngenessig inputted. Defaults to 200.
-* ``--corrmethod``: the method used to compute the correlation between the signatures; can be spearman or pearson. Defaults to pearson.
-
-Example usage to compute scores on cells using the 100 top most differentially expressed genes as a signature and using spearman to compute the correlation between signatures.
-
-.. code-block:: bash
-
-   $ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5 
-                                   --batch batch
-                                   --gene-sets MSigDB_Hallmark_2020 \
-                                   --dimensions 4 6 --model-runs 1 \
-                                   --clusters 2 3 5  --cluster-runs 1 \
-                                   --output tutorial-output \
-                                   --ngenessig 100 \
-                                   --corrmethod spearman 
-
-Example usage to disable saving any results linked to signatures 
-
-.. code-block:: bash
-
-   $ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5 
-                                   --batch batch
-                                   --gene-sets MSigDB_Hallmark_2020 \
-                                   --dimensions 4 6 --model-runs 1 \
-                                   --clusters 2 3 5  --cluster-runs 1 \
-                                   --output tutorial-output \
-                                   --disable-signatures                                 
-
 Running differential CNV analysis
 ---------------------------------
 
@@ -104,7 +67,8 @@ You have the option to perform differential CNV analysis. With original CNV call
 This module is deactivated by default. There are two main ways to run this analysis: the first assumes that you are using a data object that has been obtained using our preprocessing module (see :ref:`preprocessing`), the second can be run if provided with a external discretized CNV calling, even if the data object has not been obtained through our preprocessing module.
 
 .. note::
-   the data provided for the tutorial has been processed using our preprocessing module, and can be thus used for differential CNV analysis assuming so.
+   
+   The data provided for the tutorial has been processed using our preprocessing module, and can be thus used for differential CNV analysis assuming so.
 
 Differential CNV analysis for data preprocessed with our module
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
