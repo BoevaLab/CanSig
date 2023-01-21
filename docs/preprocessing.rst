@@ -9,7 +9,8 @@ The second step consists in CNV inference to remove cells annotated as malignant
 present CNVs and cells annotated as non-malignant that present CNVs.
 In the optional, third step, known gene signatures can be scored.
 
-.. todo:: Add graphic.
+..
+  TODO: Add graphic.
 
 Loading the data
 ----------------------
@@ -109,15 +110,15 @@ used for quality control.
     define a column that contains the batch_id. If the data is loaded from disc and the
     batch_id_column is not already in `adata.obs` it will be set to the filename.
 
-Cells with less than `min_counts` counts or more than `max_counts` counts will be
-filtered. Furthermore, cells with fewer than `min_genes` genes expressed or with a higher
-percentage count in mitochondrial genes than `threshold_pct_mt_counts` will also be removed.
-All plots generated during preprocessing will be stored in `figure_dir`. For more detail,
+Cells with less than ``min_counts`` counts or more than ``max_counts`` counts will be
+filtered. Furthermore, cells with fewer than ``min_genes`` genes expressed or with a higher
+percentage count in mitochondrial genes than ``threshold_pct_mt_counts`` will also be removed.
+All plots generated during preprocessing will be stored in ``figure_dir``. For more detail,
 on the method, see here.
 
 Outputs
 --------
-The function `preprocessing` returns a single AnnData object containing all the high
+The function ``preprocessing`` returns a single AnnData object containing all the high
 quality cells from the inputted samples.
 
 .. note:: Since the goal of CanSig is to discover shared signatures, we do an inner join
@@ -125,21 +126,22 @@ quality cells from the inputted samples.
     final AnnData.
 
 
-For each cell the following annotations are added in `adata.obs`:
+For each cell the following annotations are added in ``adata.obs``:
 
-- `n_counts`: The library size of the cell.
-- `log_counts`: `log(n_counts)`.
-- `n_genes`: The number of genes expressed in the cell.
-- `pct_zero_genes`: `n_genes` divided by the number of all genes.
-- `pct_counts_mt`: The counts corresponding to mitochondrial RNA divided by `total_counts`.
-- `malignant_celltype`:
-- `malignant_cnvs`:
-- `malignant_combined`:
+- ``n_counts``: The library size of the cell.
+- ``log_counts``: ``log(1+n_counts)``.
+- ``n_genes``: The number of genes expressed in the cell.
+- ``pct_zero_genes``: ``n_genes`` divided by the number of all genes.
+- ``pct_counts_mt``: The counts corresponding to mitochondrial RNA divided by ``total_counts``.
+- ``malignant_celltype``:
+- ``malignant_cnvs``:
+- ``malignant_combined``:
 
-For more details on the malignant/non-malignant status annotation, see  the Methods section
+For more details on the malignant/non-malignant status annotation, see the Methods section
 of our `paper <https://www.biorxiv.org/content/10.1101/2022.04.14.488324v1>`_.
 
-.. important:: Rare malignant cells might be difficult to annotate. Therefore, we consider
+.. important::
+    Rare malignant cells might be difficult to annotate. Therefore, we consider
     cells, that show CNVs but are annotated as undetermined, as malignant. However, cells
     that are annotated as non-malignant but show CNVs will not be considered as
     malignant cells.
@@ -192,12 +194,7 @@ This plot is saved to chromosome_heatmap.png
 .. todo:: Add image of the chromosome heatmap showing separation of malignant and
     non-malignant cells.
 
-.. todo:: umap for each score + umap for malignant/non-malignant cells in CNV space.
-
-.. note:: For faster pre-processing plotting can be turned off by setting plot to False.
-
-   The preprocessing tutorial.
-
+.. todo:: Add UMAP plots in CNV space with cell scores and malignant/non-malignant cells.
 
 The next plot is generated after inferring CNVs. It shows the chromosome heatmap
 separated into malignant and non-malignant and the malignant cells are further divided
@@ -207,12 +204,8 @@ This plot is saved to chromosome_heatmap.png
 .. todo:: Add image of the chromosome heatmap showing separation of malignant and
     non-malignant cells.
 
-.. todo:: umap for each score + umap for malignant/non-malignant cells in CNV space.
+.. todo:: UMAP for each score + UMAP for malignant/non-malignant cells in CNV space.
 
-
-.. note:: For faster pre-processing plotting can be turned off by setting plot to False.
-
-.. todo:: Are there other useful plots that we want to add here???
 
 References
 ----------
