@@ -423,45 +423,13 @@ You can add plotting according to pre-scored signatures (i.e. present in the ada
 </pre></div>
 </div>
 </section>
-<section id="saving-signatures-and-scoring-cells">
-<h2>Saving signatures and scoring cells<a class="headerlink" href="#saving-signatures-and-scoring-cells" title="Permalink to this heading">#</a></h2>
-<p>CanSig finds signatures in cancer data: these signatures are defined as the most overexpressed genes in a biologically meaningful part of the subspace (approximated by a cluster).
-By default, running the pipeline will result the results of the differential gene expression analysis to be saved for each cluster, as well as the score for each cell for each of the signatures (defined as the 200 most positively differentially expressed genes in the cluster) and the correlation between the signatures.</p>
-<p>The results associated with signatures and scoring can be controlled through the three following command line arguments:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--disable-signatures</span></code>: if you do not want any of the results linked to signatures to be saved (ie differential gene expression analysis for each cluster, scores of each signature for each cell and correlation between signatures), then input this flag.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--ngenessig</span></code>: number of genes that define a signature associated with a cluster. The cells will be scored using the n top positively differentially expressed genes in the cluster, with n being the minimal value between the total number of differentially expressed genes and ngenessig inputted. Defaults to 200.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--corrmethod</span></code>: the method used to compute the correlation between the signatures; can be spearman or pearson. Defaults to pearson.</p></li>
-</ul>
-<p>Example usage to compute scores on cells using the 100 top most differentially expressed genes as a signature and using spearman to compute the correlation between signatures.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
-<span class="w">                                </span>--batch<span class="w"> </span>batch
-<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--output<span class="w"> </span>tutorial-output<span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--ngenessig<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--corrmethod<span class="w"> </span>spearman
-</pre></div>
-</div>
-<p>Example usage to disable saving any results linked to signatures</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
-<span class="w">                                </span>--batch<span class="w"> </span>batch
-<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--output<span class="w"> </span>tutorial-output<span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--disable-signatures
-</pre></div>
-</div>
-</section>
 <section id="running-differential-cnv-analysis">
 <h2>Running differential CNV analysis<a class="headerlink" href="#running-differential-cnv-analysis" title="Permalink to this heading">#</a></h2>
 <p>You have the option to perform differential CNV analysis. With original CNV calls, this will output differential CNV regions between each cluster and the rest, and information about the percentage of gains/losses in the cluster and in the rest, and the number of patients showing a gain/loss in the region.
 This module is deactivated by default. There are two main ways to run this analysis: the first assumes that you are using a data object that has been obtained using our preprocessing module (see <a class="reference internal" href="preprocessing.html#preprocessing"><span class="std std-ref">Preprocessing</span></a>), the second can be run if provided with a external discretized CNV calling, even if the data object has not been obtained through our preprocessing module.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>the data provided for the tutorial has been processed using our preprocessing module, and can be thus used for differential CNV analysis assuming so.</p>
+<p>The data provided for the tutorial has been processed using our preprocessing module, and can be thus used for differential CNV analysis assuming so.</p>
 </div>
 <section id="differential-cnv-analysis-for-data-preprocessed-with-our-module">
 <h3>Differential CNV analysis for data preprocessed with our module<a class="headerlink" href="#differential-cnv-analysis-for-data-preprocessed-with-our-module" title="Permalink to this heading">#</a></h3>
@@ -541,77 +509,6 @@ This means that the data object you provide will contain the following:</p>
 <p>If trying to run this function as such on a data object that has not been processed with our preprocessing module, this will result in an ValueError</p>
 </div>
 </section>
-<section id="differential-cnv-analysis-for-data-not-processed-with-our-module">
-<h3>Differential CNV analysis for data not processed with our module<a class="headerlink" href="#differential-cnv-analysis-for-data-not-processed-with-our-module" title="Permalink to this heading">#</a></h3>
-<p>This calling assumes the data was not processed using our module. In this case, you must provide a path to a .csv file that contains pre-called CNV.
-This array must have the following structure:
-- first column should contain the cell IDs. The cell IDs must correspond to the cell IDs in the data object provided.
-- first row should contain the region IDs. This can correspond to any region you wish - if you have your own mapping, this could also be simply integers corresponding to specific regions.
-- values in the cells must be (positive or negative) integers. We thus assume your data has been discretized - running on a CNV array with non integer values will result in spurious results.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>We in the tutorial data, we provide the file <code class="docutils literal notranslate"><span class="pre">cnv_array.csv</span></code> as an example valid CNV array.</p>
-</div>
-<p>The analysis can be controlled through four arguments in the command line:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv</span></code>: this flag needs to be added for the differential CNV analysis to be performed. If not indicated, the differential CNV analysis is skipped.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv-method</span></code>: (optional) the method used to perform the differential CNV analysis. Can be Mann-Whitney U (mwu, default) or a t-test (ttest).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv-correction</span></code>: if you want to obtain False Discovery Rate (FDR) corrected results, add this flag. It is recommended to use these results rather than uncorrected p-values, as these can result in numerous false discoveries when blindly testing for differential expression (for more information, read <a class="reference external" href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1716-1">https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1716-1</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--cnvarray</span></code>: the path to the CNV array as previously described</p></li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Forgetting to add the <code class="docutils literal notranslate"><span class="pre">--cnvarray</span></code> flag will result in the differential CNV analysis being run on the data object provided, and thus will likely throw an error if this data has not been obtained using our preprocessing module.</p>
-</div>
-<p>Example usage to compute the differential CNV analysis with default values (Mann Whitney U test, no FDR correction)</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
-<span class="w">                                </span>--batch<span class="w"> </span>batch
-<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--output<span class="w"> </span>tutorial-output<span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--diffcnv<span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--cnvarray<span class="w"> </span>data/pipeline-tutorial/cnv_array.csv
-</pre></div>
-</div>
-<p>This will result in the following file being added to the <code class="docutils literal notranslate"><span class="pre">tutorial-output/</span></code> directory, in addition to all the files/directories described on the homepage.</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">postprocessing/</span></code>:</dt><dd><ul>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">{rundir}/differential-cnvs.csv</span></code>: file containing the columns for each cluster cl</dt><dd><ul>
-<li><p>{cl}_pvalues: contains the p values of the test cl vs rest</p></li>
-<li><p>{cl}_perc_{gains/losses}: contains the percentage of cells in the cluster showing a gain/loss at this region</p></li>
-<li><p>{cl}_rest_{gains/losses}: contains the percentage of cells in all but the cluster showing a gain/loss at this region</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p>Example usage to compute the differential CNV analysis with a t-test and with FDR corrected values (ie q-values)</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/pipeline-tutorial/data.hdf5
-<span class="w">                                </span>--batch<span class="w"> </span>batch
-<span class="w">                                </span>--gene-sets<span class="w"> </span>MSigDB_Hallmark_2020<span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>--model-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w">  </span>--cluster-runs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--output<span class="w"> </span>tutorial-output<span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--diffcnv<span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--diffcnv-method<span class="w"> </span>ttest<span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--diffcnv-correction<span class="w"> </span><span class="se">\</span>
-<span class="w">                                </span>--cnvarray<span class="w"> </span>data/pipeline-tutorial/cnv_array.csv
-</pre></div>
-</div>
-<p>This will result in the same file as in the previous example with the addition of the columns</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>“{cl}_qvalues”: contains the q values of the test cl vs rest</p></li>
-</ul>
-</div></blockquote>
-</section>
 </section>
 <section id="using-custom-models">
 <h2>Using custom models<a class="headerlink" href="#using-custom-models" title="Permalink to this heading">#</a></h2>
@@ -619,21 +516,22 @@ This array must have the following structure:
 For every model you consider, create a directory:</p>
 <p><code class="docutils literal notranslate"><span class="pre">my-models/</span></code>: directory with the results. In the pipeline case its called <code class="docutils literal notranslate"><span class="pre">latent/</span></code>:</p>
 <ul class="simple">
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">model1-name/</span></code>: model name, it can be arbitrary</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">model1-name/</span></code>: model name, it can be arbitrary</p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">params.json</span></code>: model parameters, will be used to create a summary</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">latent_representations.csv</span></code>: for each cell name (index column), the coordinates of the latent codes</p></li>
 </ul>
-</dd>
-</dl>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">model2-name/</span></code>: another directory, structured in the same manner</p></li>
 <li><p>…</p></li>
 </ul>
-<p>To help creating such directories, we created a template for the script wrapping your model at TODO</p>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Put a template for the wrapping script at GitHub (in a new <code class="docutils literal notranslate"><span class="pre">templates/</span></code> directory).</p>
+<p>To help creating such directories, we created auxiliary functions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cansig.filesystem</span> <span class="k">as</span> <span class="nn">fs</span>
+
+<span class="n">output_dir</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">IntegrationDir</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">create</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fs</span><span class="o">.</span><span class="n">save_settings</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">output_dir</span><span class="o">.</span><span class="n">integration_settings</span><span class="p">)</span>
+<span class="n">fs</span><span class="o">.</span><span class="n">save_latent_representations</span><span class="p">(</span><span class="n">representations</span><span class="o">=</span><span class="n">representations</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">output_dir</span><span class="o">.</span><span class="n">latent_representations</span><span class="p">)</span>
+</pre></div>
 </div>
 <p>When the directory with different latent codes is ready, run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.postprocessing<span class="w"> </span>my-models<span class="w"> </span><span class="se">\</span>
@@ -652,12 +550,13 @@ If you do not wish the <code class="docutils literal notranslate"><span class="p
 </section>
 <section id="understanding-all-the-pipeline-command-line-options">
 <h2>Understanding all the pipeline command line options<a class="headerlink" href="#understanding-all-the-pipeline-command-line-options" title="Permalink to this heading">#</a></h2>
-<p>The crux of CanSig is running the entire tool through the command:</p>
+<p>The core of the CanSig tool is the command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m cansig.run.pipeline
 </pre></div>
 </div>
+<p>which runs the entire analysis pipeline.</p>
 <p>This command comes with numerous flags to enable you to control the inputs/outputs of CanSig.
-We will describe each flag in detail here</p>
+In this section we describe all available flags.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You can get also get information on these flags by running</p>
@@ -666,27 +565,36 @@ We will describe each flag in detail here</p>
 </div>
 </div>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--batch</span></code>: the name of the column in which the batch information is stored. This will typically be the name of the column where the sample ID is stored, as generally each sample is processed separately.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--continuous-covariates</span></code>: continusous covariates for which one wishes to correct in the integration model. This could be the cell cycle score or the percentage of mitochondrial counts for example.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--discrete-covariates</span></code>: discrete covariates for which one wishes to correct in the integration model. This could be the subclonal structure for example.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--gene-sets</span></code>: gene set to use for GSEA. The input should be a string (valid for Enrichr) or a .gmt file. More information on these sets can found on the MSigDB website.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--batch</span></code>: the name of the column in which the batch information is stored.
+This will typically be the name of the column where the sample ID is stored, as generally each sample is processed separately.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--continuous-covariates</span></code>: continuous covariates for which one wishes to condition on in the integration model. This could be the cell cycle score or the percentage of mitochondrial counts, for example.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--discrete-covariates</span></code>: similar for <code class="docutils literal notranslate"><span class="pre">--continuos-covariates</span></code>, but should be used for columns with discrete/categorical variables. This could be the subclonal structure for example.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--gene-sets</span></code>: gene set to use for GSEA. The input should be a string (valid for Enrichr) or a <code class="docutils literal notranslate"><span class="pre">.gmt</span></code> file. More information on these sets can found on the MSigDB website.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--n-top-genes</span> <span class="pre">N_TOP_GENES</span></code>: number of the most highly variable genes to use.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--model-runs</span></code>: number of random seeds used for initialization of each integration model. If you are running a integration model with 4 latent dimensions and 3 model runs, this will result in 3 different latent representations for the same number of dimensions.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--cluster-runs</span></code>: number of random seeds used for initizalization of each postprocessing run. If you are running postprocessing with 6 clusters and 2 cluster runs, this will result in 2 different clustering partitions for the same number of clusters.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--max-epochs</span></code>: maximum number of epochs the integration model will run for</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--max-epochs</span></code>: maximum number of epochs the integration model will be trained for.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--dimensions</span></code>: list of number of latent dimensions used for integration</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--clusters</span></code>: list of number of clusters used for postprocessing</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--output</span></code>: name of the folder in which the output will be stored (the folder will be created if not already present)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--dim-reduction</span></code>: the name of the dimensionality reduction method used to plot the latent space - can be PCA, UMAP or both (using insets)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--sigcols</span></code>: the name of the columns in the .obs according to which to color the plots</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--output</span></code>: name of the folder in which the output will be stored (the folder will be created).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--dim-reduction</span></code>: the name of the dimensionality reduction method used to plot the latent space (can be PCA, UMAP or both).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--sigcols</span></code>: the name of the columns in the <code class="docutils literal notranslate"><span class="pre">.obs</span></code> according to which to color the plots</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--disable-plots</span></code>: if set, no plots will be created to visualize the latent space (the run will be quicker when this option is on)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--dgex-method</span></code>: method used to perform the differential gene expression analysis.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--ngenessig</span></code>: number of genes to use to define a signature to score</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--corrmethod</span></code>: correlation method used to correlate de novo found signatures</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--disable-signatures</span></code>: if set, no information linked to de novo signatures found will be saved (the run will require less memory when this option is on).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv</span></code>: if set, the differential CNV analysis will be run. For more information, see the part about running the differential CNV analysis on this page.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv-method</span></code>: the method used to perform the differential CNV (can be ttest or mwu)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv-method</span></code>: the method used to perform the differential CNV.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--subclonalcnv</span></code>: if set, the differential CNV analysis will be run using the subclonal inferred CNV representation for each cell, rather than the per cell CNV call.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--diffcnv-correction</span></code>: if set, the False Discovery Rate corrected q-value will be computed for the differential CNV analysis.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--cnvarray</span></code>: if running the differential CNV analysis on an external array (for those who did not preprocess their data using our preprocessing module), the path to the CNV array used for differential CNV.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--cnvarray</span></code>: if running the differential CNV analysis on an external array (for those who did not preprocess their data using our preprocessing module), the path to the CNV array used for differential CNV. Using this flag will automatically <em>disable</em> running the differential CNV on the AnnData object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--save-intermediate</span></code>: whether the intermediate results should be saved. By default, the results are saved. Turning this off is discouraged, unless the system memory is very limited.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--linkage</span></code>: the linkage used for the agglomerative clustering for metasignatures.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--sim-method</span></code>: similarity metric to be used to compare signatures.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--threshold</span></code>: the threshold above which a metasignature is considered too correlated with another.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--pat-specific-threshold</span></code>: the threshold above which a metasignature is considered patient-specific.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--model</span></code>, <code class="docutils literal notranslate"><span class="pre">--n-latent-batch-effect</span></code> and <code class="docutils literal notranslate"><span class="pre">--n-latent-cnv</span></code>: settings for the new experimental integration method. Currently we suggest to use the default integration method in the CanSig pipeline.</p></li>
 </ul>
 </section>
 </section>
@@ -735,11 +643,6 @@ We will describe each flag in detail here</p>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#saving-signatures-and-scoring-cells">
-   Saving signatures and scoring cells
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#running-differential-cnv-analysis">
    Running differential CNV analysis
   </a>
@@ -747,11 +650,6 @@ We will describe each flag in detail here</p>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#differential-cnv-analysis-for-data-preprocessed-with-our-module">
      Differential CNV analysis for data preprocessed with our module
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#differential-cnv-analysis-for-data-not-processed-with-our-module">
-     Differential CNV analysis for data not processed with our module
     </a>
    </li>
   </ul>
