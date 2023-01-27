@@ -77,13 +77,14 @@ class WeightProgram:
 
 
 def _jaccard(list1, list2):
+    """Returns the jaccard similarity between two lists"""
     intersection = len(list(set(list1).intersection(list2)))
     union = (len(list1) + len(list2)) - intersection
     return float(intersection) / union
 
 
 def get_similarity_matrix_WRC(signatures: Union[List[List[str]], np.ndarray]) -> np.ndarray:
-    """Returns the similarity matrix between signatures"""
+    """Returns the similarity matrix between signatures using WRC"""
     weighted_spearman = WRC(length=len(signatures[0]), weigher=WeightProgram(length=len(signatures[0]), p=6).wprogram)
     results = np.zeros((len(signatures), len(signatures)))
     for i, sig_1 in tqdm(enumerate(signatures)):
@@ -96,6 +97,7 @@ def get_similarity_matrix_WRC(signatures: Union[List[List[str]], np.ndarray]) ->
 
 
 def get_similarity_matrix_jaccard(signatures: np.ndarray) -> np.ndarray:
+    """Returns the similarity matrix between signatures using Jaccard score"""
     n_sigs = signatures.shape[0]
     pairwise = np.identity(n_sigs)
     for i in tqdm(range(len(signatures))):
@@ -107,7 +109,7 @@ def get_similarity_matrix_jaccard(signatures: np.ndarray) -> np.ndarray:
 
 
 def get_similarity_matrix_scoring(signatures: np.ndarray, adata: ad.AnnData, corrmethod: str = "pearson") -> np.ndarray:
-
+    """Returns the similarity matrix between signatures using the scores in the cells"""
     assert corrmethod in ["pearson", "kendall", "spearman"], "corrmethod must be pearson, kendall or spearman"
     for i, sig in tqdm(enumerate(signatures)):
         signame = f"sig{i+1}"
