@@ -650,7 +650,34 @@ from the GSEA dataframe</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.metasignatures.get_final_metasignatures">
 <span class="sig-prename descclassname"><span class="pre">cansig.run.metasignatures.</span></span><span class="sig-name descname"><span class="pre">get_final_metasignatures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signatures</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_memb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir" title="cansig.filesys.MetasigDir"><span class="pre">MetasigDir</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">linkage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_n_rep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pat_specific_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.run.metasignatures.get_final_metasignatures" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Computes and saves the metasignatures and their characteristics</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim</strong> – array of size (n_signatures, n_signatures) with the pairwise similarity between signatures</p></li>
+<li><p><strong>adata</strong> – original adata on which the analysis is performed; used to compute correlations between meta-signatures</p></li>
+<li><p><strong>signatures</strong> – list of all the signatures (genes are ordered according to diff expression)</p></li>
+<li><p><strong>runs</strong> – the run indices for all signatures</p></li>
+<li><p><strong>sig_index</strong> – a list with [iteration, n_clusters] for each signature</p></li>
+<li><p><strong>cluster_memb</strong> – a list with the cluster membership for all cells for all iterations</p></li>
+<li><p><strong>threshold</strong> – the threshold above which two meta-signatures are considered to be too correlated.
+the higher this threshold, the more meta-signatures will be found. The lower, the more
+conservative the meta-signature discovery.</p></li>
+<li><p><strong>batch_key</strong> – the name of the column where the batch information is stored in the adata</p></li>
+<li><p><strong>resdir</strong> – MetaSig dir to where the results should be saved</p></li>
+<li><p><strong>linkage</strong> – a str defining what linkage to use for the agglomerative clustering</p></li>
+<li><p><strong>threshold_n_rep</strong> – the fraction of total signatures under which a found meta-signature
+is considered as an outlier</p></li>
+<li><p><strong>pat_specific_threshold</strong> – the fraction of cells assigned to a meta-signature over which
+a meta-signature is considered to be patient-specific</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>metasignatures.utils.get_runs_sig</p>
+</div>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.metasignatures.main">
@@ -665,22 +692,127 @@ from the GSEA dataframe</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.metasignatures.plot_latent_score">
 <span class="sig-prename descclassname"><span class="pre">cansig.run.metasignatures.</span></span><span class="sig-name descname"><span class="pre">plot_latent_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir" title="cansig.filesys.MetasigDir"><span class="pre">MetasigDir</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_signatures</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integ_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_metamembership</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prob_cellmetamembership</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.run.metasignatures.plot_latent_score" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><dl class="simple">
+<dt>Plots the cells in score space and in a latent space of choice, colored according to the metamembership and</dt><dd><p>the probability of the metamembership</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – original adata on which the analysis is performed</p></li>
+<li><p><strong>resdir</strong> – path to where the results should be saved</p></li>
+<li><p><strong>meta_signatures</strong> – a dictionary with the meta-signature index as key and the genes ordered in
+the meta-signature by mean rank over all signatures in the meta-signature</p></li>
+<li><p><strong>integ_dir</strong> – path to the directory where the integration results are saved</p></li>
+<li><p><strong>cell_metamembership</strong> – pd.Df containing the hard meta-membership assignment of cells</p></li>
+<li><p><strong>prob_cellmetamembership</strong> – pd.Df containing the probability of belonging to each meta-signature for
+each cell</p></li>
+<li><p><strong>batch_column</strong> – name of the column where the batch information is stored in the original adata</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>metasignatures.clustering.get_cell_metamembership</p>
+</div>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.metasignatures.plot_metasignatures">
-<span class="sig-prename descclassname"><span class="pre">cansig.run.metasignatures.</span></span><span class="sig-name descname"><span class="pre">plot_metasignatures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta_results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir" title="cansig.filesys.MetasigDir"><span class="pre">MetasigDir</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_signatures</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.run.metasignatures.plot_metasignatures" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">cansig.run.metasignatures.</span></span><span class="sig-name descname"><span class="pre">plot_metasignatures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta_results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.filesys.MetasigDir" title="cansig.filesys.MetasigDir"><span class="pre">MetasigDir</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.run.metasignatures.plot_metasignatures" title="Permalink to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>Plots the metasignatures as a heatmap, the correlation between metasignatures as a clustermap, and</dt><dd><p>the signatures in MDS/UMAP space</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>meta_results</strong> – correlation between the obtained meta-signatures</p></li>
+<li><p><strong>sim</strong> – array of size (n_signatures, n_signatures) with the pairwise similarity between signatures</p></li>
+<li><p><strong>idx</strong> – the indices of the signatures sorted by cluster assignment</p></li>
+<li><p><strong>clusters</strong> – cluster assignment for each signature</p></li>
+<li><p><strong>resdir</strong> – MetaSig dir to where the results should be saved</p></li>
+<li><p><strong>resdict</strong> – dictionary containing all the information about the signatures as obtained with get_runs_sig</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>metasignatures.utils.get_runs_sig</p>
+</div>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.metasignatures.run_metasignatures">
 <span class="sig-prename descclassname"><span class="pre">cansig.run.metasignatures.</span></span><span class="sig-name descname"><span class="pre">run_metasignatures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rundir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integ_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gsea_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionConfig" title="cansig.gsea.GeneExpressionConfig"><span class="pre">GeneExpressionConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subclonalcnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'mwu'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ttest'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffcnv_correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnvarray_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'jaccard'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_n_rep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pat_specific_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.75</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linkage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'average'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.run.metasignatures.run_metasignatures" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><dl class="simple">
+<dt>Main function of the metasignature module. Will find the metasignatures by:</dt><dd><ul class="simple">
+<li><p>selecting signatures to cluster</p></li>
+<li><p>computing the similarity between signatures</p></li>
+<li><dl class="simple">
+<dt>obtaining the meta-signatures through iterative clustering with a specified max threshold</dt><dd><p>between two meta-signatures</p>
+</dd>
+</dl>
+</li>
+<li><p>computing the cell meta-memberships</p></li>
+<li><p>(optional) plotting the signatures with heatmap, clustermap, MDS/UMAP and UMAP in score space</p></li>
+<li><p>performing GSEA on the meta-signatures</p></li>
+<li><p>(optional) performing differential CNV analysis on the meta-signatures</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rundir</strong> – path to where the postprocessing runs are stored</p></li>
+<li><p><strong>resdir</strong> – path to where the metasignature results should be stored</p></li>
+<li><p><strong>integ_dir</strong> – path to where the integration runs are stored</p></li>
+<li><p><strong>batch</strong> – name of the column where the batch information is stored in the adata</p></li>
+<li><p><strong>gsea_config</strong> – a GeneExpressionConfig instance with info for running GSEA</p></li>
+<li><p><strong>diffcnv</strong> – if True, the differential CNV analysis is performed</p></li>
+<li><p><strong>subclonvalcnv</strong> – if True, use the subcloncal CNV profile rather than the per-cell profile
+to perform diff CNV analysis</p></li>
+<li><p><strong>diffcnv_method</strong> – the statistical test to use for differential CNV analysis</p></li>
+<li><p><strong>diffcnv_correction</strong> – if True, compute FDR corrected values for the diff CNV analysis</p></li>
+<li><p><strong>data_path</strong> – path to where the .h5ad data on which the analysis is performed is stored</p></li>
+<li><p><strong>cnvarray_path</strong> – optional, if the analysis isn’t run using our preprocessing module,
+the user can provide a CNV array to perform differential CNV analysis</p></li>
+<li><p><strong>sim_method</strong> – the method to compute similarity (can be jaccard or WRC)</p></li>
+<li><p><strong>threshold</strong> – the threshold above which two meta-signatures are considered to be too correlated.
+the higher this threshold, the more meta-signatures will be found. The lower, the more
+conservative the meta-signature discovery.</p></li>
+<li><p><strong>plots</strong> – if True, computes and saves all the auxiliary plotting functions to visualize
+the meta-signatures</p></li>
+<li><p><strong>sim</strong> – if provided, the similarity computation is skipped and the provided similarity
+array is used instead. Must be of size (n_signatures, n_signatures)</p></li>
+<li><p><strong>threshold_n_rep</strong> – the fraction of total signatures under which a found meta-signature
+is considered as an outlier</p></li>
+<li><p><strong>pat_specific_threshold</strong> – the fraction of cells assigned to a meta-signature over which
+a meta-signature is considered to be patient-specific</p></li>
+<li><p><strong>linkage</strong> – a str defining the linkage used in the agglomerative clustering</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>gsea.GeneExpressionConfig, metasignatures.WRC.WRC, get_final_metasignatures</p>
+</div>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.metasignatures.select_signatures">
 <span class="sig-prename descclassname"><span class="pre">cansig.run.metasignatures.</span></span><span class="sig-name descname"><span class="pre">select_signatures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resdict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.run.metasignatures.select_signatures" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>A helper function that returns the full information on signatures with signatures that are too weak removed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>resdict</strong> – dictionary containing all the information about the signatures as obtained with get_runs_sig</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>metasignature.utils.get_runs_sig</p>
+</div>
+</dd></dl>
 
 </section>
 <section id="module-cansig.run.pipeline">
