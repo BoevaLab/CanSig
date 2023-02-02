@@ -3,7 +3,7 @@ from typing import Optional, Literal  # pytype: disable=not-supported-yet
 
 import pytorch_lightning as pl  # pytype: disable=import-error
 import torch  # pytype: disable=import-error
-from scvi.module.base import LossRecorder  # pytype: disable=import-error
+from scvi.module.base import LossOutput  # pytype: disable=import-error
 from scvi.train._metrics import ElboMetric  # pytype: disable=import-error
 from torch.optim.lr_scheduler import ReduceLROnPlateau  # pytype: disable=import-error
 
@@ -236,22 +236,21 @@ class CanSigTrainingPlan(pl.LightningModule):
             raise NotImplementedError(f"{self.annealing} is not implemented.")
 
     @torch.no_grad()
-    def compute_and_log_metrics(self, loss_recorder: LossRecorder, elbo_metric: ElboMetric):
+    def compute_and_log_metrics(self, loss_output: LossOutput, elbo_metric: ElboMetric):
         """
         Computes and logs metrics.
 
         Parameters
         ----------
-        loss_recorder
-            LossRecorder object from scvi-tools module
+        loss_output
+            LossOutput object from scvi-tools module
         metric_attr_name
             The name of the torch metric object to use
         """
-        rec_loss = loss_recorder.reconstruction_loss
-        n_obs_minibatch = rec_loss.shape[0]
-        rec_loss = rec_loss.sum()
-        kl_local = loss_recorder.kl_local.sum()
-        kl_global = loss_recorder.kl_global
+        rec_loss = loss_output.reconstruction_loss_sum
+        n_obs_minibatch = rec_loss.n_obs_minibatch
+        kl_local = loss_output.kl_local_sum
+        kl_global = loss_output.kl_global_sum
 
         # use the torchmetric object for the ELBO
         elbo_metric(
@@ -308,14 +307,14 @@ class CanSigTrainingPlan(pl.LightningModule):
         )
 
         # accumulate extra metrics passed to loss recorder
-        for extra_metric in loss_recorder.extra_metric_attrs:
-            met = getattr(loss_recorder, extra_metric)
+        for key in loss_output.extra_metrics_keys:
+            met = loss_output.extra_metrics[key]
             if isinstance(met, torch.Tensor):
                 if met.shape != torch.Size([]):
                     raise ValueError("Extra tracked metrics should be 0-d tensors.")
                 met = met.detach()
             self.log(
-                f"{extra_metric}_{mode}",
+                f"{key}_{mode}",
                 met,
                 on_step=False,
                 on_epoch=True,
