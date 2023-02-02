@@ -88,7 +88,6 @@ class CanSigTrainingPlan(pl.LightningModule):
         lr_min: Optional[float] = None,
         **loss_kwargs,
     ):
-
         super().__init__()
         self.annealing = annealing
         self.beta = beta
@@ -217,7 +216,6 @@ class CanSigTrainingPlan(pl.LightningModule):
     @property
     def kl_weight(self):
         """Scaling factor on KL divergence during training."""
-
         if self.annealing == "linear":
             return _linear_annealing(
                 self.current_epoch,
@@ -249,7 +247,6 @@ class CanSigTrainingPlan(pl.LightningModule):
         metric_attr_name
             The name of the torch metric object to use
         """
-
         rec_loss = loss_recorder.reconstruction_loss
         n_obs_minibatch = rec_loss.shape[0]
         rec_loss = rec_loss.sum()
@@ -310,7 +307,7 @@ class CanSigTrainingPlan(pl.LightningModule):
             batch_size=n_obs_minibatch,
         )
 
-        # accumlate extra metrics passed to loss recorder
+        # accumulate extra metrics passed to loss recorder
         for extra_metric in loss_recorder.extra_metric_attrs:
             met = getattr(loss_recorder, extra_metric)
             if isinstance(met, torch.Tensor):

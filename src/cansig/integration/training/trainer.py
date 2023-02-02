@@ -136,7 +136,6 @@ class UnsupervisedTrainingCanSig:
         plan_kwargs,
         **trainer_kwargs,
     ):
-
         plan_kwargs = plan_kwargs if isinstance(plan_kwargs, dict) else dict()
         if "n_steps_kl_warmup" not in plan_kwargs and "n_epochs_kl_warmup" not in plan_kwargs:
             if max_epochs < 400:

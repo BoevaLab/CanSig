@@ -57,7 +57,7 @@ class GeneExpressionAnalysis:
         gene_sets: _GENESETS = "MSigDB_Hallmark_2020",
         permutation_num: int = 500,
     ) -> None:
-
+        """For the description of the arguments see the class documentation."""
         self.cluster_name = cluster_name
         self.group_names = group_names
         self.method = method
@@ -88,7 +88,6 @@ class GeneExpressionAnalysis:
                 ordered according to their z scores, and the p values and
                 FDR corrected p values
         """
-
         if self.n_diff_genes is None:
             self.n_diff_genes = adata.shape[1]
 
@@ -128,40 +127,39 @@ class GeneExpressionAnalysis:
         differentially expressed genes.
 
         Args:
-            adata: AnnData object containing the clustering labels and
-            gene counts in X
             diff_genes: dictionary with cluster label as key and a
-            pd.DataFrame containing the
-            genes ranked by average ranking in the metasignature
+              pd.DataFrame containing the
+              genes ranked by average ranking in the metasignature
 
         Returns:
-            gsea_df: pd.DataFrame containing the result of GSEA
-                on all clusters
+            gsea_df: pd.DataFrame containing the result of GSEA on all clusters
 
         Note:
-            the columns of gsea_df are the classical GSEA
-            columns ie
+            The columns of gsea_df are the classical GSEA columns:
+
                 - 'es' (enrichment score),
                 - 'nes' (normalized_layer enrichemnt score)
                 - 'pval' (p value)
                 - 'fdr' (FDR Benjamini Hochberg corrected p value)
                 - 'geneset_size' (size of the geneset of the term)
                 - 'matched_size' (size of the genes of the geneset
-                found in those studied)
+                   found in those studied)
                 - 'genes' (list of genes matched)
                 - 'ledge_genes' (leading edge genes - see GSEA doc)
-            Additionally we add the column
+
+            In addition, we add the columns:
+
                 - 'genes_for_scoring' (list of the genes that are
                     positively ranked in our
                     dataset and matched to the term that we will
                     use for scoring)
                 - 'cluster' (the cluster for which these results were found)
 
-        Note: if using default settings for gene_sets, you need to have internet connection!
+        Note:
+            if you use default settings for gene_sets, you need to have internet connection.
         """
         gsea_dfs = []
         for label, gene_rank in diff_genes.items():
-
             print(f"GSEA for cluster {label}")
             gs_res = gp.prerank(
                 rnk=gene_rank,

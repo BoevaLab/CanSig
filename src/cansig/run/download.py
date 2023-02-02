@@ -57,7 +57,7 @@ def download_hdf5(destination: Optional[str]) -> str:
 
         tutorial.download_file_to_path(
             source_url="https://cloud.inf.ethz.ch/s/Lq84JL7T6teWF8a/download/simulated.zip",
-            md5sum="dde87bb10a14f3a94206ee77d75f8bdb",
+            md5sum="706b19914ae7b9affdf15dd4be5b8c6c",
             path=zip_path,
             verbose=True,
         )

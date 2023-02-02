@@ -45,7 +45,6 @@ def discretize_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv") -> pd.DataFram
 
 
 def get_subclonal_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv", subclonal_key: str = "subclonal") -> pd.DataFrame:
-
     """Homogeneizes the CNV on a subclonal level rather than on a cell level. The CNV call for a cell will
     be computed through a majority voting of the subclone it belongs to.
 
@@ -57,7 +56,6 @@ def get_subclonal_cnv(data: anndata.AnnData, cnv_key: str = "X_cnv", subclonal_k
     Returns:
         cnv array discretized and homogeneized to a subclone level
     """
-
     # first discretize the CNVs
     cnv_array = discretize_cnv(data=data, cnv_key=cnv_key)
 
@@ -124,7 +122,6 @@ def get_cnv_results_pc(
     batch_key: str = "batch",
     clusters_to_exclude: List[str] = ["-2.0", "outlier"],
 ) -> DefaultDict[str, List]:
-
     all_results = defaultdict(list)
     for cluster in sorted(cl_labels[cluster_key].astype(str).unique()):
         if cluster in clusters_to_exclude:
@@ -347,7 +344,6 @@ def find_differential_cnv(
     subclonal: bool = True,
     batch_key: str = "batch",
 ) -> pd.DataFrame:
-
     """Main function of the differential CNV module. This function is adapted to an anndata object
     as preprocessed by our preprocessing module. If computing differential CNVs on a user-provided
     object, the function `find_differential_cnv_precomputed` is used
@@ -456,7 +452,6 @@ def find_differential_cnv_precomputed(
         `find_differential_cnv_precomputed`, the equivalent function if the anndata object provided
         was not preprocessed using our preprocessing module
     """
-
     diffCNVs = get_diff_cnv(
         cnv_array=cnv_array,
         cl_labels=cl_labels,

@@ -167,7 +167,6 @@ def get_objective_function_elements(
     all_values, all_stability = defaultdict(list), defaultdict(list)
     all_complexity = {}
     for ver in vertical:
-
         all_complexity[ver] = get_complexity(ver=ver, horizontal=horizontal, n_runs=n_runs)
 
         for panel in panels:
