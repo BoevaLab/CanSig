@@ -434,35 +434,35 @@
 </div>
 <p>Alternatively, in the <a class="reference external" href="https://github.com/boevalab/cansig">repository</a> we provide an <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> file <a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file">which can be used to create a new conda environment</a>.</p>
 </section>
-<section id="example-dataset">
-<h3>Example dataset<a class="headerlink" href="#example-dataset" title="Permalink to this heading">#</a></h3>
-<p>We will download the example data set using an auxiliary script:</p>
+<section id="example-datasets">
+<h3>Example datasets<a class="headerlink" href="#example-datasets" title="Permalink to this heading">#</a></h3>
+<p>We will analyze two small simulated data sets accompanying our publication <code class="docutils literal notranslate"><span class="pre">SmallDSet1</span></code> and <code class="docutils literal notranslate"><span class="pre">SmallDSet2</span></code>. Let’s download them using an auxiliary script:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.download
 </pre></div>
 </div>
 <p>You should see a new directory <code class="docutils literal notranslate"><span class="pre">data</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ls<span class="w"> </span>data/tutorial/simulated
-malignant.h5ad<span class="w">  </span>msigdb74.gmt<span class="w">  </span>README.md
+malignant1.h5ad<span class="w">  </span>malignant2.h5ad<span class="w">  </span>msigdb74.gmt<span class="w">  </span>README.md
 </pre></div>
 </div>
-<p>This directory contains a H5AD file with <em>simulated</em> malignant cells and a GMT file with gene signatures. More information about these are in the README file.</p>
+<p>This directory contains H5AD files with <em>simulated</em> malignant cells and a GMT file with gene signatures. More information about them is in the README file.</p>
 <p>For convenience we will <a class="reference external" href="https://linuxhint.com/variables_bash/">define variables</a> storing the locations:</p>
-<p>Let’s take a look at this data set. Note that T. Chari and L. Pachter in <a class="reference external" href="https://doi.org/10.1101/2021.08.25.457696">The Specious Art of Single-Cell Genomics</a> demonstrate that single-cell data is hard to visualise and popular dimension reduction strategies may lead to spurious conclusions.</p>
+<p>Let’s take a look at these data sets. Note that T. Chari and L. Pachter in <a class="reference external" href="https://doi.org/10.1101/2021.08.25.457696">The Specious Art of Single-Cell Genomics</a> demonstrated that single-cell data is hard to visualise and popular dimension reduction strategies may lead to spurious conclusions.</p>
 <p>We will use UMAP for demonstratory purposes to demonstrate the signals in the data we simulated. We suggest to install and run <a class="reference external" href="https://jupyter.org/">Jupyter Notebook</a> for this.</p>
 <p>Once the notebook is running, we can load the data:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-<span class="n">data</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s2">&quot;data/tutorial/simulated/malignant.h5ad&quot;</span><span class="p">)</span>
-<span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sample_id&quot;</span><span class="p">,</span> <span class="s2">&quot;celltype&quot;</span><span class="p">,</span> <span class="s2">&quot;subclonal&quot;</span><span class="p">],</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">data1</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s2">&quot;data/tutorial/simulated/malignant1.h5ad&quot;</span><span class="p">)</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">data1</span><span class="p">)</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">data1</span><span class="p">)</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sample_id&quot;</span><span class="p">,</span> <span class="s2">&quot;celltype&quot;</span><span class="p">,</span> <span class="s2">&quot;subclonal&quot;</span><span class="p">],</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/tutorial-simulated-umap.png"><img alt="UMAP visualisation of simulated cells." class="align-center" src="_images/tutorial-simulated-umap.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/tutorial-simulated-umap.png"><img alt="UMAP visualisation of simulated cells from data set 1." class="align-center" src="_images/tutorial-simulated-umap.png" style="width: 400px;" /></a>
 <p>We simulated samples coming from different patients, with different subclonal composition and different malignant cell types.
 Different patients may be missing some of the cell types. Let’s visualise how many cells with particular cell type are within each sample:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_joint</span><span class="p">(</span><span class="n">col1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">col2</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_joint</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">col1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">col2</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
    <span class="k">return</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span>
                       <span class="o">.</span><span class="n">obs</span>
                       <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">])</span>
@@ -473,17 +473,34 @@ Different patients may be missing some of the cell types. Let’s visualise how 
                       <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span>
                      <span class="p">)</span>
 
-<span class="n">plot_joint</span><span class="p">(</span><span class="s2">&quot;sample_id&quot;</span><span class="p">,</span> <span class="s2">&quot;celltype&quot;</span><span class="p">)</span>
+<span class="n">plot_joint</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="s2">&quot;sample_id&quot;</span><span class="p">,</span> <span class="s2">&quot;celltype&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/tutorial-simulated-joint.png"><img alt="Joint (empirical) distribution of cell types and patients." class="align-center" src="_images/tutorial-simulated-joint.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/tutorial-simulated-joint.png"><img alt="Joint (empirical) distribution of cell types and patients from data set 1." class="align-center" src="_images/tutorial-simulated-joint.png" style="width: 400px;" /></a>
+<p>Analogously, we can visualise the other data set:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data2</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s2">&quot;data/tutorial/simulated/malignant2.h5ad&quot;</span><span class="p">)</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sample_id&quot;</span><span class="p">,</span> <span class="s2">&quot;celltype&quot;</span><span class="p">,</span> <span class="s2">&quot;subclonal&quot;</span><span class="p">],</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/tutorial-simulated-umap2.png"><img alt="UMAP visualisation of simulated cells from data set 2." class="align-center" src="_images/tutorial-simulated-umap2.png" style="width: 400px;" /></a>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_joint</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="s2">&quot;sample_id&quot;</span><span class="p">,</span> <span class="s2">&quot;celltype&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/tutorial-simulated-joint2.png"><img alt="Joint (empirical) distribution of cell types and patients from data set 2." class="align-center" src="_images/tutorial-simulated-joint2.png" style="width: 400px;" /></a>
+<p>Note that the second data set contains more cells:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;1st data set: </span><span class="si">{</span><span class="n">data1</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># Prints out: 1st data set: (3823, 5000)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;2nd data set: </span><span class="si">{</span><span class="n">data2</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># Prints out: 2nd data set: (4470, 5000)</span>
+</pre></div>
+</div>
 </section>
 <section id="running-the-analysis">
 <h3>Running the analysis<a class="headerlink" href="#running-the-analysis" title="Permalink to this heading">#</a></h3>
-<p>As we know what we can expect in this data set, we will run the analysis:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/tutorial/simulated/malignant.h5ad
+<p>As we know what we can expect in these data sets, we can run the analysis. Let’s do it for the first data set:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/tutorial/simulated/malignant1.h5ad
 <span class="w">                                </span>--gene-sets<span class="w"> </span>data/tutorial/simulated/msigdb74.gmt
-<span class="w">                                </span>--output<span class="w"> </span>tutorial-output
+<span class="w">                                </span>--output<span class="w"> </span>tutorial-output1
 <span class="w">                                </span>--batch<span class="w"> </span>sample_id
 <span class="w">                                </span>--n-top-genes<span class="w"> </span><span class="m">2000</span>
 <span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">8</span>
@@ -551,7 +568,7 @@ Different patients may be missing some of the cell types. Let’s visualise how 
 </dl>
 </li>
 </ul>
-<p>For example, the similarity between used to create metasignatures in our case looks in the following manner:</p>
+<p>For example, the similarity between used to create meta-signatures in our case looks in the following manner:</p>
 <a class="reference internal image-reference" href="_images/tutorial-heatmap-metasignatures.png"><img alt="Similarity heatmap." class="align-center" src="_images/tutorial-heatmap-metasignatures.png" style="width: 400px;" /></a>
 <p>so one can hope that there are three different meta-signatures. When the cells are scored according to them the following correlation matrix is obtained:</p>
 <a class="reference internal image-reference" href="_images/tutorial-clustermap-metasignatures-correlation.png"><img alt="Meta-signatures scores correlation matrix." class="align-center" src="_images/tutorial-clustermap-metasignatures-correlation.png" style="width: 400px;" /></a>
@@ -561,17 +578,35 @@ Different patients may be missing some of the cell types. Let’s visualise how 
 We advise to use CanSig with this limitation in mind and we recommend <a class="reference external" href="https://www.fharrell.com/post/badb/index.html">F. Harrell’s blogpost</a> for an excellent overview of robust biomarker research.</p>
 </div>
 </section>
+<section id="running-the-analysis-2nd-data-set">
+<h3>Running the analysis: 2nd data set<a class="headerlink" href="#running-the-analysis-2nd-data-set" title="Permalink to this heading">#</a></h3>
+<p>In exactly the same manner CanSig can be applied to analyse another data set.
+We will apply it to the second data set provided, using the same GMT file and saving the output to <code class="docutils literal notranslate"><span class="pre">tutorial-output2</span></code> directory with the structure described above.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cansig.run.pipeline<span class="w"> </span>data/tutorial/simulated/malignant2.h5ad
+<span class="w">                                </span>--gene-sets<span class="w"> </span>data/tutorial/simulated/msigdb74.gmt
+<span class="w">                                </span>--output<span class="w"> </span>tutorial-output2
+<span class="w">                                </span>--batch<span class="w"> </span>sample_id
+<span class="w">                                </span>--n-top-genes<span class="w"> </span><span class="m">2000</span>
+<span class="w">                                </span>--dimensions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">8</span>
+<span class="w">                                </span>--model-runs<span class="w"> </span><span class="m">1</span>
+<span class="w">                                </span>--clusters<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="m">10</span>
+<span class="w">                                </span>--cluster-runs<span class="w"> </span><span class="m">2</span>
+<span class="w">                                </span>--max-epochs<span class="w"> </span><span class="m">200</span>
+</pre></div>
+</div>
+</section>
 <section id="comparing-with-the-ground-truth">
 <h3>Comparing with the ground truth<a class="headerlink" href="#comparing-with-the-ground-truth" title="Permalink to this heading">#</a></h3>
-<p>As we mentioned above, unsupervised learning and scientific discovery are hard problems and although CanSig can be used for exploratory data analysis, it is <em>not</em> a replacement for additional validation (by means of putting the findings in the wider biological context, using appropriate bootstrapping technique, and designing wet-lab interventional studies).
-We can however see how well the found metasignatures correspond to the cell types in the simulated data.</p>
-<p>Let’s open Jupyter and run the following code:</p>
+<p>As we mentioned above, unsupervised learning and scientific discovery are hard problems.
+Hence, while CanSig can be used for exploratory data analysis, it is not a replacement for additional validation (by means of putting the findings in the wider biological context, using appropriate bootstrapping techniques, and designing wet-lab interventional studies).
+Let us see how well the found meta-signatures correspond to the cell types in both simulated data sets.</p>
+<p>Let’s open Jupyter notebook and run the following code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
 
-<span class="k">def</span> <span class="nf">plot_joint</span><span class="p">(</span><span class="n">col1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">col2</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">plot_joint</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">col1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">col2</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span>
                        <span class="o">.</span><span class="n">obs</span>
                        <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">])</span>
@@ -583,26 +618,45 @@ We can however see how well the found metasignatures correspond to the cell type
                       <span class="p">)</span>
 
 <span class="c1"># Load the simulated cells</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s2">&quot;data/tutorial/simulated/malignant.h5ad&quot;</span><span class="p">)</span>
+<span class="n">data1</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s2">&quot;data/tutorial/simulated/malignant1.h5ad&quot;</span><span class="p">)</span>
 
 <span class="c1"># Load the meta-signatures</span>
-<span class="n">metamembership</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;tutorial-output/metasignatures/cell-metamembership.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">metamembership1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;tutorial-output1/metasignatures/cell-metamembership.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># Add the meta-signatures membership to the data</span>
-<span class="n">data</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;metamembership&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metamembership</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+<span class="n">data1</span><span class="o">.</span><span class="n">obs</span> <span class="o">=</span> <span class="n">data1</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">metamembership1</span><span class="p">)</span>
 
-
-<span class="n">plot_joint</span><span class="p">(</span><span class="s2">&quot;sample_id&quot;</span><span class="p">,</span> <span class="s2">&quot;metamembership&quot;</span><span class="p">)</span>
+<span class="c1"># Plot the (empirical) joint distribution</span>
+<span class="n">plot_joint</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="s2">&quot;celltype&quot;</span><span class="p">,</span> <span class="s2">&quot;metamembership&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/tutorial-joint-metasignature-patient.png"><img alt="Joint (empirical) distribution of meta-signature assignment and patient." class="align-center" src="_images/tutorial-joint-metasignature-patient.png" style="width: 400px;" /></a>
-<p>As we can see, the cells have been decomposed into three meta-signatures as well as undetermined cells.</p>
-<p>We can also visualise the (empirical) joint distribution of ground truth cell types and assigned memberships to meta-signatures:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_joint</span><span class="p">(</span><span class="s2">&quot;celltype&quot;</span><span class="p">,</span> <span class="s2">&quot;metamembership&quot;</span><span class="p">)</span>
+<p>This visualises the (empirical) joint distribution of ground truth cell types and assigned memberships to meta-signatures:</p>
+<a class="reference internal image-reference" href="_images/tutorial-joint-metasignature-celltype.png"><img alt="Joint (empirical) distribution of meta-signature assignment and ground truth for the 1st data set." class="align-center" src="_images/tutorial-joint-metasignature-celltype.png" style="width: 400px;" /></a>
+<p>It seems that <code class="docutils literal notranslate"><span class="pre">metasig1</span></code> is considerably smaller than the other meta-signatures as well as the set of undetermined cells.
+We see that for both types <code class="docutils literal notranslate"><span class="pre">metasig2</span></code> or <code class="docutils literal notranslate"><span class="pre">metasig3</span></code> seem to be mostly capturing <code class="docutils literal notranslate"><span class="pre">program2</span></code> and <code class="docutils literal notranslate"><span class="pre">program3</span></code>, being somewhat mixed together.
+Similarly to the Fig. 2, we conclude <code class="docutils literal notranslate"><span class="pre">SmallDSet1</span></code> turned out to be a hard problem, with meta-signatures not exactly matching the ground truth.</p>
+<p>Let us see now how CanSig worked on <code class="docutils literal notranslate"><span class="pre">SmallDSet2</span></code>, which is a larger data set:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the simulated cells</span>
+<span class="n">data2</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s2">&quot;data/tutorial/simulated/malignant2.h5ad&quot;</span><span class="p">)</span>
+
+<span class="c1"># Load the meta-signatures</span>
+<span class="n">metamembership2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;tutorial-output2/metasignatures/cell-metamembership.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Add the meta-signatures membership to the data</span>
+<span class="n">data2</span><span class="o">.</span><span class="n">obs</span> <span class="o">=</span> <span class="n">data1</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">metamembership2</span><span class="p">)</span>
+
+<span class="c1"># Plot the (empirical) joint distribution</span>
+<span class="n">plot_joint</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="s2">&quot;celltype&quot;</span><span class="p">,</span> <span class="s2">&quot;metamembership&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="_images/tutorial-joint-metasignature-celltype.png"><img alt="Joint (empirical) distribution of meta-signature assignment and ground truth." class="align-center" src="_images/tutorial-joint-metasignature-celltype.png" style="width: 400px;" /></a>
-<p>It seems that <code class="docutils literal notranslate"><span class="pre">metasig1</span></code> is considerably smaller than the other meta-signatures as well as the set of undetermined cells. We see that for both types <code class="docutils literal notranslate"><span class="pre">metasig2</span></code> or <code class="docutils literal notranslate"><span class="pre">metasig3</span></code> seem to be mostly capturing <code class="docutils literal notranslate"><span class="pre">program2</span></code> and <code class="docutils literal notranslate"><span class="pre">program3</span></code>.</p>
+<a class="reference internal image-reference" href="_images/tutorial-joint-metasignature-celltype2.png"><img alt="Joint (empirical) distribution of meta-signature assignment and ground truth for the 2nd data set." class="align-center" src="_images/tutorial-joint-metasignature-celltype2.png" style="width: 400px;" /></a>
+<p>As reported in Fig. 2 of our manuscript, CanSig found two out of three cell identities (<code class="docutils literal notranslate"><span class="pre">metasig2</span></code> mostly captures <code class="docutils literal notranslate"><span class="pre">program3</span></code> and <code class="docutils literal notranslate"><span class="pre">metasig4</span></code> mostly captures <code class="docutils literal notranslate"><span class="pre">program2</span></code>).</p>
+</section>
+<section id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h3>
+<p>We have demonstrated how to use CanSig as a command line tool to analyze malignant cells.
+However, CanSig offers more utilities and can be integrated within existing pipelines.
+For more information, see the tutorials below.</p>
 </section>
 </section>
 <section id="tutorials">
@@ -668,8 +722,8 @@ We can however see how well the found metasignatures correspond to the cell type
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-dataset">
-     Example dataset
+    <a class="reference internal nav-link" href="#example-datasets">
+     Example datasets
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -678,8 +732,18 @@ We can however see how well the found metasignatures correspond to the cell type
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#running-the-analysis-2nd-data-set">
+     Running the analysis: 2nd data set
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#comparing-with-the-ground-truth">
      Comparing with the ground truth
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#summary">
+     Summary
     </a>
    </li>
   </ul>
