@@ -50,10 +50,10 @@ Install the package:
 
 Alternatively, in the `repository <https://github.com/boevalab/cansig>`_ we provide an ``environment.yml`` file `which can be used to create a new conda environment <https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file>`_.
 
-Example dataset
-^^^^^^^^^^^^^^^
+Example datasets
+^^^^^^^^^^^^^^^^
 
-We will download the example data set using an auxiliary script:
+We will analyze two small simulated data sets accompanying our publication ``SmallDSet1`` and ``SmallDSet2``. Let's download them using an auxiliary script:
 
 .. code-block:: bash
 
@@ -64,13 +64,13 @@ You should see a new directory ``data``:
 .. code-block:: bash
 
    $ ls data/tutorial/simulated
-   malignant.h5ad  msigdb74.gmt  README.md
+   malignant1.h5ad  malignant2.h5ad  msigdb74.gmt  README.md
 
-This directory contains a H5AD file with *simulated* malignant cells and a GMT file with gene signatures. More information about these are in the README file.
+This directory contains H5AD files with *simulated* malignant cells and a GMT file with gene signatures. More information about them is in the README file.
 
 For convenience we will `define variables <https://linuxhint.com/variables_bash/>`_ storing the locations:
 
-Let's take a look at this data set. Note that T. Chari and L. Pachter in `The Specious Art of Single-Cell Genomics <https://doi.org/10.1101/2021.08.25.457696>`_ demonstrate that single-cell data is hard to visualise and popular dimension reduction strategies may lead to spurious conclusions.
+Let's take a look at these data sets. Note that T. Chari and L. Pachter in `The Specious Art of Single-Cell Genomics <https://doi.org/10.1101/2021.08.25.457696>`_ demonstrated that single-cell data is hard to visualise and popular dimension reduction strategies may lead to spurious conclusions.
 
 We will use UMAP for demonstratory purposes to demonstrate the signals in the data we simulated. We suggest to install and run `Jupyter Notebook <https://jupyter.org/>`_ for this.
 
@@ -81,14 +81,14 @@ Once the notebook is running, we can load the data:
    import scanpy as sc
    import seaborn as sns
 
-   data = sc.read_h5ad("data/tutorial/simulated/malignant.h5ad")
-   sc.pp.neighbors(data)
-   sc.tl.umap(data)
-   sc.pl.umap(data, color=["sample_id", "celltype", "subclonal"], ncols=1)
+   data1 = sc.read_h5ad("data/tutorial/simulated/malignant1.h5ad")
+   sc.pp.neighbors(data1)
+   sc.tl.umap(data1)
+   sc.pl.umap(data1, color=["sample_id", "celltype", "subclonal"], ncols=1)
 
 .. image:: img/tutorial-simulated-umap.png
   :width: 400
-  :alt: UMAP visualisation of simulated cells.
+  :alt: UMAP visualisation of simulated cells from data set 1.
   :align: center
 
 We simulated samples coming from different patients, with different subclonal composition and different malignant cell types.
@@ -96,7 +96,7 @@ Different patients may be missing some of the cell types. Let's visualise how ma
 
 .. code-block:: python
 
-   def plot_joint(col1: str, col2: str):
+   def plot_joint(data, col1: str, col2: str):
       return sns.heatmap(data
                          .obs
                          .groupby([col1, col2])
@@ -107,23 +107,53 @@ Different patients may be missing some of the cell types. Let's visualise how ma
                          fmt="g",
                         )
 
-   plot_joint("sample_id", "celltype")
+   plot_joint(data1, "sample_id", "celltype")
 
 .. image:: img/tutorial-simulated-joint.png
   :width: 400
-  :alt: Joint (empirical) distribution of cell types and patients.
+  :alt: Joint (empirical) distribution of cell types and patients from data set 1.
   :align: center
+
+Analogously, we can visualise the other data set:
+
+.. code-block:: python
+
+   data2 = sc.read_h5ad("data/tutorial/simulated/malignant2.h5ad")
+   sc.pp.neighbors(data2)
+   sc.tl.umap(data2)
+   sc.pl.umap(data2, color=["sample_id", "celltype", "subclonal"], ncols=1)
+
+.. image:: img/tutorial-simulated-umap2.png
+  :width: 400
+  :alt: UMAP visualisation of simulated cells from data set 2.
+  :align: center
+
+.. code-block:: python
+
+   plot_joint(data2, "sample_id", "celltype")
+
+.. image:: img/tutorial-simulated-joint2.png
+  :width: 400
+  :alt: Joint (empirical) distribution of cell types and patients from data set 2.
+  :align: center
+
+Note that the second data set contains more cells:
+
+.. code-block:: python
+
+   print(f"1st data set: {data1.shape}")   # Prints out: 1st data set: (3823, 5000)
+   print(f"2nd data set: {data2.shape}")  # Prints out: 2nd data set: (4470, 5000)
 
 Running the analysis
 ^^^^^^^^^^^^^^^^^^^^
 
-As we know what we can expect in this data set, we will run the analysis:
+As we know what we can expect in these data sets, we can run the analysis. Let's do it for the first data set:
 
 .. code-block:: bash
 
-   $ python -m cansig.run.pipeline data/tutorial/simulated/malignant.h5ad 
+   $ python -m cansig.run.pipeline data/tutorial/simulated/malignant1.h5ad
                                    --gene-sets data/tutorial/simulated/msigdb74.gmt
-                                   --output tutorial-output 
+                                   --output tutorial-output1
                                    --batch sample_id
                                    --n-top-genes 2000
                                    --dimensions 4 6 8
@@ -172,7 +202,7 @@ Let's analyse its structure.
           * ``heatmap-metasignatures.png``: visualisation of the similarity between different postprocessing runs, used to create meta-signatures.
           * ``clustermap-metasignatures-correlation.png``: correlation between cell scores obtained via scoring with meta-signatures.
 
-For example, the similarity between used to create metasignatures in our case looks in the following manner:
+For example, the similarity between used to create meta-signatures in our case looks in the following manner:
 
 .. image:: img/tutorial-heatmap-metasignatures.png
    :width: 400
@@ -192,13 +222,34 @@ so one can hope that there are three different meta-signatures. When the cells a
    Each directory in ``postprocessing/`` is a result of running integration method, clustering, and gene set enrichment analysis. We ablate the hyperparameters and  in ``metasignatures/`` we assemble this information to hope that the aggregated results will be more robust to changes in hyperparameters. Note that there are many possible ways of doing it and perfectly one would apply resampling techniques, such as bootstrap, to understand whether the final output is robust enough.
    We advise to use CanSig with this limitation in mind and we recommend `F. Harrell's blogpost <https://www.fharrell.com/post/badb/index.html>`_ for an excellent overview of robust biomarker research.
 
+
+Running the analysis: 2nd data set
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In exactly the same manner CanSig can be applied to analyse another data set.
+We will apply it to the second data set provided, using the same GMT file and saving the output to ``tutorial-output2`` directory with the structure described above.
+
+.. code-block:: bash
+
+   $ python -m cansig.run.pipeline data/tutorial/simulated/malignant2.h5ad
+                                   --gene-sets data/tutorial/simulated/msigdb74.gmt
+                                   --output tutorial-output2
+                                   --batch sample_id
+                                   --n-top-genes 2000
+                                   --dimensions 4 6 8
+                                   --model-runs 1
+                                   --clusters 4 6 8 10
+                                   --cluster-runs 2
+                                   --max-epochs 200
+
 Comparing with the ground truth
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As we mentioned above, unsupervised learning and scientific discovery are hard problems and although CanSig can be used for exploratory data analysis, it is *not* a replacement for additional validation (by means of putting the findings in the wider biological context, using appropriate bootstrapping technique, and designing wet-lab interventional studies).
-We can however see how well the found metasignatures correspond to the cell types in the simulated data.
+As we mentioned above, unsupervised learning and scientific discovery are hard problems.
+Hence, while CanSig can be used for exploratory data analysis, it is not a replacement for additional validation (by means of putting the findings in the wider biological context, using appropriate bootstrapping techniques, and designing wet-lab interventional studies).
+Let us see how well the found meta-signatures correspond to the cell types in both simulated data sets.
 
-Let's open Jupyter and run the following code:
+Let's open Jupyter notebook and run the following code:
 
 .. code-block:: python
 
@@ -207,7 +258,7 @@ Let's open Jupyter and run the following code:
    import seaborn as sns
 
 
-   def plot_joint(col1: str, col2: str):
+   def plot_joint(data, col1: str, col2: str):
        return sns.heatmap(data
                           .obs
                           .groupby([col1, col2])
@@ -219,38 +270,58 @@ Let's open Jupyter and run the following code:
                          )
 
    # Load the simulated cells
-   data = sc.read_h5ad("data/tutorial/simulated/malignant.h5ad")
+   data1 = sc.read_h5ad("data/tutorial/simulated/malignant1.h5ad")
    
    # Load the meta-signatures
-   metamembership = pd.read_csv("tutorial-output/metasignatures/cell-metamembership.csv", index_col=0)
+   metamembership1 = pd.read_csv("tutorial-output1/metasignatures/cell-metamembership.csv", index_col=0)
 
    # Add the meta-signatures membership to the data
-   data.obs["metamembership"] = metamembership.loc[data.obs.index]
+   data1.obs = data1.obs.join(metamembership1)
+
+   # Plot the (empirical) joint distribution
+   plot_joint(data1, "celltype", "metamembership")
 
 
-   plot_joint("sample_id", "metamembership")
-
-
-.. image::  img/tutorial-joint-metasignature-patient.png
-   :width: 400
-   :alt: Joint (empirical) distribution of meta-signature assignment and patient.
-   :align: center
-
-As we can see, the cells have been decomposed into three meta-signatures as well as undetermined cells.
-
-We can also visualise the (empirical) joint distribution of ground truth cell types and assigned memberships to meta-signatures:
-
-.. code-block:: python
-
-   plot_joint("celltype", "metamembership")
-
+This visualises the (empirical) joint distribution of ground truth cell types and assigned memberships to meta-signatures:
 
 .. image:: img/tutorial-joint-metasignature-celltype.png
    :width: 400
-   :alt: Joint (empirical) distribution of meta-signature assignment and ground truth.
+   :alt: Joint (empirical) distribution of meta-signature assignment and ground truth for the 1st data set.
    :align: center
 
-It seems that ``metasig1`` is considerably smaller than the other meta-signatures as well as the set of undetermined cells. We see that for both types ``metasig2`` or ``metasig3`` seem to be mostly capturing ``program2`` and ``program3``.
+It seems that ``metasig1`` is considerably smaller than the other meta-signatures as well as the set of undetermined cells.
+We see that for both types ``metasig2`` or ``metasig3`` seem to be mostly capturing ``program2`` and ``program3``, being somewhat mixed together.
+Similarly to the Fig. 2, we conclude ``SmallDSet1`` turned out to be a hard problem, with meta-signatures not exactly matching the ground truth.
+
+Let us see now how CanSig worked on ``SmallDSet2``, which is a larger data set:
+
+.. code-block:: python
+
+   # Load the simulated cells
+   data2 = sc.read_h5ad("data/tutorial/simulated/malignant2.h5ad")
+
+   # Load the meta-signatures
+   metamembership2 = pd.read_csv("tutorial-output2/metasignatures/cell-metamembership.csv", index_col=0)
+
+   # Add the meta-signatures membership to the data
+   data2.obs = data1.obs.join(metamembership2)
+
+   # Plot the (empirical) joint distribution
+   plot_joint(data2, "celltype", "metamembership")
+
+.. image:: img/tutorial-joint-metasignature-celltype2.png
+   :width: 400
+   :alt: Joint (empirical) distribution of meta-signature assignment and ground truth for the 2nd data set.
+   :align: center
+
+As reported in Fig. 2 of our manuscript, CanSig found two out of three cell identities (``metasig2`` mostly captures ``program3`` and ``metasig4`` mostly captures ``program2``).
+
+Summary
+^^^^^^^
+
+We have demonstrated how to use CanSig as a command line tool to analyze malignant cells.
+However, CanSig offers more utilities and can be integrated within existing pipelines.
+For more information, see the tutorials below.
 
 Tutorials
 ---------
@@ -266,4 +337,3 @@ Contributing
 ------------
 
 For the contribution guide and instructions for new developers, see :ref:`contribution-guide`.
-
