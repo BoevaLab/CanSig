@@ -141,7 +141,7 @@ Note that the second data set contains more cells:
 
 .. code-block:: python
 
-   print(f"1st data set: {data1.shape}")   # Prints out: 1st data set: (3823, 5000)
+   print(f"1st data set: {data1.shape}")  # Prints out: 1st data set: (3823, 5000)
    print(f"2nd data set: {data2.shape}")  # Prints out: 2nd data set: (4470, 5000)
 
 Running the analysis

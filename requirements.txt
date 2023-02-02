@@ -19,7 +19,7 @@ sphinx<6
 statsmodels
 protobuf~=3.19.0
 # requirements-dev.txt
-black
+black==22.10.0
 flake8
 pre-commit
 pydata-sphinx-theme

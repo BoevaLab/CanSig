@@ -57,7 +57,7 @@ class GeneExpressionAnalysis:
         gene_sets: _GENESETS = "MSigDB_Hallmark_2020",
         permutation_num: int = 500,
     ) -> None:
-
+        """For the description of the arguments see the class documentation."""
         self.cluster_name = cluster_name
         self.group_names = group_names
         self.method = method
@@ -88,7 +88,6 @@ class GeneExpressionAnalysis:
                 ordered according to their z scores, and the p values and
                 FDR corrected p values
         """
-
         if self.n_diff_genes is None:
             self.n_diff_genes = adata.shape[1]
 
@@ -161,7 +160,6 @@ class GeneExpressionAnalysis:
         """
         gsea_dfs = []
         for label, gene_rank in diff_genes.items():
-
             print(f"GSEA for cluster {label}")
             gs_res = gp.prerank(
                 rnk=gene_rank,
