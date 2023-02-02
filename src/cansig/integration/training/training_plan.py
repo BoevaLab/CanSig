@@ -61,9 +61,6 @@ def _cycle_annealing(
     return beta
 
 
-# Ideally, we would inherit from scVI's trainingsplan, however, it calls the kl_weight
-# in the initializer and since CanSigTrainingPlan is not yet initialized it doesn't find
-# the property. There is probably a way of solving it, but I don't know how.
 class CanSigTrainingPlan(TrainingPlan):
     def __init__(
         self,
@@ -71,7 +68,7 @@ class CanSigTrainingPlan(TrainingPlan):
         *,
         optimizer: Literal["Adam", "AdamW", "Custom"] = "Adam",
         optimizer_creator: Optional[TorchOptimizerCreator] = None,
-        beta: float = 1.0,  # new 
+        beta: float = 1.0,
         annealing: Literal["linear", "cyclical"] = "linear",
         lr: float = 1e-3,
         weight_decay: float = 1e-6,
