@@ -14,7 +14,7 @@ scanpy>=1.9.1
 seaborn
 scikit-learn
 scipy
-scvi-tools
+scvi-tools<=0.19.0
 sphinx<6
 statsmodels
 protobuf~=3.19.0
