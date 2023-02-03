@@ -2,7 +2,7 @@ from typing import Iterable, Optional, Dict
 
 import torch  # pytype: disable=import-error
 import torch.nn as nn  # pytype: disable=import-error
-from scvi._compat import Literal  # pytype: disable=import-error
+from typing import Literal  # pytype: disable=not-supported-yet
 from scvi.module.base import LossRecorder, auto_move_data  # pytype: disable=import-error
 from scvi.nn import Encoder  # pytype: disable=import-error
 from scvi.nn import FCLayers  # pytype: disable=import-error

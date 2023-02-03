@@ -3,7 +3,7 @@ from typing import List, Optional
 import anndata  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
 from anndata import AnnData  # pytype: disable=import-error
-from scvi._compat import Literal  # pytype: disable=import-error
+from typing import Literal  # pytype: disable=not-supported-yet
 from scvi.data import AnnDataManager  # pytype: disable=import-error
 from scvi.data.fields import (  # pytype: disable=import-error
     CategoricalJointObsField,
