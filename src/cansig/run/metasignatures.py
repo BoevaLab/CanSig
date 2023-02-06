@@ -274,6 +274,14 @@ def plot_latent_score(
 
 
 def get_integration_dir(integ_dir: Union[str, pl.Path], metamembership: pd.DataFrame) -> pl.Path:
+    """Selects the latent spaced used to show the meta-signatures.
+
+    Args:
+
+        integ_dir: Path to the integration dir.
+        metamembership: pd.Df containing the hard meta-membership assignment of cells
+    """
+
     integ_paths = list(pl.Path(integ_dir).iterdir())
 
     aws = []
