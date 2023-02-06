@@ -1,23 +1,24 @@
 """Script for running the metasignatures."""
 
-from typing import Union, List, Optional, Literal, Dict, Tuple  # pytype: disable=not-supported-yet
 import argparse
-import os
 import logging
+import os
+import pathlib as pl  # pytype: disable=import-error
+from typing import Union, List, Optional, Literal, Dict, Tuple  # pytype: disable=not-supported-yet
 
 import anndata as ad  # pytype: disable=import-error
-import scanpy as sc  # pytype: disable=import-error
-import pandas as pd  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
-import pathlib as pl  # pytype: disable=import-error
+import pandas as pd  # pytype: disable=import-error
+import scanpy as sc  # pytype: disable=import-error
+from sklearn import metrics  # pytype: disable=import-error
 
 import cansig.cnvanalysis.differentialcnvs as cnv  # pytype: disable=import-error
+import cansig.filesys as fs  # pytype: disable=import-error
+import cansig.gsea as gsea  # pytype: disable=import-error
 import cansig.logger as clogger  # pytype: disable=import-error
-import cansig.metasignatures.utils as utils  # pytype: disable=import-error
 import cansig.metasignatures.WRC as WRC  # pytype: disable=import-error
 import cansig.metasignatures.clustering as clustering  # pytype: disable=import-error
-import cansig.gsea as gsea  # pytype: disable=import-error
-import cansig.filesys as fs  # pytype: disable=import-error
+import cansig.metasignatures.utils as utils  # pytype: disable=import-error
 import cansig.multirun as mr  # pytype: disable=import-error
 
 _LOGGER = logging.getLogger(__name__)
@@ -238,7 +239,6 @@ def plot_latent_score(
     prob_cellmetamembership: pd.DataFrame,
     batch_column: str,
 ) -> None:
-
     """Plots the cells in score space and in a latent space of choice, colored according to the metamembership and
         the probability of the metamembership
 
@@ -260,9 +260,8 @@ def plot_latent_score(
     utils.plot_score_UMAP(adata=adata, meta_signatures=meta_signatures, resdir=resdir.figures_output, len_sig=50)
 
     _LOGGER.info("Plotting latent space with metamemberships.")
-    integ_dir = pl.Path(integ_dir)
-    all_integ = [path for path in integ_dir.iterdir()]
-    integ_path = all_integ[np.random.randint(len(all_integ))]
+
+    integ_path = get_integration_dir(integ_dir=integ_dir, metamembership=cell_metamembership)
 
     utils.plot_metamembership(
         adata=adata,
@@ -272,6 +271,30 @@ def plot_latent_score(
         resdir=resdir.figures_output,
         batch_column=batch_column,
     )
+
+
+def get_integration_dir(integ_dir: Union[str, pl.Path], metamembership: pd.DataFrame) -> pl.Path:
+    integ_paths = list(pl.Path(integ_dir).iterdir())
+
+    aws = []
+    for integ_path in integ_paths:
+        latent = pd.read_csv(integ_path.joinpath("latent-representations.csv"), index_col=0)
+        if set(latent.index) != set(metamembership.index):
+            # This should probably throw an exception!
+            _LOGGER.warning("The index of the latent codes doesn't match the index of cell" "meta-membership.")
+        idx = latent.index.intersection(metamembership.index)
+
+        latent = latent.loc[idx].copy()
+        metamem = metamembership.loc[idx].copy()
+        adata = ad.AnnData(X=latent.values, obs=metamem, dtype=np.float32)
+        sc.pp.neighbors(adata)
+        sc.tl.umap(adata)
+        metamem = metamem[metamem["metamembership"] != -2.0]
+        adata = adata[metamem.index]
+
+        aws.append(metrics.silhouette_score(adata.obsm["X_umap"], metamem.values.ravel()))
+
+    return integ_paths[np.argmax(aws)]
 
 
 def select_signatures(
@@ -319,7 +342,6 @@ def run_metasignatures(
     pat_specific_threshold: float = 0.75,
     linkage: str = "average",
 ) -> None:
-
     """Main function of the metasignature module. Will find the metasignatures by:
         - selecting signatures to cluster
         - computing the similarity between signatures
@@ -417,9 +439,7 @@ def run_metasignatures(
         metamembership=cell_metamembership, prob_metamembership=prob_cellmetamembership, res_dir=resdir.path
     )
 
-    # TODO(Josephine, Florian): select the best integration run for viz
     if plots:
-
         _LOGGER.info("Plotting metasignature level figures.")
         resdir.make_fig_dir()
         os.makedirs(resdir.figures_output, exist_ok=True)
