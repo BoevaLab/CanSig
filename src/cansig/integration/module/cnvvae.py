@@ -1,9 +1,8 @@
-from typing import Iterable, Optional, Dict
+from typing import Dict, Iterable, Literal, Optional
 
 import torch  # pytype: disable=import-error
 import torch.nn as nn  # pytype: disable=import-error
-from scvi._compat import Literal  # pytype: disable=import-error
-from scvi.module.base import LossRecorder, auto_move_data  # pytype: disable=import-error
+from scvi.module.base import LossOutput, auto_move_data  # pytype: disable=import-error
 from scvi.nn import Encoder  # pytype: disable=import-error
 from scvi.nn import FCLayers  # pytype: disable=import-error
 from torch.distributions import Normal  # pytype: disable=import-error
@@ -190,7 +189,13 @@ class VAECNV(CanSigBaseModule):
 
         kl_local = dict(kl_loss=kl_loss)
         kl_global = torch.tensor(0.0)
-        return LossRecorder(loss, reconst_loss, kl_local, kl_global)
+
+        return LossOutput(
+            loss=loss,
+            reconstruction_loss=reconst_loss,
+            kl_local=kl_local,
+            kl_global=kl_global,
+        )
 
     def get_reconstruction_loss(self, x, x_hat) -> torch.Tensor:
         return self.reconstruction_loss(x, x_hat).sum(dim=1)
