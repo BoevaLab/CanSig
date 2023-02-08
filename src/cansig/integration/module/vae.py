@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 """Main module."""
-from typing import Callable, Iterable, Optional
+from typing import Callable, Iterable, Literal, Optional
 
 import numpy as np  # pytype: disable=import-error
 import torch  # pytype: disable=import-error
 import torch.nn.functional as F  # pytype: disable=import-error
 from cansig.integration._CONSTANTS import REGISTRY_KEYS  # pytype: disable=import-error
 from cansig.integration.base.module import CanSigBaseModule  # pytype: disable=import-error
-from scvi._compat import Literal  # pytype: disable=import-error
 from scvi.distributions import NegativeBinomial, ZeroInflatedNegativeBinomial  # pytype: disable=import-error
-from scvi.module.base import LossRecorder, auto_move_data  # pytype: disable=import-error
+from scvi.module.base import LossOutput, auto_move_data  # pytype: disable=import-error
 from scvi.nn import DecoderSCVI, Encoder, one_hot  # pytype: disable=import-error
 from torch.distributions import Normal, Poisson  # pytype: disable=import-error
 from torch.distributions import kl_divergence as kl  # pytype: disable=import-error
@@ -344,7 +343,13 @@ class VAECanSig(CanSigBaseModule):
 
         kl_local = dict(kl_divergence_l=kl_divergence_l, kl_divergence_z=kl_divergence_z)
         kl_global = torch.tensor(0.0)
-        return LossRecorder(loss, reconst_loss, kl_local, kl_global)
+
+        return LossOutput(
+            loss=loss,
+            reconstruction_loss=reconst_loss,
+            kl_local=kl_local,
+            kl_global=kl_global,
+        )
 
     @torch.no_grad()
     def sample(

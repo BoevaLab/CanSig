@@ -67,7 +67,7 @@ def get_cell_metamembership(
     cell_metamembership = cell_metamembership.apply(lambda row: row[1] if row[0] == 0 else -2, axis=1).to_frame()
 
     if rename:
-        renaming = {-1: "outlier"}
+        renaming = {-1: "undetermined"}
         for cl in prob_cellmetamembership.columns:
             if cl >= 0:
                 renaming[cl] = "metasig" + str(int(cl) + 1)

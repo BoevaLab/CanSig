@@ -9,6 +9,7 @@ import numpy as np  # pytype: disable=import-error
 import matplotlib.pyplot as plt  # pytype: disable=import-error
 import json  # pytype: disable=import-error
 import umap  # pytype: disable=import-error
+from scanpy.plotting._utils import _set_default_colors_for_categorical_obs  # pytype: disable=import-error
 from sklearn.manifold import MDS  # pytype: disable=import-error
 
 import cansig.plotting.plotting as plotting  # pytype: disable=import-error
@@ -337,6 +338,10 @@ def plot_metamembership(
     adata_copy = adata.copy()
     adata_copy = adata_copy[prob_metamembership.index, :].copy()
     adata_copy.obs = pd.concat([adata_copy.obs, prob_metamembership], axis=1, join="inner")
+    # Setting all cells that were not assigned to a metamodule to undetermind.
+    metamembership["metamembership"] = metamembership["metamembership"].apply(
+        lambda x: x if x != "-2.0" else "undetermined"
+    )
     adata_copy.obs = pd.concat([adata_copy.obs, metamembership.astype("category")], axis=1, join="inner")
 
     plotting_config = plotting.ScatterPlotConfig(
@@ -346,11 +351,27 @@ def plot_metamembership(
         ncols=2,
     )
 
+    set_colors(adata_copy, key=metamembership.columns[0])
     scatter = plotting.ScatterPlot(plotting_config)
+
     fig = scatter.plot_scatter(adata=adata_copy, representations=latent_representations)
     fig.savefig(resdir / "umap-metamembership.png", bbox_inches="tight")
 
     del adata_copy
+
+
+def set_colors(adata: ad.AnnData, key: str = "metamembership"):
+    if not pd.CategoricalDtype.is_dtype(adata.obs[key]):
+        adata.obs[key] = adata.obs[key].astype("category")
+    _set_default_colors_for_categorical_obs(adata, key)
+
+    if "undetermined" in adata.obs[key].cat.categories:
+        idx = adata.obs[key].cat.categories.get_loc("undetermined")
+        adata.uns[f"{key}_colors"][idx] = "#929591"
+
+    if "outlier" in adata.obs[key].cat.categories:
+        idx = adata.obs[key].cat.categories.get_loc("outlier")
+        adata.uns[f"{key}_colors"][idx] = "#000000"
 
 
 def plot_score_UMAP(
