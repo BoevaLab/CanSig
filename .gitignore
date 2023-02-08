@@ -1,3 +1,6 @@
+## Automated versioning: we do not want to store this file in Git
+src/cansig/_version.py
+
 ## Environment
 .idea/
 *.DS_Store
