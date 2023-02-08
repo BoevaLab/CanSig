@@ -680,6 +680,20 @@ a meta-signature is considered to be patient-specific</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="cansig.run.metasignatures.get_integration_dir">
+<span class="sig-prename descclassname"><span class="pre">cansig.run.metasignatures.</span></span><span class="sig-name descname"><span class="pre">get_integration_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">integ_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metamembership</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="headerlink" href="#cansig.run.metasignatures.get_integration_dir" title="Permalink to this definition">#</a></dt>
+<dd><p>Selects the latent spaced used to show the meta-signatures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>integ_dir</strong> – Path to the integration dir.</p></li>
+<li><p><strong>metamembership</strong> – pd.Df containing the hard meta-membership assignment of cells</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="cansig.run.metasignatures.main">
 <span class="sig-prename descclassname"><span class="pre">cansig.run.metasignatures.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.run.metasignatures.main" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
@@ -1296,6 +1310,15 @@ anndata, a slice (not a copy) with the other random split</p>
      <code class="docutils literal notranslate">
       <span class="pre">
        get_final_metasignatures()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cansig.run.metasignatures.get_integration_dir">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       get_integration_dir()
       </span>
      </code>
     </a>
