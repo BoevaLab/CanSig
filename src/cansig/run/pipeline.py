@@ -3,6 +3,9 @@
 Takes as input the data and multi-run specification, and then processes the data according
 to all models specified.
 In the end, produces summary.
+
+Use as:
+``$ python -m cansig.run.pipeline --help``
 """
 import argparse
 import logging
@@ -31,6 +34,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 def create_parser() -> argparse.ArgumentParser:
+    """Creates the CLI parser."""
     parser = argparse.ArgumentParser()
     parser.add_argument("data", type=pathlib.Path, help="HDF5 file containing the dataset.")
     parser.add_argument("--batch", type=str, help="Name of the column with batch (or sample) index.")
@@ -186,6 +190,9 @@ def create_parser() -> argparse.ArgumentParser:
         "running the differential CNV on the anndata object",
         default=None,
     )
+    parser.add_argument(
+        "--n-top-genes", type=int, default=2_000, help="Number of the most highly variable genes to use. Default: 2000."
+    )
 
     # CanSig Args
     parser.add_argument("--n-latent-batch-effect", type=int, default=5)
@@ -195,6 +202,7 @@ def create_parser() -> argparse.ArgumentParser:
 
 
 def generate_gsea_config(args) -> gsea.GeneExpressionConfig:
+    """Parses the CLI arguments into GSEA config."""
     return gsea.GeneExpressionConfig(
         gene_sets=args.gene_sets,
         method=args.dgex_method,
@@ -202,6 +210,7 @@ def generate_gsea_config(args) -> gsea.GeneExpressionConfig:
 
 
 def validate_args(args) -> None:
+    """Validates the arguments."""
     if not args.save_intermediate:
         raise NotImplementedError
 
@@ -211,6 +220,7 @@ def validate_args(args) -> None:
 
 
 def generate_model_configs(args) -> List[Union[models.SCVIConfig, models.CanSigConfig]]:
+    """Generates a list of model configs used for data integration from the CLI arguments."""
     lst = []
     for seed in range(args.model_runs):
         for dim in args.dimensions:
@@ -222,6 +232,7 @@ def generate_model_configs(args) -> List[Union[models.SCVIConfig, models.CanSigC
                     train=_scvi.TrainConfig(max_epochs=args.max_epochs),
                     continuous_covariates=args.continuous_covariates,
                     discrete_covariates=args.discrete_covariates,
+                    preprocessing=models.module_scvi.PreprocessingConfig(n_top_genes=args.n_top_genes),
                 )
             elif args.model == "cansig":
                 config = models.CanSigConfig(
@@ -233,6 +244,7 @@ def generate_model_configs(args) -> List[Union[models.SCVIConfig, models.CanSigC
                     train=_scvi.TrainConfig(max_epochs=args.max_epochs),
                     continuous_covariates=args.continuous_covariates,
                     discrete_covariates=args.discrete_covariates,
+                    preprocessing=models.module_cansig.PreprocessingConfig(n_top_genes=args.n_top_genes),
                 )
             else:
                 raise NotImplementedError(f"Model {args.model} not implemented.")
@@ -242,6 +254,7 @@ def generate_model_configs(args) -> List[Union[models.SCVIConfig, models.CanSigC
 
 
 def generate_plotting_config(args) -> plotting.ScatterPlotConfig:
+    """Generates the scatter plot config from the CLI arguments."""
     return plotting.ScatterPlotConfig(
         dim_reduction=args.dim_reduction,
         signature_columns=args.sigcols,
@@ -250,6 +263,7 @@ def generate_plotting_config(args) -> plotting.ScatterPlotConfig:
 
 
 def generate_clustering_configs(args) -> List[cluster.LeidenNClusterConfig]:
+    """Generates Leiden clustering configs from the CLI args."""
     lst = []
 
     for seed in range(args.cluster_runs):
@@ -272,6 +286,18 @@ def single_integration_run(
     plot: bool,
     savesig: bool,
 ) -> None:
+    """A single integration run with all matching postprocessing steps.
+
+    Args:
+        data_path: path to the AnnData object with the malignant data
+        integration_config: config for the data integration step
+        clustering_configs: list of configs specifying the clusterings to be applied to the latent codes
+        gsea_config: GSEA config applied to each clustering
+        multirun_dir: (created) multi-run directory where the output will be saved
+        plotting_config: plotting config for the scatter plot
+        plot: whether to produce and save the plot
+        savesig: whether to save the results of the differential gene expression analysis
+    """
     # First, we run the integration step
     integration_dir = multirun_dir.integration_directories / fs.get_directory_name()
 

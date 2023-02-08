@@ -50,14 +50,15 @@ def preprocessing(
     threshold_annotation: float = 0.6,
     depth_annotation: int = 6,
 ) -> ad.AnnData:
-    """
-    This is the pre-processing module of CanSig. For every batch several preprocessing
-    steps are run:
-     1. Running of standard quality control for scRNA-seq data.
-     2. Calling of CNVs.
-     3. Improving the split of malignant and non-malignant cells by clustering cells by
+    """This is the pre-processing module of CanSig.
+    For every batch several preprocessing steps are run:
+
+     #. Running of standard quality control for scRNA-seq data.
+     #. Calling of CNVs.
+     #. Improving the split of malignant and non-malignant cells by clustering cells by
         CNVs.
-     4. INference of subclones based on the CNVs.
+     #. INference of subclones based on the CNVs.
+
     In the end, all high quality cells are combined. After combining, known gene
     signatures are scored only on malignant cells and the cell cycle is scored on all
     cells.
@@ -70,10 +71,14 @@ def preprocessing(
             chromosome, start and end as columns. The chromosome needs to be stored as
             "chr<number of the chromsome that the gene belongs to>". In the .csv file
             the gene names are expected as the first column. Example:
-                >>> print(gene_order.head(2))
-                >>>             chromosome   start     end
-                >>>MIR1302-9.3        chr1   29554   31109
-                >>>FAM87B             chr1  752751  755214
+
+            .. code-block:: python
+
+               print(gene_order.head(2))
+               chromosome   start     end
+               MIR1302-9.3        chr1   29554   31109
+               FAM87B             chr1  752751  755214
+
         reference_groups: List of reference groups. A reference group is a tuple of
             celltypes that will be used together as one reference for infercnv. Cells in
             a reference group should have similar gene expression. Example:
@@ -125,8 +130,8 @@ def preprocessing(
     Notes:
         See further usage examples in the following tutorials:
 
-        1. :doc:`/preprocessing`
-        2. TODO: add link to colab
+        #. :doc:`/preprocessing`
+        #. TODO: add link to colab
 
     """
     if undetermined_celltypes is None:

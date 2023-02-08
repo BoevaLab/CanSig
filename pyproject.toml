@@ -19,6 +19,7 @@ exclude = '''
   | build
   | dist
   | docs
+  | \.pytype
 )/
 '''
 
@@ -27,4 +28,26 @@ addopts = "--cov=src/cansig"
 testpaths = [
     "tests",
 ]
+
+[tool.pytype]
+inputs = ["src", "tests"]
+
+[tool.interrogate]
+ignore-init-method = true
+ignore-init-module = true
+ignore-magic = false
+ignore-semiprivate = true
+ignore-private = true
+ignore-property-decorators = false
+ignore-nested-functions = true
+ignore-nested-classes = true
+exclude = ["setup.py", "docs", "build", "tests"]
+ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
+# possible values: 0 (minimal output), 1 (-v), 2 (-vv)
+verbose = 2
+quiet = false
+fail-under = 70
+whitelist-regex = []
+color = true
+omit-covered-files = false
 

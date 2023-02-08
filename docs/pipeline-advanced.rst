@@ -60,43 +60,6 @@ Example usage to disable plotting utilities
                                    --output tutorial-output \
                                    --disable-plots
 
-Saving signatures and scoring cells
------------------------------------
-
-CanSig finds signatures in cancer data: these signatures are defined as the most overexpressed genes in a biologically meaningful part of the subspace (approximated by a cluster).
-By default, running the pipeline will result the results of the differential gene expression analysis to be saved for each cluster (for more information on interpretation, see :ref:`interpretation`), as wells as the score for each cell for each of the signatures (defined as the 200 most positively differentially expressed genes in the cluster) and the correlation between the signatures.
-
-The results associated with signatures and scoring can be controlled through the three following command line arguments:
-
-* ``--disable-signatures``: if you do not want any of the results linked to signatures to be saved (ie differential gene expression analysis for each cluster, scores of each signature for each cell and correlation between signatures), then input this flag.
-* ``--ngenessig``: number of genes that define a signature associated with a cluster. The cells will be scored using the n top positively differentially expressed genes in the cluster, with n being the minimal value between the total number of differentially expressed genes and ngenessig inputted. Defaults to 200.
-* ``--corrmethod``: the method used to compute the correlation between the signatures; can be spearman or pearson. Defaults to pearson.
-
-Example usage to compute scores on cells using the 100 top most differentially expressed genes as a signature and using spearman to compute the correlation between signatures.
-
-.. code-block:: bash
-
-   $ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5 
-                                   --batch batch
-                                   --gene-sets MSigDB_Hallmark_2020 \
-                                   --dimensions 4 6 --model-runs 1 \
-                                   --clusters 2 3 5  --cluster-runs 1 \
-                                   --output tutorial-output \
-                                   --ngenessig 100 \
-                                   --corrmethod spearman 
-
-Example usage to disable saving any results linked to signatures 
-
-.. code-block:: bash
-
-   $ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5 
-                                   --batch batch
-                                   --gene-sets MSigDB_Hallmark_2020 \
-                                   --dimensions 4 6 --model-runs 1 \
-                                   --clusters 2 3 5  --cluster-runs 1 \
-                                   --output tutorial-output \
-                                   --disable-signatures                                 
-
 Running differential CNV analysis
 ---------------------------------
 
@@ -104,7 +67,8 @@ You have the option to perform differential CNV analysis. With original CNV call
 This module is deactivated by default. There are two main ways to run this analysis: the first assumes that you are using a data object that has been obtained using our preprocessing module (see :ref:`preprocessing`), the second can be run if provided with a external discretized CNV calling, even if the data object has not been obtained through our preprocessing module.
 
 .. note::
-   the data provided for the tutorial has been processed using our preprocessing module, and can be thus used for differential CNV analysis assuming so.
+   
+   The data provided for the tutorial has been processed using our preprocessing module, and can be thus used for differential CNV analysis assuming so.
 
 Differential CNV analysis for data preprocessed with our module
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -170,30 +134,32 @@ This will result in the same file as in the previous example with the addition o
 .. note::
    If trying to run this function as such on a data object that has not been processed with our preprocessing module, this will result in an ValueError
 
-Differential CNV analysis for data not processed with our module
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-This calling assumes the data was not processed using our module. In this case, you must provide a path to a .csv file that contains pre-called CNV. 
-This array must have the following structure:
-- first column should contain the cell IDs. The cell IDs must correspond to the cell IDs in the data object provided.
-- first row should contain the region IDs. This can correspond to any region you wish - if you have your own mapping, this could also be simply integers corresponding to specific regions.
-- values in the cells must be (positive or negative) integers. We thus assume your data has been discretized - running on a CNV array with non integer values will result in spurious results.
+.. 
+  .. Differential CNV analysis for data not processed with our module
+  .. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  This calling assumes the data was not processed using our module. In this case, you must provide a path to a .csv file that contains pre-called CNV. 
+  This array must have the following structure:
+  - first column should contain the cell IDs. The cell IDs must correspond to the cell IDs in the data object provided.
+  - first row should contain the region IDs. This can correspond to any region you wish - if you have your own mapping, this could also be simply integers corresponding to specific regions.
+  - values in the cells must be (positive or negative) integers. We thus assume your data has been discretized - running on a CNV array with non integer values will result in spurious results.
 
-.. note::
-   We in the tutorial data, we provide the file ``cnv_array.csv`` as an example valid CNV array.
+..
+  .. note::
+     We in the tutorial data, we provide the file ``cnv_array.csv`` as an example valid CNV array.
 
-The analysis can be controlled through four arguments in the command line:
+  The analysis can be controlled through four arguments in the command line:
 
-* ``--diffcnv``: this flag needs to be added for the differential CNV analysis to be performed. If not indicated, the differential CNV analysis is skipped.
-* ``--diffcnv-method``: (optional) the method used to perform the differential CNV analysis. Can be Mann-Whitney U (mwu, default) or a t-test (ttest).
-* ``--diffcnv-correction``: if you want to obtain False Discovery Rate (FDR) corrected results, add this flag. It is recommended to use these results rather than uncorrected p-values, as these can result in numerous false discoveries when blindly testing for differential expression (for more information, read https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1716-1)
-* ``--cnvarray``: the path to the CNV array as previously described
+  * ``--diffcnv``: this flag needs to be added for the differential CNV analysis to be performed. If not indicated, the differential CNV analysis is skipped.
+  * ``--diffcnv-method``: (optional) the method used to perform the differential CNV analysis. Can be Mann-Whitney U (mwu, default) or a t-test (ttest).
+  * ``--diffcnv-correction``: if you want to obtain False Discovery Rate (FDR) corrected results, add this flag. It is recommended to use these results rather than uncorrected p-values, as these can result in numerous false discoveries when blindly testing for differential expression (for more information, read https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1716-1)
+  * ``--cnvarray``: the path to the CNV array as previously described
 
-.. note::
+  .. note::
    Forgetting to add the ``--cnvarray`` flag will result in the differential CNV analysis being run on the data object provided, and thus will likely throw an error if this data has not been obtained using our preprocessing module.
 
-Example usage to compute the differential CNV analysis with default values (Mann Whitney U test, no FDR correction)
+  Example usage to compute the differential CNV analysis with default values (Mann Whitney U test, no FDR correction)
 
-.. code-block:: bash
+  .. code-block:: bash
 
    $ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5 
                                    --batch batch
@@ -204,17 +170,17 @@ Example usage to compute the differential CNV analysis with default values (Mann
                                    --diffcnv \
                                    --cnvarray data/pipeline-tutorial/cnv_array.csv
 
-This will result in the following file being added to the ``tutorial-output/`` directory, in addition to all the files/directories described on the homepage.
+  This will result in the following file being added to the ``tutorial-output/`` directory, in addition to all the files/directories described on the homepage.
 
-* ``postprocessing/``:
+  * ``postprocessing/``:
    * ``{rundir}/differential-cnvs.csv``: file containing the columns for each cluster cl
       - {cl}\_pvalues: contains the p values of the test cl vs rest
       - {cl}\_perc\_{gains/losses}: contains the percentage of cells in the cluster showing a gain/loss at this region
       - {cl}\_rest\_{gains/losses}: contains the percentage of cells in all but the cluster showing a gain/loss at this region
 
-Example usage to compute the differential CNV analysis with a t-test and with FDR corrected values (ie q-values)
+  Example usage to compute the differential CNV analysis with a t-test and with FDR corrected values (ie q-values)
 
-.. code-block:: bash
+  .. code-block:: bash
 
    $ python -m cansig.run.pipeline data/pipeline-tutorial/data.hdf5 
                                    --batch batch
@@ -227,7 +193,7 @@ Example usage to compute the differential CNV analysis with a t-test and with FD
                                    --diffcnv-correction \
                                    --cnvarray data/pipeline-tutorial/cnv_array.csv
 
-This will result in the same file as in the previous example with the addition of the columns
+  This will result in the same file as in the previous example with the addition of the columns
 
       - "{cl}\_qvalues": contains the q values of the test cl vs rest
 
@@ -240,15 +206,24 @@ For every model you consider, create a directory:
 ``my-models/``: directory with the results. In the pipeline case its called ``latent/``:
 
 * ``model1-name/``: model name, it can be arbitrary
-    * ``params.json``: model parameters, will be used to create a summary
-    * ``latent_representations.csv``: for each cell name (index column), the coordinates of the latent codes
+
+  * ``params.json``: model parameters, will be used to create a summary
+
+  * ``latent_representations.csv``: for each cell name (index column), the coordinates of the latent codes
+
 * ``model2-name/``: another directory, structured in the same manner
+
 * ...
 
-To help creating such directories, we created a template for the script wrapping your model at TODO
+To help creating such directories, we created auxiliary functions:
 
-.. todo::
-   Put a template for the wrapping script at GitHub (in a new ``templates/`` directory).
+.. code-block:: python
+
+   import cansig.filesystem as fs
+   
+   output_dir = fs.IntegrationDir(output, create=True)
+   fs.save_settings(settings=config, path=output_dir.integration_settings)
+   fs.save_latent_representations(representations=representations, path=output_dir.latent_representations)
 
 
 When the directory with different latent codes is ready, run:
@@ -270,14 +245,16 @@ If you do not wish the ``my-models/`` directory to be copied over into ``output-
 Understanding all the pipeline command line options
 ---------------------------------------------------
 
-The crux of CanSig is running the entire tool through the command:
+The core of the CanSig tool is the command:
 
 .. code-block::
 
    $ python -m cansig.run.pipeline
 
+which runs the entire analysis pipeline.
+
 This command comes with numerous flags to enable you to control the inputs/outputs of CanSig.
-We will describe each flag in detail here
+In this section we describe all available flags.
 
 .. note::
    You can get also get information on these flags by running 
@@ -286,24 +263,35 @@ We will describe each flag in detail here
 
       $ python -m cansig.run.pipeline --help
 
-* ``--batch``: the name of the column in which the batch information is stored. This will typically be the name of the column where the sample ID is stored, as generally each sample is processed separately.
-* ``--continuous-covariates``: continusous covariates for which one wishes to correct in the integration model. This could be the cell cycle score or the percentage of mitochondrial counts for example.
-* ``--discrete-covariates``: discrete covariates for which one wishes to correct in the integration model. This could be the subclonal structure for example.
-* ``--gene-sets``: gene set to use for GSEA. The input should be a string (valid for Enrichr) or a .gmt file. More information on these sets can found on the MSigDB website. 
+
+* ``--batch``: the name of the column in which the batch information is stored. 
+  This will typically be the name of the column where the sample ID is stored, as generally each sample is processed separately.
+* ``--continuous-covariates``: continuous covariates for which one wishes to condition on in the integration model. This could be the cell cycle score or the percentage of mitochondrial counts, for example.
+* ``--discrete-covariates``: similar for ``--continuos-covariates``, but should be used for columns with discrete/categorical variables. This could be the subclonal structure for example.
+* ``--gene-sets``: gene set to use for GSEA. The input should be a string (valid for Enrichr) or a ``.gmt`` file. More information on these sets can found on the MSigDB website. 
+* ``--n-top-genes N_TOP_GENES``: number of the most highly variable genes to use.
 * ``--model-runs``: number of random seeds used for initialization of each integration model. If you are running a integration model with 4 latent dimensions and 3 model runs, this will result in 3 different latent representations for the same number of dimensions.
 * ``--cluster-runs``: number of random seeds used for initizalization of each postprocessing run. If you are running postprocessing with 6 clusters and 2 cluster runs, this will result in 2 different clustering partitions for the same number of clusters.
-* ``--max-epochs``: maximum number of epochs the integration model will run for 
+* ``--max-epochs``: maximum number of epochs the integration model will be trained for. 
 * ``--dimensions``: list of number of latent dimensions used for integration 
 * ``--clusters``: list of number of clusters used for postprocessing
-* ``--output``: name of the folder in which the output will be stored (the folder will be created if not already present)
-* ``--dim-reduction``: the name of the dimensionality reduction method used to plot the latent space - can be PCA, UMAP or both (using insets)
-* ``--sigcols``: the name of the columns in the .obs according to which to color the plots 
+* ``--output``: name of the folder in which the output will be stored (the folder will be created).
+* ``--dim-reduction``: the name of the dimensionality reduction method used to plot the latent space (can be PCA, UMAP or both).
+* ``--sigcols``: the name of the columns in the ``.obs`` according to which to color the plots 
 * ``--disable-plots``: if set, no plots will be created to visualize the latent space (the run will be quicker when this option is on)
+* ``--dgex-method``: method used to perform the differential gene expression analysis.
 * ``--ngenessig``: number of genes to use to define a signature to score 
 * ``--corrmethod``: correlation method used to correlate de novo found signatures
 * ``--disable-signatures``: if set, no information linked to de novo signatures found will be saved (the run will require less memory when this option is on). 
 * ``--diffcnv``: if set, the differential CNV analysis will be run. For more information, see the part about running the differential CNV analysis on this page.
-* ``--diffcnv-method``: the method used to perform the differential CNV (can be ttest or mwu)
+* ``--diffcnv-method``: the method used to perform the differential CNV.
 * ``--subclonalcnv``: if set, the differential CNV analysis will be run using the subclonal inferred CNV representation for each cell, rather than the per cell CNV call.
 * ``--diffcnv-correction``: if set, the False Discovery Rate corrected q-value will be computed for the differential CNV analysis.
-* ``--cnvarray``: if running the differential CNV analysis on an external array (for those who did not preprocess their data using our preprocessing module), the path to the CNV array used for differential CNV.
+* ``--cnvarray``: if running the differential CNV analysis on an external array (for those who did not preprocess their data using our preprocessing module), the path to the CNV array used for differential CNV. Using this flag will automatically *disable* running the differential CNV on the AnnData object.
+* ``--save-intermediate``: whether the intermediate results should be saved. By default, the results are saved. Turning this off is discouraged, unless the system memory is very limited.
+* ``--linkage``: the linkage used for the agglomerative clustering for metasignatures.
+* ``--sim-method``: similarity metric to be used to compare signatures.
+* ``--threshold``: the threshold above which a metasignature is considered too correlated with another.
+* ``--pat-specific-threshold``: the threshold above which a metasignature is considered patient-specific.
+* ``--model``, ``--n-latent-batch-effect`` and ``--n-latent-cnv``: settings for the new experimental integration method. Currently we suggest to use the default integration method in the CanSig pipeline.
+

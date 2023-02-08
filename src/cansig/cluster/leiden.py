@@ -1,3 +1,8 @@
+"""Wrappers around the Leiden clustering algorithm.
+
+We allow the parametrizations both in terms of the resolution (standard one)
+and the number of clusters (a custom one, using binary search over the resolution).
+"""
 from typing import Literal  # pytype: disable=not-supported-yet
 from typing import Optional
 
@@ -38,6 +43,7 @@ _SupportedMetric = Literal[
 
 class NeighborsGraphConfig(pydantic.BaseModel):
     """Settings for neighborhood graph computation.
+
     For description, see
     https://scanpy.readthedocs.io/en/stable/generated/scanpy.pp.neighbors.html
     """
@@ -63,18 +69,26 @@ def _build_neighborhood_graph(data: an.AnnData, config: NeighborsGraphConfig, ra
 
 
 class _LeidenBaseConfig(pydantic.BaseModel):
-    nngraph: NeighborsGraphConfig = pydantic.Field(default_factory=NeighborsGraphConfig)
+    """Private base class. All Leiden configs will probably inherit from this one."""
+
+    nngraph: NeighborsGraphConfig = pydantic.Field(
+        default_factory=NeighborsGraphConfig, description="Nearest neighbor graph construction settings."
+    )
     random_state: int = pydantic.Field(default=0)
-    directed: bool = pydantic.Field(default=True)
+    directed: bool = pydantic.Field(default=True, description="Whether the graph should be directed.")
     use_weights: bool = pydantic.Field(default=True)
     n_iterations: int = pydantic.Field(default=-1)
 
 
 class LeidenResolutionConfig(_LeidenBaseConfig):
-    resolution: float = pydantic.Field(default=1.0)
+    """Leiden config parametrized by the resolution parameter."""
+
+    resolution: float = pydantic.Field(default=1.0, description="The resolution to be used.")
 
 
 class BinSearchSettings(pydantic.BaseModel):
+    """Settings for binary searching a resolution corresponding to the specified number of clusters."""
+
     start: pydantic.PositiveFloat = pydantic.Field(default=1e-3, description="The minimal resolution.")
     end: pydantic.PositiveFloat = pydantic.Field(default=10.0, description="The maximal resolution.")
     epsilon: pydantic.PositiveFloat = pydantic.Field(
@@ -83,21 +97,27 @@ class BinSearchSettings(pydantic.BaseModel):
 
     @pydantic.validator("end")
     def validate_end_greater_than_start(cls, v, values, **kwargs) -> float:
+        """Validates whether end > start."""
         if v <= values["start"]:
             raise ValueError("In binary search end must be greater than start.")
         return v
 
 
 class LeidenNClusterConfig(_LeidenBaseConfig):
+    """Config used to parametrize Leiden clustering in terms of the number of clusters rather than the resolution."""
+
     clusters: int = pydantic.Field(default=5, description="The number of clusters to be returned.")
     binsearch: BinSearchSettings = pydantic.Field(default_factory=BinSearchSettings)
 
 
 class LeidenResolution(ICluster):
+    """The Leiden clustering algorithm parametrised in terms of the resolution."""
+
     def __init__(self, settings: LeidenResolutionConfig) -> None:
         self._settings = settings
 
     def fit_predict(self, X: ArrayLike, y=None) -> np.ndarray:
+        """See the corresponding protocol definition."""
         points = an.AnnData(X=np.asarray(X), dtype=X.dtype)
         _build_neighborhood_graph(points, config=self._settings.nngraph, random_state=self._settings.random_state)
 
@@ -114,10 +134,13 @@ class LeidenResolution(ICluster):
 
 
 class LeidenNCluster(ICluster):
+    """The Leiden clustering algorithm parametrised in terms of the number of clusters."""
+
     def __init__(self, settings: LeidenNClusterConfig) -> None:
         self._settings = settings
 
     def fit_predict(self, X: ArrayLike, y=None) -> np.ndarray:
+        """See the corresponding protocol definition."""
         adata = an.AnnData(X=np.asarray(X), dtype=X.dtype)
         _build_neighborhood_graph(adata, config=self._settings.nngraph, random_state=self._settings.random_state)
 

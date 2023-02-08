@@ -79,7 +79,7 @@ html_theme = "pydata_sphinx_theme"
 html_static_path = ["_static"]
 
 # Options for the theme, as specified there:
-# https://pydata-sphinx-theme.readthedocs.io/en/stable/user_guide/configuring.html
+# https://pydata-sphinx-theme.readthedocs.io/en/stable/
 
 html_theme_options = {
     "icon_links": [

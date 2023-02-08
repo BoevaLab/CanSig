@@ -2,8 +2,6 @@
 
 Input data format
 =================
-.. note::
-    This tutorial is meant for researchers with little to no experience with coding.
 
 We highly recommend you use our preprocessing module (see :ref:`preprocessing`) to preprocess your data. 
 This will ensure the data you input in CanSig is in the correct format and will enable smooth use of functionalities like differential CNV analysis.

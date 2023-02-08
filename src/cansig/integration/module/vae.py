@@ -373,11 +373,13 @@ class VAECanSig(CanSigBaseModule):
             tensor with shape (n_cells, n_genes, n_samples)
         """
         inference_kwargs = dict(n_samples=n_samples)
+        # fmt: off
         inference_outputs, generative_outputs, = self.forward(
             tensors,
             inference_kwargs=inference_kwargs,
             compute_loss=False,
         )
+        # fmt: on
 
         px_r = generative_outputs["px_r"]
         px_rate = generative_outputs["px_rate"]

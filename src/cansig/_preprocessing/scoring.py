@@ -226,7 +226,6 @@ class SignatureScorer:
     def update_cell_cycle_genes(
         g2m_genes: Optional[List[str]], s_genes: Optional[List[str]], gene_list: List[str]
     ) -> Tuple[Optional[List[str]], Optional[List[str]]]:
-
         if g2m_genes is None:
             g2m_genes = _DEFAULT_G2M_GENES
         if s_genes is None:

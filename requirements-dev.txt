@@ -1,9 +1,10 @@
-black
+black==22.10.0
 flake8
+interrogate
 pre-commit
 pydata-sphinx-theme
 pytest
 pytest-cov
 pytest-xdist
 pytype
-sphinx
+sphinx<6

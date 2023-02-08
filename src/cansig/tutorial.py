@@ -22,6 +22,14 @@ _PREPROCESSED_URL = ""
 
 @dataclasses.dataclass
 class Dataset:
+    """Represents a data set:
+
+    Attrs:
+      url: where to download it from
+      md5sum: the MD5 checksum of the data set
+      filepath: where to save it
+    """
+
     url: str
     md5sum: str
     filepath: str

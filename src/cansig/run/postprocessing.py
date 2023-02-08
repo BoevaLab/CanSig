@@ -1,3 +1,4 @@
+"""The high-level postprocessing utilities."""
 import argparse
 import logging
 import pathlib
@@ -18,6 +19,7 @@ OUTPUT_BASE_PATH = pathlib.Path("outputs/postprocessing")
 
 
 def parse_args():
+    """Creates the CLI argument parser."""
     parser = argparse.ArgumentParser()
     parser.add_argument("data", type=pathlib.Path, help="The path to the original anndata object.")
     parser.add_argument("latents", type=pathlib.Path, help="The path to the directory with integration results.")
@@ -164,6 +166,7 @@ def postprocess(
 
 
 def main(args):
+    """Parses the CLI arguments and runs postprocessing."""
     clogger.configure_logging(args.log)
     LOGGER.info("Starting a postprocessing run...")
 

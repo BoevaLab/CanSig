@@ -142,6 +142,31 @@ def get_final_metasignatures(
     threshold_n_rep: float,
     pat_specific_threshold: float,
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, Dict[str, List[str]]]:
+    """Computes and saves the metasignatures and their characteristics
+
+    Args:
+
+        sim: array of size (n_signatures, n_signatures) with the pairwise similarity between signatures
+        adata: original adata on which the analysis is performed; used to compute correlations between meta-signatures
+        signatures: list of all the signatures (genes are ordered according to diff expression)
+        runs: the run indices for all signatures
+        sig_index: a list with [iteration, n_clusters] for each signature
+        cluster_memb: a list with the cluster membership for all cells for all iterations
+        threshold: the threshold above which two meta-signatures are considered to be too correlated.
+            the higher this threshold, the more meta-signatures will be found. The lower, the more
+            conservative the meta-signature discovery.
+        batch_key: the name of the column where the batch information is stored in the adata
+        resdir: MetaSig dir to where the results should be saved
+        linkage: a str defining what linkage to use for the agglomerative clustering
+        threshold_n_rep: the fraction of total signatures under which a found meta-signature
+            is considered as an outlier
+        pat_specific_threshold: the fraction of cells assigned to a meta-signature over which
+            a meta-signature is considered to be patient-specific
+
+    See also:
+        metasignatures.utils.get_runs_sig
+    """
+
     _LOGGER.info("Get the clustering for signatures.")
 
     clusters = clustering.get_final_clustering_jaccard(
@@ -182,13 +207,26 @@ def plot_metasignatures(
     clusters: np.ndarray,
     resdir: fs.MetasigDir,
     resdict: Dict[str, Union[List, np.ndarray]],
-    meta_signatures: Dict[str, Union[List, np.ndarray]],
 ) -> None:
+    """Plots the metasignatures as a heatmap, the correlation between metasignatures as a clustermap, and
+        the signatures in MDS/UMAP space
+
+    Args:
+
+        meta_results: correlation between the obtained meta-signatures
+        sim: array of size (n_signatures, n_signatures) with the pairwise similarity between signatures
+        idx: the indices of the signatures sorted by cluster assignment
+        clusters: cluster assignment for each signature
+        resdir: MetaSig dir to where the results should be saved
+        resdict: dictionary containing all the information about the signatures as obtained with get_runs_sig
+
+    See also:
+        metasignatures.utils.get_runs_sig
+    """
     _LOGGER.info("Get the clustering for signatures.")
     utils.plot_clustermap(results=meta_results, resdir=resdir.figures_output)
     utils.plot_heatmap(sim=sim, idx=idx, resdir=resdir.figures_output)
     utils.viz_clusters_runs(sim=sim, clusters=clusters, runs=resdict["runs"], resdir=resdir.figures_output)
-    utils.save_metasignatures(meta_signatures=meta_signatures, res_dir=resdir.sig_output)
 
 
 def plot_latent_score(
@@ -198,8 +236,28 @@ def plot_latent_score(
     integ_dir: Optional[Union[str, pl.Path]],
     cell_metamembership: pd.DataFrame,
     prob_cellmetamembership: pd.DataFrame,
+    batch_column: str,
 ) -> None:
-    utils.plot_score_UMAP(adata=adata, meta_signatures=meta_signatures, resdir=resdir.figures_output)
+
+    """Plots the cells in score space and in a latent space of choice, colored according to the metamembership and
+        the probability of the metamembership
+
+    Args:
+
+        adata: original adata on which the analysis is performed
+        resdir: path to where the results should be saved
+        meta_signatures: a dictionary with the meta-signature index as key and the genes ordered in
+            the meta-signature by mean rank over all signatures in the meta-signature
+        integ_dir: path to the directory where the integration results are saved
+        cell_metamembership: pd.Df containing the hard meta-membership assignment of cells
+        prob_cellmetamembership: pd.Df containing the probability of belonging to each meta-signature for
+            each cell
+        batch_column: name of the column where the batch information is stored in the original adata
+
+    See also:
+        metasignatures.clustering.get_cell_metamembership
+    """
+    utils.plot_score_UMAP(adata=adata, meta_signatures=meta_signatures, resdir=resdir.figures_output, len_sig=50)
 
     _LOGGER.info("Plotting latent space with metamemberships.")
     integ_dir = pl.Path(integ_dir)
@@ -212,12 +270,22 @@ def plot_latent_score(
         prob_metamembership=prob_cellmetamembership,
         integration_path=integ_path,
         resdir=resdir.figures_output,
+        batch_column=batch_column,
     )
 
 
 def select_signatures(
     resdict: Dict[str, List],
 ) -> Tuple[Union[np.ndarray, List[str]], int, Union[np.ndarray, List[int]], Union[np.ndarray, List[int]], pd.DataFrame]:
+    """A helper function that returns the full information on signatures with signatures that are too weak removed
+
+    Args:
+
+        resdict: dictionary containing all the information about the signatures as obtained with get_runs_sig
+
+    See also:
+        metasignature.utils.get_runs_sig
+    """
     signatures = np.array(resdict["signatures"]).copy()[np.array(resdict["passed"]), :]
     n_genes = resdict["n_genes"][0]
     runs = np.array(resdict["runs"]).copy()[np.array(resdict["passed"])]
@@ -251,6 +319,49 @@ def run_metasignatures(
     pat_specific_threshold: float = 0.75,
     linkage: str = "average",
 ) -> None:
+
+    """Main function of the metasignature module. Will find the metasignatures by:
+        - selecting signatures to cluster
+        - computing the similarity between signatures
+        - obtaining the meta-signatures through iterative clustering with a specified max threshold
+            between two meta-signatures
+        - computing the cell meta-memberships
+        - (optional) plotting the signatures with heatmap, clustermap, MDS/UMAP and UMAP in score space
+        - performing GSEA on the meta-signatures
+        - (optional) performing differential CNV analysis on the meta-signatures
+
+    Args:
+
+        rundir: path to where the postprocessing runs are stored
+        resdir: path to where the metasignature results should be stored
+        integ_dir: path to where the integration runs are stored
+        batch: name of the column where the batch information is stored in the adata
+        gsea_config: a GeneExpressionConfig instance with info for running GSEA
+        diffcnv: if True, the differential CNV analysis is performed
+        subclonvalcnv: if True, use the subcloncal CNV profile rather than the per-cell profile
+            to perform diff CNV analysis
+        diffcnv_method: the statistical test to use for differential CNV analysis
+        diffcnv_correction: if True, compute FDR corrected values for the diff CNV analysis
+        data_path: path to where the .h5ad data on which the analysis is performed is stored
+        cnvarray_path: optional, if the analysis isn't run using our preprocessing module,
+            the user can provide a CNV array to perform differential CNV analysis
+        sim_method: the method to compute similarity (can be jaccard or WRC)
+        threshold: the threshold above which two meta-signatures are considered to be too correlated.
+            the higher this threshold, the more meta-signatures will be found. The lower, the more
+            conservative the meta-signature discovery.
+        plots: if True, computes and saves all the auxiliary plotting functions to visualize
+            the meta-signatures
+        sim: if provided, the similarity computation is skipped and the provided similarity
+            array is used instead. Must be of size (n_signatures, n_signatures)
+        threshold_n_rep: the fraction of total signatures under which a found meta-signature
+            is considered as an outlier
+        pat_specific_threshold: the fraction of cells assigned to a meta-signature over which
+            a meta-signature is considered to be patient-specific
+        linkage: a str defining the linkage used in the agglomerative clustering
+
+    See also:
+        gsea.GeneExpressionConfig, metasignatures.WRC.WRC, get_final_metasignatures
+    """
 
     resdir = fs.MetasigDir(resdir, create=True)
     rundir = pl.Path(rundir)
@@ -314,7 +425,6 @@ def run_metasignatures(
         os.makedirs(resdir.figures_output, exist_ok=True)
         plot_metasignatures(
             meta_results=meta_results,
-            meta_signatures=meta_signatures,
             sim=sim,
             idx=idx,
             clusters=clusters,
@@ -329,6 +439,7 @@ def run_metasignatures(
             integ_dir=integ_dir,
             cell_metamembership=cell_metamembership,
             prob_cellmetamembership=prob_cellmetamembership,
+            batch_column=batch,
         )
 
     _LOGGER.info("Performing GSEA.")
@@ -350,7 +461,7 @@ def run_metasignatures(
         adata_copy.obs = pd.concat([adata_copy.obs, cell_metamembership], axis=1, join="inner")
 
         if cnvarray_path is None:
-            print("Computing the differential CNVs using the provided AnnData object")
+            _LOGGER.info("Computing the differential CNVs using the provided AnnData object")
             diffCNVs = cnv.find_differential_cnv(
                 data=adata_copy,
                 diff_method=diffcnv_method,
@@ -361,7 +472,7 @@ def run_metasignatures(
             cnv.save_diffcnv(diffCNVs=diffCNVs, output_file=resdir.dcnv_output)
 
         else:
-            print("Computing the differential CNVs using a user-provided CNV array")
+            _LOGGER.info("Computing the differential CNVs using a user-provided CNV array")
             cnvarray = pd.read_csv(cnvarray_path, index_col=0)
             cl_labels = cnv.get_cluster_labels(data=adata, batch_key=batch)
             diffCNVs = cnv.find_differential_cnv_precomputed(

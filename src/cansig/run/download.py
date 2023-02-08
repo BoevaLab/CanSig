@@ -13,9 +13,10 @@ PREPROCESSING = "PREPROCESSING"
 
 
 def create_parser() -> argparse.ArgumentParser:
+    """Creates the CLI parser."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "what",
+        "--dataset",
         help="The type of data to be downloaded. (Different tutorials use different datasets).",
         type=str,
         choices=[PIPELINE, PREPROCESSING],
@@ -55,8 +56,8 @@ def download_hdf5(destination: Optional[str]) -> str:
         print("Downloading the ZIP version of the dataset...")
 
         tutorial.download_file_to_path(
-            source_url="https://polybox.ethz.ch/index.php/s/NdjJLiNGcEwiswd/download",
-            md5sum="7ea79c0e799b2b560c92cb2062f8d257",
+            source_url="https://cloud.inf.ethz.ch/s/Lq84JL7T6teWF8a/download/simulated.zip",
+            md5sum="706b19914ae7b9affdf15dd4be5b8c6c",
             path=zip_path,
             verbose=True,
         )
@@ -86,12 +87,13 @@ def download_preprocessing(destination: Optional[str]) -> str:
 
 
 def main() -> None:
+    """Parses the argument and downloads the data set."""
     parser = create_parser()
     args = parser.parse_args()
 
-    if args.what == PIPELINE:
+    if args.dataset == PIPELINE:
         downloaded_path = download_hdf5(destination=args.destination)
-    elif args.what == PREPROCESSING:
+    elif args.dataset == PREPROCESSING:
         downloaded_path = download_preprocessing(destination=args.destination)
     else:
         raise ValueError(f"Dataset {args.what} not recognized.")

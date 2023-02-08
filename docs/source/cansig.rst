@@ -12,20 +12,13 @@ Subpackages
    cansig.integration
    cansig.interface
    cansig.metaanalysis
+   cansig.metasignatures
    cansig.models
    cansig.plotting
    cansig.run
 
 Submodules
 ----------
-
-cansig.api module
------------------
-
-.. automodule:: cansig.api
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 cansig.filesys module
 ---------------------
