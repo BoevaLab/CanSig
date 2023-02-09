@@ -462,6 +462,22 @@ We check whether the <code class="docutils literal notranslate"><span class="pre
 </div>
 </section>
 </section>
+<section id="releasing-a-new-version">
+<h2>Releasing a new version<a class="headerlink" href="#releasing-a-new-version" title="Permalink to this heading">#</a></h2>
+<p>In this section we briefly discuss how to upload new version to PyPI. It is based on the <a href="#id6"><span class="problematic" id="id7">`official instructions &lt;https://packaging.python.org/en/latest/tutorials/packaging-projects/`_</span></a>.</p>
+<ol class="arabic simple">
+<li><p>Activate the development environment.</p></li>
+<li><p>Install <code class="docutils literal notranslate"><span class="pre">twine</span></code> (if you do not have it already) with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--upgrade</span> <span class="pre">twine</span></code>.</p></li>
+<li><p>Bump version in the <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code> file. We use <a class="reference external" href="https://py-pkgs.org/07-releasing-versioning.html">semantic versioning</a>.</p></li>
+<li><p>Make sure that the <code class="docutils literal notranslate"><span class="pre">dist/</span></code> directory is empty.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">build</span></code> and check if the <code class="docutils literal notranslate"><span class="pre">dist/</span></code> directory contains only the new version.</p></li>
+<li><p>Upload the package to TestPyPI with <code class="docutils literal notranslate"><span class="pre">twine</span> <span class="pre">upload</span> <span class="pre">--repository</span> <span class="pre">testpypi</span> <span class="pre">dist/*</span></code>.</p></li>
+<li><p>Go to a different directory (which does not contain <code class="docutils literal notranslate"><span class="pre">CanSig</span></code>) and using a <em>new environment</em>, install the package from TestPyPI: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-i</span> <span class="pre">https://test.pypi.org/simple/</span> <span class="pre">cansig</span></code>. It is often convenient to reinstall the version from the previous test with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">cansig</span></code>.</p></li>
+<li><p>Test whether the package installed properly. For example, run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">cansig.run.pipeline</span> <span class="pre">--help</span></code> and check if it does not raise exceptions.</p></li>
+<li><p>If the package seems to work, go back to the development environment (with <code class="docutils literal notranslate"><span class="pre">twine</span></code> installed) and upload it to the PyPI via <code class="docutils literal notranslate"><span class="pre">twine</span> <span class="pre">upload</span> <span class="pre">dist/*</span></code>.</p></li>
+<li><p>Commit the new <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code> file and submit a PR which bumps the version.</p></li>
+</ol>
+</section>
 </section>
 
 
@@ -538,6 +554,11 @@ We check whether the <code class="docutils literal notranslate"><span class="pre
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#releasing-a-new-version">
+   Releasing a new version
+  </a>
  </li>
 </ul>
 
