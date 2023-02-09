@@ -105,3 +105,19 @@ We check whether the ``requirements.txt`` is the union of the other two files us
 
 .. note:: Currently this script *does not* parse lines containing both the module and the comment. It is very simple.
 
+
+Releasing a new version
+-----------------------
+In this section we briefly discuss how to upload new version to PyPI. It is based on the `official instructions <https://packaging.python.org/en/latest/tutorials/packaging-projects/`_.
+
+#. Activate the development environment.
+#. Install ``twine`` (if you do not have it already) with ``pip install --upgrade twine``.
+#. Bump version in the ``setup.cfg`` file. We use `semantic versioning <https://py-pkgs.org/07-releasing-versioning.html>`_.
+#. Make sure that the ``dist/`` directory is empty.
+#. Run ``python -m build`` and check if the ``dist/`` directory contains only the new version.
+#. Upload the package to TestPyPI with ``twine upload --repository testpypi dist/*``.
+#. Go to a different directory (which does not contain ``CanSig``) and using a *new environment*, install the package from TestPyPI: ``pip install -i https://test.pypi.org/simple/ cansig``. It is often convenient to reinstall the version from the previous test with ``pip uninstall cansig``.
+#. Test whether the package installed properly. For example, run ``python -m cansig.run.pipeline --help`` and check if it does not raise exceptions.
+#. If the package seems to work, go back to the development environment (with ``twine`` installed) and upload it to the PyPI via ``twine upload dist/*``.
+#. Commit the new ``setup.cfg`` file and submit a PR which bumps the version.
+
