@@ -108,7 +108,7 @@ We check whether the ``requirements.txt`` is the union of the other two files us
 
 Releasing a new version
 -----------------------
-In this section we briefly discuss how to upload new version to PyPI. It is based on the `official instructions <https://packaging.python.org/en/latest/tutorials/packaging-projects/`_.
+In this section we briefly discuss how to upload new version to PyPI. It is based on the `official instructions <https://packaging.python.org/en/latest/tutorials/packaging-projects/>`_.
 
 #. Activate the development environment.
 #. Install ``twine`` (if you do not have it already) with ``pip install --upgrade twine``.
