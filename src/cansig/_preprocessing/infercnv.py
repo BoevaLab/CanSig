@@ -5,9 +5,9 @@ import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 
+from cansig._preprocessing._infercnv import infercnv  # pytype: disable=import-error
 from cansig._preprocessing.utils import Normalized  # pytype: disable=import-error
 from cansig.types import Pathlike  # pytype: disable=import-error
-from cansig._preprocessing._infercnv import infercnv  # pytype: disable=import-error
 
 _LOGGER = logging.Logger(__name__)
 
@@ -158,7 +158,7 @@ class ReferenceConfig(pydantic.BaseModel):
 
 
 def get_reference_groups(
-    adata: anndata.AnnData,
+    obs: pd.DataFrame,
     celltype_column: str,
     reference_groups,
     config: ReferenceConfig,
@@ -166,13 +166,13 @@ def get_reference_groups(
     min_reference_cells: int = 20,
     min_reference_groups: int = 2,
 ):
-    adata.obs[reference_key] = adata.obs[celltype_column].apply(
+    obs[reference_key] = obs[celltype_column].apply(
         lambda cell_type: _annotate_reference(cell_type, reference_groups, config)
     )
 
-    valid_ref_groups = get_valid_reference_groups(adata, reference_key, min_reference_cells, config)
+    valid_ref_groups = get_valid_reference_groups(obs, reference_key, min_reference_cells, config)
 
-    valid_ref_groups = reduce_reference_groups(adata, valid_ref_groups, min_reference_groups, reference_key, config)
+    valid_ref_groups = reduce_reference_groups(obs, valid_ref_groups, min_reference_groups, reference_key, config)
     return valid_ref_groups
 
 
@@ -190,18 +190,18 @@ def _annotate_reference(celltype: str, reference_groups: Iterable[Iterable[str]]
 
 
 def get_valid_reference_groups(
-    adata: anndata.AnnData, reference_key: str, min_reference_cells: int, config: ReferenceConfig
+    obs: pd.DataFrame, reference_key: str, min_reference_cells: int, config: ReferenceConfig
 ) -> List[str]:
-    n_cell_per_ref_group = adata.obs[reference_key].value_counts()
-    valid_ref_groups = n_cell_per_ref_group.index[
-        (n_cell_per_ref_group >= min_reference_cells)
-        & n_cell_per_ref_group.index.str.startswith(config.reference_prefix)
-    ].tolist()
+    n_cell_per_ref_group = obs[reference_key].value_counts()
+    idx = (n_cell_per_ref_group >= min_reference_cells) & n_cell_per_ref_group.index.str.startswith(
+        config.reference_prefix
+    )
+    valid_ref_groups = n_cell_per_ref_group.index[idx].tolist()
     return valid_ref_groups
 
 
 def reduce_reference_groups(
-    adata: anndata.AnnData,
+    obs: pd.DataFrame,
     valid_ref_groups: List[str],
     min_reference_groups: int,
     reference_key: str,
@@ -219,12 +219,31 @@ def reduce_reference_groups(
     Returns:
 
     """
+    obs[reference_key] = obs[reference_key].astype("category")
     if len(valid_ref_groups) < min_reference_groups:
-        adata.obs.loc[
-            adata.obs[reference_key].str.startswith(config.reference_prefix), reference_key
-        ] = config.reference_group(0)
+        _LOGGER.info(
+            f"Found {len(valid_ref_groups)} valid reference groups which is "
+            f"less than min_reference_groups={min_reference_groups}. "
+            f"Therefore, assigning all reference cells to one reference group."
+        )
+        _add_category(obs, reference_key, config.reference_group(0))
+        idx = obs[reference_key].str.startswith(config.reference_prefix)
+        obs.loc[idx, reference_key] = config.reference_group(0)
         valid_ref_groups = [config.reference_group(0)]
     else:
-        adata.obs.loc[~adata.obs[reference_key].isin(valid_ref_groups), reference_key] = config.non_reference
+        _add_category(obs, reference_key, config.non_reference)
+        idx = ~obs[reference_key].isin(valid_ref_groups)
+        obs.loc[idx, reference_key] = config.non_reference
 
     return valid_ref_groups
+
+
+def _add_category(obs: pd.DataFrame, reference_key: str, category: str) -> None:
+    """Helper function to add a category to a categorical column.
+    Args:
+        obs: adata.obs.
+        reference_key: column key for the reference groups.
+        category: category to be added to obs[reference_key].
+    """
+    if category not in obs[reference_key].cat.categories:
+        obs[reference_key] = obs[reference_key].cat.add_categories([category])

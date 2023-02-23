@@ -197,7 +197,7 @@ def preprocessing(
             continue
 
         reference_cat = get_reference_groups(
-            adata,
+            adata.obs,
             celltype_column=celltype_column,
             reference_groups=reference_groups,
             min_reference_groups=min_reference_groups,
