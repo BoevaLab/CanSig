@@ -192,11 +192,9 @@ def _annotate_reference(celltype: str, reference_groups: Iterable[Iterable[str]]
 def get_valid_reference_groups(
     obs: pd.DataFrame, reference_key: str, min_reference_cells: int, config: ReferenceConfig
 ) -> List[str]:
-    n_cell_per_ref_group = obs[reference_key].value_counts()
-    idx = (n_cell_per_ref_group >= min_reference_cells) & n_cell_per_ref_group.index.str.startswith(
-        config.reference_prefix
-    )
-    valid_ref_groups = n_cell_per_ref_group.index[idx].tolist()
+    n_cells = obs[reference_key].value_counts()
+    idx = (n_cells >= min_reference_cells) & (n_cells.index.str.startswith(config.reference_prefix))
+    valid_ref_groups = n_cells.index[idx].tolist()
     return valid_ref_groups
 
 
