@@ -297,7 +297,7 @@ def get_integration_dir(integ_dir: Union[str, pl.Path], metamembership: pd.DataF
         adata = ad.AnnData(X=latent.values, obs=metamem, dtype=np.float32)
         sc.pp.neighbors(adata)
         sc.tl.umap(adata)
-        metamem = metamem[metamem["metamembership"] != "-2.0"]
+        metamem = metamem[metamem["metamembership"].astype(str) != "-2.0"]
         adata = adata[metamem.index]
 
         aws.append(metrics.silhouette_score(adata.obsm["X_umap"], metamem.values.ravel()))
