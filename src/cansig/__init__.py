@@ -1,15 +1,12 @@
-import cansig.cluster.leiden  # pytype: disable=import-error
-import cansig.cnvanalysis.differentialcnvs  # pytype: disable=import-error
-import cansig.filesys  # pytype: disable=import-error
-import cansig.gsea  # pytype: disable=import-error
-import cansig.metaanalysis.heatmap  # pytype: disable=import-error
-import cansig.metaanalysis.repr_directory  # pytype: disable=import-error
-import cansig.models.scvi  # pytype: disable=import-error
-import cansig.multirun  # pytype: disable=import-error
-import cansig.plotting.plotting  # pytype: disable=import-error
-import cansig.metasignatures  # noqa F401 # pytype: disable=import-error
-
-from cansig._preprocessing.main import preprocessing  # noqa F401 # pytype: disable=import-error
+import cansig.cluster.leiden  # noqa F401  # pytype: disable=import-error
+import cansig.cnvanalysis.differentialcnvs  # noqa F401  # pytype: disable=import-error
+import cansig.filesys  # noqa F401  # pytype: disable=import-error
+import cansig.gsea  # noqa F401  # pytype: disable=import-error
+import cansig.metasignatures  # noqa F401  # noqa F401 # pytype: disable=import-error
+import cansig.models.scvi  # noqa F401  # pytype: disable=import-error
+import cansig.multirun  # noqa F401 # pytype: disable=import-error
+import cansig.plotting  # noqa F401 # pytype: disable=import-error
+from cansig.preprocessing.main import preprocessing  # noqa F401 # pytype: disable=import-error
 
 __all__ = [
     "preprocessing",
@@ -17,7 +14,6 @@ __all__ = [
     "cnvanalysis",
     "filesys",
     "gsea",
-    "metaanalysis",
     "models",
     "plotting",
     "multirun",

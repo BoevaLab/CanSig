@@ -3,16 +3,16 @@ from typing import List, Union, Tuple, Optional
 # pytype: disable=import-error
 import anndata as ad
 import pandas as pd
-
 from cansig._preprocessing.annotation import AnnotationConfig, CellStatus, CellAnnotation
 from cansig._preprocessing.data import DataRecorder
 from cansig._preprocessing.infercnv import InferCNVConfig, InferCNV, get_reference_groups, ReferenceConfig
 from cansig._preprocessing.plotting import plot_chromosomal_heatmap
-from cansig._preprocessing.quality_control import quality_control
 from cansig._preprocessing.scoring import SignatureScorer
 from cansig._preprocessing.subclonal import Subclonal, SubclonalConfig
 from cansig._preprocessing.utils import check_min_malignant_cells, check_min_reference_cells, load_adatas, pop_adatas
+
 from cansig.types import Pathlike, ScoringDict, GeneList
+
 
 # pytype: enable=import-error
 
@@ -25,10 +25,6 @@ def preprocessing(
     celltype_column: str,
     batch_id_column: str,
     undetermined_celltypes: Optional[List[str]] = None,
-    min_counts: int = 1_500,
-    max_counts: int = 50_000,
-    min_genes: int = 700,
-    threshold_pct_mt_counts: float = 30.0,
     min_reference_groups: int = 2,
     min_reference_cells: int = 20,
     min_malignant_cells: int = 20,
@@ -177,16 +173,6 @@ def preprocessing(
 
     for adata in pop_adatas(input_adatas, gene_list):
         cell_annotation.annotate_using_celltype(adata)
-
-        adata = quality_control(
-            adata,
-            sample_id=adata.obs[batch_id_column][0],
-            min_counts=min_counts,
-            max_counts=max_counts,
-            min_genes=min_genes,
-            threshold_mt=threshold_pct_mt_counts,
-            figure_dir=figure_dir,
-        )
 
         if not check_min_malignant_cells(
             adata,
