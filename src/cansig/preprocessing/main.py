@@ -3,13 +3,13 @@ from typing import List, Union, Tuple, Optional
 # pytype: disable=import-error
 import anndata as ad
 import pandas as pd
-from cansig._preprocessing.annotation import AnnotationConfig, CellStatus, CellAnnotation
-from cansig._preprocessing.data import DataRecorder
-from cansig._preprocessing.infercnv import InferCNVConfig, InferCNV, get_reference_groups, ReferenceConfig
-from cansig._preprocessing.plotting import plot_chromosomal_heatmap
-from cansig._preprocessing.scoring import SignatureScorer
-from cansig._preprocessing.subclonal import Subclonal, SubclonalConfig
-from cansig._preprocessing.utils import check_min_malignant_cells, check_min_reference_cells, load_adatas, pop_adatas
+from cansig.preprocessing.annotation import AnnotationConfig, CellStatus, CellAnnotation
+from cansig.preprocessing.data import DataRecorder
+from cansig.preprocessing.infercnv import InferCNVConfig, InferCNV, get_reference_groups, ReferenceConfig
+from cansig.preprocessing.plotting import plot_chromosomal_heatmap
+from cansig.preprocessing.scoring import SignatureScorer
+from cansig.preprocessing.subclonal import Subclonal, SubclonalConfig
+from cansig.preprocessing.utils import check_min_malignant_cells, check_min_reference_cells, load_adatas, pop_adatas
 
 from cansig.types import Pathlike, ScoringDict, GeneList
 

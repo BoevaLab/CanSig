@@ -5,8 +5,8 @@ import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 
-from cansig._preprocessing._infercnv import infercnv  # pytype: disable=import-error
-from cansig._preprocessing.utils import Normalized  # pytype: disable=import-error
+from cansig.preprocessing._infercnv import infercnv  # pytype: disable=import-error
+from cansig.preprocessing.utils import Normalized  # pytype: disable=import-error
 from cansig.types import Pathlike  # pytype: disable=import-error
 
 _LOGGER = logging.Logger(__name__)
