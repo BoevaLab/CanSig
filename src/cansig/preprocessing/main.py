@@ -79,11 +79,6 @@ def preprocessing(
         undetermined_celltypes: Optional list of celltypes that are considered
             malignant. Cells of undertermined celltype will be separated into malignant
             and non-malignant based on CNVs.
-        min_counts: Cells with a total count lower than `min_counts` are removed.
-        max_counts: Cells with a total count higher than `max_counts` are removed.
-        min_genes: Cells with fewer genes expressed than `min_genes` are removed.
-        threshold_mt: Cells with a higher percentage of counts in mitochondrial
-            genes than the `threshold_mt` are being removed.
         min_reference_groups:
         min_reference_cells: If the number of cells in a reference group is less than
             `min_reference_cells` that reference group will not be used for CNV
