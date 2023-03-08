@@ -1,6 +1,6 @@
 import pytest  # pytype: disable=import-error
 
-from cansig._preprocessing.annotation import (  # pytype: disable=import-error
+from cansig.preprocessing.annotation import (  # pytype: disable=import-error
     CellStatus,
     CellAnnotation,
     AnnotationConfig,

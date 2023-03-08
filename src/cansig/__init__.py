@@ -6,10 +6,12 @@ import cansig.metasignatures  # noqa F401  # noqa F401 # pytype: disable=import-
 import cansig.models.scvi  # noqa F401  # pytype: disable=import-error
 import cansig.multirun  # noqa F401 # pytype: disable=import-error
 import cansig.plotting  # noqa F401 # pytype: disable=import-error
-from cansig.preprocessing.main import preprocessing  # noqa F401 # pytype: disable=import-error
+import cansig.preprocessing  # noqa F401 # pytype: disable=import-error
+from cansig.preprocessing.main import preprocessing as run_preprocessing  # noqa F401 # pytype: disable=import-error
 
 __all__ = [
     "preprocessing",
+    "run_preprocessing",
     "cluster",
     "cnvanalysis",
     "filesys",

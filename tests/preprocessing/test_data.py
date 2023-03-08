@@ -4,8 +4,8 @@ import anndata  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
 import pytest  # pytype: disable=import-error
 
-from cansig._preprocessing.data import DataRecorder  # pytype: disable=import-error
-from cansig._preprocessing.utils import load_adatas  # pytype: disable=import-error
+from cansig.preprocessing.data import DataRecorder  # pytype: disable=import-error
+from cansig.preprocessing.utils import load_adatas  # pytype: disable=import-error
 from tests.preprocessing.utils import generate_adata  # pytype: disable=import-error
 
 

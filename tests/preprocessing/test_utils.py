@@ -5,7 +5,7 @@ import numpy as np  # pytype: disable=import-error
 import pytest  # pytype: disable=import-error
 
 # pytype: disable=import-error
-from cansig._preprocessing.utils import (
+from cansig.preprocessing.utils import (
     check_min_malignant_cells,
     check_min_reference_cells,
     Normalized,

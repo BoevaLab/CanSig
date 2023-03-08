@@ -2,12 +2,12 @@ import numpy as np
 import pandas as pd  # pytype: disable=import-error
 import pytest  # pytype: disable=import-error
 
-from cansig._preprocessing.infercnv import InferCNV, InferCNVConfig  # pytype: disable=import-error
+from cansig.preprocessing.infercnv import InferCNV, InferCNVConfig  # pytype: disable=import-error
 from tests.preprocessing.utils import generate_adata, is_normalized  # pytype: disable=import-error
 
 
-def _normalized(*args, **kwargs):
-    adata = args[0]
+def _normalized(adata, *args, **kwargs):
+    """Checks if the adata passed to the function is normalized."""
     assert is_normalized(adata)
     return {}, np.ones((100, 80))
 
@@ -55,7 +55,7 @@ class TestInferCNV:
     def test_infercnv_normalized(self, adata, gene_annotation, cnv, monkeypatch):
         """This test makes sure that we pass log1p-normalized counts to infercnv and
         that the raw counts are restored after."""
-        monkeypatch.setattr("cansig._preprocessing.infercnv.infercnv", _normalized)
+        monkeypatch.setattr("cansig.preprocessing.infercnv.infercnv", _normalized)
         cnv.infer(adata, ["reference"])
         assert np.allclose(adata.X, 1.0)
 

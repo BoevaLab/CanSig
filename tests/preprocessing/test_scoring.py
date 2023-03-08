@@ -2,7 +2,7 @@ import numpy as np  # pytype: disable=import-error
 import pytest  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
 
-from cansig._preprocessing.scoring import SignatureScorer  # pytype: disable=import-error
+from cansig.preprocessing.scoring import SignatureScorer  # pytype: disable=import-error
 from tests.preprocessing.utils import generate_adata, is_normalized
 
 _cell_cycle_scoring = sc.tl.score_genes_cell_cycle
