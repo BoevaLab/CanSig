@@ -33,15 +33,9 @@ def gene_list():
 
 
 @pytest.fixture()
-def mean_counts_per_gene(gene_list):
-    columns = gene_list
-    return pd.DataFrame(np.ones((400, 1)), index=columns)
-
-
-@pytest.fixture()
-def cnv(gene_annotation, mean_counts_per_gene):
+def cnv(gene_annotation, gene_list):
     infercnv_config = InferCNVConfig()
-    cnv = InferCNV(infercnv_config, gene_order=gene_annotation, mean_counts_per_gene=mean_counts_per_gene)
+    cnv = InferCNV(infercnv_config, gene_order=gene_annotation, gene_list=gene_list)
     return cnv
 
 

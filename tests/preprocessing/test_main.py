@@ -1,4 +1,5 @@
-import numpy as np
+import anndata  # pytype: disable=import-error
+import numpy as np  # pytype: disable=import-error
 import pytest  # pytype: disable=import-error
 
 
@@ -23,7 +24,7 @@ _EXPECTED_VAR = ["chromosome", "start", "end", "cnv_called"]
 
 def infercnv_monkeypatch(*args, **kwargs):
     adata = args[0]
-    X_cnv = np.random.normal(0.0, size=(100, 100))
+    X_cnv = np.random.normal(0.0, size=adata.shape)
     X_cnv[adata.obs["celltype"] == "evil", :] = 1 + X_cnv[adata.obs["celltype"] == "evil", :]
     return {"chr_pos": {"chr1": 0, "chr2": 50}}, X_cnv
 
@@ -43,14 +44,14 @@ def test_integation(monkeypatch, xtype):
         adatas.append(adata)
 
     gene_anno = gene_annotation(100)
-
+    input_adata = anndata.concat(adatas)
     adata = run_preprocessing(
-        adatas,
+        input_adata,
         reference_groups=[("good",)],
         malignant_celltypes=["evil"],
         gene_order=gene_anno,
-        celltype_column="celltype",
-        batch_id_column="sample_id",
+        celltype_key="celltype",
+        batch_key="sample_id",
         g2m_genes=["gene_1", "gene_2"],
         s_genes=["gene_3", "gene_4"],
     )

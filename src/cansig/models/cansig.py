@@ -12,7 +12,7 @@ import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 import scvi as scvibase  # pytype: disable=import-error
-from cansig.integration.model import CanSig  # pytype: disable=import-error
+from cansig_integration import CanSigIntegration  # pytype: disable=import-error
 
 
 class PreprocessingConfig(pydantic.BaseModel):
@@ -54,7 +54,7 @@ class TrainConfig(pydantic.BaseModel):
     lr_min: float = pydantic.Field(default=0)
 
 
-def _train_cansig_wrapper(model: CanSig, config: TrainConfig) -> None:
+def _train_cansig_wrapper(model: CanSigIntegration, config: TrainConfig) -> None:
     plan_kwargs = {
         "lr": config.learning_rate,
         "weight_decay": config.weight_decay,
@@ -130,8 +130,8 @@ def _preprocessing(data: anndata.AnnData, config: PreprocessingConfig) -> anndat
     if config.n_top_genes is None:
         return data
     else:
-        # TODO: add hvg that is batch sensetive.
-        return CanSig.preprocessing(data, n_highly_variable_genes=config.n_top_genes)
+        # TODO: add hvg that is batch sensitive.
+        return CanSigIntegration.preprocessing(data, n_highly_variable_genes=config.n_top_genes)
 
 
 def _data_setup_wrapper(
@@ -143,7 +143,7 @@ def _data_setup_wrapper(
     Note:
         Modifies `data` in place.
     """
-    CanSig.setup_anndata(
+    CanSigIntegration.setup_anndata(
         data,
         categorical_covariate_keys=config.discrete_covariates,
         continuous_covariate_keys=config.continuous_covariates,
@@ -157,8 +157,8 @@ class EvaluationResults(pydantic.BaseModel):
     n_samples_marginal_ll: pydantic.PositiveInt
 
 
-def _cansig_factory_wrapper(data: anndata.AnnData, n_latent: int, config: ModelConfig) -> CanSig:
-    return CanSig(
+def _cansig_factory_wrapper(data: anndata.AnnData, n_latent: int, config: ModelConfig) -> CanSigIntegration:
+    return CanSigIntegration(
         data,
         n_hidden=config.n_hidden,
         n_latent=n_latent,
@@ -186,7 +186,7 @@ class CanSigWrapper:
         if not (config.inplace):
             copy = data.copy()
             copy = _preprocessing(copy, config.preprocessing)
-            # Setup the data
+            # Set up the data
             copy = _data_setup_wrapper(data=copy, config=config)
 
             # Initialize the model
@@ -194,7 +194,7 @@ class CanSigWrapper:
 
         else:
             data = _preprocessing(data, config.preprocessing)
-            # Setup the data
+            # Set up the data
             data = _data_setup_wrapper(data=data, config=config)
 
             # Initialize the model

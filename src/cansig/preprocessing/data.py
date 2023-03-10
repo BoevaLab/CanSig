@@ -4,10 +4,6 @@ from typing import List, Optional
 import anndata as ad  # pytype: disable=import-error
 from cansig.preprocessing.utils import DisableLogger  # pytype: disable=import-error
 
-_DEFAULT_VARS_TO_DROP = ("n_cells_by_counts", "mean_counts", "pct_dropout_by_counts", "total_counts", "mean", "std")
-
-_DEFAULT_OBS_TO_DROP = ("total_counts", "n_genes_by_counts", "cansig_leiden_cnv")
-
 _DEFAULT_OBSM_TO_DROP = ("X_cnv_pca", "X_cnv_umap", "X_pca", "X_umap")
 
 
@@ -55,34 +51,17 @@ class DataRecorder:
     def _sanitize_adata(
         self,
         adata: ad.AnnData,
-        obs_to_drop: Optional[List[str]] = None,
         obsm_to_drop: Optional[List[str]] = None,
-        var_to_drop: Optional[List[str]] = None,
     ) -> None:
         """
-        Removes columns in `.obs`, `.var` and `obsm` from adata that are specified in
-        `obs_to_drop`, `var_to_drop` and `obsm_to_drop` respectively. For each of them
-        defaults are provided that remove any field that is added during preprocessing
-        that is either redundant or meaningless after concatenation.
+        Removes meaningless keys from `obsm`.
         Args:
             adata (AnnData): annotated data matrix
-            obs_to_drop (Optional[List[str]]): List of columns to drop from `.obs`.
             obsm_to_drop (Optional[List[str]]): List of columns to drop from `.obsm`.
-            var_to_drop (Optional[List[str]]): List of columns to drop from `.var`.
         """
-        if obs_to_drop is None:
-            obs_to_drop = _DEFAULT_OBS_TO_DROP
         if obsm_to_drop is None:
             obsm_to_drop = _DEFAULT_OBSM_TO_DROP
-        if var_to_drop is None:
-            var_to_drop = _DEFAULT_VARS_TO_DROP
 
-        for obs in obs_to_drop:
-            if obs in adata.obs.columns:
-                adata.obs.drop(obs, axis=1, inplace=True)
         for obsm in obsm_to_drop:
             if obsm in adata.obsm_keys():
                 del adata.obsm[obsm]
-        for var in var_to_drop:
-            if var in adata.var.columns:
-                adata.var.drop(var, axis=1, inplace=True)
