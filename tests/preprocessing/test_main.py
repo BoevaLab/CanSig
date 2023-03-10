@@ -1,20 +1,15 @@
-import numpy as np
+import anndata  # pytype: disable=import-error
+import numpy as np  # pytype: disable=import-error
 import pytest  # pytype: disable=import-error
 
 
-from cansig import preprocessing  # pytype: disable=import-error
-
-from .utils import generate_adata, gene_annotation
+from cansig import run_preprocessing  # pytype: disable=import-error
+from .utils import generate_adata, gene_annotation  # pytype: disable=import-error
 
 _EXPECTED_OBS = [
     "celltype",
     "sample_id",
     "malignant_celltype",
-    "total_counts_mt",
-    "pct_counts_mt",
-    "n_counts",
-    "n_genes",
-    "log_counts",
     "reference",
     "malignant_cnv",
     "malignant_key",
@@ -24,40 +19,41 @@ _EXPECTED_OBS = [
     "phase",
 ]
 
-_EXPECTED_VAR = ["mt", "chromosome", "start", "end", "cnv_called"]
+_EXPECTED_VAR = ["chromosome", "start", "end", "cnv_called"]
 
 
-def infercnv_(*args, **kwargs):
+def infercnv_monkeypatch(*args, **kwargs):
     adata = args[0]
-    X_cnv = np.zeros((100, 100))
-    X_cnv[adata.obs["celltype"] == "evil", :] = 1.0
-    return {"chr_pos": {"chr1": 0, "chr2": 100}}, X_cnv
+    X_cnv = np.random.normal(0.0, size=adata.shape)
+    X_cnv[adata.obs["celltype"] == "evil", :] = 1 + X_cnv[adata.obs["celltype"] == "evil", :]
+    return {"chr_pos": {"chr1": 0, "chr2": 50}}, X_cnv
 
 
 @pytest.mark.parametrize("xtype", [None, "csc", "csr"])
 def test_integation(monkeypatch, xtype):
-    monkeypatch.setattr("cansig._preprocessing.infercnv.infercnv", infercnv_)
+    # This is a  bit tricky. Infercnv is defined in cansig.preprocessing.infercnv_ but
+    # it is called in cansig.preprocessing.infercnv. Therefore, we have to patch it in
+    # cansig.preprocessing.infercnv.
+    monkeypatch.setattr("cansig.preprocessing.infercnv.infercnv", infercnv_monkeypatch)
 
     adatas = []
     for i in range(2):
         adata = generate_adata(
             100, 100, obs_dict={"celltype": [("evil", 50), ("good", 50)]}, sample_id=f"sample_{i}", xtype=xtype
         )
-        adata.X = 50 * adata.X
         adatas.append(adata)
 
     gene_anno = gene_annotation(100)
-
-    adata = preprocessing(
-        adatas,
+    input_adata = anndata.concat(adatas)
+    adata = run_preprocessing(
+        input_adata,
         reference_groups=[("good",)],
         malignant_celltypes=["evil"],
         gene_order=gene_anno,
-        celltype_column="celltype",
-        batch_id_column="sample_id",
+        celltype_key="celltype",
+        batch_key="sample_id",
         g2m_genes=["gene_1", "gene_2"],
         s_genes=["gene_3", "gene_4"],
-        min_genes=0,
     )
 
     assert "X_cnv" in adata.obsm_keys()

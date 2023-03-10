@@ -1,6 +1,6 @@
 import numpy as np
 
-from cansig._preprocessing.subclonal import Subclonal, SubclonalConfig
+from cansig.preprocessing.subclonal import Subclonal, SubclonalConfig  # pytype: disable=import-error
 from .utils import generate_adata
 
 

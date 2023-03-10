@@ -5,8 +5,8 @@ from typing import Dict, List, Optional, Tuple
 import anndata  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
+from cansig.preprocessing.utils import Normalized  # pytype: disable=import-error
 
-from cansig._preprocessing.utils import Normalized  # pytype: disable=import-error
 from cansig.types import GeneList, ScoringDict  # pytype: disable=import-error
 
 _LOGGER = logging.Logger(__name__)
