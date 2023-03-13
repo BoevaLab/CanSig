@@ -6,7 +6,7 @@ infercnvpy
 interrogate
 leidenalg
 matplotlib
-numpy<=1.21
+numpy
 pandas    
 petname
 pydantic
@@ -17,7 +17,7 @@ scipy
 scvi-tools>=0.20.0
 sphinx<6
 statsmodels
-protobuf~=3.19.0
+protobuf
 # requirements-dev.txt
 black==22.10.0
 flake8

@@ -5,6 +5,7 @@ Note:
     Currently CanSig is based on scVI, which is considerably faster.
 """
 import warnings
+import typing
 from typing import Dict, List, Optional, Sequence
 from typing import Literal  # pytype: disable=not-supported-yet
 
@@ -12,7 +13,9 @@ import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 import scvi as scvibase  # pytype: disable=import-error
-from cansig_integration import CanSigIntegration  # pytype: disable=import-error
+
+if typing.TYPE_CHECKING:
+    from cansig_integration import CanSigIntegration  # pytype: disable=import-error
 
 
 class PreprocessingConfig(pydantic.BaseModel):
@@ -158,6 +161,8 @@ class EvaluationResults(pydantic.BaseModel):
 
 
 def _cansig_factory_wrapper(data: anndata.AnnData, n_latent: int, config: ModelConfig) -> CanSigIntegration:
+    from cansig_integration import CanSigIntegration  # pytype: disable=import-error
+
     return CanSigIntegration(
         data,
         n_hidden=config.n_hidden,
