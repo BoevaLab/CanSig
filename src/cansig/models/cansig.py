@@ -160,7 +160,7 @@ class EvaluationResults(pydantic.BaseModel):
     n_samples_marginal_ll: pydantic.PositiveInt
 
 
-def _cansig_factory_wrapper(data: anndata.AnnData, n_latent: int, config: ModelConfig) -> CanSigIntegration:
+def _cansig_factory_wrapper(data: anndata.AnnData, n_latent: int, config: ModelConfig) -> "CanSigIntegration":
     from cansig_integration import CanSigIntegration  # pytype: disable=import-error
 
     return CanSigIntegration(
