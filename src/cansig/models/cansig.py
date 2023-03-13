@@ -57,7 +57,7 @@ class TrainConfig(pydantic.BaseModel):
     lr_min: float = pydantic.Field(default=0)
 
 
-def _train_cansig_wrapper(model: CanSigIntegration, config: TrainConfig) -> None:
+def _train_cansig_wrapper(model: "CanSigIntegration", config: TrainConfig) -> None:
     plan_kwargs = {
         "lr": config.learning_rate,
         "weight_decay": config.weight_decay,
