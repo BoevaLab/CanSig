@@ -67,7 +67,7 @@ def get_cell_metamembership(
     cell_metamembership = cell_metamembership.apply(lambda row: row[1] if row[0] == 0 else -2, axis=1).to_frame()
 
     if rename:
-        renaming = {-1: "undetermined"}
+        renaming = {-1: "outlier"}
         for cl in prob_cellmetamembership.columns:
             if cl >= 0:
                 renaming[cl] = "metasig" + str(int(cl) + 1)
@@ -393,6 +393,7 @@ def get_final_clustering_jaccard(
     pat_specific_threshold: float = 0.75,
     max_n_clusters: int = 20,
     linkage: str = "ward",
+    fixed_k: bool = False,
 ) -> Union[List, np.ndarray]:
     """
     Returns the optimized clustering partition. Clustering is done iteratively until at least 2 signatures
@@ -421,6 +422,7 @@ def get_final_clustering_jaccard(
             that originate from one patient, it is discarded as patient specific
         max_n_clusters: maximal number of clusters allowed
         linkage: a string that contains the linkage used in the agglomerative clustering
+        fixed_k: a boolean, set to True if the user specified a number of clusters a priori
 
     Returns:
 
@@ -453,6 +455,7 @@ def get_final_clustering_jaccard(
             threshold_n_rep=threshold_n_rep,
             pat_specific_threshold=pat_specific_threshold,
             linkage=linkage,
+            fixed_k=fixed_k,
         )
 
     else:
@@ -463,6 +466,22 @@ def get_final_clustering_jaccard(
     corrmeta = get_corr_metasignatures(meta, adata)
 
     correlation_iteration = _sigs_correlated(corrmeta, threshold)
+
+    if fixed_k:
+        _LOGGER.info(f"User-provided number of clusters {n_clusters} was used")
+        final_clusters = outliers.copy()
+        final_clusters[final_clusters >= 0] = new_clusters
+
+        _LOGGER.info("Removing potentially patient-specific clusters")
+        cleaned_clusters = _remove_patient_unique_ms(
+            clusters=final_clusters,
+            sig_index=sig_index,
+            cluster_memb=cluster_memb,
+            batch_key=batch_key,
+            adata=adata,
+            pat_specific_threshold=pat_specific_threshold,
+        )
+        return cleaned_clusters
 
     # There is a maximal number of clusters allowed, to make sure that
     # we don't have infinite recursion.
@@ -507,4 +526,5 @@ def get_final_clustering_jaccard(
         threshold_n_rep=threshold_n_rep,
         pat_specific_threshold=pat_specific_threshold,
         linkage=linkage,
+        fixed_k=fixed_k,
     )

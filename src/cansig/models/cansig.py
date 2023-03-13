@@ -1,10 +1,10 @@
 """An experimental integration model,
 which uses CNV profiles as well as the healthy cells to learn better embeddings of the malignant cells.
-
 Note:
     Currently CanSig is based on scVI, which is considerably faster.
 """
 import warnings
+import typing
 from typing import Dict, List, Optional, Sequence
 from typing import Literal  # pytype: disable=not-supported-yet
 
@@ -12,7 +12,9 @@ import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import pydantic  # pytype: disable=import-error
 import scvi as scvibase  # pytype: disable=import-error
-from cansig_integration import CanSigIntegration  # pytype: disable=import-error
+
+if typing.TYPE_CHECKING:
+    from cansig_integration import CanSigIntegration  # pytype: disable=import-error
 
 
 class PreprocessingConfig(pydantic.BaseModel):
@@ -54,7 +56,7 @@ class TrainConfig(pydantic.BaseModel):
     lr_min: float = pydantic.Field(default=0)
 
 
-def _train_cansig_wrapper(model: CanSigIntegration, config: TrainConfig) -> None:
+def _train_cansig_wrapper(model: "CanSigIntegration", config: TrainConfig) -> None:
     plan_kwargs = {
         "lr": config.learning_rate,
         "weight_decay": config.weight_decay,
@@ -83,11 +85,9 @@ def _cast_covariates(listlike: Sequence[str]) -> Optional[list]:
     want to cast a given sequence to a list (or None).
     Moreover, scVI doesn't accept empty lists -- we need to cast empty
     list to None.
-
     Args:
         listlike: None or anything that behaves like a list
             (and can be explicitly casted)
-
     Returns:
         None, if `listlike` is None or is empty, or
           a list with the same elements as `listlike`, if it's nonempty
@@ -139,7 +139,6 @@ def _data_setup_wrapper(
     config: CanSigConfig,
 ) -> anndata.AnnData:
     """A thin wrapper over scVI's model preprocessing.
-
     Note:
         Modifies `data` in place.
     """
@@ -157,7 +156,9 @@ class EvaluationResults(pydantic.BaseModel):
     n_samples_marginal_ll: pydantic.PositiveInt
 
 
-def _cansig_factory_wrapper(data: anndata.AnnData, n_latent: int, config: ModelConfig) -> CanSigIntegration:
+def _cansig_factory_wrapper(data: anndata.AnnData, n_latent: int, config: ModelConfig) -> "CanSigIntegration":
+    from cansig_integration import CanSigIntegration  # pytype: disable=import-error
+
     return CanSigIntegration(
         data,
         n_hidden=config.n_hidden,
@@ -172,7 +173,6 @@ def _cansig_factory_wrapper(data: anndata.AnnData, n_latent: int, config: ModelC
 
 def _unpack_series(series) -> list:
     """Pass from pandas Series to a list.
-
     Useful for serialization purposes.
     """
     return series.values.ravel().tolist()

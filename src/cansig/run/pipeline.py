@@ -194,6 +194,13 @@ def create_parser() -> argparse.ArgumentParser:
         "--n-top-genes", type=int, default=2_000, help="Number of the most highly variable genes to use. Default: 2000."
     )
 
+    parser.add_argument(
+        "--n-clusters",
+        type=int,
+        help="If used, number of meta-signatures that will be uncovered. Overrides the threshold.",
+        default=None,
+    )
+
     # CanSig Args
     parser.add_argument("--n-latent-batch-effect", type=int, default=5)
     parser.add_argument("--n-latent-cnv", type=int, default=10)
@@ -330,6 +337,8 @@ def main() -> None:
     args = parser.parse_args()
     validate_args(args)
 
+    fixed_k = False if args.n_clusters is None else True
+
     # Create a new directory, storing all the generated results
     multirun_dir = mr.MultirunDirectory(path=args.output, create=True)
 
@@ -375,6 +384,8 @@ def main() -> None:
         pat_specific_threshold=args.pat_specific_threshold,
         linkage=args.linkage,
         plots=(not args.disable_plots),
+        n_clusters=args.n_clusters,
+        fixed_k=fixed_k,
     )
 
     LOGGER.info(f"Pipeline run finished. The generated data is in {args.output}.")
