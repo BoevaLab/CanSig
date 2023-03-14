@@ -20,7 +20,7 @@ def plot_chromosomal_heatmap(
 ):
     sc.settings.figdir = Path(figure_dir).joinpath(sample_id)
     with warnings.catch_warnings():
-        warnings.simplefilter("ignore", FutureWarning)
+        warnings.simplefilter("ignore")
         with DisableLogger():
             cnv.pl.chromosome_heatmap(adata, groupby=malignant_key, use_rep=cnv_key, show=False, save="_malignant.png")
             cnv.pl.chromosome_heatmap(
