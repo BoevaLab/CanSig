@@ -531,8 +531,90 @@ If it is not already, then adds it.</p>
 <section id="cansig-run-heatmap-module">
 <h2>cansig.run.heatmap module<a class="headerlink" href="#cansig-run-heatmap-module" title="Permalink to this heading">#</a></h2>
 </section>
-<section id="cansig-run-integration-module">
-<h2>cansig.run.integration module<a class="headerlink" href="#cansig-run-integration-module" title="Permalink to this heading">#</a></h2>
+<section id="module-cansig.run.integration">
+<span id="cansig-run-integration-module"></span><h2>cansig.run.integration module<a class="headerlink" href="#module-cansig.run.integration" title="Permalink to this heading">#</a></h2>
+<p>The high-level utilities for the integration step.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.run.integration.Arguments">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.run.integration.</span></span><span class="sig-name descname"><span class="pre">Arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.run.integration.Arguments" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
+<p>Protocol used to define CLI arguments.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.run.integration.Arguments.batch">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">batch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#cansig.run.integration.Arguments.batch" title="Permalink to this definition">#</a></dt>
+<dd><p>Batch column name.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.run.integration.Arguments.data">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.run.integration.Arguments.data" title="Permalink to this definition">#</a></dt>
+<dd><p>The path to the AnnData object with malignant cells.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.run.integration.Arguments.latent">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">latent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.run.integration.Arguments.latent" title="Permalink to this definition">#</a></dt>
+<dd><p>The dimension of the latent space.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.run.integration.Arguments.log">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.run.integration.Arguments.log" title="Permalink to this definition">#</a></dt>
+<dd><p>Location of the log file.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.run.integration.Arguments.max_epochs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max_epochs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.run.integration.Arguments.max_epochs" title="Permalink to this definition">#</a></dt>
+<dd><p>Maximum number of epochs to be run.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.run.integration.Arguments.model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#cansig.run.integration.Arguments.model" title="Permalink to this definition">#</a></dt>
+<dd><p>Integration model to be used.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.run.integration.Arguments.n_top_genes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_top_genes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.run.integration.Arguments.n_top_genes" title="Permalink to this definition">#</a></dt>
+<dd><p>Number of most highly variable genes to be used.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.run.integration.Arguments.output">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.run.integration.Arguments.output" title="Permalink to this definition">#</a></dt>
+<dd><p>Output directory.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cansig.run.integration.Arguments.path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#cansig.run.integration.Arguments.path" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.run.integration.integrate">
+<span class="sig-prename descclassname"><span class="pre">cansig.run.integration.</span></span><span class="sig-name descname"><span class="pre">integrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig" title="cansig.models.scvi.SCVIConfig"><span class="pre">SCVIConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cansig.run.integration.integrate" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.run.integration.integrate_adata">
+<span class="sig-prename descclassname"><span class="pre">cansig.run.integration.</span></span><span class="sig-name descname"><span class="pre">integrate_adata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig" title="cansig.models.scvi.SCVIConfig"><span class="pre">SCVIConfig</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="cansig.models.html#cansig.models.cansig.CanSigConfig" title="cansig.models.cansig.CanSigConfig"><span class="pre">CanSigConfig</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.run.integration.integrate_adata" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.run.integration.main">
+<span class="sig-prename descclassname"><span class="pre">cansig.run.integration.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.run.integration.Arguments" title="cansig.run.integration.Arguments"><span class="pre">Arguments</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.run.integration.main" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.run.integration.parse_args">
+<span class="sig-prename descclassname"><span class="pre">cansig.run.integration.</span></span><span class="sig-name descname"><span class="pre">parse_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cansig.run.integration.Arguments" title="cansig.run.integration.Arguments"><span class="pre">Arguments</span></a></span></span><a class="headerlink" href="#cansig.run.integration.parse_args" title="Permalink to this definition">#</a></dt>
+<dd><p>Creates the CLI parser.</p>
+</dd></dl>
+
 </section>
 <section id="module-cansig.run.metasignatures">
 <span id="cansig-run-metasignatures-module"></span><h2>cansig.run.metasignatures module<a class="headerlink" href="#module-cansig.run.metasignatures" title="Permalink to this heading">#</a></h2>
@@ -719,8 +801,75 @@ a meta-signature is considered to be patient-specific</p></li>
 </dd></dl>
 
 </section>
-<section id="cansig-run-pipeline-module">
-<h2>cansig.run.pipeline module<a class="headerlink" href="#cansig-run-pipeline-module" title="Permalink to this heading">#</a></h2>
+<section id="module-cansig.run.pipeline">
+<span id="cansig-run-pipeline-module"></span><h2>cansig.run.pipeline module<a class="headerlink" href="#module-cansig.run.pipeline" title="Permalink to this heading">#</a></h2>
+<p>The main pipeline.</p>
+<p>Takes as input the data and multi-run specification, and then processes the data according
+to all models specified.
+In the end, produces summary.</p>
+<p>Use as:
+<code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">cansig.run.pipeline</span> <span class="pre">--help</span></code></p>
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.run.pipeline.create_parser">
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">create_parser</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArgumentParser</span></span></span><a class="headerlink" href="#cansig.run.pipeline.create_parser" title="Permalink to this definition">#</a></dt>
+<dd><p>Creates the CLI parser.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.run.pipeline.generate_clustering_configs">
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">generate_clustering_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig" title="cansig.cluster.leiden.LeidenNClusterConfig"><span class="pre">LeidenNClusterConfig</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.run.pipeline.generate_clustering_configs" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates Leiden clustering configs from the CLI args.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.run.pipeline.generate_gsea_config">
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">generate_gsea_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionConfig" title="cansig.gsea.GeneExpressionConfig"><span class="pre">GeneExpressionConfig</span></a></span></span><a class="headerlink" href="#cansig.run.pipeline.generate_gsea_config" title="Permalink to this definition">#</a></dt>
+<dd><p>Parses the CLI arguments into GSEA config.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.run.pipeline.generate_model_configs">
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">generate_model_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig" title="cansig.models.scvi.SCVIConfig"><span class="pre">SCVIConfig</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="cansig.models.html#cansig.models.cansig.CanSigConfig" title="cansig.models.cansig.CanSigConfig"><span class="pre">CanSigConfig</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.run.pipeline.generate_model_configs" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates a list of model configs used for data integration from the CLI arguments.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.run.pipeline.generate_plotting_config">
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">generate_plotting_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig" title="cansig.plotting.plotting.ScatterPlotConfig"><span class="pre">ScatterPlotConfig</span></a></span></span><a class="headerlink" href="#cansig.run.pipeline.generate_plotting_config" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates the scatter plot config from the CLI arguments.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.run.pipeline.main">
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.run.pipeline.main" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.run.pipeline.single_integration_run">
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">single_integration_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integration_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.models.html#cansig.models.scvi.SCVIConfig" title="cansig.models.scvi.SCVIConfig"><span class="pre">SCVIConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">clustering_configs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig" title="cansig.cluster.leiden.LeidenNClusterConfig"><span class="pre">LeidenNClusterConfig</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gsea_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.gsea.GeneExpressionConfig" title="cansig.gsea.GeneExpressionConfig"><span class="pre">GeneExpressionConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">multirun_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.html#cansig.multirun.MultirunDirectory" title="cansig.multirun.MultirunDirectory"><span class="pre">MultirunDirectory</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotting_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cansig.plotting.html#cansig.plotting.plotting.ScatterPlotConfig" title="cansig.plotting.plotting.ScatterPlotConfig"><span class="pre">ScatterPlotConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savesig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.run.pipeline.single_integration_run" title="Permalink to this definition">#</a></dt>
+<dd><p>A single integration run with all matching postprocessing steps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_path</strong> – path to the AnnData object with the malignant data</p></li>
+<li><p><strong>integration_config</strong> – config for the data integration step</p></li>
+<li><p><strong>clustering_configs</strong> – list of configs specifying the clusterings to be applied to the latent codes</p></li>
+<li><p><strong>gsea_config</strong> – GSEA config applied to each clustering</p></li>
+<li><p><strong>multirun_dir</strong> – (created) multi-run directory where the output will be saved</p></li>
+<li><p><strong>plotting_config</strong> – plotting config for the scatter plot</p></li>
+<li><p><strong>plot</strong> – whether to produce and save the plot</p></li>
+<li><p><strong>savesig</strong> – whether to save the results of the differential gene expression analysis</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.run.pipeline.validate_args">
+<span class="sig-prename descclassname"><span class="pre">cansig.run.pipeline.</span></span><span class="sig-name descname"><span class="pre">validate_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cansig.run.pipeline.validate_args" title="Permalink to this definition">#</a></dt>
+<dd><p>Validates the arguments.</p>
+</dd></dl>
+
 </section>
 <section id="module-cansig.run.postprocessing">
 <span id="cansig-run-postprocessing-module"></span><h2>cansig.run.postprocessing module<a class="headerlink" href="#module-cansig.run.postprocessing" title="Permalink to this heading">#</a></h2>
@@ -868,7 +1017,25 @@ anndata, a slice (not a copy) with the other random split</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig-run-heatmap-module">cansig.run.heatmap module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig-run-integration-module">cansig.run.integration module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-cansig.run.integration">cansig.run.integration module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.integration.Arguments"><code class="docutils literal notranslate"><span class="pre">Arguments</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.integration.Arguments.batch"><code class="docutils literal notranslate"><span class="pre">Arguments.batch</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.integration.Arguments.data"><code class="docutils literal notranslate"><span class="pre">Arguments.data</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.integration.Arguments.latent"><code class="docutils literal notranslate"><span class="pre">Arguments.latent</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.integration.Arguments.log"><code class="docutils literal notranslate"><span class="pre">Arguments.log</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.integration.Arguments.max_epochs"><code class="docutils literal notranslate"><span class="pre">Arguments.max_epochs</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.integration.Arguments.model"><code class="docutils literal notranslate"><span class="pre">Arguments.model</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.integration.Arguments.n_top_genes"><code class="docutils literal notranslate"><span class="pre">Arguments.n_top_genes</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.integration.Arguments.output"><code class="docutils literal notranslate"><span class="pre">Arguments.output</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.integration.Arguments.path"><code class="docutils literal notranslate"><span class="pre">Arguments.path</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.integration.integrate"><code class="docutils literal notranslate"><span class="pre">integrate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.integration.integrate_adata"><code class="docutils literal notranslate"><span class="pre">integrate_adata()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.integration.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.integration.parse_args"><code class="docutils literal notranslate"><span class="pre">parse_args()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-cansig.run.metasignatures">cansig.run.metasignatures module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.metasignatures.get_final_metasignatures"><code class="docutils literal notranslate"><span class="pre">get_final_metasignatures()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.metasignatures.get_integration_dir"><code class="docutils literal notranslate"><span class="pre">get_integration_dir()</span></code></a></li>
@@ -880,7 +1047,17 @@ anndata, a slice (not a copy) with the other random split</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.metasignatures.select_signatures"><code class="docutils literal notranslate"><span class="pre">select_signatures()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig-run-pipeline-module">cansig.run.pipeline module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-cansig.run.pipeline">cansig.run.pipeline module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.pipeline.create_parser"><code class="docutils literal notranslate"><span class="pre">create_parser()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.pipeline.generate_clustering_configs"><code class="docutils literal notranslate"><span class="pre">generate_clustering_configs()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.pipeline.generate_gsea_config"><code class="docutils literal notranslate"><span class="pre">generate_gsea_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.pipeline.generate_model_configs"><code class="docutils literal notranslate"><span class="pre">generate_model_configs()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.pipeline.generate_plotting_config"><code class="docutils literal notranslate"><span class="pre">generate_plotting_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.pipeline.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.pipeline.single_integration_run"><code class="docutils literal notranslate"><span class="pre">single_integration_run()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.pipeline.validate_args"><code class="docutils literal notranslate"><span class="pre">validate_args()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-cansig.run.postprocessing">cansig.run.postprocessing module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.postprocessing.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run.postprocessing.parse_args"><code class="docutils literal notranslate"><span class="pre">parse_args()</span></code></a></li>

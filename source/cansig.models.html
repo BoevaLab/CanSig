@@ -449,11 +449,437 @@ document.write(`
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h2>
 </section>
-<section id="cansig-models-api-module">
-<h2>cansig.models.api module<a class="headerlink" href="#cansig-models-api-module" title="Permalink to this heading">#</a></h2>
+<section id="module-cansig.models.api">
+<span id="cansig-models-api-module"></span><h2>cansig.models.api module<a class="headerlink" href="#module-cansig.models.api" title="Permalink to this heading">#</a></h2>
+<p>The public API for the models used at the integration step.</p>
+<p>Use as:
+<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">cansig.models.api</span> <span class="pre">as</span> <span class="pre">models</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.models.api.</span></span><span class="sig-name descname"><span class="pre">CanSigConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_latent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_latent_batch_effect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_latent_cnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.models.cansig.PreprocessingConfig" title="cansig.models.cansig.PreprocessingConfig"><span class="pre">PreprocessingConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.models.cansig.ModelConfig" title="cansig.models.cansig.ModelConfig"><span class="pre">ModelConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.models.cansig.TrainConfig" title="cansig.models.cansig.TrainConfig"><span class="pre">TrainConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuous_covariates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_covariates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.api.CanSigConfig" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigConfig.batch">
+<span class="sig-name descname"><span class="pre">batch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#cansig.models.api.CanSigConfig.batch" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigConfig.continuous_covariates">
+<span class="sig-name descname"><span class="pre">continuous_covariates</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.api.CanSigConfig.continuous_covariates" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigConfig.continuous_covariates_validator">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">continuous_covariates_validator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.api.CanSigConfig.continuous_covariates_validator" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigConfig.discrete_covariates">
+<span class="sig-name descname"><span class="pre">discrete_covariates</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.api.CanSigConfig.discrete_covariates" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigConfig.discrete_covariates_validator">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">discrete_covariates_validator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.api.CanSigConfig.discrete_covariates_validator" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigConfig.inplace">
+<span class="sig-name descname"><span class="pre">inplace</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cansig.models.api.CanSigConfig.inplace" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigConfig.model">
+<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cansig.models.cansig.ModelConfig" title="cansig.models.cansig.ModelConfig"><span class="pre">ModelConfig</span></a></em><a class="headerlink" href="#cansig.models.api.CanSigConfig.model" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigConfig.n_latent">
+<span class="sig-name descname"><span class="pre">n_latent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveInt</span></em><a class="headerlink" href="#cansig.models.api.CanSigConfig.n_latent" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigConfig.n_latent_batch_effect">
+<span class="sig-name descname"><span class="pre">n_latent_batch_effect</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveInt</span></em><a class="headerlink" href="#cansig.models.api.CanSigConfig.n_latent_batch_effect" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigConfig.n_latent_cnv">
+<span class="sig-name descname"><span class="pre">n_latent_cnv</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveInt</span></em><a class="headerlink" href="#cansig.models.api.CanSigConfig.n_latent_cnv" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigConfig.preprocessing">
+<span class="sig-name descname"><span class="pre">preprocessing</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cansig.models.cansig.PreprocessingConfig" title="cansig.models.cansig.PreprocessingConfig"><span class="pre">PreprocessingConfig</span></a></em><a class="headerlink" href="#cansig.models.api.CanSigConfig.preprocessing" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigConfig.random_seed">
+<span class="sig-name descname"><span class="pre">random_seed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.models.api.CanSigConfig.random_seed" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigConfig.train">
+<span class="sig-name descname"><span class="pre">train</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cansig.models.cansig.TrainConfig" title="cansig.models.cansig.TrainConfig"><span class="pre">TrainConfig</span></a></em><a class="headerlink" href="#cansig.models.api.CanSigConfig.train" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.models.api.</span></span><span class="sig-name descname"><span class="pre">CanSigWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.models.cansig.CanSigConfig" title="cansig.models.cansig.CanSigConfig"><span class="pre">CanSigConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.api.CanSigWrapper" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigWrapper.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cansig.models.cansig.EvaluationResults" title="cansig.models.cansig.EvaluationResults"><span class="pre">EvaluationResults</span></a></span></span><a class="headerlink" href="#cansig.models.api.CanSigWrapper.evaluate" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.models.api.CanSigWrapper.get_latent_codes">
+<span class="sig-name descname"><span class="pre">get_latent_codes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.models.api.CanSigWrapper.get_latent_codes" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.models.api.SCVI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.models.api.</span></span><span class="sig-name descname"><span class="pre">SCVI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.models.scvi.SCVIConfig" title="cansig.models.scvi.SCVIConfig"><span class="pre">SCVIConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.api.SCVI" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The wrapper around the scVI model.</p>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">model</span></code> property to access the scVI’s SCVI instance.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.models.api.SCVI.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cansig.models.scvi.EvaluationResults" title="cansig.models.scvi.EvaluationResults"><span class="pre">EvaluationResults</span></a></span></span><a class="headerlink" href="#cansig.models.api.SCVI.evaluate" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the results of model validation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.models.api.SCVI.get_latent_codes">
+<span class="sig-name descname"><span class="pre">get_latent_codes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.models.api.SCVI.get_latent_codes" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the latent representations as a data frame.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.models.api.SCVIConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.models.api.</span></span><span class="sig-name descname"><span class="pre">SCVIConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_latent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.models.scvi.PreprocessingConfig" title="cansig.models.scvi.PreprocessingConfig"><span class="pre">PreprocessingConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.models.scvi.ModelConfig" title="cansig.models.scvi.ModelConfig"><span class="pre">ModelConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.models.scvi.TrainConfig" title="cansig.models.scvi.TrainConfig"><span class="pre">TrainConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evaluation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.models.scvi.EvaluationConfig" title="cansig.models.scvi.EvaluationConfig"><span class="pre">EvaluationConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuous_covariates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_covariates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.api.SCVIConfig" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>The configuration of the scVI integration model and its training.</p>
+<p>Note that this config is split into several smaller subconfigs,
+as the hyperparameters are hierarchical.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.SCVIConfig.batch">
+<span class="sig-name descname"><span class="pre">batch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#cansig.models.api.SCVIConfig.batch" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.SCVIConfig.continuous_covariates">
+<span class="sig-name descname"><span class="pre">continuous_covariates</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.api.SCVIConfig.continuous_covariates" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.models.api.SCVIConfig.continuous_covariates_validator">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">continuous_covariates_validator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.api.SCVIConfig.continuous_covariates_validator" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.SCVIConfig.discrete_covariates">
+<span class="sig-name descname"><span class="pre">discrete_covariates</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.api.SCVIConfig.discrete_covariates" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.models.api.SCVIConfig.discrete_covariates_validator">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">discrete_covariates_validator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.api.SCVIConfig.discrete_covariates_validator" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.SCVIConfig.evaluation">
+<span class="sig-name descname"><span class="pre">evaluation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cansig.models.scvi.EvaluationConfig" title="cansig.models.scvi.EvaluationConfig"><span class="pre">EvaluationConfig</span></a></em><a class="headerlink" href="#cansig.models.api.SCVIConfig.evaluation" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.SCVIConfig.model">
+<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cansig.models.scvi.ModelConfig" title="cansig.models.scvi.ModelConfig"><span class="pre">ModelConfig</span></a></em><a class="headerlink" href="#cansig.models.api.SCVIConfig.model" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.SCVIConfig.n_latent">
+<span class="sig-name descname"><span class="pre">n_latent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveInt</span></em><a class="headerlink" href="#cansig.models.api.SCVIConfig.n_latent" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.SCVIConfig.preprocessing">
+<span class="sig-name descname"><span class="pre">preprocessing</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cansig.models.scvi.PreprocessingConfig" title="cansig.models.scvi.PreprocessingConfig"><span class="pre">PreprocessingConfig</span></a></em><a class="headerlink" href="#cansig.models.api.SCVIConfig.preprocessing" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.SCVIConfig.random_seed">
+<span class="sig-name descname"><span class="pre">random_seed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.models.api.SCVIConfig.random_seed" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.api.SCVIConfig.train">
+<span class="sig-name descname"><span class="pre">train</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cansig.models.scvi.TrainConfig" title="cansig.models.scvi.TrainConfig"><span class="pre">TrainConfig</span></a></em><a class="headerlink" href="#cansig.models.api.SCVIConfig.train" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="cansig-models-cansig-module">
-<h2>cansig.models.cansig module<a class="headerlink" href="#cansig-models-cansig-module" title="Permalink to this heading">#</a></h2>
+<section id="module-cansig.models.cansig">
+<span id="cansig-models-cansig-module"></span><h2>cansig.models.cansig module<a class="headerlink" href="#module-cansig.models.cansig" title="Permalink to this heading">#</a></h2>
+<p>An experimental integration model,
+which uses CNV profiles as well as the healthy cells to learn better embeddings of the malignant cells.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently CanSig is based on scVI, which is considerably faster.</p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.models.cansig.</span></span><span class="sig-name descname"><span class="pre">CanSigConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_latent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_latent_batch_effect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_latent_cnv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.models.cansig.PreprocessingConfig" title="cansig.models.cansig.PreprocessingConfig"><span class="pre">PreprocessingConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.models.cansig.ModelConfig" title="cansig.models.cansig.ModelConfig"><span class="pre">ModelConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.models.cansig.TrainConfig" title="cansig.models.cansig.TrainConfig"><span class="pre">TrainConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuous_covariates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_covariates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.cansig.CanSigConfig" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigConfig.batch">
+<span class="sig-name descname"><span class="pre">batch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#cansig.models.cansig.CanSigConfig.batch" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigConfig.continuous_covariates">
+<span class="sig-name descname"><span class="pre">continuous_covariates</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.cansig.CanSigConfig.continuous_covariates" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigConfig.continuous_covariates_validator">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">continuous_covariates_validator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.cansig.CanSigConfig.continuous_covariates_validator" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigConfig.discrete_covariates">
+<span class="sig-name descname"><span class="pre">discrete_covariates</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.cansig.CanSigConfig.discrete_covariates" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigConfig.discrete_covariates_validator">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">discrete_covariates_validator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.cansig.CanSigConfig.discrete_covariates_validator" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigConfig.inplace">
+<span class="sig-name descname"><span class="pre">inplace</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cansig.models.cansig.CanSigConfig.inplace" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigConfig.model">
+<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cansig.models.cansig.ModelConfig" title="cansig.models.cansig.ModelConfig"><span class="pre">ModelConfig</span></a></em><a class="headerlink" href="#cansig.models.cansig.CanSigConfig.model" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigConfig.n_latent">
+<span class="sig-name descname"><span class="pre">n_latent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveInt</span></em><a class="headerlink" href="#cansig.models.cansig.CanSigConfig.n_latent" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigConfig.n_latent_batch_effect">
+<span class="sig-name descname"><span class="pre">n_latent_batch_effect</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveInt</span></em><a class="headerlink" href="#cansig.models.cansig.CanSigConfig.n_latent_batch_effect" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigConfig.n_latent_cnv">
+<span class="sig-name descname"><span class="pre">n_latent_cnv</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveInt</span></em><a class="headerlink" href="#cansig.models.cansig.CanSigConfig.n_latent_cnv" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigConfig.preprocessing">
+<span class="sig-name descname"><span class="pre">preprocessing</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cansig.models.cansig.PreprocessingConfig" title="cansig.models.cansig.PreprocessingConfig"><span class="pre">PreprocessingConfig</span></a></em><a class="headerlink" href="#cansig.models.cansig.CanSigConfig.preprocessing" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigConfig.random_seed">
+<span class="sig-name descname"><span class="pre">random_seed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.models.cansig.CanSigConfig.random_seed" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigConfig.train">
+<span class="sig-name descname"><span class="pre">train</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cansig.models.cansig.TrainConfig" title="cansig.models.cansig.TrainConfig"><span class="pre">TrainConfig</span></a></em><a class="headerlink" href="#cansig.models.cansig.CanSigConfig.train" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.models.cansig.</span></span><span class="sig-name descname"><span class="pre">CanSigWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.models.cansig.CanSigConfig" title="cansig.models.cansig.CanSigConfig"><span class="pre">CanSigConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.cansig.CanSigWrapper" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigWrapper.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cansig.models.cansig.EvaluationResults" title="cansig.models.cansig.EvaluationResults"><span class="pre">EvaluationResults</span></a></span></span><a class="headerlink" href="#cansig.models.cansig.CanSigWrapper.evaluate" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cansig.models.cansig.CanSigWrapper.get_latent_codes">
+<span class="sig-name descname"><span class="pre">get_latent_codes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.models.cansig.CanSigWrapper.get_latent_codes" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.models.cansig.EvaluationResults">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.models.cansig.</span></span><span class="sig-name descname"><span class="pre">EvaluationResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">history</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginal_ll</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples_marginal_ll</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveInt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.cansig.EvaluationResults" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.EvaluationResults.history">
+<span class="sig-name descname"><span class="pre">history</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.cansig.EvaluationResults.history" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.EvaluationResults.marginal_ll">
+<span class="sig-name descname"><span class="pre">marginal_ll</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#cansig.models.cansig.EvaluationResults.marginal_ll" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.EvaluationResults.n_samples_marginal_ll">
+<span class="sig-name descname"><span class="pre">n_samples_marginal_ll</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveInt</span></em><a class="headerlink" href="#cansig.models.cansig.EvaluationResults.n_samples_marginal_ll" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.models.cansig.ModelConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.models.cansig.</span></span><span class="sig-name descname"><span class="pre">ModelConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_hidden</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ConstrainedFloatValue</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispersion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'gene'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'gene-batch'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'gene-label'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'gene-cell'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gene'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_likelihood</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'poisson'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'zinb'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'nb'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'zinb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_distribution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'normal'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ln'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'normal'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.cansig.ModelConfig" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.ModelConfig.dispersion">
+<span class="sig-name descname"><span class="pre">dispersion</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'gene'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'gene-batch'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'gene-label'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'gene-cell'</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.cansig.ModelConfig.dispersion" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.ModelConfig.dropout_rate">
+<span class="sig-name descname"><span class="pre">dropout_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ConstrainedFloatValue</span></em><a class="headerlink" href="#cansig.models.cansig.ModelConfig.dropout_rate" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.ModelConfig.gene_likelihood">
+<span class="sig-name descname"><span class="pre">gene_likelihood</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'poisson'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'zinb'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'nb'</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.cansig.ModelConfig.gene_likelihood" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.ModelConfig.latent_distribution">
+<span class="sig-name descname"><span class="pre">latent_distribution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'normal'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ln'</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.cansig.ModelConfig.latent_distribution" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.ModelConfig.n_hidden">
+<span class="sig-name descname"><span class="pre">n_hidden</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveInt</span></em><a class="headerlink" href="#cansig.models.cansig.ModelConfig.n_hidden" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.ModelConfig.n_layers">
+<span class="sig-name descname"><span class="pre">n_layers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveInt</span></em><a class="headerlink" href="#cansig.models.cansig.ModelConfig.n_layers" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.models.cansig.PreprocessingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.models.cansig.</span></span><span class="sig-name descname"><span class="pre">PreprocessingConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_top_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.cansig.PreprocessingConfig" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.PreprocessingConfig.batch">
+<span class="sig-name descname"><span class="pre">batch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.cansig.PreprocessingConfig.batch" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.PreprocessingConfig.n_top_genes">
+<span class="sig-name descname"><span class="pre">n_top_genes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.cansig.PreprocessingConfig.n_top_genes" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.models.cansig.</span></span><span class="sig-name descname"><span class="pre">TrainConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ConstrainedFloatValue</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">early_stopping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveFloat</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_decay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveFloat</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'Adam'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Adam'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps_kl_warmup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_epochs_kl_warmup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce_lr_on_plateau</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveFloat</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr_patience</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr_scheduler_metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'elbo_validation'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'reconstruction_loss_validation'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'kl_local_validation'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'elbo_validation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.models.cansig.TrainConfig" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.batch_size">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveInt</span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.batch_size" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.early_stopping">
+<span class="sig-name descname"><span class="pre">early_stopping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.early_stopping" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.eps">
+<span class="sig-name descname"><span class="pre">eps</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.eps" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.learning_rate">
+<span class="sig-name descname"><span class="pre">learning_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveFloat</span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.learning_rate" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.lr_factor">
+<span class="sig-name descname"><span class="pre">lr_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveFloat</span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.lr_factor" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.lr_min">
+<span class="sig-name descname"><span class="pre">lr_min</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.lr_min" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.lr_patience">
+<span class="sig-name descname"><span class="pre">lr_patience</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveInt</span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.lr_patience" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.lr_scheduler_metric">
+<span class="sig-name descname"><span class="pre">lr_scheduler_metric</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'elbo_validation'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'reconstruction_loss_validation'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'kl_local_validation'</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.lr_scheduler_metric" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.lr_threshold">
+<span class="sig-name descname"><span class="pre">lr_threshold</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.lr_threshold" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.max_epochs">
+<span class="sig-name descname"><span class="pre">max_epochs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveInt</span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.max_epochs" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.n_epochs_kl_warmup">
+<span class="sig-name descname"><span class="pre">n_epochs_kl_warmup</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveInt</span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.n_epochs_kl_warmup" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.n_steps_kl_warmup">
+<span class="sig-name descname"><span class="pre">n_steps_kl_warmup</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.n_steps_kl_warmup" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.optimizer">
+<span class="sig-name descname"><span class="pre">optimizer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'Adam'</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.optimizer" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.reduce_lr_on_plateau">
+<span class="sig-name descname"><span class="pre">reduce_lr_on_plateau</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.reduce_lr_on_plateau" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.train_size">
+<span class="sig-name descname"><span class="pre">train_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ConstrainedFloatValue</span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.train_size" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.models.cansig.TrainConfig.weight_decay">
+<span class="sig-name descname"><span class="pre">weight_decay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PositiveFloat</span></em><a class="headerlink" href="#cansig.models.cansig.TrainConfig.weight_decay" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-cansig.models.scvi">
 <span id="cansig-models-scvi-module"></span><h2>cansig.models.scvi module<a class="headerlink" href="#module-cansig.models.scvi" title="Permalink to this heading">#</a></h2>
@@ -742,8 +1168,112 @@ as the hyperparameters are hierarchical.</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig-models-api-module">cansig.models.api module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig-models-cansig-module">cansig.models.cansig module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-cansig.models.api">cansig.models.api module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigConfig"><code class="docutils literal notranslate"><span class="pre">CanSigConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigConfig.batch"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.batch</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigConfig.continuous_covariates"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.continuous_covariates</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigConfig.continuous_covariates_validator"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.continuous_covariates_validator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigConfig.discrete_covariates"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.discrete_covariates</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigConfig.discrete_covariates_validator"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.discrete_covariates_validator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigConfig.inplace"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.inplace</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigConfig.model"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.model</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigConfig.n_latent"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.n_latent</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigConfig.n_latent_batch_effect"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.n_latent_batch_effect</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigConfig.n_latent_cnv"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.n_latent_cnv</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigConfig.preprocessing"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.preprocessing</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigConfig.random_seed"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.random_seed</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigConfig.train"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.train</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigWrapper"><code class="docutils literal notranslate"><span class="pre">CanSigWrapper</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigWrapper.evaluate"><code class="docutils literal notranslate"><span class="pre">CanSigWrapper.evaluate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.CanSigWrapper.get_latent_codes"><code class="docutils literal notranslate"><span class="pre">CanSigWrapper.get_latent_codes()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVI"><code class="docutils literal notranslate"><span class="pre">SCVI</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVI.evaluate"><code class="docutils literal notranslate"><span class="pre">SCVI.evaluate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVI.get_latent_codes"><code class="docutils literal notranslate"><span class="pre">SCVI.get_latent_codes()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVIConfig"><code class="docutils literal notranslate"><span class="pre">SCVIConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVIConfig.batch"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.batch</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVIConfig.continuous_covariates"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.continuous_covariates</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVIConfig.continuous_covariates_validator"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.continuous_covariates_validator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVIConfig.discrete_covariates"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.discrete_covariates</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVIConfig.discrete_covariates_validator"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.discrete_covariates_validator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVIConfig.evaluation"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.evaluation</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVIConfig.model"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.model</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVIConfig.n_latent"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.n_latent</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVIConfig.preprocessing"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.preprocessing</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVIConfig.random_seed"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.random_seed</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.api.SCVIConfig.train"><code class="docutils literal notranslate"><span class="pre">SCVIConfig.train</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-cansig.models.cansig">cansig.models.cansig module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigConfig"><code class="docutils literal notranslate"><span class="pre">CanSigConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigConfig.batch"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.batch</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigConfig.continuous_covariates"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.continuous_covariates</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigConfig.continuous_covariates_validator"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.continuous_covariates_validator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigConfig.discrete_covariates"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.discrete_covariates</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigConfig.discrete_covariates_validator"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.discrete_covariates_validator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigConfig.inplace"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.inplace</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigConfig.model"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.model</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigConfig.n_latent"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.n_latent</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigConfig.n_latent_batch_effect"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.n_latent_batch_effect</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigConfig.n_latent_cnv"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.n_latent_cnv</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigConfig.preprocessing"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.preprocessing</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigConfig.random_seed"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.random_seed</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigConfig.train"><code class="docutils literal notranslate"><span class="pre">CanSigConfig.train</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigWrapper"><code class="docutils literal notranslate"><span class="pre">CanSigWrapper</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigWrapper.evaluate"><code class="docutils literal notranslate"><span class="pre">CanSigWrapper.evaluate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.CanSigWrapper.get_latent_codes"><code class="docutils literal notranslate"><span class="pre">CanSigWrapper.get_latent_codes()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.EvaluationResults"><code class="docutils literal notranslate"><span class="pre">EvaluationResults</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.EvaluationResults.history"><code class="docutils literal notranslate"><span class="pre">EvaluationResults.history</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.EvaluationResults.marginal_ll"><code class="docutils literal notranslate"><span class="pre">EvaluationResults.marginal_ll</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.EvaluationResults.n_samples_marginal_ll"><code class="docutils literal notranslate"><span class="pre">EvaluationResults.n_samples_marginal_ll</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.ModelConfig"><code class="docutils literal notranslate"><span class="pre">ModelConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.ModelConfig.dispersion"><code class="docutils literal notranslate"><span class="pre">ModelConfig.dispersion</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.ModelConfig.dropout_rate"><code class="docutils literal notranslate"><span class="pre">ModelConfig.dropout_rate</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.ModelConfig.gene_likelihood"><code class="docutils literal notranslate"><span class="pre">ModelConfig.gene_likelihood</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.ModelConfig.latent_distribution"><code class="docutils literal notranslate"><span class="pre">ModelConfig.latent_distribution</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.ModelConfig.n_hidden"><code class="docutils literal notranslate"><span class="pre">ModelConfig.n_hidden</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.ModelConfig.n_layers"><code class="docutils literal notranslate"><span class="pre">ModelConfig.n_layers</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.PreprocessingConfig"><code class="docutils literal notranslate"><span class="pre">PreprocessingConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.PreprocessingConfig.batch"><code class="docutils literal notranslate"><span class="pre">PreprocessingConfig.batch</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.PreprocessingConfig.n_top_genes"><code class="docutils literal notranslate"><span class="pre">PreprocessingConfig.n_top_genes</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig"><code class="docutils literal notranslate"><span class="pre">TrainConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.batch_size"><code class="docutils literal notranslate"><span class="pre">TrainConfig.batch_size</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.early_stopping"><code class="docutils literal notranslate"><span class="pre">TrainConfig.early_stopping</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.eps"><code class="docutils literal notranslate"><span class="pre">TrainConfig.eps</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.learning_rate"><code class="docutils literal notranslate"><span class="pre">TrainConfig.learning_rate</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.lr_factor"><code class="docutils literal notranslate"><span class="pre">TrainConfig.lr_factor</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.lr_min"><code class="docutils literal notranslate"><span class="pre">TrainConfig.lr_min</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.lr_patience"><code class="docutils literal notranslate"><span class="pre">TrainConfig.lr_patience</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.lr_scheduler_metric"><code class="docutils literal notranslate"><span class="pre">TrainConfig.lr_scheduler_metric</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.lr_threshold"><code class="docutils literal notranslate"><span class="pre">TrainConfig.lr_threshold</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.max_epochs"><code class="docutils literal notranslate"><span class="pre">TrainConfig.max_epochs</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.n_epochs_kl_warmup"><code class="docutils literal notranslate"><span class="pre">TrainConfig.n_epochs_kl_warmup</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.n_steps_kl_warmup"><code class="docutils literal notranslate"><span class="pre">TrainConfig.n_steps_kl_warmup</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.optimizer"><code class="docutils literal notranslate"><span class="pre">TrainConfig.optimizer</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.reduce_lr_on_plateau"><code class="docutils literal notranslate"><span class="pre">TrainConfig.reduce_lr_on_plateau</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.train_size"><code class="docutils literal notranslate"><span class="pre">TrainConfig.train_size</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.cansig.TrainConfig.weight_decay"><code class="docutils literal notranslate"><span class="pre">TrainConfig.weight_decay</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-cansig.models.scvi">cansig.models.scvi module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.scvi.EvaluationConfig"><code class="docutils literal notranslate"><span class="pre">EvaluationConfig</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.models.scvi.EvaluationConfig.n_samples_ll"><code class="docutils literal notranslate"><span class="pre">EvaluationConfig.n_samples_ll</span></code></a></li>
