@@ -17,7 +17,7 @@ from cansig.types import Pathlike, ScoringDict, GeneList
 # pytype: enable=import-error
 
 
-def preprocessing(
+def run_preprocessing(
     input_adata: ad.AnnData,
     malignant_celltypes: List[str],
     gene_order: Union[pd.DataFrame, Pathlike],

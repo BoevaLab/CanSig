@@ -7,7 +7,7 @@ import cansig.models.scvi  # noqa F401  # pytype: disable=import-error
 import cansig.multirun  # noqa F401 # pytype: disable=import-error
 import cansig.plotting  # noqa F401 # pytype: disable=import-error
 import cansig.preprocessing  # noqa F401 # pytype: disable=import-error
-from cansig.preprocessing.main import preprocessing as run_preprocessing  # noqa F401 # pytype: disable=import-error
+from cansig.preprocessing.main import run_preprocessing  # noqa F401 # pytype: disable=import-error
 
 __all__ = [
     "preprocessing",
