@@ -9,7 +9,7 @@ from cansig.preprocessing.utils import Normalized  # pytype: disable=import-erro
 
 from cansig.types import GeneList, ScoringDict  # pytype: disable=import-error
 
-_LOGGER = logging.Logger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 _DEFAULT_S_GENES = [
     "MCM5",

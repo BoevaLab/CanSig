@@ -1,7 +1,10 @@
 import logging
 
 import anndata as ad  # pytype: disable=import-error
+import pandas as pd  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
+
+from cansig.preprocessing.annotation import AnnotationConfig  # pytype: disable=import-error
 
 _LOGGER = logging.Logger(__name__)
 
@@ -43,3 +46,14 @@ class Normalized:
     def normalize_adata(self):
         sc.pp.normalize_total(self.adata, target_sum=self.target_sum)
         sc.pp.log1p(self.adata)
+
+
+def check_n_malignant_cells(obs: pd.DataFrame, min_malignant_cells: int, annotation_config: AnnotationConfig):
+    malignant_status = annotation_config.cell_status.malignant
+    n_malignant_cells = (obs[annotation_config.malignant_combined] == malignant_status).sum()
+
+    if n_malignant_cells < min_malignant_cells:
+        _LOGGER.info(f"Sample only contains {n_malignant_cells} malignant cells and is skipped.")
+        return True
+    else:
+        return False

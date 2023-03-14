@@ -8,7 +8,7 @@ from sklearn.metrics import silhouette_score  # pytype: disable=import-error
 
 from cansig.cluster.leiden import LeidenNClusterConfig, LeidenNCluster  # pytype: disable=import-error
 
-_LOGGER = logging.Logger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 
 class SubclonalConfig(pydantic.BaseModel):
@@ -71,5 +71,5 @@ class Subclonal:
         subclonal_key = self._config.subclonal_key
         sample_id = adata.obs[self._config.batch_id_column][0]
         adata.obs[subclonal_key] = self._config.non_malignant_marker
-        adata.obs.loc[cluster.index, subclonal_key] = sample_id + "-" + cluster.astype(str)
+        adata.obs.loc[cluster.index, subclonal_key] = str(sample_id) + "-" + cluster.astype(str)
         adata.obs[subclonal_key] = adata.obs[subclonal_key].astype("category")
