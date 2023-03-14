@@ -1716,86 +1716,6 @@ where k is the latent space dimension</p></li>
 </section>
 <section id="module-cansig">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cansig" title="Permalink to this heading">#</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="cansig.run_preprocessing">
-<span class="sig-prename descclassname"><span class="pre">cansig.</span></span><span class="sig-name descname"><span class="pre">run_preprocessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">malignant_celltypes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_groups</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">celltype_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">undetermined_celltypes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'reference'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_reference_cells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnv_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cnv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoring_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2m_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_annotation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth_annotation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span></span></span><a class="headerlink" href="#cansig.run_preprocessing" title="Permalink to this definition">#</a></dt>
-<dd><p>This is the pre-processing module of CanSig.
-For every batch several preprocessing steps are run:</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li><p>Calling of CNVs.</p></li>
-<li><p>Improving the split of malignant and non-malignant cells by clustering cells by
-CNVs.</p></li>
-<li><p>INference of subclones based on the CNVs.</p></li>
-</ol>
-</div></blockquote>
-<p>In the end, all high quality cells are combined. After combining, known gene
-signatures are scored only on malignant cells and the cell cycle is scored on all
-cells.</p>
-<dl class="field-list">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul>
-<li><p><strong>input_adata</strong> – AnnData.</p></li>
-<li><p><strong>malignant_celltypes</strong> – List of celltypes that are considered malignant.</p></li>
-<li><p><strong>gene_order</strong> – Either a pandas DataFrame or a path to a .csv file containing the
-gene annotations. The Dataframe needs to contain the gene names as index and
-chromosome, start and end as columns. The chromosome needs to be stored as
-“chr&lt;number of the chromsome that the gene belongs to&gt;”. In the .csv file
-the gene names are expected as the first column. Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">gene_order</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-<span class="n">chromosome</span>   <span class="n">start</span>     <span class="n">end</span>
-<span class="n">MIR1302</span><span class="o">-</span><span class="mf">9.3</span>        <span class="n">chr1</span>   <span class="mi">29554</span>   <span class="mi">31109</span>
-<span class="n">FAM87B</span>             <span class="n">chr1</span>  <span class="mi">752751</span>  <span class="mi">755214</span>
-</pre></div>
-</div>
-</li>
-<li><p><strong>reference_groups</strong> – List of reference groups. A reference group is a tuple of
-celltypes that will be used together as one reference for infercnv. Cells in
-a reference group should have similar gene expression. Example:
-<cite>[(“T.cells.CD8”, “T.cell.CD8.exhausted”), (“Macrophages”,), …]</cite></p></li>
-<li><p><strong>celltype_key</strong> – column name in <cite>adata.obs</cite> that stores the celltype annotation.</p></li>
-<li><p><strong>batch_key</strong> – column name in <cite>adata.obs</cite> that stores the batch id.</p></li>
-<li><p><strong>undetermined_celltypes</strong> – Optional list of celltypes that are considered
-malignant. Cells of undertermined celltype will be separated into malignant
-and non-malignant based on CNVs.</p></li>
-<li><p><strong>min_reference_cells</strong> – If the number of cells in a reference group is less than
-<cite>min_reference_cells</cite> that reference group will not be used for CNV
-inference. If the total number of reference cells (any cell belonging to a
-reference group) in a sample is lower than <cite>min_reference_groups *
-min_reference_cells</cite> the sample will not be added to the finale AnnData.
-Setting this to a lower number will reduce the quality of inferred CNVs but
-might allow to use more samples.</p></li>
-<li><p><strong>reference_key</strong> – column name in <cite>adata.obs</cite> to store to which reference group
-a cell belongs.</p></li>
-<li><p><strong>window_size</strong> – size of the running window used in infercnv.</p></li>
-<li><p><strong>step</strong> – In infercnv only every <cite>step</cite>-th running window is computed. This saves
-memory and computation time. Set to 1 to compute all windows.</p></li>
-<li><p><strong>cnv_key</strong> – Key under which the cnv matrix will be store. Notice: Infercnv has the
-convention to store the matrix in <cite>adata.obsm[“X_{key_added}”]</cite> and
-additional information in <cite>adata.uns[key_added]</cite>.</p></li>
-<li><p><strong>scoring_dict</strong> – Dictionary containing the name of a signature as key and a list of
-its associated genes as value.</p></li>
-<li><p><strong>g2m_genes</strong> – Optional list of genes to score the G2M phase of the cell cycle. If
-None a default gene list is used.</p></li>
-<li><p><strong>s_genes</strong> – Optional list of genes to score the S phase of the cell cycle. If
-None a default gene list is used.</p></li>
-<li><p><strong>figure_dir</strong> – Path to directory to store figures.</p></li>
-<li><p><strong>threshold_annotation</strong></p></li>
-<li><p><strong>depth_annotation</strong></p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>combined and preprocessed AnnData.</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>See further usage examples in the following tutorials:</p>
-<ol class="arabic simple">
-<li><p><a class="reference internal" href="../preprocessing.html"><span class="doc">Preprocessing</span></a></p></li>
-<li><p>TODO: add link to colab</p></li>
-</ol>
-</dd></dl>
-
 </section>
 </section>
 
@@ -1954,10 +1874,7 @@ None a default gene list is used.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.types.write_latents"><code class="docutils literal notranslate"><span class="pre">write_latents()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-cansig">Module contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.run_preprocessing"><code class="docutils literal notranslate"><span class="pre">run_preprocessing()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-cansig">Module contents</a></li>
 </ul>
   </nav></div>
 
