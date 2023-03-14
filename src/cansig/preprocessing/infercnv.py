@@ -64,7 +64,7 @@ class InferCNV:
                 inplace=False,
                 exclude_chromosomes=self._config.exclude_chromosome,
             )
-        _LOGGER.info(f"Finished inferring CNVs. {X_cnv.shape[1]} CNVs have been annotated.")
+        _LOGGER.info(f"Finished inferring CNVs. {X_cnv.shape[1]} CNV positions have been annotated.")
         cnv_dict = {"chr_pos": chr_position, "window_size": self._config.window_size, "step": self._config.step}
         adata.uns[self._config.cnv_key], adata.obsm[f"X_{self._config.cnv_key}"] = cnv_dict, X_cnv
 
