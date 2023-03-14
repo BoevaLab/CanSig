@@ -10,7 +10,7 @@ from cansig.preprocessing.infercnv_ import infercnv  # pytype: disable=import-er
 from cansig.preprocessing.utils import Normalized  # pytype: disable=import-error
 from cansig.types import Pathlike  # pytype: disable=import-error
 
-_LOGGER = logging.Logger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 
 class InferCNVConfig(pydantic.BaseModel):
