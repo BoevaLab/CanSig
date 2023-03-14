@@ -6,7 +6,7 @@ import scanpy as sc  # pytype: disable=import-error
 
 from cansig.preprocessing.annotation import AnnotationConfig  # pytype: disable=import-error
 
-_LOGGER = logging.Logger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 
 def split_anndata(input_adata: ad.AnnData, batch_key: str):
