@@ -166,11 +166,12 @@ def run_preprocessing(
     cnv.infer(input_adata, reference_cat)
     for adata in split_anndata(input_adata, batch_key=batch_key):
 
+        cell_annotation.annotate_using_cnv(adata)
+        cell_annotation.combine_annotations(adata)
+
         if check_n_malignant_cells(adata.obs, min_malignant_cells, annotation_config):
             continue
 
-        cell_annotation.annotate_using_cnv(adata)
-        cell_annotation.combine_annotations(adata)
         subclonal.cluster(adata)
 
         if figure_dir:
