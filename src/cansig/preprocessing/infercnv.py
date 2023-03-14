@@ -64,7 +64,6 @@ class InferCNV:
                 inplace=False,
                 exclude_chromosomes=self._config.exclude_chromosome,
             )
-
         cnv_dict = {"chr_pos": chr_position, "window_size": self._config.window_size, "step": self._config.step}
         adata.uns[self._config.cnv_key], adata.obsm[f"X_{self._config.cnv_key}"] = cnv_dict, X_cnv
 
@@ -80,6 +79,7 @@ class InferCNV:
             & ~var[self._config.chromosome].isin(self._config.exclude_chromosome).values
             & (mean_counts_per_gene >= self._config.threshold)
         )
+        _LOGGER.info(f"{sum(cnv_called)} of {len(cnv_called)} genes are used for CNV inference.")
         return cnv_called
 
     def merge_gene_order(self, var: pd.DataFrame) -> pd.DataFrame:
