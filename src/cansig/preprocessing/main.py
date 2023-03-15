@@ -10,7 +10,7 @@ from cansig.preprocessing.infercnv import InferCNVConfig, InferCNV, get_referenc
 from cansig.preprocessing.plotting import plot_chromosomal_heatmap
 from cansig.preprocessing.scoring import SignatureScorer
 from cansig.preprocessing.subclonal import Subclonal, SubclonalConfig
-from cansig.preprocessing.utils import split_anndata, check_n_malignant_cells
+from cansig.preprocessing.utils import split_anndata, check_n_malignant_cells, make_indices_unique
 from cansig.types import Pathlike, ScoringDict, GeneList
 
 
@@ -114,6 +114,8 @@ def run_preprocessing(
     if undetermined_celltypes is None:
         undetermined_celltypes = []
 
+    make_indices_unique(input_adata)
+
     cell_status = CellStatus()
     reference_config = ReferenceConfig()
     infercnv_config = InferCNVConfig(
@@ -151,7 +153,6 @@ def run_preprocessing(
         malignant_key=annotation_config.malignant_combined,
         malignant_status=cell_status.malignant,
     )
-
     cell_annotation.annotate_using_celltype(input_adata)
 
     reference_cat = get_reference_groups(

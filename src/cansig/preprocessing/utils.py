@@ -1,5 +1,6 @@
 import logging
 
+import anndata  # pytype: disable=import-error
 import anndata as ad  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
@@ -57,3 +58,13 @@ def check_n_malignant_cells(obs: pd.DataFrame, min_malignant_cells: int, annotat
         return True
     else:
         return False
+
+
+def make_indices_unique(adata: anndata.AnnData):
+    if not adata.obs_names.is_unique:
+        _LOGGER.warning("Making obs_names unique.")
+        adata.obs_names_make_unique()
+
+    if not adata.var_names.is_unique:
+        _LOGGER.warning("Making var_names unique.")
+        adata.var_names_make_unique()

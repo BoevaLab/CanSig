@@ -30,7 +30,8 @@ def infercnv_monkeypatch(*args, **kwargs):
 
 
 @pytest.mark.parametrize("xtype", [None, "csc", "csr"])
-def test_integation(monkeypatch, xtype):
+@pytest.mark.parametrize("obs_names", [None, ["cell1"] * 100, [1] * 100])
+def test_integation(monkeypatch, xtype, obs_names):
     # This is a  bit tricky. Infercnv is defined in cansig.preprocessing.infercnv_ but
     # it is called in cansig.preprocessing.infercnv. Therefore, we have to patch it in
     # cansig.preprocessing.infercnv.
@@ -39,8 +40,14 @@ def test_integation(monkeypatch, xtype):
     adatas = []
     for i in range(2):
         adata = generate_adata(
-            100, 100, obs_dict={"celltype": [("evil", 50), ("good", 50)]}, sample_id=f"sample_{i}", xtype=xtype
+            100,
+            100,
+            obs_dict={"celltype": [("evil", 50), ("good", 50)]},
+            obs_names=obs_names,
+            sample_id=f"sample_{i}",
+            xtype=xtype,
         )
+        scoring_dict = {"sig1": adata.var_names.to_list()[:50]}
         adatas.append(adata)
 
     gene_anno = gene_annotation(100)
@@ -52,10 +59,11 @@ def test_integation(monkeypatch, xtype):
         gene_order=gene_anno,
         celltype_key="celltype",
         batch_key="sample_id",
+        scoring_dict=scoring_dict,
         g2m_genes=["gene_1", "gene_2"],
         s_genes=["gene_3", "gene_4"],
     )
-
+    assert "sig1" in adata.obs.columns
     assert "X_cnv" in adata.obsm_keys()
     for obs in _EXPECTED_OBS:
         assert obs in adata.obs.columns
