@@ -1,24 +1,23 @@
 """Script for running the metasignatures."""
 
-import argparse
-import logging
-import os
-import pathlib as pl  # pytype: disable=import-error
 from typing import Union, List, Optional, Literal, Dict, Tuple  # pytype: disable=not-supported-yet
+import argparse
+import os
+import logging
 
 import anndata as ad  # pytype: disable=import-error
-import numpy as np  # pytype: disable=import-error
-import pandas as pd  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
-from sklearn import metrics  # pytype: disable=import-error
+import pandas as pd  # pytype: disable=import-error
+import numpy as np  # pytype: disable=import-error
+import pathlib as pl  # pytype: disable=import-error
 
 import cansig.cnvanalysis.differentialcnvs as cnv  # pytype: disable=import-error
-import cansig.filesys as fs  # pytype: disable=import-error
-import cansig.gsea as gsea  # pytype: disable=import-error
 import cansig.logger as clogger  # pytype: disable=import-error
+import cansig.metasignatures.utils as utils  # pytype: disable=import-error
 import cansig.metasignatures.WRC as WRC  # pytype: disable=import-error
 import cansig.metasignatures.clustering as clustering  # pytype: disable=import-error
-import cansig.metasignatures.utils as utils  # pytype: disable=import-error
+import cansig.gsea as gsea  # pytype: disable=import-error
+import cansig.filesys as fs  # pytype: disable=import-error
 import cansig.multirun as mr  # pytype: disable=import-error
 
 _LOGGER = logging.getLogger(__name__)
@@ -124,6 +123,12 @@ def parse_args():
         help="Generated log file.",
         default="postprocessing.log",
     )
+    parser.add_argument(
+        "--n-clusters",
+        type=int,
+        help="If used, number of meta-signatures that will be uncovered. Overrides the threshold.",
+        default=None,
+    )
 
     args = parser.parse_args()
     return args
@@ -142,6 +147,8 @@ def get_final_metasignatures(
     linkage: str,
     threshold_n_rep: float,
     pat_specific_threshold: float,
+    n_clusters: int,
+    fixed_k: bool,
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, Dict[str, List[str]]]:
     """Computes and saves the metasignatures and their characteristics
 
@@ -170,6 +177,8 @@ def get_final_metasignatures(
 
     _LOGGER.info("Get the clustering for signatures.")
 
+    n_clusters = 2 if n_clusters is None else n_clusters
+
     clusters = clustering.get_final_clustering_jaccard(
         sim=sim,
         signatures=signatures,
@@ -178,13 +187,14 @@ def get_final_metasignatures(
         cluster_memb=cluster_memb,
         sig_index=sig_index,
         outliers=np.ones(len(signatures)),
-        n_clusters=2,
+        n_clusters=n_clusters,
         threshold=threshold,
         batch_key=batch_key,
         threshold_n_rep=threshold_n_rep,
         pat_specific_threshold=pat_specific_threshold,
         adata=adata,
         linkage=linkage,
+        fixed_k=fixed_k,
     )
     clusters, idx = clustering.update_clusters_strength(clusters=clusters, sim=sim)
 
@@ -260,8 +270,9 @@ def plot_latent_score(
     utils.plot_score_UMAP(adata=adata, meta_signatures=meta_signatures, resdir=resdir.figures_output, len_sig=50)
 
     _LOGGER.info("Plotting latent space with metamemberships.")
-
-    integ_path = get_integration_dir(integ_dir=integ_dir, metamembership=cell_metamembership)
+    integ_dir = pl.Path(integ_dir)
+    all_integ = [path for path in integ_dir.iterdir()]
+    integ_path = all_integ[np.random.randint(len(all_integ))]
 
     utils.plot_metamembership(
         adata=adata,
@@ -271,38 +282,6 @@ def plot_latent_score(
         resdir=resdir.figures_output,
         batch_column=batch_column,
     )
-
-
-def get_integration_dir(integ_dir: Union[str, pl.Path], metamembership: pd.DataFrame) -> pl.Path:
-    """Selects the latent spaced used to show the meta-signatures.
-
-    Args:
-
-        integ_dir: Path to the integration dir.
-        metamembership: pd.Df containing the hard meta-membership assignment of cells
-    """
-
-    integ_paths = list(pl.Path(integ_dir).iterdir())
-
-    aws = []
-    for integ_path in integ_paths:
-        latent = pd.read_csv(integ_path.joinpath("latent-representations.csv"), index_col=0)
-        if set(latent.index) != set(metamembership.index):
-            # This should probably throw an exception!
-            _LOGGER.warning("The index of the latent codes doesn't match the index of cell" "meta-membership.")
-        idx = latent.index.intersection(metamembership.index)
-
-        latent = latent.loc[idx].copy()
-        metamem = metamembership.loc[idx].copy()
-        adata = ad.AnnData(X=latent.values, obs=metamem, dtype=np.float32)
-        sc.pp.neighbors(adata)
-        sc.tl.umap(adata)
-        metamem = metamem[metamem["metamembership"].astype(str) != "-2.0"]
-        adata = adata[metamem.index]
-
-        aws.append(metrics.silhouette_score(adata.obsm["X_umap"], metamem.values.ravel()))
-
-    return integ_paths[np.argmax(aws)]
 
 
 def select_signatures(
@@ -349,6 +328,8 @@ def run_metasignatures(
     threshold_n_rep: float = 0.01,
     pat_specific_threshold: float = 0.75,
     linkage: str = "average",
+    n_clusters: Optional[int] = None,
+    fixed_k: bool = False,
 ) -> None:
     """Main function of the metasignature module. Will find the metasignatures by:
         - selecting signatures to cluster
@@ -388,6 +369,9 @@ def run_metasignatures(
         pat_specific_threshold: the fraction of cells assigned to a meta-signature over which
             a meta-signature is considered to be patient-specific
         linkage: a str defining the linkage used in the agglomerative clustering
+        n_clusters: the user-specified number of clusters a priori
+        fixed_k: a boolean indicating if the number of clusters was given a priori
+            by the user
 
     See also:
         gsea.GeneExpressionConfig, metasignatures.WRC.WRC, get_final_metasignatures
@@ -433,6 +417,8 @@ def run_metasignatures(
         linkage=linkage,
         threshold_n_rep=threshold_n_rep,
         pat_specific_threshold=pat_specific_threshold,
+        n_clusters=n_clusters,
+        fixed_k=fixed_k,
     )
 
     _LOGGER.info("Finding cell metamembership.")
@@ -447,6 +433,7 @@ def run_metasignatures(
         metamembership=cell_metamembership, prob_metamembership=prob_cellmetamembership, res_dir=resdir.path
     )
 
+    # TODO(Josephine, Florian): select the best integration run for viz
     if plots:
         _LOGGER.info("Plotting metasignature level figures.")
         resdir.make_fig_dir()
@@ -519,6 +506,8 @@ def main(args):
 
     multirun_dir = mr.MultirunDirectory(path=args.output, create=False)
 
+    fixed_k = False if args.n_clusters is None else True
+
     run_metasignatures(
         rundir=args.postdir,
         resdir=multirun_dir.metasig_directories,
@@ -536,6 +525,8 @@ def main(args):
         pat_specific_threshold=args.pat_specific_threshold,
         plots=(not args.disable_plots),
         linkage=args.linkage,
+        n_clusters=args.n_clusters,
+        fixed_k=fixed_k,
     )
     _LOGGER.info(f"Metasignature run finished. The generated output is in {args.output}.")
 

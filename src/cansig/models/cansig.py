@@ -1,6 +1,5 @@
 """An experimental integration model,
 which uses CNV profiles as well as the healthy cells to learn better embeddings of the malignant cells.
-
 Note:
     Currently CanSig is based on scVI, which is considerably faster.
 """
@@ -86,11 +85,9 @@ def _cast_covariates(listlike: Sequence[str]) -> Optional[list]:
     want to cast a given sequence to a list (or None).
     Moreover, scVI doesn't accept empty lists -- we need to cast empty
     list to None.
-
     Args:
         listlike: None or anything that behaves like a list
             (and can be explicitly casted)
-
     Returns:
         None, if `listlike` is None or is empty, or
           a list with the same elements as `listlike`, if it's nonempty
@@ -142,7 +139,6 @@ def _data_setup_wrapper(
     config: CanSigConfig,
 ) -> anndata.AnnData:
     """A thin wrapper over scVI's model preprocessing.
-
     Note:
         Modifies `data` in place.
     """
@@ -177,7 +173,6 @@ def _cansig_factory_wrapper(data: anndata.AnnData, n_latent: int, config: ModelC
 
 def _unpack_series(series) -> list:
     """Pass from pandas Series to a list.
-
     Useful for serialization purposes.
     """
     return series.values.ravel().tolist()
