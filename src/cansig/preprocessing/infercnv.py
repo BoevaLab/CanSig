@@ -50,11 +50,12 @@ class InferCNV:
         similar gene expression.
         """
         adata.var = self.merge_gene_order(adata.var)
-        adata.var[self._config.cnv_called] = self.get_cnv_called(adata)
+        if self._config.cnv_called not in adata.var.columns:
+            adata.var[self._config.cnv_called] = self.get_cnv_called(adata)
         # Here we subset to just the genes that will be used for InferCNV.
-        bdata = adata[:, adata.var[self._config.cnv_called]].copy()
 
-        with Normalized(bdata):
+        with Normalized(adata):
+            bdata = adata[:, adata.var[self._config.cnv_called]].copy()
             chr_position, X_cnv = infercnv(
                 bdata,
                 reference_key=self._config.reference_key,
@@ -89,7 +90,7 @@ class InferCNV:
         Args:
             var (pd.DataFrame): DataFrame to merge the gene order with. Typically, this will be`adata.var`.
         """
-        return var.merge(self.gene_order, how="left", left_index=True, right_index=True)
+        return var.merge(self.gene_order, how="left", left_index=True, right_index=True, suffixes=(None, "_cansig"))
 
     def get_gene_order(self, gene_order: Union[Pathlike, pd.DataFrame], gene_list: List[str]) -> pd.DataFrame:
         """
