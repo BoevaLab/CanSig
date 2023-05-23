@@ -131,6 +131,26 @@ def save_metasignatures(meta_signatures: Dict[str, np.ndarray], res_dir: pl.Path
         pd.DataFrame(meta_signatures[cluster]).to_csv(res_dir / name)
 
 
+def save_full_metasignatures(meta_signatures: Dict[str, pd.DataFrame], res_dir: pl.Path) -> None:
+    """Saves the metasignatures
+
+    Args:
+        meta_signatures: a dict containing the results of the metasignatures found (full res)
+        res_dir: path to the directory in which to save the metasignatures
+
+    Returns:
+        None
+
+    See Also:
+        `get_metasignatures`, function used to compute metasignatures
+    """
+    for cluster in meta_signatures:
+        if cluster == "outlier":
+            continue
+        name = f"{cluster}_full.csv"
+        meta_signatures[cluster].to_csv(res_dir / name)
+
+
 def save_cell_metamembership(metamembership: pd.DataFrame, prob_metamembership: pd.DataFrame, res_dir: pl.Path) -> None:
     """Saves the metamembership and probability of metamembership
 
@@ -171,6 +191,14 @@ def score_sig(adata: ad.AnnData, signature: Union[np.ndarray, List[str]], score_
     del adata.uns["log1p"]
 
     return adata
+
+
+def rename_consensus_clusters(consensus_clusters: pd.DataFrame) -> pd.DataFrame:
+    rename_mapping = {k: f"metasig{int(k)+1}" for k in range(0, consensus_clusters.metamembership.max() + 1)}
+    rename_mapping[-1] = "outlier"
+
+    consensus_clusters = consensus_clusters.replace(rename_mapping)
+    return consensus_clusters
 
 
 def rename_metasig(meta_signatures: Dict[str, np.ndarray]) -> Dict[str, np.ndarray]:
@@ -216,7 +244,6 @@ def plot_clustermap(
 def plot_heatmap(
     sim: np.ndarray, idx: np.ndarray, resdir: pl.Path, filename: str = "heatmap-metasignatures.png"
 ) -> None:
-
     """Plotting function; plots the heatmap to visualize the pairwise similarities between signatures
         ordered by meta-signature membership
 
@@ -250,7 +277,6 @@ def viz_clusters_runs(
     spread: float = 1.5,
     filename: str = "viz-clusters-runs.png",
 ) -> None:
-
     """Plotting function; plots the signatures in MDS and UMAP space, colored according to the run of origin
         and the meta-signature it belongs to
 
@@ -314,7 +340,6 @@ def plot_metamembership(
     resdir: pl.Path,
     batch_column: str,
 ) -> None:
-
     """Plotting function; plots the latent spaces colored according (a) to the hard meta-membership labeling
         and (b) to the soft labeling, i.e., the probability of a cell to belong to the meta-membership
 

@@ -1,6 +1,6 @@
 """Script for running the metasignatures."""
 
-from typing import Union, List, Optional, Literal, Dict, Tuple  # pytype: disable=not-supported-yet
+from typing import Union, List, Optional, Literal, Dict, Tuple, Callable  # pytype: disable=not-supported-yet
 import argparse
 import os
 import logging
@@ -16,12 +16,18 @@ import cansig.logger as clogger  # pytype: disable=import-error
 import cansig.metasignatures.utils as utils  # pytype: disable=import-error
 import cansig.metasignatures.WRC as WRC  # pytype: disable=import-error
 import cansig.metasignatures.clustering as clustering  # pytype: disable=import-error
+import cansig.metasignatures.consensusclustering as cc  # pytype: disable=import-error
 import cansig.gsea as gsea  # pytype: disable=import-error
 import cansig.filesys as fs  # pytype: disable=import-error
 import cansig.multirun as mr  # pytype: disable=import-error
 
+from scanpy.tools._rank_genes_groups import _Method  # pytype: disable=import-error
+
 _LOGGER = logging.getLogger(__name__)
 _TESTTYPE = Literal["mwu", "ttest"]
+_METASIG_METHOD = Literal["consensus", "module"]
+_CLUSTER_TYPE = Literal["agglomerative", "spectral"]
+_LINKAGE_TYPE = Literal["average", "single", "complete"]
 
 OUTPUT_BASE_PATH = pl.Path("outputs/metasignatures")
 
@@ -42,6 +48,15 @@ def parse_args():
         "--disable-plots",
         action="store_true",
         help="a flag used when the user does not want plotting done",
+    )
+
+    parser.add_argument(
+        "--metasig-method",
+        type=str,
+        choices=["module", "consensus"],
+        help="the method used to compute the metasignature, can be clustering signatures or consensus clustering "
+        " on the cells",
+        default="jaccard",
     )
     parser.add_argument(
         "--sim-method",
@@ -126,7 +141,36 @@ def parse_args():
     parser.add_argument(
         "--n-clusters",
         type=int,
-        help="If used, number of meta-signatures that will be uncovered. Overrides the threshold.",
+        help="If used, number of meta-signatures that will be uncovered. Overrides the "
+        "threshold or automatic selection.",
+        default=None,
+    )
+
+    parser.add_argument(
+        "--cons-kmax",
+        type=int,
+        help="If consensus clustering, and automatic k selection, the max k used for automatic selection ",
+        default=10,
+    )
+    parser.add_argument(
+        "--cons-keepweak",
+        action="store_true",
+        help="If consensus clustering, will keep weak agreement between points (according to null distribution)",
+    )
+    parser.add_argument(
+        "--cons-clustermethod",
+        type=str,
+        help="If consensus clustering, which method from spectral or agglomerative to use; is agglomerative, the "
+        "linkage can be specified with the args.linkage argument",
+        choices=["agglomerative", "spectral"],
+        default="agglomerative",
+    )
+    parser.add_argument(
+        "--cons-thresholdfct",
+        type=str,
+        help="If consensus clustering, which method to aggregate the results of the null distribution to then "
+        "remove weak associations",
+        choices=["mean", "median"],
         default=None,
     )
 
@@ -309,10 +353,118 @@ def select_signatures(
     return signatures, n_genes, runs, sig_index, cluster_memb
 
 
+def module_type_metasignature(
+    signatures: Union[np.ndarray, List[str]],
+    n_genes: int,
+    runs: Union[np.ndarray, List[int]],
+    sig_index: Union[np.ndarray, List[int]],
+    cluster_memb: pd.DataFrame,
+    adata: ad.AnnData,
+    threshold: float,
+    batch: str,
+    linkage: str,
+    n_clusters: Optional[int],
+    fixed_k: bool,
+    pat_specific_threshold: float,
+    resdir: fs.MetasigDir,
+    sim_method: str = "jaccard",
+    sim: Optional[np.ndarray] = None,
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, Dict[str, List[str]], pd.DataFrame, pd.DataFrame]:
+    if sim is None:
+        _LOGGER.info(f"Computing the similarity between signatures using {sim_method}.")
+        if sim_method == "jaccard":
+            sim = WRC.get_similarity_matrix_jaccard(signatures=signatures[:, :n_genes])
+        else:
+            sim = WRC.get_similarity_matrix_WRC(signatures=signatures[:, :n_genes])
+        pd.DataFrame(sim).to_csv(resdir.sim_output)
+    else:
+        _LOGGER.info("Precomputed similarity was provided.")
+
+    # threshold_n_rep = resdict["threshold"][0]
+    threshold_n_rep = 0.05
+    _LOGGER.info(f"Using threshold {threshold_n_rep} for outlier detection in metasignatures")
+
+    clusters, idx, meta_results, meta_signatures = get_final_metasignatures(
+        sim=sim,
+        adata=adata,
+        signatures=signatures,
+        runs=runs,
+        sig_index=sig_index,
+        cluster_memb=cluster_memb,
+        threshold=threshold,
+        batch_key=batch,
+        resdir=resdir,
+        linkage=linkage,
+        threshold_n_rep=threshold_n_rep,
+        pat_specific_threshold=pat_specific_threshold,
+        n_clusters=n_clusters,
+        fixed_k=fixed_k,
+    )
+
+    _LOGGER.info("Finding cell metamembership.")
+    cell_metamembership, prob_cellmetamembership = clustering.get_cell_metamembership(
+        cluster_memb=cluster_memb,
+        sig_index=sig_index,
+        clusters=clusters,
+        rename=True,
+    )
+
+    return sim, clusters, idx, meta_results, meta_signatures, cell_metamembership, prob_cellmetamembership
+
+
+def consensus_type_metasignature(
+    adata: ad.AnnData,
+    cluster_memb: List[pd.DataFrame],
+    resdir: fs.MetasigDir,
+    batch_key: str = "sample_id",
+    threshold_pat_specific: float = 0.9,
+    n_clusters: Optional[int] = None,
+    fixed_k: bool = False,
+    linkage: _LINKAGE_TYPE = "average",
+    kmax: int = 10,
+    remove_weak: bool = True,
+    dgex_method: _Method = "t-test_overestim_var",
+    cluster_method: _CLUSTER_TYPE = "agglomerative",
+    threshold_fct: Optional[Callable] = None,
+    plot: bool = False,
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, Dict[str, List[str]], pd.DataFrame, pd.DataFrame]:
+    cluster_memb = pd.concat(cluster_memb, axis=1)
+    cluster_memb.columns = [f"iter{i}" for i in range(cluster_memb.shape[1])]
+    cluster_memb = cluster_memb.astype(str)
+
+    (
+        sim,
+        clusters,
+        idx,
+        meta_results,
+        meta_signatures,
+        cell_metamembership,
+        prob_cellmetamembership,
+    ) = cc.get_final_metasignatures_consensus(
+        adata=adata,
+        cluster_memb=cluster_memb,
+        resdir=resdir,
+        batch_key=batch_key,
+        threshold_pat_specific=threshold_pat_specific,
+        n_clusters=n_clusters,
+        fixed_k=fixed_k,
+        linkage=linkage,
+        kmax=kmax,
+        remove_weak=remove_weak,
+        dgex_method=dgex_method,
+        cluster_method=cluster_method,
+        threshold_fct=threshold_fct,
+        plot=plot,
+    )
+
+    return sim, clusters, idx, meta_results, meta_signatures, cell_metamembership, prob_cellmetamembership
+
+
 def run_metasignatures(
     rundir: Union[str, pl.Path],
     resdir: Union[str, pl.Path],
     integ_dir: Optional[Union[str, pl.Path]],
+    metasig_method: _METASIG_METHOD,
     batch: str,
     gsea_config: gsea.GeneExpressionConfig,
     diffcnv: bool,
@@ -330,6 +482,11 @@ def run_metasignatures(
     linkage: str = "average",
     n_clusters: Optional[int] = None,
     fixed_k: bool = False,
+    kmax: int = 10,
+    remove_weak: bool = True,
+    dgex_method: _Method = "t-test_overestim_var",
+    consensus_cluster_method: _CLUSTER_TYPE = "agglomerative",
+    threshold_fct: Optional[Callable] = None,
 ) -> None:
     """Main function of the metasignature module. Will find the metasignatures by:
         - selecting signatures to cluster
@@ -390,44 +547,57 @@ def run_metasignatures(
 
     signatures, n_genes, runs, sig_index, cluster_memb = select_signatures(resdict=resdict)
 
-    if sim is None:
-        _LOGGER.info(f"Computing the similarity between signatures using {sim_method}.")
-        if sim_method == "jaccard":
-            sim = WRC.get_similarity_matrix_jaccard(signatures=signatures[:, :n_genes])
-        else:
-            sim = WRC.get_similarity_matrix_WRC(signatures=signatures[:, :n_genes])
-        pd.DataFrame(sim).to_csv(resdir.sim_output)
+    if metasig_method == "module":
+        (
+            sim,
+            clusters,
+            idx,
+            meta_results,
+            meta_signatures,
+            cell_metamembership,
+            prob_cellmetamembership,
+        ) = module_type_metasignature(
+            signatures=signatures,
+            n_genes=n_genes,
+            runs=runs,
+            sig_index=sig_index,
+            cluster_memb=cluster_memb,
+            adata=adata,
+            threshold=threshold,
+            batch=batch,
+            linkage=linkage,
+            n_clusters=n_clusters,
+            fixed_k=fixed_k,
+            pat_specific_threshold=pat_specific_threshold,
+            resdir=resdir,
+            sim_method=sim_method,
+            sim=sim,
+        )
     else:
-        _LOGGER.info("Precomputed similarity was provided.")
-
-    # threshold_n_rep = resdict["threshold"][0]
-    threshold_n_rep = 0.05
-    _LOGGER.info(f"Using threshold {threshold_n_rep} for outlier detection in metasignatures")
-
-    clusters, idx, meta_results, meta_signatures = get_final_metasignatures(
-        sim=sim,
-        adata=adata,
-        signatures=signatures,
-        runs=runs,
-        sig_index=sig_index,
-        cluster_memb=cluster_memb,
-        threshold=threshold,
-        batch_key=batch,
-        resdir=resdir,
-        linkage=linkage,
-        threshold_n_rep=threshold_n_rep,
-        pat_specific_threshold=pat_specific_threshold,
-        n_clusters=n_clusters,
-        fixed_k=fixed_k,
-    )
-
-    _LOGGER.info("Finding cell metamembership.")
-    cell_metamembership, prob_cellmetamembership = clustering.get_cell_metamembership(
-        cluster_memb=cluster_memb,
-        sig_index=sig_index,
-        clusters=clusters,
-        rename=True,
-    )
+        (
+            sim,
+            clusters,
+            idx,
+            meta_results,
+            meta_signatures,
+            cell_metamembership,
+            prob_cellmetamembership,
+        ) = consensus_type_metasignature(
+            adata=adata,
+            cluster_memb=cluster_memb,
+            resdir=resdir,
+            batch_key=batch,
+            threshold_pat_specific=pat_specific_threshold,
+            n_clusters=n_clusters,
+            fixed_k=fixed_k,
+            linkage=linkage,
+            kmax=kmax,
+            remove_weak=remove_weak,
+            dgex_method=dgex_method,
+            cluster_method=consensus_cluster_method,
+            threshold_fct=threshold_fct,
+            plot=plots,
+        )
 
     utils.save_cell_metamembership(
         metamembership=cell_metamembership, prob_metamembership=prob_cellmetamembership, res_dir=resdir.path
@@ -508,10 +678,18 @@ def main(args):
 
     fixed_k = False if args.n_clusters is None else True
 
+    if args.cons_thresholdfct is None:
+        threshold_fct = None
+    elif args.cons_thresholdfct == "mean":
+        threshold_fct = np.mean
+    elif args.cons_thresholdfct == "median":
+        threshold_fct = np.median
+
     run_metasignatures(
         rundir=args.postdir,
         resdir=multirun_dir.metasig_directories,
         integ_dir=args.integdir,
+        metasig_method=args.metasig_method,
         batch=args.batch,
         sim_method=args.sim_method,
         gsea_config=gsea.GeneExpressionConfig(gene_sets=args.gene_sets, method=args.dgex_method),
@@ -526,6 +704,11 @@ def main(args):
         plots=(not args.disable_plots),
         linkage=args.linkage,
         n_clusters=args.n_clusters,
+        kmax=args.cons_kmax,
+        remove_weak=not (args.cons_keepweak),
+        dgex_method=args.dgex_method,
+        consensus_cluster_method=args.cons_clustermethod,
+        threshold_fct=threshold_fct,
         fixed_k=fixed_k,
     )
     _LOGGER.info(f"Metasignature run finished. The generated output is in {args.output}.")
