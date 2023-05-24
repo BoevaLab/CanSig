@@ -18,12 +18,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -31,8 +31,8 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -735,6 +735,8 @@ document.write(`
 </li>
       <li><a href="source/cansig.html#cansig.logger.configure_logging">configure_logging() (in module cansig.logger)</a>
 </li>
+      <li><a href="source/cansig.run.html#cansig.run.metasignatures.consensus_type_metasignature">consensus_type_metasignature() (in module cansig.run.metasignatures)</a>
+</li>
       <li><a href="source/cansig.models.html#cansig.models.api.CanSigConfig.continuous_covariates">continuous_covariates (cansig.models.api.CanSigConfig attribute)</a>
 
       <ul>
@@ -1326,6 +1328,8 @@ document.write(`
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/cansig.run.html#cansig.run.metasignatures.module_type_metasignature">module_type_metasignature() (in module cansig.run.metasignatures)</a>
+</li>
       <li><a href="source/cansig.html#cansig.multirun.MultirunDirectory">MultirunDirectory (class in cansig.multirun)</a>
 </li>
   </ul></td>
@@ -1532,10 +1536,10 @@ document.write(`
 </li>
       <li><a href="source/cansig.html#cansig.filesys.read_latent_representations">read_latent_representations() (in module cansig.filesys)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/cansig.html#cansig.types.read_latents">read_latents() (in module cansig.types)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/cansig.html#cansig.filesys.read_settings">read_settings() (in module cansig.filesys)</a>
 </li>
       <li><a href="source/cansig.models.html#cansig.models.cansig.TrainConfig.reduce_lr_on_plateau">reduce_lr_on_plateau (cansig.models.cansig.TrainConfig attribute)</a>
@@ -1544,6 +1548,8 @@ document.write(`
         <li><a href="source/cansig.models.html#cansig.models.scvi.TrainConfig.reduce_lr_on_plateau">(cansig.models.scvi.TrainConfig attribute)</a>
 </li>
       </ul></li>
+      <li><a href="source/cansig.metasignatures.html#cansig.metasignatures.utils.rename_consensus_clusters">rename_consensus_clusters() (in module cansig.metasignatures.utils)</a>
+</li>
       <li><a href="source/cansig.metasignatures.html#cansig.metasignatures.utils.rename_metasig">rename_metasig() (in module cansig.metasignatures.utils)</a>
 </li>
       <li><a href="source/cansig.html#cansig.filesys.IntegrationDir.REPRESENTATIONS">REPRESENTATIONS (cansig.filesys.IntegrationDir attribute)</a>
@@ -1565,6 +1571,8 @@ document.write(`
       <li><a href="source/cansig.cnvanalysis.html#cansig.cnvanalysis.differentialcnvs.save_diffcnv">save_diffcnv() (in module cansig.cnvanalysis.differentialcnvs)</a>
 </li>
       <li><a href="source/cansig.plotting.html#cansig.plotting.plotting.ScatterPlot.save_fig">save_fig() (cansig.plotting.plotting.ScatterPlot static method)</a>
+</li>
+      <li><a href="source/cansig.metasignatures.html#cansig.metasignatures.utils.save_full_metasignatures">save_full_metasignatures() (in module cansig.metasignatures.utils)</a>
 </li>
       <li><a href="source/cansig.html#cansig.filesys.save_latent_representations">save_latent_representations() (in module cansig.filesys)</a>
 </li>
@@ -1758,9 +1766,15 @@ document.write(`
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -1770,7 +1784,7 @@ document.write(`
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner"></div>
+            
           </footer>
         
       </main>
@@ -1778,8 +1792,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1797,7 +1811,7 @@ document.write(`
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://sphinx-doc.org/">Sphinx</a> 5.3.0.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     <br/>
   </p>
 </div>
@@ -1808,7 +1822,7 @@ document.write(`
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
 </p></div>
       
     </div>
