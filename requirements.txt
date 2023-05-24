@@ -9,7 +9,7 @@ matplotlib
 numpy
 pandas    
 petname
-pydantic==4.5.0
+pydantic
 scanpy>=1.9.1
 seaborn
 scikit-learn
