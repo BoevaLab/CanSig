@@ -382,7 +382,7 @@ def get_final_clustering_jaccard(
     signatures: Union[np.ndarray, List[str]],
     runs: Union[np.ndarray, List[int]],
     sig_index: Union[np.ndarray, List[int]],
-    cluster_memb: pd.DataFrame,
+    cluster_memb: List[pd.DataFrame],
     original_clustering: np.ndarray,
     outliers: np.ndarray,
     adata: ad.AnnData,

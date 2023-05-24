@@ -12,6 +12,7 @@ import logging
 import pathlib
 from typing import Iterable, List, Literal, Union  # pytype: disable=not-supported-yet
 
+import numpy as np
 
 import cansig.cluster.api as cluster  # pytype: disable=import-error
 import cansig.filesys as fs  # pytype: disable=import-error
@@ -56,6 +57,15 @@ def create_parser() -> argparse.ArgumentParser:
         default="scvi",
         choices=["scvi", "cansig"],
         help="Which models is used for dataset integration.",
+    )
+
+    parser.add_argument(
+        "--metasig-method",
+        type=str,
+        choices=["module", "consensus"],
+        help="the method used to compute the metasignature, can be clustering signatures or consensus clustering "
+        " on the cells",
+        default="jaccard",
     )
     parser.add_argument(
         "--dgex-method",
@@ -205,6 +215,34 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument("--n-latent-batch-effect", type=int, default=5)
     parser.add_argument("--n-latent-cnv", type=int, default=10)
 
+    parser.add_argument(
+        "--cons-kmax",
+        type=int,
+        help="If consensus clustering, and automatic k selection, the max k used for automatic selection ",
+        default=10,
+    )
+    parser.add_argument(
+        "--cons-keepweak",
+        action="store_true",
+        help="If consensus clustering, will keep weak agreement between points (according to null distribution)",
+    )
+    parser.add_argument(
+        "--cons-clustermethod",
+        type=str,
+        help="If consensus clustering, which method from spectral or agglomerative to use; is agglomerative, the "
+        "linkage can be specified with the args.linkage argument",
+        choices=["agglomerative", "spectral"],
+        default="agglomerative",
+    )
+    parser.add_argument(
+        "--cons-thresholdfct",
+        type=str,
+        help="If consensus clustering, which method to aggregate the results of the null distribution to then "
+        "remove weak associations",
+        choices=["mean", "median"],
+        default=None,
+    )
+
     return parser
 
 
@@ -339,6 +377,13 @@ def main() -> None:
 
     fixed_k = False if args.n_clusters is None else True
 
+    if args.cons_thresholdfct is None:
+        threshold_fct = None
+    elif args.cons_thresholdfct == "mean":
+        threshold_fct = np.mean
+    elif args.cons_thresholdfct == "median":
+        threshold_fct = np.median
+
     # Create a new directory, storing all the generated results
     multirun_dir = mr.MultirunDirectory(path=args.output, create=True)
 
@@ -371,6 +416,7 @@ def main() -> None:
         rundir=multirun_dir.postprocessing_directories,
         resdir=multirun_dir.metasig_directories,
         integ_dir=multirun_dir.integration_directories,
+        metasig_method=args.metasig_method,
         data_path=args.data,
         sim_method=args.sim_method,
         batch=args.batch,
@@ -386,6 +432,11 @@ def main() -> None:
         plots=(not args.disable_plots),
         n_clusters=args.n_clusters,
         fixed_k=fixed_k,
+        kmax=args.cons_kmax,
+        remove_weak=not (args.cons_keepweak),
+        dgex_method=args.dgex_method,
+        consensus_cluster_method=args.cons_clustermethod,
+        threshold_fct=threshold_fct,
     )
 
     LOGGER.info(f"Pipeline run finished. The generated data is in {args.output}.")
