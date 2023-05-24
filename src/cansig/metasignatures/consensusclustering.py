@@ -4,6 +4,7 @@ import pandas as pd  # pytype: disable=import-error
 import scanpy as sc  # pytype: disable=import-error
 import seaborn as sns  # pytype: disable=import-error
 
+import logging
 from typing import Optional, Literal, Tuple, Dict, Union, Iterable, List, Callable  # pytype: disable=not-supported-yet
 from tqdm import tqdm  # pytype: disable=import-error
 
@@ -18,6 +19,8 @@ import cansig.filesys as fs  # pytype: disable=import-error
 _CLUSTER_TYPE = Literal["agglomerative", "spectral"]
 _LINKAGE_TYPE = Literal["average", "single", "complete"]
 
+
+_LOGGER = logging.getLogger(__name__)
 # Based on the CSPA algorithm described here https://www.jmlr.org/papers/volume3/strehl02a/strehl02a.pdf
 # The threshold for null distribution is inspired from here https://www.nature.com/articles/srep00336
 
@@ -38,11 +41,11 @@ def get_agreement_matrix(
     if threshold_fct is None:
         threshold_fct = np.mean
     cm = cluster_memb.T.values
-    print("Get agreement matrix for provided clusters...")
+    _LOGGER.info("Get agreement matrix for provided clusters...")
     agreement = compute_agreement(cm)
 
     if remove_weak:
-        print("Setting to zero noisy agreements...")
+        _LOGGER.info("Setting to zero noisy agreements...")
         null_assign = np.column_stack([np.random.permutation(i) for i in cm.T])
         null_agree = compute_agreement(null_assign)
         threshold = threshold_fct(null_agree)
@@ -55,12 +58,14 @@ def perform_clustering(
     agreement: np.ndarray,
     k: int,
     cluster_method: _CLUSTER_TYPE = "agglomerative",
-    linkage: Optional[_LINKAGE_TYPE] = "average",
+    linkage: _LINKAGE_TYPE = "average",
 ) -> np.ndarray:
     if cluster_method == "agglomerative":
         clst = AgglomerativeClustering(n_clusters=k, affinity="precomputed", linkage=linkage)
-    else:
+    elif cluster_method == "spectral":
         clst = SpectralClustering(n_clusters=k, affinity="precomputed")
+    else:
+        raise NotImplementedError
     clst.fit(1 - agreement)
 
     labels = clst.labels_
@@ -70,9 +75,10 @@ def perform_clustering(
 
 def get_optimal_k(
     agreement: np.ndarray,
+    resdir: fs.MetasigDir,
     kmax: int = 10,
     cluster_method: _CLUSTER_TYPE = "agglomerative",
-    linkage: Optional[_LINKAGE_TYPE] = "average",
+    linkage: _LINKAGE_TYPE = "average",
     plot: bool = False,
 ) -> Tuple[List, int]:
     sil = []
@@ -86,23 +92,27 @@ def get_optimal_k(
     if plot:
         ax = sns.lineplot(x=np.arange(2, len(sil) + 2), y=sil)
         ax.text(opt_k, sil[opt_k - 2], f"Sel. k={opt_k}")
+        ax.figure.savefig(resdir / "silhouette_score_plot.png", bbox_inches="tight")
 
     return sil, opt_k
 
 
 def get_consensus_cluster(
     agreement: np.ndarray,
+    resdir: fs.MetasigDir,
     k: Optional[int] = None,
     kmax: int = 10,
     cluster_method: _CLUSTER_TYPE = "agglomerative",
-    linkage: Optional[_LINKAGE_TYPE] = "average",
+    linkage: _LINKAGE_TYPE = "average",
     plot: bool = False,
 ) -> np.ndarray:
     if k is None:
-        print("No k was provided, computing optimal k using the silhouette score...")
-        sil, k = get_optimal_k(agreement, kmax=kmax, cluster_method=cluster_method, linkage=linkage, plot=plot)
-        print(f"Selected k={k}")
-    print("Get consensus clusters with user-provided or optimal k...")
+        _LOGGER.info("No k was provided, computing optimal k using the silhouette score...")
+        _, k = get_optimal_k(
+            agreement, kmax=kmax, cluster_method=cluster_method, linkage=linkage, plot=plot, resdir=resdir
+        )
+        _LOGGER.info(f"Selected k={k}")
+    _LOGGER.info("Get consensus clusters with user-provided or optimal k...")
     labels = perform_clustering(agreement, k, cluster_method=cluster_method, linkage=linkage)
     return labels
 
@@ -117,12 +127,11 @@ def remove_patient_specific(
     patsp_cl = {}
     for cl in metamembership["metamembership"].unique():
         pat_specific = (cluster_counts[cl] / cluster_counts[cl].sum() > threshold_pat_specific).sum()
-        pat_specific = pat_specific > 0
-        if pat_specific:
+        if pat_specific > 0:
             patsp_cl[cl] = -1
 
     if len(patsp_cl) > 0:
-        print(f"Removing {len(patsp_cl)} patient specific clusters")
+        _LOGGER.info(f"Removing {len(patsp_cl)} patient specific clusters")
         metamembership = metamembership.replace(patsp_cl)
 
     return metamembership
@@ -131,21 +140,28 @@ def remove_patient_specific(
 def perform_full_consensus(
     cluster_memb: pd.DataFrame,
     batch_ind: pd.DataFrame,
+    resdir: fs.MetasigDir,
     remove_weak: bool = True,
     cluster_method: _CLUSTER_TYPE = "agglomerative",
-    linkage: Optional[_LINKAGE_TYPE] = "average",
+    linkage: _LINKAGE_TYPE = "average",
     k: Optional[int] = None,
     kmax: int = 10,
     plot: bool = False,
     threshold_fct: Optional[Callable] = None,
     threshold_pat_specific: float = 0.9,
 ) -> pd.DataFrame:
-    print("Computing agreement matrix...")
+    _LOGGER.info("Computing agreement matrix...")
     agreement = get_agreement_matrix(cluster_memb=cluster_memb, remove_weak=remove_weak, threshold_fct=threshold_fct)
 
-    print("Getting consensus cluster")
+    _LOGGER.info("Getting consensus cluster")
     labels = get_consensus_cluster(
-        agreement=agreement, k=k, kmax=kmax, cluster_method=cluster_method, linkage=linkage, plot=plot
+        agreement=agreement,
+        k=k,
+        kmax=kmax,
+        cluster_method=cluster_method,
+        linkage=linkage,
+        plot=plot,
+        resdir=resdir,
     )
 
     labels = pd.DataFrame(labels, index=cluster_memb.index, columns=["metamembership"])
@@ -216,6 +232,7 @@ def get_final_metasignatures_consensus(
         threshold_fct=threshold_fct,
         threshold_pat_specific=threshold_pat_specific,
         plot=plot,
+        resdir=resdir,
     )
 
     clusters, idx = clustering.update_clusters_strength(clusters=consensus_clusters.values.ravel(), sim=agreement)
@@ -227,9 +244,10 @@ def get_final_metasignatures_consensus(
 
     resdir.make_sig_dir()
 
-    utils.save_full_metasignatures(meta_signatures=metasigs_full, res_dir=resdir.sig_output)
-
     meta_signatures = utils.rename_metasig(meta_signatures)
+    metasigs_full = utils.rename_metasig(metasigs_full)
+
+    utils.save_full_metasignatures(meta_signatures=metasigs_full, res_dir=resdir.sig_output)
 
     meta_results = clustering.get_corr_metasignatures(meta_signatures, adata)
 
