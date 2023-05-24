@@ -216,9 +216,9 @@ def rename_metasig(meta_signatures: Dict[str, np.ndarray]) -> Dict[str, np.ndarr
     nmeta = {}
     for k, v in meta_signatures.items():
         if k >= 0:
-            nmeta[f"metasig{int(k)+1}"] = np.array(v)
+            nmeta[f"metasig{int(k)+1}"] = v
         else:
-            nmeta["outlier"] = np.array(v)
+            nmeta["outlier"] = v
     return nmeta
 
 
