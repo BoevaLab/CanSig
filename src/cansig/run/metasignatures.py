@@ -424,7 +424,7 @@ def consensus_type_metasignature(
     kmax: int = 10,
     remove_weak: bool = True,
     dgex_method: _Method = "t-test_overestim_var",
-    cluster_method: _CLUSTER_TYPE = "agglomerative",
+    cluster_method: str = "agglomerative",
     threshold_fct: Optional[Callable] = None,
     plot: bool = False,
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, Dict[str, List[str]], pd.DataFrame, pd.DataFrame]:
