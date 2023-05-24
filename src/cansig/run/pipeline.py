@@ -68,6 +68,13 @@ def create_parser() -> argparse.ArgumentParser:
         default="jaccard",
     )
     parser.add_argument(
+        "--cluster-method",
+        type=str,
+        default="leiden",
+        choices=["leiden", "kmeans", "agglomerative"],
+        help="Method used to perform the clustering in the postprocessing step",
+    )
+    parser.add_argument(
         "--dgex-method",
         type=str,
         default="t-test",
@@ -313,9 +320,8 @@ def generate_clustering_configs(args) -> List[cluster.LeidenNClusterConfig]:
 
     for seed in range(args.cluster_runs):
         for n_cluster in args.clusters:
-            config = cluster.LeidenNClusterConfig(
-                random_state=seed,
-                clusters=n_cluster,
+            config = postprocessing.get_config_cluster(
+                cluster_method=args.cluster_method, n_clusters=n_cluster, random_seed=seed
             )
             lst.append(config)
     return lst

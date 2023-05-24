@@ -108,6 +108,7 @@ class LeidenNClusterConfig(_LeidenBaseConfig):
 
     clusters: int = pydantic.Field(default=5, description="The number of clusters to be returned.")
     binsearch: BinSearchSettings = pydantic.Field(default_factory=BinSearchSettings)
+    name: str = pydantic.Field(default="leiden")
 
 
 class LeidenResolution(ICluster):
