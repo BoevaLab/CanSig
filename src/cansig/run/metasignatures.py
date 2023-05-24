@@ -420,7 +420,7 @@ def consensus_type_metasignature(
     threshold_pat_specific: float = 0.9,
     n_clusters: Optional[int] = None,
     fixed_k: bool = False,
-    linkage: _LINKAGE_TYPE = "average",
+    linkage: str = "average",
     kmax: int = 10,
     remove_weak: bool = True,
     dgex_method: _Method = "t-test_overestim_var",
