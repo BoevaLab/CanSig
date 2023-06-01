@@ -6,6 +6,5 @@ class KMeansConfig(pydantic.BaseModel):
     See kmeans documentation for description.
     """
 
-    name: str = pydantic.Field(default="kmeans")
     clusters: int = pydantic.Field(default=5)
     random_state: int = pydantic.Field(default=0)

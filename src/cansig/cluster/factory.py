@@ -12,13 +12,13 @@ LOGGER = logging.getLogger(__name__)
 def clustering_factory(config: Union[KMeansConfig, AggloConfig, LeidenNClusterConfig]):
     """A factory method."""
     LOGGER.info(f"Using {config.name} for clustering in postprocessing")
-    if config.name == "kmeans":
+    if isinstance(config, KMeansConfig):
         return cluster.KMeans(n_clusters=config.clusters, random_state=config.random_state)
-    elif config.name == "agglomerative":
+    elif isinstance(config, AggloConfig):
         return cluster.AgglomerativeClustering(
             n_clusters=config.clusters, linkage=config.linkage, affinity=config.affinity
         )
-    elif config.name == "leiden":
+    elif isinstance(config, LeidenNClusterConfig):
         return LeidenNCluster(config)
     else:
         raise ValueError(f"Clustering method {config.name} not known.")
