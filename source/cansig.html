@@ -917,12 +917,10 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run.pipeline">cansig.run.pipeline module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.create_parser"><code class="docutils literal notranslate"><span class="pre">create_parser()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.generate_clustering_configs"><code class="docutils literal notranslate"><span class="pre">generate_clustering_configs()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.generate_gsea_config"><code class="docutils literal notranslate"><span class="pre">generate_gsea_config()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.generate_model_configs"><code class="docutils literal notranslate"><span class="pre">generate_model_configs()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.generate_plotting_config"><code class="docutils literal notranslate"><span class="pre">generate_plotting_config()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.single_integration_run"><code class="docutils literal notranslate"><span class="pre">single_integration_run()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cansig.run.html#cansig.run.pipeline.validate_args"><code class="docutils literal notranslate"><span class="pre">validate_args()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="cansig.run.html#module-cansig.run.postprocessing">cansig.run.postprocessing module</a><ul>
@@ -1287,148 +1285,6 @@ and split long pathway names into multiple lines.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionAnalysis">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">GeneExpressionAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cluster'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'all'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'logreg'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t-test'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wilcoxon'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t-test_overestim_var'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'wilcoxon'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_diff_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_sets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'MSigDB_Hallmark_2020'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permutation_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.gsea.GeneExpressionAnalysis" title="Permalink to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Interface to perform the gene expression analysis for Step 2 of the pipeline.</p>
-<p>Performs first differential gene expression analysis and then GSEA.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cluster_name</strong> – name of the column in which to find the cluster labels
-in the AnnData object</p></li>
-<li><p><strong>group_names</strong> – clusters to perform the analysis for, default is all,
-else iterable of valid names of the clusters</p></li>
-<li><p><strong>method</strong> – name of the method to use for differential analysis,
-see “Bias, robustness and scalability in single-cell differential expression
-analysis” Soneson &amp; Robinson for more info on the choice</p></li>
-<li><p><strong>n_diff_genes</strong> – number of differentially expressed genes for every cluster
-to keep for further analysis</p></li>
-<li><p><strong>gene_sets</strong> – gene set to perform the GSEA on. Can be a string if valid
-in the ENRICHR API.
-Otherwise, it can be a path to the .gmt file downloaded from the MSigDB site</p></li>
-<li><p><strong>permutation_num</strong> – number of permutations computed in GSEA.
-Lower reduces the computational complexity,
-higher leads to more robust results.</p></li>
-</ul>
-</dd>
-</dl>
-<p>Note: if using default settings for gene_sets, you need to have internet connection to run GSEA!</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionAnalysis.diff_gex">
-<span class="sig-name descname"><span class="pre">diff_gex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.gsea.GeneExpressionAnalysis.diff_gex" title="Permalink to this definition">#</a></dt>
-<dd><p>Computes the differential gene expression between cluster groups</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>adata</strong> – AnnData object containing the clustering labels and gene counts in X</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>dictionary with cluster label as key and</dt><dd><p>differential gene expression results as value, with genes
-ordered according to their z scores, and the p values and
-FDR corrected p values</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>gene_order</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionAnalysis.perform_gsea">
-<span class="sig-name descname"><span class="pre">perform_gsea</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diff_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.gsea.GeneExpressionAnalysis.perform_gsea" title="Permalink to this definition">#</a></dt>
-<dd><p>Performs the gene set enrichment analysis for every cluster group using pre-ranked
-differentially expressed genes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>diff_genes</strong> – dictionary with cluster label as key and a
-pd.DataFrame containing the
-genes ranked by average ranking in the metasignature</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>pd.DataFrame containing the result of GSEA on all clusters</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>gsea_df</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The columns of gsea_df are the classical GSEA columns:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>‘es’ (enrichment score),</p></li>
-<li><p>‘nes’ (normalized_layer enrichemnt score)</p></li>
-<li><p>‘pval’ (p value)</p></li>
-<li><p>‘fdr’ (FDR Benjamini Hochberg corrected p value)</p></li>
-<li><p>‘geneset_size’ (size of the geneset of the term)</p></li>
-<li><dl class="simple">
-<dt>‘matched_size’ (size of the genes of the geneset</dt><dd><p>found in those studied)</p>
-</dd>
-</dl>
-</li>
-<li><p>‘genes’ (list of genes matched)</p></li>
-<li><p>‘ledge_genes’ (leading edge genes - see GSEA doc)</p></li>
-</ul>
-</div></blockquote>
-<p>In addition, we add the columns:</p>
-<blockquote>
-<div><ul class="simple">
-<li><dl class="simple">
-<dt>‘genes_for_scoring’ (list of the genes that are</dt><dd><p>positively ranked in our
-dataset and matched to the term that we will
-use for scoring)</p>
-</dd>
-</dl>
-</li>
-<li><p>‘cluster’ (the cluster for which these results were found)</p></li>
-</ul>
-</div></blockquote>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>if you use default settings for gene_sets, you need to have internet connection.</p>
-</div>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">GeneExpressionConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'logreg'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t-test'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wilcoxon'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t-test_overestim_var'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'t-test'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_sets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'MSigDB_Hallmark_2020'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_diff_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permutation_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.gsea.GeneExpressionConfig" title="Permalink to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
-<p>Config for GSEA analysis.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionConfig.gene_sets">
-<span class="sig-name descname"><span class="pre">gene_sets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#cansig.gsea.GeneExpressionConfig.gene_sets" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionConfig.looks_as_valid_gmt">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">looks_as_valid_gmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.gsea.GeneExpressionConfig.looks_as_valid_gmt" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionConfig.method">
-<span class="sig-name descname"><span class="pre">method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'logreg'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t-test'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wilcoxon'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t-test_overestim_var'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.gsea.GeneExpressionConfig.method" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionConfig.n_diff_genes">
-<span class="sig-name descname"><span class="pre">n_diff_genes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cansig.gsea.GeneExpressionConfig.n_diff_genes" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="cansig.gsea.GeneExpressionConfig.permutation_num">
-<span class="sig-name descname"><span class="pre">permutation_num</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.gsea.GeneExpressionConfig.permutation_num" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="cansig.gsea.IGSEADataFrameSummarizer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">IGSEADataFrameSummarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.gsea.IGSEADataFrameSummarizer" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
@@ -1501,15 +1357,89 @@ The returned score is (maximum among all clusterings) NES.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="cansig.gsea.diff_gex">
+<span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">diff_gex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'logreg'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t-test'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wilcoxon'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t-test_overestim_var'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cansig.gsea.diff_gex" title="Permalink to this definition">#</a></dt>
+<dd><p>Computes the differential gene expression between cluster groups</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>adata</strong> – AnnData object containing the clustering labels and gene counts in X</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>dictionary with cluster label as key and</dt><dd><p>differential gene expression results as value, with genes
+ordered according to their z scores, and the p values and
+FDR corrected p values</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>gene_order</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="cansig.gsea.genes_to_string">
 <span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">genes_to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">';'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#cansig.gsea.genes_to_string" title="Permalink to this definition">#</a></dt>
 <dd><p>Joins a list of strings</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="cansig.gsea.gex_factory">
-<span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">gex_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.gsea.GeneExpressionConfig" title="cansig.gsea.GeneExpressionConfig"><span class="pre">GeneExpressionConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cansig.gsea.GeneExpressionAnalysis" title="cansig.gsea.GeneExpressionAnalysis"><span class="pre">GeneExpressionAnalysis</span></a></span></span><a class="headerlink" href="#cansig.gsea.gex_factory" title="Permalink to this definition">#</a></dt>
-<dd><p>Factory method used to create a GeneExpressionAnalysis object for a given cluster.</p>
+<dt class="sig sig-object py" id="cansig.gsea.perform_gsea">
+<span class="sig-prename descclassname"><span class="pre">cansig.gsea.</span></span><span class="sig-name descname"><span class="pre">perform_gsea</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diff_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_sets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permutation_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#cansig.gsea.perform_gsea" title="Permalink to this definition">#</a></dt>
+<dd><p>Performs the gene set enrichment analysis for every cluster group using pre-ranked
+differentially expressed genes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>diff_genes</strong> – dictionary with cluster label as key and a
+pd.DataFrame containing the
+genes ranked by average ranking in the metasignature</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame containing the result of GSEA on all clusters</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>gsea_df</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The columns of gsea_df are the classical GSEA columns:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>‘es’ (enrichment score),</p></li>
+<li><p>‘nes’ (normalized_layer enrichemnt score)</p></li>
+<li><p>‘pval’ (p value)</p></li>
+<li><p>‘fdr’ (FDR Benjamini Hochberg corrected p value)</p></li>
+<li><p>‘geneset_size’ (size of the geneset of the term)</p></li>
+<li><dl class="simple">
+<dt>‘matched_size’ (size of the genes of the geneset</dt><dd><p>found in those studied)</p>
+</dd>
+</dl>
+</li>
+<li><p>‘genes’ (list of genes matched)</p></li>
+<li><p>‘ledge_genes’ (leading edge genes - see GSEA doc)</p></li>
+</ul>
+</div></blockquote>
+<p>In addition, we add the columns:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>‘genes_for_scoring’ (list of the genes that are</dt><dd><p>positively ranked in our
+dataset and matched to the term that we will
+use for scoring)</p>
+</dd>
+</dl>
+</li>
+<li><p>‘cluster’ (the cluster for which these results were found)</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>if you use default settings for gene_sets, you need to have internet connection.</p>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -1833,19 +1763,6 @@ where k is the latent space dimension</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.DefaultFormatter.format"><code class="docutils literal notranslate"><span class="pre">DefaultFormatter.format()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.GeneExpressionAnalysis"><code class="docutils literal notranslate"><span class="pre">GeneExpressionAnalysis</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.GeneExpressionAnalysis.diff_gex"><code class="docutils literal notranslate"><span class="pre">GeneExpressionAnalysis.diff_gex()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.GeneExpressionAnalysis.perform_gsea"><code class="docutils literal notranslate"><span class="pre">GeneExpressionAnalysis.perform_gsea()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.GeneExpressionConfig"><code class="docutils literal notranslate"><span class="pre">GeneExpressionConfig</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.GeneExpressionConfig.gene_sets"><code class="docutils literal notranslate"><span class="pre">GeneExpressionConfig.gene_sets</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.GeneExpressionConfig.looks_as_valid_gmt"><code class="docutils literal notranslate"><span class="pre">GeneExpressionConfig.looks_as_valid_gmt()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.GeneExpressionConfig.method"><code class="docutils literal notranslate"><span class="pre">GeneExpressionConfig.method</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.GeneExpressionConfig.n_diff_genes"><code class="docutils literal notranslate"><span class="pre">GeneExpressionConfig.n_diff_genes</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.GeneExpressionConfig.permutation_num"><code class="docutils literal notranslate"><span class="pre">GeneExpressionConfig.permutation_num</span></code></a></li>
-</ul>
-</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.IGSEADataFrameSummarizer"><code class="docutils literal notranslate"><span class="pre">IGSEADataFrameSummarizer</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.IGSEADataFrameSummarizer.summarize"><code class="docutils literal notranslate"><span class="pre">IGSEADataFrameSummarizer.summarize()</span></code></a></li>
 </ul>
@@ -1858,8 +1775,9 @@ where k is the latent space dimension</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.MaxNESFDRSummarizer.summarize"><code class="docutils literal notranslate"><span class="pre">MaxNESFDRSummarizer.summarize()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.diff_gex"><code class="docutils literal notranslate"><span class="pre">diff_gex()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.genes_to_string"><code class="docutils literal notranslate"><span class="pre">genes_to_string()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.gex_factory"><code class="docutils literal notranslate"><span class="pre">gex_factory()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.perform_gsea"><code class="docutils literal notranslate"><span class="pre">perform_gsea()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.gsea.save_signatures"><code class="docutils literal notranslate"><span class="pre">save_signatures()</span></code></a></li>
 </ul>
 </li>
