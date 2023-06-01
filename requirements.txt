@@ -7,7 +7,7 @@ interrogate
 leidenalg
 matplotlib
 numpy
-jax < 4.11
+jax <= 4.10
 pandas    
 petname
 pydantic
