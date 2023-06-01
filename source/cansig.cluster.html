@@ -455,6 +455,52 @@ document.write(`
 <p>Use as:</p>
 <p><code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">cansig.cluster.api</span> <span class="pre">as</span> <span class="pre">cluster</span></code>.</p>
 <dl class="py class">
+<dt class="sig sig-object py" id="cansig.cluster.api.AggloConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.cluster.api.</span></span><span class="sig-name descname"><span class="pre">AggloConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linkage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ward'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">affinity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.cluster.api.AggloConfig" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Hyperparameters of k-means.
+See kmeans documentation for description.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.cluster.api.AggloConfig.affinity">
+<span class="sig-name descname"><span class="pre">affinity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#cansig.cluster.api.AggloConfig.affinity" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.cluster.api.AggloConfig.clusters">
+<span class="sig-name descname"><span class="pre">clusters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.cluster.api.AggloConfig.clusters" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.cluster.api.AggloConfig.linkage">
+<span class="sig-name descname"><span class="pre">linkage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#cansig.cluster.api.AggloConfig.linkage" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.cluster.api.AggloConfig.random_state">
+<span class="sig-name descname"><span class="pre">random_state</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.cluster.api.AggloConfig.random_state" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cansig.cluster.api.KMeansConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.cluster.api.</span></span><span class="sig-name descname"><span class="pre">KMeansConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.cluster.api.KMeansConfig" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Hyperparameters of k-means.
+See kmeans documentation for description.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.cluster.api.KMeansConfig.clusters">
+<span class="sig-name descname"><span class="pre">clusters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.cluster.api.KMeansConfig.clusters" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cansig.cluster.api.KMeansConfig.random_state">
+<span class="sig-name descname"><span class="pre">random_state</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.cluster.api.KMeansConfig.random_state" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="cansig.cluster.api.LeidenNCluster">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cansig.cluster.api.</span></span><span class="sig-name descname"><span class="pre">LeidenNCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cansig.cluster.leiden.LeidenNClusterConfig" title="cansig.cluster.leiden.LeidenNClusterConfig"><span class="pre">LeidenNClusterConfig</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.cluster.api.LeidenNCluster" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="cansig.interface.html#cansig.interface.cluster.ICluster" title="cansig.interface.cluster.ICluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ICluster</span></code></a></p>
@@ -482,6 +528,12 @@ document.write(`
 <span class="sig-name descname"><span class="pre">clusters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cansig.cluster.api.LeidenNClusterConfig.clusters" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cansig.cluster.api.clustering_factory">
+<span class="sig-prename descclassname"><span class="pre">cansig.cluster.api.</span></span><span class="sig-name descname"><span class="pre">clustering_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cansig.cluster.api.KMeansConfig" title="cansig.cluster.kmeans.KMeansConfig"><span class="pre">KMeansConfig</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#cansig.cluster.api.AggloConfig" title="cansig.cluster.agglomerative.AggloConfig"><span class="pre">AggloConfig</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#cansig.cluster.leiden.LeidenNClusterConfig" title="cansig.cluster.leiden.LeidenNClusterConfig"><span class="pre">LeidenNClusterConfig</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cansig.cluster.api.clustering_factory" title="Permalink to this definition">#</a></dt>
+<dd><p>A factory method.</p>
 </dd></dl>
 
 </section>
@@ -670,6 +722,18 @@ and the number of clusters (a custom one, using binary search over the resolutio
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-cansig.cluster.api">cansig.cluster.api module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.cluster.api.AggloConfig"><code class="docutils literal notranslate"><span class="pre">AggloConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.cluster.api.AggloConfig.affinity"><code class="docutils literal notranslate"><span class="pre">AggloConfig.affinity</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.cluster.api.AggloConfig.clusters"><code class="docutils literal notranslate"><span class="pre">AggloConfig.clusters</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.cluster.api.AggloConfig.linkage"><code class="docutils literal notranslate"><span class="pre">AggloConfig.linkage</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.cluster.api.AggloConfig.random_state"><code class="docutils literal notranslate"><span class="pre">AggloConfig.random_state</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.cluster.api.KMeansConfig"><code class="docutils literal notranslate"><span class="pre">KMeansConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.cluster.api.KMeansConfig.clusters"><code class="docutils literal notranslate"><span class="pre">KMeansConfig.clusters</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.cluster.api.KMeansConfig.random_state"><code class="docutils literal notranslate"><span class="pre">KMeansConfig.random_state</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.cluster.api.LeidenNCluster"><code class="docutils literal notranslate"><span class="pre">LeidenNCluster</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.cluster.api.LeidenNCluster.fit_predict"><code class="docutils literal notranslate"><span class="pre">LeidenNCluster.fit_predict()</span></code></a></li>
 </ul>
@@ -679,6 +743,7 @@ and the number of clusters (a custom one, using binary search over the resolutio
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.cluster.api.LeidenNClusterConfig.clusters"><code class="docutils literal notranslate"><span class="pre">LeidenNClusterConfig.clusters</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cansig.cluster.api.clustering_factory"><code class="docutils literal notranslate"><span class="pre">clustering_factory()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-cansig.cluster.leiden">cansig.cluster.leiden module</a><ul class="nav section-nav flex-column">

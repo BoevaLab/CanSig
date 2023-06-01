@@ -418,10 +418,14 @@ document.write(`
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/cansig.html#cansig.multirun.MultirunDirectory.analysis_directory">analysis_directory (cansig.multirun.MultirunDirectory property)</a>
+      <li><a href="source/cansig.cluster.html#cansig.cluster.api.AggloConfig.affinity">affinity (cansig.cluster.api.AggloConfig attribute)</a>
+</li>
+      <li><a href="source/cansig.cluster.html#cansig.cluster.api.AggloConfig">AggloConfig (class in cansig.cluster.api)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/cansig.html#cansig.multirun.MultirunDirectory.analysis_directory">analysis_directory (cansig.multirun.MultirunDirectory property)</a>
+</li>
       <li><a href="source/cansig.run.html#cansig.run.integration.Arguments">Arguments (class in cansig.run.integration)</a>
 </li>
   </ul></td>
@@ -636,8 +640,6 @@ document.write(`
         <li><a href="source/cansig.run.html#module-cansig.run">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     cansig.run.download
 
@@ -645,6 +647,8 @@ document.write(`
         <li><a href="source/cansig.run.html#module-cansig.run.download">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     cansig.run.format
 
@@ -723,9 +727,15 @@ document.write(`
 </li>
       <li><a href="source/cansig.html#cansig.filesys.PostprocessingDir.cluster_settings">cluster_settings (cansig.filesys.PostprocessingDir property)</a>
 </li>
-      <li><a href="source/cansig.cluster.html#cansig.cluster.api.LeidenNClusterConfig.clusters">clusters (cansig.cluster.api.LeidenNClusterConfig attribute)</a>
+      <li><a href="source/cansig.cluster.html#cansig.cluster.api.clustering_factory">clustering_factory() (in module cansig.cluster.api)</a>
+</li>
+      <li><a href="source/cansig.cluster.html#cansig.cluster.api.AggloConfig.clusters">clusters (cansig.cluster.api.AggloConfig attribute)</a>
 
       <ul>
+        <li><a href="source/cansig.cluster.html#cansig.cluster.api.KMeansConfig.clusters">(cansig.cluster.api.KMeansConfig attribute)</a>
+</li>
+        <li><a href="source/cansig.cluster.html#cansig.cluster.api.LeidenNClusterConfig.clusters">(cansig.cluster.api.LeidenNClusterConfig attribute)</a>
+</li>
         <li><a href="source/cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig.clusters">(cansig.cluster.leiden.LeidenNClusterConfig attribute)</a>
 </li>
       </ul></li>
@@ -965,6 +975,8 @@ document.write(`
 </li>
       <li><a href="source/cansig.cnvanalysis.html#cansig.cnvanalysis.differentialcnvs.get_cnv_results_pc">get_cnv_results_pc() (in module cansig.cnvanalysis.differentialcnvs)</a>
 </li>
+      <li><a href="source/cansig.run.html#cansig.run.postprocessing.get_config_cluster">get_config_cluster() (in module cansig.run.postprocessing)</a>
+</li>
       <li><a href="source/cansig.metasignatures.html#cansig.metasignatures.api.get_corr_metasignatures">get_corr_metasignatures() (in module cansig.metasignatures.api)</a>
 
       <ul>
@@ -1087,6 +1099,10 @@ document.write(`
 <h2 id="K">K</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/cansig.cluster.html#cansig.cluster.api.KMeansConfig">KMeansConfig (class in cansig.cluster.api)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/cansig.cluster.html#cansig.cluster.leiden.NeighborsGraphConfig.knn">knn (cansig.cluster.leiden.NeighborsGraphConfig attribute)</a>
 </li>
   </ul></td>
@@ -1131,11 +1147,13 @@ document.write(`
         <li><a href="source/cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig">(class in cansig.cluster.leiden)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/cansig.cluster.html#cansig.cluster.leiden.LeidenResolution">LeidenResolution (class in cansig.cluster.leiden)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/cansig.cluster.html#cansig.cluster.leiden.LeidenResolutionConfig">LeidenResolutionConfig (class in cansig.cluster.leiden)</a>
+</li>
+      <li><a href="source/cansig.cluster.html#cansig.cluster.api.AggloConfig.linkage">linkage (cansig.cluster.api.AggloConfig attribute)</a>
 </li>
       <li><a href="source/cansig.html#cansig.tutorial.load_data">load_data() (in module cansig.tutorial)</a>
 </li>
@@ -1530,16 +1548,22 @@ document.write(`
         <li><a href="source/cansig.models.html#cansig.models.scvi.SCVIConfig.random_seed">(cansig.models.scvi.SCVIConfig attribute)</a>
 </li>
       </ul></li>
-      <li><a href="source/cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig.random_state">random_state (cansig.cluster.leiden.LeidenNClusterConfig attribute)</a>
+      <li><a href="source/cansig.cluster.html#cansig.cluster.api.AggloConfig.random_state">random_state (cansig.cluster.api.AggloConfig attribute)</a>
+
+      <ul>
+        <li><a href="source/cansig.cluster.html#cansig.cluster.api.KMeansConfig.random_state">(cansig.cluster.api.KMeansConfig attribute)</a>
 </li>
+        <li><a href="source/cansig.cluster.html#cansig.cluster.leiden.LeidenNClusterConfig.random_state">(cansig.cluster.leiden.LeidenNClusterConfig attribute)</a>
+</li>
+      </ul></li>
       <li><a href="source/cansig.html#cansig.filesys.read_cluster_labels">read_cluster_labels() (in module cansig.filesys)</a>
 </li>
       <li><a href="source/cansig.html#cansig.filesys.read_latent_representations">read_latent_representations() (in module cansig.filesys)</a>
 </li>
-      <li><a href="source/cansig.html#cansig.types.read_latents">read_latents() (in module cansig.types)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/cansig.html#cansig.types.read_latents">read_latents() (in module cansig.types)</a>
+</li>
       <li><a href="source/cansig.html#cansig.filesys.read_settings">read_settings() (in module cansig.filesys)</a>
 </li>
       <li><a href="source/cansig.models.html#cansig.models.cansig.TrainConfig.reduce_lr_on_plateau">reduce_lr_on_plateau (cansig.models.cansig.TrainConfig attribute)</a>
