@@ -8,6 +8,7 @@ leidenalg
 matplotlib
 numpy
 jax<=0.4.10
+jaxlib<=0.4.10
 pandas
 petname
 pydantic
