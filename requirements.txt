@@ -7,7 +7,9 @@ interrogate
 leidenalg
 matplotlib
 numpy
-pandas    
+jax<=0.4.10
+jaxlib<=0.4.10
+pandas
 petname
 pydantic
 scanpy>=1.9.1

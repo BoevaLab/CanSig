@@ -3,6 +3,8 @@ import argparse
 import logging
 import pathlib
 
+from typing import Union  # pytype: disable=import-error
+
 import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 
@@ -30,6 +32,13 @@ def parse_args():
         type=pathlib.Path,
         help="Output directory.",
         default=OUTPUT_BASE_PATH / fs.get_directory_name(),
+    )
+    parser.add_argument(
+        "--cluster-method",
+        type=str,
+        default="leiden",
+        choices=["leiden", "kmeans", "agglomerative"],
+        help="Method used to perform the clustering in the postprocessing step",
     )
     parser.add_argument(
         "--dgex-method",
@@ -76,7 +85,7 @@ def postprocess(
     data_path: pathlib.Path,
     latents_dir: pathlib.Path,
     output_dir: pathlib.Path,
-    cluster_config: cluster.LeidenNClusterConfig,
+    cluster_config: Union[cluster.LeidenNClusterConfig, cluster.KMeansConfig, cluster.AggloConfig],
     gsea_config: gsea.GeneExpressionConfig,
     plotting_config: plotting.ScatterPlotConfig,
     plot: bool,
@@ -125,7 +134,8 @@ def postprocess(
 
     # Run the clustering algorithm
     representations = fs.read_latent_representations(model_dir.latent_representations)
-    clustering_algorithm = cluster.LeidenNCluster(cluster_config)
+    # clustering_algorithm = cluster.LeidenNCluster(cluster_config)
+    clustering_algorithm = cluster.clustering_factory(cluster_config)
     labels = clustering_algorithm.fit_predict(representations.values)
     labels = pd.Series(labels, dtype="category", index=representations.index)
     # Save the cluster labels
@@ -165,17 +175,30 @@ def postprocess(
     return output_dir.valid()
 
 
+def get_config_cluster(
+    cluster_method: str, n_clusters: int, random_seed: int
+) -> Union[cluster.KMeansConfig, cluster.AggloConfig, cluster.LeidenNClusterConfig]:
+    if cluster_method == "kmeans":
+        return cluster.KMeansConfig(clusters=n_clusters, random_state=random_seed)
+    elif cluster_method == "agglomerative":
+        return cluster.AggloConfig(clusters=n_clusters, random_state=random_seed)
+    else:
+        return cluster.LeidenNClusterConfig(clusters=n_clusters, random_state=random_seed)
+
+
 def main(args):
     """Parses the CLI arguments and runs postprocessing."""
     clogger.configure_logging(args.log)
     LOGGER.info("Starting a postprocessing run...")
+
+    cf = get_config_cluster(cluster_method=args.cluster_method, n_clusters=args.clusters, random_seed=args.random_seed)
 
     postprocess(
         data_path=args.data,
         latents_dir=args.latents,
         output_dir=args.output,
         gsea_config=gsea.GeneExpressionConfig(),
-        cluster_config=cluster.LeidenNClusterConfig(clusters=args.clusters, random_state=args.random_seed),
+        cluster_config=cf,
         plotting_config=plotting.ScatterPlotConfig(
             batch_column=args.batch, dim_red=args.dim_reduction, signature_columns=args.sigcols
         ),
