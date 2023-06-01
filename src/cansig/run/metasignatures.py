@@ -23,6 +23,8 @@ import cansig.multirun as mr  # pytype: disable=import-error
 
 from scanpy.tools._rank_genes_groups import _Method  # pytype: disable=import-error
 
+from cansig.types import Pathlike  # pytype: disable=import-error
+
 _LOGGER = logging.getLogger(__name__)
 _TESTTYPE = Literal["mwu", "ttest"]
 _METASIG_METHOD = Literal["consensus", "module"]
@@ -30,6 +32,7 @@ _CLUSTER_TYPE = Literal["agglomerative", "spectral"]
 _LINKAGE_TYPE = Literal["average", "single", "complete"]
 
 OUTPUT_BASE_PATH = pl.Path("outputs/metasignatures")
+_CLUSTER_NAME = "metamembership"
 
 
 def parse_args():
@@ -90,7 +93,6 @@ def parse_args():
     parser.add_argument(
         "--gene-sets",
         type=str,
-        default="MSigDB_Hallmark_2020",
         help="Gene sets database to be used. Alternatively, the path to a GMT file.",
     )
     parser.add_argument(
@@ -420,11 +422,11 @@ def consensus_type_metasignature(
     threshold_pat_specific: float = 0.9,
     n_clusters: Optional[int] = None,
     fixed_k: bool = False,
-    linkage: str = "average",
+    linkage: _LINKAGE_TYPE = "average",
     kmax: int = 10,
     remove_weak: bool = True,
     dgex_method: _Method = "t-test_overestim_var",
-    cluster_method: str = "agglomerative",
+    cluster_method: _CLUSTER_TYPE = "agglomerative",
     threshold_fct: Optional[Callable] = None,
     plot: bool = False,
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, Dict[str, List[str]], pd.DataFrame, pd.DataFrame]:
@@ -466,20 +468,19 @@ def run_metasignatures(
     integ_dir: Optional[Union[str, pl.Path]],
     metasig_method: _METASIG_METHOD,
     batch: str,
-    gsea_config: gsea.GeneExpressionConfig,
     diffcnv: bool,
     subclonalcnv: bool,
     diffcnv_method: _TESTTYPE,
     diffcnv_correction: bool,
     data_path: Union[str, pl.Path],
     cnvarray_path: Optional[pl.Path],
+    gene_sets: Optional[Pathlike] = None,
     sim_method: str = "jaccard",
     threshold: float = 0.3,
     plots: bool = True,
     sim: Optional[np.ndarray] = None,
-    threshold_n_rep: float = 0.01,
     pat_specific_threshold: float = 0.75,
-    linkage: str = "average",
+    linkage: _LINKAGE_TYPE = "average",
     n_clusters: Optional[int] = None,
     fixed_k: bool = False,
     kmax: int = 10,
@@ -521,8 +522,6 @@ def run_metasignatures(
             the meta-signatures
         sim: if provided, the similarity computation is skipped and the provided similarity
             array is used instead. Must be of size (n_signatures, n_signatures)
-        threshold_n_rep: the fraction of total signatures under which a found meta-signature
-            is considered as an outlier
         pat_specific_threshold: the fraction of cells assigned to a meta-signature over which
             a meta-signature is considered to be patient-specific
         linkage: a str defining the linkage used in the agglomerative clustering
@@ -573,7 +572,7 @@ def run_metasignatures(
             sim_method=sim_method,
             sim=sim,
         )
-    else:
+    elif metasig_method == "consensus":
         (
             sim,
             clusters,
@@ -598,7 +597,8 @@ def run_metasignatures(
             threshold_fct=threshold_fct,
             plot=plots,
         )
-
+    else:
+        raise NotImplementedError(f"Metasig_method {metasig_method} is not implemented.")
     utils.save_cell_metamembership(
         metamembership=cell_metamembership, prob_metamembership=prob_cellmetamembership, res_dir=resdir.path
     )
@@ -628,14 +628,15 @@ def run_metasignatures(
         )
 
     _LOGGER.info("Performing GSEA.")
-    gex_object = gsea.gex_factory(cluster_name="metamembership", config=gsea_config)
+
     gsea_metasig = {
         cl: pd.DataFrame(np.arange(len(meta_signatures[cl]))[::-1], index=meta_signatures[cl], columns=["avg_rank"])
         for cl in meta_signatures
     }
+    if gene_sets:
+        results = gsea.perform_gsea(diff_genes=gsea_metasig, gene_sets=gene_sets)
+        results.to_csv(resdir.gsea_output)
 
-    results = gex_object.perform_gsea(diff_genes=gsea_metasig)
-    results.to_csv(resdir.gsea_output)
     # *** Differential CNV analysis ***
     if diffcnv:
         # the user wants to perform the CNV analysis
@@ -676,7 +677,7 @@ def main(args):
 
     multirun_dir = mr.MultirunDirectory(path=args.output, create=False)
 
-    fixed_k = False if args.n_clusters is None else True
+    fixed_k = not (args.n_clusters is None)
 
     if args.cons_thresholdfct is None:
         threshold_fct = None
@@ -684,6 +685,8 @@ def main(args):
         threshold_fct = np.mean
     elif args.cons_thresholdfct == "median":
         threshold_fct = np.median
+    else:
+        raise NotImplementedError()
 
     run_metasignatures(
         rundir=args.postdir,
@@ -692,7 +695,7 @@ def main(args):
         metasig_method=args.metasig_method,
         batch=args.batch,
         sim_method=args.sim_method,
-        gsea_config=gsea.GeneExpressionConfig(gene_sets=args.gene_sets, method=args.dgex_method),
+        gene_sets=args.gene_sets,
         diffcnv=args.diffcnv,
         subclonalcnv=args.subclonalcnv,
         diffcnv_method=args.diffcnv_method,
@@ -705,7 +708,7 @@ def main(args):
         linkage=args.linkage,
         n_clusters=args.n_clusters,
         kmax=args.cons_kmax,
-        remove_weak=not (args.cons_keepweak),
+        remove_weak=(not args.cons_keepweak),
         dgex_method=args.dgex_method,
         consensus_cluster_method=args.cons_clustermethod,
         threshold_fct=threshold_fct,

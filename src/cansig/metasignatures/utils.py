@@ -45,6 +45,8 @@ def get_runs_sig(basedir: pl.Path, n_genes: int = 50, q_thresh: float = 0.005) -
                 a signature is strong enough
 
     """
+    _SCORES = "scores"
+    _QVALS = "pvals_adj"
     signatures = []
     integration_runs = []
     runs = []
@@ -69,8 +71,8 @@ def get_runs_sig(basedir: pl.Path, n_genes: int = 50, q_thresh: float = 0.005) -
 
         with open(path.joinpath("cluster-settings.json"), "r") as f:
             cset = json.load(f)
-            n_clusters.add(cset["clusters"])
-            cluster_rs.add(cset["random_state"])
+        n_clusters.add(cset["clusters"])
+        cluster_rs.add(cset["random_state"])
 
         n_run = integration_runs.index(data)
 
@@ -81,21 +83,21 @@ def get_runs_sig(basedir: pl.Path, n_genes: int = 50, q_thresh: float = 0.005) -
             signature = pd.read_csv(run_path, index_col=0)
             # look at if the signature is "strong" i.e. has enough genes diff expressed above a
             # specific q-value threshold
-            sig = signature[(signature.qvals < q_thresh) & (signature.zscores > 0)]
-            passed.append((True if sig.shape[0] > n_genes else False))
+            sig = signature[(signature[_QVALS] < q_thresh) & (signature[_SCORES] > 0)]
+            passed.append(sig.shape[0] > n_genes)
             signature = signature.index.tolist()
             signatures.append(signature)
             sig_index.append([f"iter{i}", n_cluster])
             runs.append(n_run)
 
-        unique_runs = np.unique(runs)
-        # this is an automatically computed threshold that can be used so that we only filter out runs that
-        # would most likely be an artifact. Can be used at the meta-signature clustering phase for outlier
-        # detection
-        threshold = (
-            1 / (len(unique_runs)) * (len(n_clusters) * len(cluster_rs)) / (len(cluster_rs) * np.sum(list(n_clusters)))
-        )
-        threshold = max(0.01, threshold)
+    unique_runs = np.unique(runs)
+    # this is an automatically computed threshold that can be used so that we only filter out runs that
+    # would most likely be an artifact. Can be used at the meta-signature clustering phase for outlier
+    # detection
+    threshold = (
+        1 / (len(unique_runs)) * (len(n_clusters) * len(cluster_rs)) / (len(cluster_rs) * np.sum(list(n_clusters)))
+    )
+    threshold = max(0.01, threshold)
 
     resdict = {
         "signatures": signatures,

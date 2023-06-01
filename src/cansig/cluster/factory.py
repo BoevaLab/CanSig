@@ -11,7 +11,7 @@ LOGGER = logging.getLogger(__name__)
 
 def clustering_factory(config: Union[KMeansConfig, AggloConfig, LeidenNClusterConfig]):
     """A factory method."""
-    LOGGER.info(f"Using {config.name} for clustering in postprocessing")
+    LOGGER.info(f"Using {repr(config)} for clustering in postprocessing")
     if isinstance(config, KMeansConfig):
         return cluster.KMeans(n_clusters=config.clusters, random_state=config.random_state)
     elif isinstance(config, AggloConfig):
@@ -21,4 +21,4 @@ def clustering_factory(config: Union[KMeansConfig, AggloConfig, LeidenNClusterCo
     elif isinstance(config, LeidenNClusterConfig):
         return LeidenNCluster(config)
     else:
-        raise ValueError(f"Clustering method {config.name} not known.")
+        raise ValueError(f"Clustering method {repr(config)} not known.")

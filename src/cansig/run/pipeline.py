@@ -48,7 +48,7 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--gene-sets",
         type=str,
-        default="MSigDB_Hallmark_2020",
+        default=None,
         help="Gene sets database to be used. Alternatively, the path to a GMT file.",
     )
     parser.add_argument(
@@ -65,7 +65,7 @@ def create_parser() -> argparse.ArgumentParser:
         choices=["module", "consensus"],
         help="the method used to compute the metasignature, can be clustering signatures or consensus clustering "
         " on the cells",
-        default="jaccard",
+        default="module",
     )
     parser.add_argument(
         "--cluster-method",
@@ -253,24 +253,6 @@ def create_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def generate_gsea_config(args) -> gsea.GeneExpressionConfig:
-    """Parses the CLI arguments into GSEA config."""
-    return gsea.GeneExpressionConfig(
-        gene_sets=args.gene_sets,
-        method=args.dgex_method,
-    )
-
-
-def validate_args(args) -> None:
-    """Validates the arguments."""
-    if not args.save_intermediate:
-        raise NotImplementedError
-
-    # Try to generate a GSEA config.
-    # It has its own validators throwing exceptions.
-    generate_gsea_config(args)
-
-
 def generate_model_configs(args) -> List[Union[models.SCVIConfig, models.CanSigConfig]]:
     """Generates a list of model configs used for data integration from the CLI arguments."""
     lst = []
@@ -331,7 +313,7 @@ def single_integration_run(
     data_path: pathlib.Path,
     integration_config: models.SCVIConfig,
     clustering_configs: Iterable[cluster.LeidenNClusterConfig],
-    gsea_config: gsea.GeneExpressionConfig,
+    method: gsea.Method,
     multirun_dir: mr.MultirunDirectory,
     plotting_config: plotting.ScatterPlotConfig,
     plot: bool,
@@ -364,7 +346,7 @@ def single_integration_run(
             postprocessing.postprocess(
                 data_path=data_path,
                 cluster_config=cluster_config,
-                gsea_config=gsea_config,
+                method=method,
                 latents_dir=integration_dir,
                 output_dir=multirun_dir.postprocessing_directories / fs.get_directory_name(),
                 plotting_config=plotting_config,
@@ -379,7 +361,6 @@ def main() -> None:
     # Read the CLI arguments
     parser = create_parser()
     args = parser.parse_args()
-    validate_args(args)
 
     fixed_k = False if args.n_clusters is None else True
 
@@ -406,7 +387,7 @@ def main() -> None:
                 data_path=args.data,
                 integration_config=model_config,
                 clustering_configs=generate_clustering_configs(args),
-                gsea_config=generate_gsea_config(args),
+                method=args.dgex_method,
                 multirun_dir=multirun_dir,
                 plotting_config=generate_plotting_config(args),
                 plot=(not args.disable_plots),
@@ -426,7 +407,7 @@ def main() -> None:
         data_path=args.data,
         sim_method=args.sim_method,
         batch=args.batch,
-        gsea_config=generate_gsea_config(args),
+        gene_sets=args.gene_sets,
         diffcnv=args.diffcnv,
         subclonalcnv=args.subclonalcnv,
         diffcnv_method=args.diffcnv_method,

@@ -428,8 +428,6 @@ def get_final_clustering_jaccard(
 
         an array of shape (n_signatures,) containing the final cluster memberships
     """
-    assert linkage in ["ward", "average", "single", "complete", "weighted", "centroid", "median"]
-
     clusters = _get_cluster_linkage(sim=sim, linkage=linkage, n_clusters=n_clusters)
 
     new_clusters = _change_outliers(clusters, runs, threshold_n_rep=threshold_n_rep, threshold_n_runs=0.9)

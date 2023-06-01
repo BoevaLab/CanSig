@@ -13,11 +13,13 @@ import cansig.filesys as fs  # pytype: disable=import-error
 import cansig.gsea as gsea  # pytype: disable=import-error
 import cansig.logger as clogger  # pytype: disable=import-error
 import cansig.plotting.plotting as plotting  # pytype: disable=import-error
+from cansig.gsea import Method  # pytype: disable=import-error
 
 
 LOGGER = logging.getLogger(__name__)
 
 OUTPUT_BASE_PATH = pathlib.Path("outputs/postprocessing")
+_CLUSTER_COL = "new-cluster-column"
 
 
 def parse_args():
@@ -86,7 +88,7 @@ def postprocess(
     latents_dir: pathlib.Path,
     output_dir: pathlib.Path,
     cluster_config: Union[cluster.LeidenNClusterConfig, cluster.KMeansConfig, cluster.AggloConfig],
-    gsea_config: gsea.GeneExpressionConfig,
+    method: Method,
     plotting_config: plotting.ScatterPlotConfig,
     plot: bool,
     savesig: bool,
@@ -141,17 +143,12 @@ def postprocess(
     # Save the cluster labels
     fs.save_cluster_labels(labels=labels, path=output_dir.cluster_labels)
 
-    # *** Gene Set Enrichment Analysis ***
-    # Set up and save GSEA settings
-    fs.save_settings(settings=gsea_config, path=output_dir.gsea_settings)
-
     # Read the anndata and add the cluster labels
     # TODO(Pawel, Florian, Josephine): Apply preprocessing, e.g., selecting HVGs?
     #  Or maybe this should be in the GEX object?
     adata = anndata.read_h5ad(data_path)
-    cluster_col = "new-cluster-column"
     adata = adata[labels.index, :].copy()
-    adata.obs[cluster_col] = labels
+    adata.obs[_CLUSTER_COL] = labels
 
     # *** Plotting ***
     # by default, plotting is activated with PCA (plot=True), can be disabled by the user
@@ -160,10 +157,7 @@ def postprocess(
         fig = scatter.plot_scatter(adata=adata, representations=representations)
         scatter.save_fig(fig, output_file=output_dir.scatter_output)
 
-    # Find the signatures
-    gex_object = gsea.gex_factory(cluster_name=cluster_col, config=gsea_config)
-
-    gene_ranks = gex_object.diff_gex(adata)
+    gene_ranks = gsea.diff_gex(adata, cluster_name=_CLUSTER_COL, method=method)
 
     # *** Signature saving and scoring ***
     # by default, all de novo found signatures are saved as the result of the differential gene expression
@@ -197,7 +191,7 @@ def main(args):
         data_path=args.data,
         latents_dir=args.latents,
         output_dir=args.output,
-        gsea_config=gsea.GeneExpressionConfig(),
+        method=args.dgex_method,
         cluster_config=cf,
         plotting_config=plotting.ScatterPlotConfig(
             batch_column=args.batch, dim_red=args.dim_reduction, signature_columns=args.sigcols
