@@ -13,6 +13,7 @@ from scanpy.plotting._utils import _set_default_colors_for_categorical_obs  # py
 from sklearn.manifold import MDS  # pytype: disable=import-error
 
 import cansig.plotting.plotting as plotting  # pytype: disable=import-error
+from cansig.filesys import PostprocessingDir  # pytype: disable=import-error
 
 # Retrieve signatures from directory
 
@@ -55,31 +56,31 @@ def get_runs_sig(basedir: pl.Path, n_genes: int = 50, q_thresh: float = 0.005) -
     passed = []
     n_clusters = set()
     cluster_rs = set()
-    for i, path in enumerate(basedir.iterdir()):
-        path = pl.Path(path)
+    i = 0
+    for path in basedir.iterdir():
+        postprocessing_dir = PostprocessingDir(path)
 
-        # It is possible that the clustering run has failed. We skip such directories.
-        if not path.joinpath("cluster-labels.csv").is_file():
-            warnings.warn(f"For path {path} there are no cluster labels. Skipping...")
+        if not postprocessing_dir.valid():
+            warnings.warn(f"For path {path} invalid postprocessing_dir found. Skipping...")
             continue
 
-        with open(path.joinpath("integration-settings.json"), "r") as f:
+        with postprocessing_dir.integration_settings.open() as f:
             data = json.load(f)
 
         if data not in integration_runs:
             integration_runs.append(data)
 
-        with open(path.joinpath("cluster-settings.json"), "r") as f:
+        with postprocessing_dir.cluster_settings.open() as f:
             cset = json.load(f)
         n_clusters.add(cset["clusters"])
         cluster_rs.add(cset["random_state"])
 
         n_run = integration_runs.index(data)
 
-        cluster_memb.append(pd.read_csv(path.joinpath("cluster-labels.csv"), index_col=0, header=None))
+        cluster_memb.append(pd.read_csv(postprocessing_dir.cluster_labels, index_col=0, header=None))
 
-        for run_path in sorted(path.joinpath("signatures").iterdir()):
-            n_cluster = run_path.name.split("cl")[1].split(".")[0]
+        for run_path in sorted(postprocessing_dir.signature_output.iterdir()):
+            n_cluster = run_path.stem.split("cl")[1]
             signature = pd.read_csv(run_path, index_col=0)
             # look at if the signature is "strong" i.e. has enough genes diff expressed above a
             # specific q-value threshold
@@ -89,7 +90,7 @@ def get_runs_sig(basedir: pl.Path, n_genes: int = 50, q_thresh: float = 0.005) -
             signatures.append(signature)
             sig_index.append([f"iter{i}", n_cluster])
             runs.append(n_run)
-
+        i += 1
     unique_runs = np.unique(runs)
     # this is an automatically computed threshold that can be used so that we only filter out runs that
     # would most likely be an artifact. Can be used at the meta-signature clustering phase for outlier

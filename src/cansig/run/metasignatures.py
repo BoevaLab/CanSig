@@ -627,13 +627,12 @@ def run_metasignatures(
             batch_column=batch,
         )
 
-    _LOGGER.info("Performing GSEA.")
-
-    gsea_metasig = {
-        cl: pd.DataFrame(np.arange(len(meta_signatures[cl]))[::-1], index=meta_signatures[cl], columns=["avg_rank"])
-        for cl in meta_signatures
-    }
     if gene_sets:
+        _LOGGER.info("Performing GSEA.")
+        gsea_metasig = {
+            cl: pd.DataFrame(np.arange(len(meta_signatures[cl]))[::-1], index=meta_signatures[cl], columns=["avg_rank"])
+            for cl in meta_signatures
+        }
         results = gsea.perform_gsea(diff_genes=gsea_metasig, gene_sets=gene_sets)
         results.to_csv(resdir.gsea_output)
 
