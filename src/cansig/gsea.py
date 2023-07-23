@@ -30,7 +30,7 @@ def diff_gex(adata: anndata.AnnData, cluster_name: str, method: Method) -> Dict[
     """Computes the differential gene expression between cluster groups
 
     Args:
-        adata: AnnData object containing the clustering labels and gene counts in X
+        adata: AnnData object containing the clustering labels and logp1, normalized counts in X
 
     Returns:
         gene_order: dictionary with cluster label as key and
@@ -40,9 +40,6 @@ def diff_gex(adata: anndata.AnnData, cluster_name: str, method: Method) -> Dict[
     """
     _NAMES = "names"
     adata_copy = adata.copy()
-    sc.pp.normalize_total(adata_copy)
-    sc.pp.log1p(adata_copy)
-
     sc.tl.rank_genes_groups(adata_copy, groupby=cluster_name, method=method)
 
     gene_order = {}

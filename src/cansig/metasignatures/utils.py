@@ -186,13 +186,7 @@ def score_sig(adata: ad.AnnData, signature: Union[np.ndarray, List[str]], score_
         adata with the signature scored
 
     """
-    adata.layers["counts"] = adata.X.copy()
-    sc.pp.normalize_total(adata, target_sum=10000)
-    sc.pp.log1p(adata)
     sc.tl.score_genes(adata, gene_list=signature, score_name=score_name)
-    adata.X = adata.layers["counts"]
-    del adata.uns["log1p"]
-
     return adata
 
 

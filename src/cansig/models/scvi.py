@@ -123,7 +123,7 @@ class SCVIConfig(pydantic.BaseModel):
     model: ModelConfig = pydantic.Field(default_factory=ModelConfig)
     train: TrainConfig = pydantic.Field(default_factory=TrainConfig)
     evaluation: EvaluationConfig = pydantic.Field(default_factory=EvaluationConfig)
-
+    layer: Optional[str] = pydantic.Field(default="counts")
     # Covariates
     continuous_covariates: Optional[List[str]] = pydantic.Field(default=None)
     discrete_covariates: Optional[List[str]] = pydantic.Field(default=None)
@@ -141,17 +141,9 @@ def _preprocessing(data: anndata.AnnData, config: PreprocessingConfig) -> anndat
     """Preprocessing which finds highly-variable genes."""
     if config.n_top_genes is None:
         return data
-    else:
-        # Store the original counts
-        data.layers["counts"] = data.X.copy()
-        # Find the highly variable genes
-        sc.pp.normalize_total(data)
-        sc.pp.log1p(data)
-        sc.pp.highly_variable_genes(data, n_top_genes=config.n_top_genes)
-        # Modify `data` to retain only the highly variable genes
-        data = data[:, data.var["highly_variable"]].copy()
-        data.X = data.layers["counts"].copy()
-        return data
+
+    sc.pp.highly_variable_genes(data, n_top_genes=config.n_top_genes, subset=True)
+    return data
 
 
 def _data_setup_wrapper(
@@ -163,9 +155,12 @@ def _data_setup_wrapper(
     Note:
         Modifies `data` in place.
     """
+    if config.layer not in data.layers.keys():
+        raise ValueError(f"{config.layer} key not found in adata.layer.")
     scvibase.model.SCVI.setup_anndata(
         data,
         batch_key=config.batch,
+        layer=config.layer,
         categorical_covariate_keys=config.discrete_covariates,
         continuous_covariate_keys=config.continuous_covariates,
     )
@@ -227,7 +222,6 @@ class SCVI:
         self._config = config
 
         scvibase.settings.seed = config.random_seed
-        data.raw = data
         data = _preprocessing(data, config.preprocessing)
         # Setup the data
         data = _data_setup_wrapper(data=data, config=config)
@@ -240,7 +234,6 @@ class SCVI:
 
         # Record the index, to be returned by `get_latent_codes`
         self._index = data.obs_names
-        data = data.raw.to_adata()
 
     def evaluate(self) -> EvaluationResults:
         """Returns the results of model validation."""

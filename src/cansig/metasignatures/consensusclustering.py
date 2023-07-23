@@ -180,9 +180,6 @@ def get_metasigs(
     adata_copy = adata_copy[consensus_clusters.index]
     adata_copy.obs = pd.concat([adata_copy.obs, consensus_clusters.astype("category")], axis=1)
 
-    sc.pp.normalize_total(adata_copy, target_sum=10000)
-    sc.pp.log1p(adata_copy)
-
     sc.tl.rank_genes_groups(
         adata_copy, method=dgex_method, group_names=group_names, groupby=consensus_clusters.columns[0]
     )

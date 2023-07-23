@@ -100,6 +100,7 @@ def _cast_covariates(listlike: Sequence[str]) -> Optional[list]:
 
 class CanSigConfig(pydantic.BaseModel):
     batch: str
+    layer: Optional[str] = pydantic.Field(default="counts")
     n_latent: pydantic.PositiveInt = pydantic.Field(default=10, description="The dimensionality of the latent space.")
     n_latent_batch_effect: pydantic.PositiveInt = pydantic.Field(
         default=10, description="The dimensionality of the latent space for the batch effect model."
@@ -144,6 +145,7 @@ def _data_setup_wrapper(
     """
     CanSigIntegration.setup_anndata(
         data,
+        layer=config.layer,
         categorical_covariate_keys=config.discrete_covariates,
         continuous_covariate_keys=config.continuous_covariates,
     )
