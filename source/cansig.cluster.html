@@ -478,12 +478,16 @@ See kmeans documentation for description.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.api.AggloConfig.model_config">
 <span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#cansig.cluster.api.AggloConfig.model_config" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.api.AggloConfig.model_fields">
 <span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'affinity':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=False,</span> <span class="pre">default='euclidean'),</span> <span class="pre">'clusters':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=5),</span> <span class="pre">'linkage':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=False,</span> <span class="pre">default='ward'),</span> <span class="pre">'random_state':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=0)}</span></em><a class="headerlink" href="#cansig.cluster.api.AggloConfig.model_fields" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.api.AggloConfig.random_state">
@@ -506,12 +510,16 @@ See kmeans documentation for description.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.api.KMeansConfig.model_config">
 <span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#cansig.cluster.api.KMeansConfig.model_config" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.api.KMeansConfig.model_fields">
 <span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'clusters':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=5),</span> <span class="pre">'random_state':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=0)}</span></em><a class="headerlink" href="#cansig.cluster.api.KMeansConfig.model_fields" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.api.KMeansConfig.random_state">
@@ -551,12 +559,16 @@ See kmeans documentation for description.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.api.LeidenNClusterConfig.model_config">
 <span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#cansig.cluster.api.LeidenNClusterConfig.model_config" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.api.LeidenNClusterConfig.model_fields">
 <span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'binsearch':</span> <span class="pre">FieldInfo(annotation=BinSearchSettings,</span> <span class="pre">required=False,</span> <span class="pre">default_factory=BinSearchSettings),</span> <span class="pre">'clusters':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=5,</span> <span class="pre">description='The</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">clusters</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">returned.'),</span> <span class="pre">'directed':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=True,</span> <span class="pre">description='Whether</span> <span class="pre">the</span> <span class="pre">graph</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">directed.'),</span> <span class="pre">'n_iterations':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=-1),</span> <span class="pre">'nngraph':</span> <span class="pre">FieldInfo(annotation=NeighborsGraphConfig,</span> <span class="pre">required=False,</span> <span class="pre">default_factory=NeighborsGraphConfig,</span> <span class="pre">description='Nearest</span> <span class="pre">neighbor</span> <span class="pre">graph</span> <span class="pre">construction</span> <span class="pre">settings.'),</span> <span class="pre">'random_state':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=0),</span> <span class="pre">'use_weights':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=True)}</span></em><a class="headerlink" href="#cansig.cluster.api.LeidenNClusterConfig.model_fields" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -590,12 +602,16 @@ and the number of clusters (a custom one, using binary search over the resolutio
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.leiden.BinSearchSettings.model_config">
 <span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#cansig.cluster.leiden.BinSearchSettings.model_config" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.leiden.BinSearchSettings.model_fields">
 <span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'end':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=False,</span> <span class="pre">default=10.0,</span> <span class="pre">description='The</span> <span class="pre">maximal</span> <span class="pre">resolution.',</span> <span class="pre">metadata=[Gt(gt=0)]),</span> <span class="pre">'epsilon':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=False,</span> <span class="pre">default=0.001,</span> <span class="pre">description='Controls</span> <span class="pre">the</span> <span class="pre">maximal</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">iterations</span> <span class="pre">before</span> <span class="pre">throwing</span> <span class="pre">lookup</span> <span class="pre">error.',</span> <span class="pre">metadata=[Gt(gt=0)]),</span> <span class="pre">'start':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=False,</span> <span class="pre">default=0.001,</span> <span class="pre">description='The</span> <span class="pre">minimal</span> <span class="pre">resolution.',</span> <span class="pre">metadata=[Gt(gt=0)])}</span></em><a class="headerlink" href="#cansig.cluster.leiden.BinSearchSettings.model_fields" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.leiden.BinSearchSettings.start">
@@ -646,12 +662,16 @@ and the number of clusters (a custom one, using binary search over the resolutio
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.leiden.LeidenNClusterConfig.model_config">
 <span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#cansig.cluster.leiden.LeidenNClusterConfig.model_config" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.leiden.LeidenNClusterConfig.model_fields">
 <span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'binsearch':</span> <span class="pre">FieldInfo(annotation=BinSearchSettings,</span> <span class="pre">required=False,</span> <span class="pre">default_factory=BinSearchSettings),</span> <span class="pre">'clusters':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=5,</span> <span class="pre">description='The</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">clusters</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">returned.'),</span> <span class="pre">'directed':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=True,</span> <span class="pre">description='Whether</span> <span class="pre">the</span> <span class="pre">graph</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">directed.'),</span> <span class="pre">'n_iterations':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=-1),</span> <span class="pre">'nngraph':</span> <span class="pre">FieldInfo(annotation=NeighborsGraphConfig,</span> <span class="pre">required=False,</span> <span class="pre">default_factory=NeighborsGraphConfig,</span> <span class="pre">description='Nearest</span> <span class="pre">neighbor</span> <span class="pre">graph</span> <span class="pre">construction</span> <span class="pre">settings.'),</span> <span class="pre">'random_state':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=0),</span> <span class="pre">'use_weights':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=True)}</span></em><a class="headerlink" href="#cansig.cluster.leiden.LeidenNClusterConfig.model_fields" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.leiden.LeidenNClusterConfig.n_iterations">
@@ -696,12 +716,16 @@ and the number of clusters (a custom one, using binary search over the resolutio
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.leiden.LeidenResolutionConfig.model_config">
 <span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#cansig.cluster.leiden.LeidenResolutionConfig.model_config" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.leiden.LeidenResolutionConfig.model_fields">
 <span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'directed':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=True,</span> <span class="pre">description='Whether</span> <span class="pre">the</span> <span class="pre">graph</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">directed.'),</span> <span class="pre">'n_iterations':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=-1),</span> <span class="pre">'nngraph':</span> <span class="pre">FieldInfo(annotation=NeighborsGraphConfig,</span> <span class="pre">required=False,</span> <span class="pre">default_factory=NeighborsGraphConfig,</span> <span class="pre">description='Nearest</span> <span class="pre">neighbor</span> <span class="pre">graph</span> <span class="pre">construction</span> <span class="pre">settings.'),</span> <span class="pre">'random_state':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=0),</span> <span class="pre">'resolution':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=False,</span> <span class="pre">default=1.0,</span> <span class="pre">description='The</span> <span class="pre">resolution</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">used.'),</span> <span class="pre">'use_weights':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=True)}</span></em><a class="headerlink" href="#cansig.cluster.leiden.LeidenResolutionConfig.model_fields" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.leiden.LeidenResolutionConfig.resolution">
@@ -735,12 +759,16 @@ and the number of clusters (a custom one, using binary search over the resolutio
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.leiden.NeighborsGraphConfig.model_config">
 <span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#cansig.cluster.leiden.NeighborsGraphConfig.model_config" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.leiden.NeighborsGraphConfig.model_fields">
 <span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'knn':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=True),</span> <span class="pre">'method':</span> <span class="pre">FieldInfo(annotation=Literal['umap'],</span> <span class="pre">required=False,</span> <span class="pre">default='umap'),</span> <span class="pre">'metric':</span> <span class="pre">FieldInfo(annotation=Literal['cityblock',</span> <span class="pre">'cosine',</span> <span class="pre">'euclidean',</span> <span class="pre">'l1',</span> <span class="pre">'l2',</span> <span class="pre">'manhattan',</span> <span class="pre">'braycurtis',</span> <span class="pre">'canberra',</span> <span class="pre">'chebyshev',</span> <span class="pre">'correlation',</span> <span class="pre">'dice',</span> <span class="pre">'hamming',</span> <span class="pre">'jaccard',</span> <span class="pre">'kulsinski',</span> <span class="pre">'mahalanobis',</span> <span class="pre">'minkowski',</span> <span class="pre">'rogerstanimoto',</span> <span class="pre">'russellrao',</span> <span class="pre">'seuclidean',</span> <span class="pre">'sokalmichener',</span> <span class="pre">'sokalsneath',</span> <span class="pre">'sqeuclidean',</span> <span class="pre">'yule'],</span> <span class="pre">required=False,</span> <span class="pre">default='euclidean'),</span> <span class="pre">'n_neighbors':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=15),</span> <span class="pre">'n_pcs':</span> <span class="pre">FieldInfo(annotation=Union[int,</span> <span class="pre">NoneType],</span> <span class="pre">required=False)}</span></em><a class="headerlink" href="#cansig.cluster.leiden.NeighborsGraphConfig.model_fields" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cansig.cluster.leiden.NeighborsGraphConfig.n_neighbors">
