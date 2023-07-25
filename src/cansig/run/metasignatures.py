@@ -6,7 +6,6 @@ import os
 import logging
 
 import anndata as ad  # pytype: disable=import-error
-import scanpy as sc  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 import numpy as np  # pytype: disable=import-error
 import pathlib as pl  # pytype: disable=import-error
@@ -24,6 +23,7 @@ import cansig.multirun as mr  # pytype: disable=import-error
 from scanpy.tools._rank_genes_groups import _Method  # pytype: disable=import-error
 
 from cansig.types import Pathlike  # pytype: disable=import-error
+from cansig.utils import read_anndata  # pytype: disable=import-error
 
 _LOGGER = logging.getLogger(__name__)
 _TESTTYPE = Literal["mwu", "ttest"]
@@ -539,7 +539,7 @@ def run_metasignatures(
     _LOGGER.info("Get the information about the signatures in the postprocessing folder.")
     resdict = utils.get_runs_sig(rundir)
 
-    adata = sc.read_h5ad(data_path)
+    adata = read_anndata(data_path)
     # make sure that even in the CanSig case, we don't use the healthy cells
     obs_names = list(pd.concat(resdict["cluster_memb"], axis=1).index)
     adata = adata[obs_names, :].copy()

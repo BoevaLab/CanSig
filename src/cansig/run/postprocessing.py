@@ -5,7 +5,6 @@ import pathlib
 
 from typing import Union  # pytype: disable=import-error
 
-import anndata  # pytype: disable=import-error
 import pandas as pd  # pytype: disable=import-error
 
 import cansig.cluster.api as cluster  # pytype: disable=import-error
@@ -14,7 +13,7 @@ import cansig.gsea as gsea  # pytype: disable=import-error
 import cansig.logger as clogger  # pytype: disable=import-error
 import cansig.plotting.plotting as plotting  # pytype: disable=import-error
 from cansig.gsea import Method  # pytype: disable=import-error
-
+from cansig.utils import read_anndata  # pytype: disable=import-error
 
 LOGGER = logging.getLogger(__name__)
 
@@ -146,7 +145,7 @@ def postprocess(
     # Read the anndata and add the cluster labels
     # TODO(Pawel, Florian, Josephine): Apply preprocessing, e.g., selecting HVGs?
     #  Or maybe this should be in the GEX object?
-    adata = anndata.read_h5ad(data_path)
+    adata = read_anndata(data_path)
     adata = adata[labels.index, :].copy()
     adata.obs[_CLUSTER_COL] = labels
 

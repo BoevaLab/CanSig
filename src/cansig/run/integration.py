@@ -10,6 +10,7 @@ import pandas as pd  # pytype: disable=import-error
 import cansig.filesys as fs  # pytype: disable=import-error
 import cansig.logger as clogger  # pytype: disable=import-error
 import cansig.models.api as models  # pytype: disable=import-error
+from cansig.utils import read_anndata  # pytype: disable=import-error
 
 LOGGER = logging.getLogger(__name__)
 DEFAULT_OUTPUT_BASE_PATH = pathlib.Path("./outputs/batch-integration")
@@ -109,7 +110,7 @@ def integrate(
     fs.save_settings(settings=config, path=output_dir.integration_settings)
 
     # Train the model and get the representations
-    data = anndata.read_h5ad(data_path)
+    data = read_anndata(data_path)
     representations = integrate_adata(data=data, config=config)
 
     # Save the representations
