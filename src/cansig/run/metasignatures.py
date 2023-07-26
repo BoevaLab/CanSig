@@ -383,7 +383,7 @@ def module_type_metasignature(
         _LOGGER.info("Precomputed similarity was provided.")
 
     # threshold_n_rep = resdict["threshold"][0]
-    threshold_n_rep = 0.05
+    threshold_n_rep = 0.00
     _LOGGER.info(f"Using threshold {threshold_n_rep} for outlier detection in metasignatures")
 
     clusters, idx, meta_results, meta_signatures = get_final_metasignatures(
